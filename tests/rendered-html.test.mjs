@@ -33,7 +33,7 @@ test("server-renders the macro dashboard shell", async () => {
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
   const html = await response.text();
-  assert.match(html, /<title>宏观脉搏 · 高频观测<\/title>/i);
+  assert.match(html, /<title>创金固收投资部宏观数据研究<\/title>/i);
   assert.match(html, /正在整理今日宏观信号/);
   assert.doesNotMatch(html, /codex-preview/);
   assert.doesNotMatch(html, /react-loading-skeleton/);

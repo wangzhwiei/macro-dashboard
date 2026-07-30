@@ -6,9 +6,11 @@
   --paper: #f3f1eb;
   --card: #fffdf8;
   --line: #d9ddd7;
-  --navy: #173f43;
-  --teal: #008f66;
-  --lime: #c8ef63;
+  --navy: #333438;
+  --teal: #c98500;
+  --lime: #f5ad00;
+  --brand-gold: #f5ad00;
+  --brand-gold-soft: #fff2ca;
   --bull: #d54b48;
   --bear: #008f66;
   --neutral: #78827e;
@@ -26,8 +28,8 @@ html {
 body {
   margin: 0;
   background:
-    linear-gradient(rgba(23, 63, 67, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 63, 67, 0.035) 1px, transparent 1px),
+    linear-gradient(rgba(51, 52, 56, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 52, 56, 0.035) 1px, transparent 1px),
     var(--paper);
   background-size: 32px 32px;
   color: var(--ink);
@@ -57,7 +59,7 @@ a {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  min-height: 68px;
+  min-height: 76px;
   padding: 0 32px;
   border-bottom: 1px solid rgba(217, 221, 215, 0.9);
   background: rgba(243, 241, 235, 0.91);
@@ -67,40 +69,46 @@ a {
 .brand {
   display: flex;
   align-items: center;
-  gap: 11px;
+  min-width: 0;
+  gap: 14px;
   color: var(--ink);
   text-decoration: none;
 }
 
-.brand-mark {
-  display: inline-grid;
-  width: 38px;
-  height: 38px;
-  place-items: center;
-  border-radius: 50%;
-  background: var(--navy);
-  color: var(--lime);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-}
-
-.brand strong,
-.brand small {
+.company-logo {
   display: block;
+  flex: 0 0 166px;
+  width: 166px;
+  height: 48px;
+  background-image: url("/cjhx-logo.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 166px 96px;
 }
 
-.brand strong {
-  font-size: 15px;
-  letter-spacing: 0.06em;
+.brand-product {
+  min-width: 0;
+  padding-left: 14px;
+  border-left: 1px solid rgba(51, 52, 56, 0.18);
 }
 
-.brand small {
-  margin-top: 1px;
+.brand-product strong,
+.brand-product small {
+  display: block;
+  white-space: nowrap;
+}
+
+.brand-product strong {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.brand-product small {
+  margin-top: 4px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
 }
 
 .topbar nav {
@@ -142,10 +150,10 @@ a {
 .live-dot {
   width: 8px;
   height: 8px;
-  border: 2px solid rgba(0, 143, 102, 0.22);
+  border: 2px solid rgba(245, 173, 0, 0.28);
   border-radius: 50%;
-  background: var(--bull);
-  box-shadow: 0 0 0 5px rgba(0, 143, 102, 0.09);
+  background: var(--brand-gold);
+  box-shadow: 0 0 0 5px rgba(245, 173, 0, 0.11);
 }
 
 .hero {
@@ -177,7 +185,7 @@ a {
   bottom: -150px;
   width: 360px;
   height: 360px;
-  border: 60px solid rgba(200, 239, 99, 0.12);
+  border: 60px solid rgba(245, 173, 0, 0.12);
   border-radius: 50%;
   content: "";
 }
@@ -300,15 +308,15 @@ a {
 }
 
 .hero-copy .signal-badge.is-bullish {
-  border-color: var(--lime);
-  background: var(--lime);
-  color: var(--navy);
+  border-color: var(--bull);
+  background: var(--bull);
+  color: #fff;
 }
 
 .hero-copy .signal-badge.is-bearish {
-  border-color: #ffd2c9;
-  background: #ffd2c9;
-  color: #8b2523;
+  border-color: var(--bear);
+  background: var(--bear);
+  color: #fff;
 }
 
 .hero-copy .signal-badge.is-neutral {
@@ -1533,8 +1541,16 @@ footer p {
   text-align: center;
 }
 
-.status-screen .brand-mark {
-  margin: 0 auto 20px;
+.status-screen .company-logo {
+  margin: 0 auto 10px;
+}
+
+.status-product-name {
+  margin-bottom: 22px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
 
 .status-screen h1 {
@@ -1547,6 +1563,29 @@ footer p {
 }
 
 @media (max-width: 1180px) {
+  .company-logo {
+    flex-basis: 138px;
+    width: 138px;
+    height: 40px;
+    background-size: 138px 80px;
+  }
+
+  .brand {
+    gap: 9px;
+  }
+
+  .brand-product {
+    padding-left: 9px;
+  }
+
+  .brand-product strong {
+    font-size: 12px;
+  }
+
+  .topbar nav {
+    gap: 18px;
+  }
+
   .category-grid {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -1695,9 +1734,28 @@ footer p {
 }
 
 @media (max-width: 560px) {
-  .brand small,
-  .update-status span:last-child {
+  .update-status {
     display: none;
+  }
+
+  .topbar {
+    grid-template-columns: 1fr;
+  }
+
+  .company-logo {
+    flex-basis: 126px;
+    width: 126px;
+    height: 36px;
+    background-size: 126px 72px;
+  }
+
+  .brand-product strong {
+    font-size: 11px;
+  }
+
+  .brand-product small {
+    margin-top: 2px;
+    font-size: 9px;
   }
 
   .hero h1 {

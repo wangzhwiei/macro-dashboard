@@ -889,7 +889,10 @@ export default function Dashboard() {
   if (error) {
     return (
       <main className="status-screen">
-        <span className="brand-mark">MP</span>
+        <span className="company-logo" aria-label="创金合信基金" role="img" />
+        <span className="status-product-name">
+          创金固收投资部 · 宏观数据研究
+        </span>
         <h1>数据暂时没有准备好</h1>
         <p>{error}。请先运行每日更新脚本生成 dashboard.json。</p>
       </main>
@@ -899,7 +902,10 @@ export default function Dashboard() {
   if (!data) {
     return (
       <main className="status-screen">
-        <span className="brand-mark">MP</span>
+        <span className="company-logo" aria-label="创金合信基金" role="img" />
+        <span className="status-product-name">
+          创金固收投资部 · 宏观数据研究
+        </span>
         <h1>正在整理今日宏观信号</h1>
         <p>聚合指标族、检查数据新鲜度并计算债市方向。</p>
       </main>
@@ -935,11 +941,15 @@ export default function Dashboard() {
   return (
     <main>
       <header className="topbar">
-        <a className="brand" href="#" aria-label="宏观脉搏首页">
-          <span className="brand-mark">MP</span>
-          <span>
-            <strong>宏观脉搏</strong>
-            <small>MACRO PULSE</small>
+        <a
+          className="brand"
+          href="#"
+          aria-label="创金固收投资部宏观数据研究首页"
+        >
+          <span className="company-logo" aria-hidden="true" />
+          <span className="brand-product">
+            <strong>创金固收投资部</strong>
+            <small>宏观数据研究</small>
           </span>
         </a>
         <nav aria-label="页面导航">
@@ -1490,7 +1500,7 @@ export default function Dashboard() {
       </section>
 
       <footer className="shell">
-        <span>MACRO PULSE / 宏观脉搏</span>
+        <span>创金固收投资部 · 宏观数据研究</span>
         <p>
           红色表示债市利多，绿色表示债市利空。数据模式：{data.mode} ·
           信号仅用于宏观观察，不构成投资建议。

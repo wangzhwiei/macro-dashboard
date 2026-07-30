@@ -3,13 +3,14 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "宏观脉搏 · 高频观测",
-    template: "%s · 宏观脉搏",
+    default: "创金固收投资部宏观数据研究",
+    template: "%s · 创金固收投资部宏观数据研究",
   },
-  description: "每天自动更新的中国宏观高频指标观测、去重评分与债市信号面板",
+  description:
+    "创金固收投资部中国宏观高频指标观测、去重评分与债市信号研究面板",
   openGraph: {
-    title: "宏观脉搏 · 高频观测",
-    description: "从高频数据到可解释的宏观与债市信号",
+    title: "创金固收投资部宏观数据研究",
+    description: "从高频数据到可解释的宏观观点与债市信号",
     type: "website",
   },
 };
