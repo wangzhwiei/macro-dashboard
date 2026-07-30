@@ -1,0 +1,52 @@
+import assert from "node:assert/strict";
+import { access, readFile } from "node:fs/promises";
+import test from "node:test";
+
+async function render() {
+  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
+  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}`);
+  const { default: worker } = await import(workerUrl.href);
+  return worker.fetch(
+    new Request("http://localhost/", { headers: { accept: "text/html" } }),
+    {
+      ASSETS: {
+        fetch: async (request) => {
+          const pathname = new URL(request.url).pathname;
+          if (pathname === "/data/dashboard.json") {
+            return new Response(
+              await readFile(
+                new URL("../public/data/dashboard.json", import.meta.url),
+              ),
+              { headers: { "content-type": "application/json" } },
+            );
+          }
+          return new Response("Not found", { status: 404 });
+        },
+      },
+    },
+    { waitUntil() {}, passThroughOnException() {} },
+  );
+}
+
+test("server-renders the macro dashboard shell", async () => {
+  const response = await render();
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+  const html = await response.text();
+  assert.match(html, /<title>宏观脉搏 · 高频观测<\/title>/i);
+  assert.match(html, /正在整理今日宏观信号/);
+  assert.doesNotMatch(html, /codex-preview/);
+  assert.doesNotMatch(html, /react-loading-skeleton/);
+});
+
+test("ships generated dashboard data and removes starter preview", async () => {
+  const dashboard = JSON.parse(
+    await readFile(new URL("../public/data/dashboard.json", import.meta.url)),
+  );
+  assert.equal(dashboard.categories.length, 9);
+  assert.ok(dashboard.indicators.length >= 35);
+  assert.equal(dashboard.dates.length, 13);
+  await assert.rejects(
+    access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)),
+  );
+});

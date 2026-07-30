@@ -1,0 +1,551 @@
+#!/usr/bin/env python3
+"""Fetch, normalize, deduplicate, score and publish macro dashboard data."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import importlib
+import json
+import math
+import os
+import random
+import statistics
+import sys
+from collections import defaultdict
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+from typing import Any, Callable
+
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_CONFIG = ROOT / "config" / "indicators.json"
+DEFAULT_OUTPUT = ROOT / "public" / "data" / "dashboard.json"
+Point = tuple[date, float]
+
+
+def load_dotenv(path: Path) -> None:
+    if not path.exists():
+        return
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        os.environ.setdefault(key.strip(), value.strip().strip("\"'"))
+
+
+def clamp(value: float, low: float = -100, high: float = 100) -> float:
+    return max(low, min(high, value))
+
+
+def parse_day(value: Any) -> date:
+    return datetime.fromisoformat(str(value)[:10]).date()
+
+
+def normalize_records(records: list[dict[str, Any]]) -> list[Point]:
+    values: dict[date, float] = {}
+    for record in records:
+        try:
+            day = parse_day(record["date"])
+            value = float(record["value"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        if math.isfinite(value):
+            values[day] = value
+    return sorted(values.items())
+
+
+def value_at(points: list[Point], target: date) -> tuple[date, float] | None:
+    for day, value in reversed(points):
+        if day <= target:
+            return day, value
+    return None
+
+
+def rolling(points: list[Point], window: int, operation: str) -> list[Point]:
+    if window <= 1:
+        return points
+    result: list[Point] = []
+    bucket: list[Point] = []
+    for point in points:
+        bucket.append(point)
+        bucket = [
+            item for item in bucket if (point[0] - item[0]).days <= window - 1
+        ]
+        if operation == "sum":
+            value = sum(item[1] for item in bucket)
+        else:
+            value = statistics.fmean(item[1] for item in bucket)
+        result.append((point[0], value))
+    return result
+
+
+def standardized_mean(
+    components: list[tuple[list[Point], float]],
+) -> list[Point]:
+    normalized: list[tuple[dict[date, float], float]] = []
+    all_dates: set[date] = set()
+    for points, weight in components:
+        raw = [value for _, value in points]
+        if not raw:
+            continue
+        mean = statistics.fmean(raw)
+        std = statistics.pstdev(raw) or 1.0
+        mapping = {day: (value - mean) / std for day, value in points}
+        normalized.append((mapping, weight))
+        all_dates.update(mapping)
+
+    result: list[Point] = []
+    latest_values: list[tuple[dict[date, float], float]] = normalized
+    for day in sorted(all_dates):
+        weighted_values: list[tuple[float, float]] = []
+        for mapping, weight in latest_values:
+            eligible = [known for known in mapping if known <= day]
+            if not eligible:
+                continue
+            latest_day = max(eligible)
+            if (day - latest_day).days <= 10:
+                weighted_values.append((mapping[latest_day], weight))
+        if weighted_values:
+            numerator = sum(value * weight for value, weight in weighted_values)
+            denominator = sum(weight for _, weight in weighted_values)
+            result.append((day, 100 + numerator / denominator * 10))
+    return result
+
+
+def aggregate_points(
+    indicator: dict[str, Any],
+    components: list[tuple[list[Point], float]],
+) -> list[Point]:
+    operation = indicator.get("aggregate", "")
+    if operation == "standardized_mean":
+        return standardized_mean(components)
+
+    points = components[0][0] if components else []
+    if operation == "rolling_7d_sum":
+        return rolling(points, 7, "sum")
+    if operation == "rolling_7d_mean":
+        return rolling(points, 7, "mean")
+    if operation == "rolling_4w_mean":
+        return rolling(points, 28, "mean")
+    return points
+
+
+def transformed_change(
+    current: float, previous: float, method: str
+) -> tuple[float, str]:
+    if method in {"pp_change", "level_change"}:
+        change = current - previous
+        suffix = "个百分点" if method == "pp_change" else ""
+        return change, f"{change:+.2f}{suffix}"
+    if previous == 0:
+        return 0.0, "—"
+    change = (current / previous - 1) * 100
+    return change, f"{change:+.2f}%"
+
+
+def weekly_scores(
+    points: list[Point],
+    evaluation_dates: list[date],
+    method: str,
+    bond_direction: float,
+) -> tuple[list[float], list[float]]:
+    historical_changes: list[float] = []
+    weekly_values: list[float] = []
+    all_week_ends = sorted(
+        {
+            day - timedelta(days=(day.weekday() - 4) % 7)
+            for day, _ in points
+        }
+    )
+    for week_end in all_week_ends:
+        current = value_at(points, week_end)
+        previous = value_at(points, week_end - timedelta(days=7))
+        if current and previous:
+            historical_changes.append(
+                transformed_change(current[1], previous[1], method)[0]
+            )
+
+    center = statistics.fmean(historical_changes) if historical_changes else 0.0
+    scale = statistics.pstdev(historical_changes) if len(historical_changes) > 1 else 1
+    if scale < 1e-8:
+        scale = 1
+
+    for week_end in evaluation_dates:
+        current = value_at(points, week_end)
+        previous = value_at(points, week_end - timedelta(days=7))
+        if not current or not previous:
+            weekly_values.append(0)
+            continue
+        change = transformed_change(current[1], previous[1], method)[0]
+        score = (change - center) / scale * 35 * bond_direction
+        weekly_values.append(round(clamp(score), 1))
+    return weekly_values, historical_changes
+
+
+def percentile(values: list[float], current: float) -> int:
+    if not values:
+        return 50
+    return round(sum(value <= current for value in values) / len(values) * 100)
+
+
+def signal_from_score(score: float, threshold: float) -> str:
+    if score >= threshold:
+        return "bullish"
+    if score <= -threshold:
+        return "bearish"
+    return "neutral"
+
+
+def stable_seed(value: str) -> int:
+    return int(hashlib.sha256(value.encode("utf-8")).hexdigest()[:12], 16)
+
+
+def mock_fetcher(
+    indicator: dict[str, Any],
+    series: dict[str, Any],
+    start_date: date,
+    end_date: date,
+) -> list[dict[str, Any]]:
+    seed = stable_seed(f"{indicator['category']}:{series['code']}")
+    rng = random.Random(seed)
+    frequency = indicator["frequency"]
+    step = 7 if frequency == "weekly" else 1
+    unit = indicator.get("unit", "")
+    if unit == "%":
+        base = 20 + seed % 600 / 10
+    elif unit in {"亿元", "架次", "套", "万吨", "万㎡", "万TEU"}:
+        base = 80 + seed % 900
+    elif "元/" in unit:
+        base = 300 + seed % 6000
+    elif "美元/" in unit:
+        base = 55 + seed % 140
+    else:
+        base = 80 + seed % 180
+
+    category_bias = {
+        "liquidity": -0.07,
+        "consumption": -0.12,
+        "real_estate": -0.28,
+        "infrastructure": 0.08,
+        "production": 0.05,
+        "inventory": 0.1,
+        "prices": 0.14,
+        "trade": -0.08,
+        "fx": 0.04,
+    }.get(indicator["category"], 0)
+
+    records: list[dict[str, Any]] = []
+    current = start_date
+    index = 0
+    value = float(base)
+    while current <= end_date:
+        if frequency == "daily" and current.weekday() >= 5:
+            current += timedelta(days=1)
+            continue
+        seasonal = math.sin(index / 17 + seed % 13) * base * 0.006
+        recent = category_bias * base * max(0, (index - 250) / 1800)
+        noise = rng.gauss(0, base * (0.006 if frequency == "daily" else 0.014))
+        value = max(0.01, value + seasonal * 0.04 + recent + noise)
+        records.append({"date": current.isoformat(), "value": round(value, 4)})
+        current += timedelta(days=step)
+        index += 1
+    return records
+
+
+def get_fetcher(adapter: str) -> Callable[..., list[dict[str, Any]]]:
+    if adapter == "mock":
+        return mock_fetcher
+    if adapter not in {"http", "custom"}:
+        raise ValueError(f"不支持的数据适配器: {adapter}")
+    module = importlib.import_module(f"scripts.adapters.{adapter}_adapter")
+    return module.fetch_series
+
+
+def build_indicator(
+    definition: dict[str, Any],
+    fetcher: Callable[..., list[dict[str, Any]]],
+    start_date: date,
+    end_date: date,
+    evaluation_dates: list[date],
+    threshold: float,
+) -> dict[str, Any] | None:
+    components: list[tuple[list[Point], float]] = []
+    for series in definition["series"]:
+        records = fetcher(definition, series, start_date, end_date)
+        points = normalize_records(records)
+        if points:
+            components.append((points, float(series.get("weight", 1))))
+    points = aggregate_points(definition, components)
+    if len(points) < 2:
+        return None
+
+    latest_day, latest_value = points[-1]
+    previous = value_at(points, latest_day - timedelta(days=7))
+    if not previous:
+        return None
+    previous_value = previous[1]
+    method = definition.get("transform", "pct_change")
+    change, change_label = transformed_change(latest_value, previous_value, method)
+    scores, _ = weekly_scores(
+        points,
+        evaluation_dates,
+        method,
+        float(definition.get("bond_direction", -1)),
+    )
+    score = scores[-1] if scores else 0
+    signal = signal_from_score(score, threshold)
+    direction_word = "上升" if change > 0 else "下降" if change < 0 else "持平"
+    signal_word = {"bullish": "利多", "bearish": "利空", "neutral": "中性"}[signal]
+    stale_days = (end_date - latest_day).days
+    stale_limit = 10 if definition["frequency"] == "weekly" else 4
+
+    return {
+        "id": definition["id"],
+        "category": definition["category"],
+        "family": definition["family"],
+        "name": definition["name"],
+        "frequency": "周频" if definition["frequency"] == "weekly" else "日频",
+        "unit": definition.get("unit", ""),
+        "latest": round(latest_value, 4),
+        "previous": round(previous_value, 4),
+        "change": round(change, 4),
+        "changeLabel": f"近1周 {change_label}",
+        "signal": signal,
+        "score": round(score, 1),
+        "percentile": percentile([value for _, value in points], latest_value),
+        "updatedAt": latest_day.isoformat(),
+        "source": definition.get("source", ""),
+        "core": bool(definition.get("core", True)),
+        "weight": float(definition.get("weight", 1)),
+        "fresh": stale_days <= stale_limit,
+        "reason": (
+            f"近一周指标{direction_word}{abs(change):.2f}"
+            f"{'个百分点' if method == 'pp_change' else '%'}；"
+            f"按该指标独立方向和历史波动标准化后，当前对债市{signal_word}。"
+        ),
+        "history": scores,
+    }
+
+
+def weighted_mean(items: list[tuple[float, float]]) -> float:
+    if not items:
+        return 0
+    denominator = sum(weight for _, weight in items)
+    if denominator == 0:
+        return 0
+    return sum(value * weight for value, weight in items) / denominator
+
+
+def aggregate_by_family(
+    indicators: list[dict[str, Any]], history_index: int | None = None
+) -> float:
+    families: dict[str, list[tuple[float, float]]] = defaultdict(list)
+    for indicator in indicators:
+        if not indicator["core"]:
+            continue
+        value = (
+            indicator["score"]
+            if history_index is None
+            else indicator["history"][history_index]
+        )
+        families[indicator["family"]].append((value, indicator["weight"]))
+    family_scores = [weighted_mean(values) for values in families.values()]
+    return statistics.fmean(family_scores) if family_scores else 0
+
+
+def category_title(category_scores: list[dict[str, Any]], overall_score: float) -> str:
+    if overall_score >= 35:
+        prefix = "增长与价格信号偏弱，债市环境较友好"
+    elif overall_score >= 15:
+        prefix = "宏观动能温和偏弱，债市略占优"
+    elif overall_score <= -35:
+        prefix = "增长与价格压力共振，债市面临逆风"
+    elif overall_score <= -15:
+        prefix = "宏观动能边际回升，债市略承压"
+    else:
+        prefix = "宏观信号分化，债市方向暂不明确"
+    return prefix
+
+
+def build_dashboard(
+    config: dict[str, Any],
+    adapter: str,
+    start_date: date,
+    end_date: date,
+) -> dict[str, Any]:
+    threshold = float(config.get("score_threshold", 15))
+    last_friday = end_date - timedelta(days=(end_date.weekday() - 4) % 7)
+    evaluation_dates = [
+        last_friday - timedelta(days=7 * offset) for offset in reversed(range(13))
+    ]
+    fetcher = get_fetcher(adapter)
+    indicators: list[dict[str, Any]] = []
+    failures: list[str] = []
+
+    for definition in config["indicators"]:
+        try:
+            indicator = build_indicator(
+                definition,
+                fetcher,
+                start_date,
+                end_date,
+                evaluation_dates,
+                threshold,
+            )
+            if indicator:
+                indicators.append(indicator)
+            else:
+                failures.append(f"{definition['id']}: 无有效数据")
+        except Exception as error:  # continue other indicators on one API failure
+            failures.append(f"{definition['id']}: {error}")
+
+    if not indicators:
+        raise RuntimeError("没有任何指标成功更新")
+
+    categories: list[dict[str, Any]] = []
+    for category in config["categories"]:
+        category_indicators = [
+            item for item in indicators if item["category"] == category["id"]
+        ]
+        expected = [
+            item for item in config["indicators"] if item["category"] == category["id"]
+        ]
+        weekly = [
+            round(aggregate_by_family(category_indicators, index), 1)
+            for index in range(len(evaluation_dates))
+        ]
+        score = weekly[-1] if weekly else 0
+        directional = [
+            item
+            for item in category_indicators
+            if abs(item["score"]) >= threshold and item["core"]
+        ]
+        bullish = sum(item["score"] > 0 for item in directional)
+        breadth = round(bullish / len(directional) * 100) if directional else 50
+        fresh = sum(item["fresh"] for item in category_indicators)
+        confidence = round(
+            100
+            * len(category_indicators)
+            / max(1, len(expected))
+            * fresh
+            / max(1, len(category_indicators))
+        )
+        latest_day = max(
+            (item["updatedAt"] for item in category_indicators),
+            default=end_date.isoformat(),
+        )
+        categories.append(
+            {
+                "id": category["id"],
+                "name": category["name"],
+                "code": category["code"],
+                "score": round(score, 1),
+                "signal": signal_from_score(score, threshold),
+                "breadth": breadth,
+                "confidence": confidence,
+                "updatedAt": latest_day,
+                "summary": category["summary"],
+                "validCount": len(category_indicators),
+                "totalCount": len(expected),
+                "weeklyScores": weekly,
+                "weight": float(category.get("weight", 1)),
+            }
+        )
+
+    overall_score = weighted_mean(
+        [(category["score"], category["weight"]) for category in categories]
+    )
+    overall_signal = signal_from_score(overall_score, threshold)
+    directional_categories = [
+        category for category in categories if abs(category["score"]) >= threshold
+    ]
+    overall_breadth = (
+        round(
+            sum(category["score"] > 0 for category in directional_categories)
+            / len(directional_categories)
+            * 100
+        )
+        if directional_categories
+        else 50
+    )
+    confidence = round(statistics.fmean(item["confidence"] for item in categories))
+    freshness = round(
+        sum(item["fresh"] for item in indicators) / max(1, len(indicators)) * 100
+    )
+    supportive = sorted(categories, key=lambda item: item["score"], reverse=True)[:2]
+    headwinds = sorted(categories, key=lambda item: item["score"])[:2]
+    narrative = (
+        f"{'、'.join(item['name'] for item in supportive)}对债市相对友好；"
+        f"{'、'.join(item['name'] for item in headwinds)}构成主要反向力量。"
+        "信号先在指标族内合成，再对九大类等权汇总。"
+    )
+
+    clean_indicators = []
+    for item in indicators:
+        clean_indicators.append(
+            {key: value for key, value in item.items() if key not in {"weight", "fresh"}}
+        )
+    clean_categories = []
+    for item in categories:
+        clean_categories.append(
+            {key: value for key, value in item.items() if key != "weight"}
+        )
+
+    if failures:
+        print("以下指标未更新：", file=sys.stderr)
+        for failure in failures:
+            print(f"  - {failure}", file=sys.stderr)
+
+    return {
+        "generatedAt": datetime.now(timezone.utc).isoformat(),
+        "mode": {"mock": "示例数据", "http": "HTTP接口", "custom": "自定义接口"}[
+            adapter
+        ],
+        "dates": [day.isoformat() for day in evaluation_dates],
+        "overall": {
+            "score": round(overall_score, 1),
+            "signal": overall_signal,
+            "title": category_title(categories, overall_score),
+            "narrative": narrative,
+            "breadth": overall_breadth,
+            "confidence": confidence,
+            "freshness": freshness,
+        },
+        "categories": clean_categories,
+        "indicators": clean_indicators,
+    }
+
+
+def main() -> int:
+    load_dotenv(ROOT / ".env")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--adapter",
+        choices=["mock", "http", "custom"],
+        default=os.environ.get("MACRO_DATA_ADAPTER", "mock"),
+    )
+    parser.add_argument("--days", type=int, default=540)
+    parser.add_argument("--end-date", type=date.fromisoformat, default=date.today())
+    args = parser.parse_args()
+
+    config = json.loads(args.config.read_text(encoding="utf-8"))
+    start_date = args.end_date - timedelta(days=args.days)
+    dashboard = build_dashboard(config, args.adapter, start_date, args.end_date)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(
+        json.dumps(dashboard, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print(
+        f"已生成 {args.output}："
+        f"{len(dashboard['categories'])} 个分类，"
+        f"{len(dashboard['indicators'])} 个指标"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
