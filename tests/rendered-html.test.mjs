@@ -44,7 +44,15 @@ test("ships generated dashboard data and removes starter preview", async () => {
     await readFile(new URL("../public/data/dashboard.json", import.meta.url)),
   );
   assert.equal(dashboard.categories.length, 9);
-  assert.ok(dashboard.indicators.length >= 35);
+  assert.ok(dashboard.indicators.length >= 100);
+  assert.ok(dashboard.indicators.some((indicator) => !indicator.core));
+  assert.ok(
+    dashboard.indicators.every(
+      (indicator) =>
+        Array.isArray(indicator.series) && indicator.series.length > 10,
+    ),
+  );
+  assert.ok(dashboard.overall.breadthDetail.total === 9);
   assert.equal(dashboard.dates.length, 13);
   await assert.rejects(
     access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)),

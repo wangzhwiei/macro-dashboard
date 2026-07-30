@@ -5,10 +5,11 @@
 项目包含：
 
 - 响应式宏观面板；
-- 40个核心指标的推荐配置；
+- 40个核心指标与72个辅助研究指标；
 - HTTP和自定义Python接口适配器；
 - 方向、变化口径、历史标准化和数据新鲜度处理；
 - GitHub Actions工作日自动更新与GitHub Pages发布；
+- 每个指标的历史曲线、时间区间筛选、悬停读数与CSV下载；
 - 本地示例数据生成器，未接接口时也能完整运行。
 
 ## 1. 本地运行
@@ -96,7 +97,9 @@ python scripts/update_dashboard.py --adapter custom
 
 ## 3. 配置指标
 
-所有指标定义在 `config/indicators.json`。
+核心指标定义在 `config/indicators.json`，辅助指标定义在
+`config/auxiliary-indicators.csv`。辅助指标可以展开研究，但不会重复影响
+大类评分和扩散度。
 
 关键字段：
 
@@ -118,7 +121,9 @@ python scripts/update_dashboard.py --adapter custom
 - `rolling_7d_sum`：7日合计；
 - `rolling_4w_mean`：4周均值。
 
-如果希望保留原来的110个序列，可以继续加入配置，将非核心项设为 `"core": false`。它们会出现在辅助指标筛选中，但不会放大大类信号。
+页面默认展示核心指标，点击“全部指标”即可显示辅助序列。点击任一指标名称
+可以打开历史走势，选择1个月、3个月、6个月、1年、全部或自定义日期，并可
+下载当前区间CSV。
 
 ## 4. 每日自动更新
 
@@ -144,8 +149,8 @@ python scripts/update_dashboard.py --adapter custom
 
 每个指标使用最近一周变化，并根据自身历史波动标准化到 `-100～100`：
 
-- 正分：对债市利多；
-- 负分：对债市利空；
+- 正分：对债市利多，页面使用红色；
+- 负分：对债市利空，页面使用绿色；
 - 绝对值小于15：中性。
 
 计算顺序：
@@ -156,11 +161,20 @@ python scripts/update_dashboard.py --adapter custom
 
 因此，FR007多个期限、地产城市能级、钢材各品种库存等不会再被当成多个完全独立的宏观证据。
 
+“利多扩散度”定义为：
+
+```text
+利多指标族（或大类）数量 ÷（利多数量 + 利空数量）
+```
+
+中性项不进入分母。扩散度表示观点的覆盖面，不等同于信号强度。
+
 ## 6. 项目结构
 
 ```text
 app/                         页面与样式
 config/indicators.json       指标、方向、权重与接口代码
+config/auxiliary-indicators.csv  辅助研究序列
 scripts/update_dashboard.py  每日更新、标准化和评分
 scripts/adapters/            HTTP及自定义数据接口
 public/data/dashboard.json   前端读取的最终数据

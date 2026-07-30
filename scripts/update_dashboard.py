@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import importlib
 import json
@@ -19,6 +20,7 @@ from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "config" / "indicators.json"
+DEFAULT_AUXILIARY = ROOT / "config" / "auxiliary-indicators.csv"
 DEFAULT_OUTPUT = ROOT / "public" / "data" / "dashboard.json"
 Point = tuple[date, float]
 
@@ -325,6 +327,10 @@ def build_indicator(
             f"按该指标独立方向和历史波动标准化后，当前对债市{signal_word}。"
         ),
         "history": scores,
+        "series": [
+            {"date": day.isoformat(), "value": round(value, 4)}
+            for day, value in points
+        ],
     }
 
 
@@ -337,9 +343,9 @@ def weighted_mean(items: list[tuple[float, float]]) -> float:
     return sum(value * weight for value, weight in items) / denominator
 
 
-def aggregate_by_family(
+def scores_by_family(
     indicators: list[dict[str, Any]], history_index: int | None = None
-) -> float:
+) -> dict[str, float]:
     families: dict[str, list[tuple[float, float]]] = defaultdict(list)
     for indicator in indicators:
         if not indicator["core"]:
@@ -350,7 +356,13 @@ def aggregate_by_family(
             else indicator["history"][history_index]
         )
         families[indicator["family"]].append((value, indicator["weight"]))
-    family_scores = [weighted_mean(values) for values in families.values()]
+    return {family: weighted_mean(values) for family, values in families.items()}
+
+
+def aggregate_by_family(
+    indicators: list[dict[str, Any]], history_index: int | None = None
+) -> float:
+    family_scores = list(scores_by_family(indicators, history_index).values())
     return statistics.fmean(family_scores) if family_scores else 0
 
 
@@ -411,25 +423,30 @@ def build_dashboard(
         expected = [
             item for item in config["indicators"] if item["category"] == category["id"]
         ]
+        category_core = [item for item in category_indicators if item["core"]]
+        expected_core = [item for item in expected if item.get("core", True)]
         weekly = [
             round(aggregate_by_family(category_indicators, index), 1)
             for index in range(len(evaluation_dates))
         ]
         score = weekly[-1] if weekly else 0
-        directional = [
-            item
-            for item in category_indicators
-            if abs(item["score"]) >= threshold and item["core"]
-        ]
-        bullish = sum(item["score"] > 0 for item in directional)
-        breadth = round(bullish / len(directional) * 100) if directional else 50
-        fresh = sum(item["fresh"] for item in category_indicators)
+        family_scores = list(scores_by_family(category_indicators).values())
+        bullish = sum(score >= threshold for score in family_scores)
+        bearish = sum(score <= -threshold for score in family_scores)
+        neutral = len(family_scores) - bullish - bearish
+        directional_count = bullish + bearish
+        breadth = (
+            round(bullish / directional_count * 100)
+            if directional_count
+            else 50
+        )
+        fresh = sum(item["fresh"] for item in category_core)
         confidence = round(
             100
-            * len(category_indicators)
-            / max(1, len(expected))
+            * len(category_core)
+            / max(1, len(expected_core))
             * fresh
-            / max(1, len(category_indicators))
+            / max(1, len(category_core))
         )
         latest_day = max(
             (item["updatedAt"] for item in category_indicators),
@@ -443,11 +460,17 @@ def build_dashboard(
                 "score": round(score, 1),
                 "signal": signal_from_score(score, threshold),
                 "breadth": breadth,
+                "breadthDetail": {
+                    "bullish": bullish,
+                    "bearish": bearish,
+                    "neutral": neutral,
+                    "total": len(family_scores),
+                },
                 "confidence": confidence,
                 "updatedAt": latest_day,
                 "summary": category["summary"],
-                "validCount": len(category_indicators),
-                "totalCount": len(expected),
+                "validCount": len(category_core),
+                "totalCount": len(expected_core),
                 "weeklyScores": weekly,
                 "weight": float(category.get("weight", 1)),
             }
@@ -460,6 +483,13 @@ def build_dashboard(
     directional_categories = [
         category for category in categories if abs(category["score"]) >= threshold
     ]
+    bullish_categories = sum(
+        category["score"] >= threshold for category in categories
+    )
+    bearish_categories = sum(
+        category["score"] <= -threshold for category in categories
+    )
+    neutral_categories = len(categories) - bullish_categories - bearish_categories
     overall_breadth = (
         round(
             sum(category["score"] > 0 for category in directional_categories)
@@ -509,6 +539,12 @@ def build_dashboard(
             "title": category_title(categories, overall_score),
             "narrative": narrative,
             "breadth": overall_breadth,
+            "breadthDetail": {
+                "bullish": bullish_categories,
+                "bearish": bearish_categories,
+                "neutral": neutral_categories,
+                "total": len(categories),
+            },
             "confidence": confidence,
             "freshness": freshness,
         },
@@ -517,10 +553,36 @@ def build_dashboard(
     }
 
 
+def load_auxiliary_indicators(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    definitions: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8-sig", newline="") as handle:
+        for row in csv.DictReader(handle):
+            definitions.append(
+                {
+                    "id": row["id"],
+                    "category": row["category"],
+                    "family": row["family"],
+                    "name": row["name"],
+                    "frequency": row["frequency"],
+                    "unit": row.get("unit", ""),
+                    "source": row["source"],
+                    "series": [{"code": row["code"], "weight": 1}],
+                    "transform": row.get("transform") or "pct_change",
+                    "bond_direction": float(row.get("bond_direction") or -1),
+                    "core": False,
+                    "weight": float(row.get("weight") or 0.3),
+                }
+            )
+    return definitions
+
+
 def main() -> int:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
+    parser.add_argument("--auxiliary", type=Path, default=DEFAULT_AUXILIARY)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
         "--adapter",
@@ -532,11 +594,12 @@ def main() -> int:
     args = parser.parse_args()
 
     config = json.loads(args.config.read_text(encoding="utf-8"))
+    config["indicators"].extend(load_auxiliary_indicators(args.auxiliary))
     start_date = args.end_date - timedelta(days=args.days)
     dashboard = build_dashboard(config, args.adapter, start_date, args.end_date)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
-        json.dumps(dashboard, ensure_ascii=False, indent=2),
+        json.dumps(dashboard, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
     print(

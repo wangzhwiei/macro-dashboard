@@ -1,11 +1,19 @@
 export type Signal = "bullish" | "bearish" | "neutral";
 
+export interface BreadthDetail {
+  bullish: number;
+  bearish: number;
+  neutral: number;
+  total: number;
+}
+
 export interface OverallSummary {
   score: number;
   signal: Signal;
   title: string;
   narrative: string;
   breadth: number;
+  breadthDetail: BreadthDetail;
   confidence: number;
   freshness: number;
 }
@@ -17,6 +25,7 @@ export interface CategorySummary {
   score: number;
   signal: Signal;
   breadth: number;
+  breadthDetail: BreadthDetail;
   confidence: number;
   updatedAt: string;
   summary: string;
@@ -44,6 +53,7 @@ export interface Indicator {
   core: boolean;
   reason: string;
   history: number[];
+  series: Array<{ date: string; value: number }>;
 }
 
 export interface DashboardData {
