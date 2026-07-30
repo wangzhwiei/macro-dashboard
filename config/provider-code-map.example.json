@@ -1,0 +1,8 @@
+{
+  "CJHX:FR007_IRS_1Y": {
+    "provider_code": "请替换为内部接口中的真实代码"
+  },
+  "IFIND:SHIBOR_3M": "请替换为iFinD或内部数据服务中的真实代码",
+  "CJHX:METRO_SHANGHAI": "请替换为上海地铁客流真实代码",
+  "CJHX:METRO_GUANGZHOU": "请替换为广州地铁客流真实代码"
+}

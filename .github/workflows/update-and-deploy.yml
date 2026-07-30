@@ -1,0 +1,75 @@
+name: Update macro dashboard
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 工作日北京时间 08:30
+    - cron: "30 0 * * 1-5"
+  push:
+    branches: ["main"]
+    paths:
+      - "app/**"
+      - "config/**"
+      - "scripts/**"
+      - "static/**"
+      - "public/**"
+      - "package.json"
+      - "package-lock.json"
+      - "vite.github.config.ts"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+    env:
+      MACRO_DATA_ADAPTER: ${{ vars.MACRO_DATA_ADAPTER || 'mock' }}
+      MACRO_API_URL: ${{ vars.MACRO_API_URL }}
+      MACRO_API_METHOD: ${{ vars.MACRO_API_METHOD || 'GET' }}
+      MACRO_API_KEY: ${{ secrets.MACRO_API_KEY }}
+      MACRO_API_AUTH_HEADER: ${{ vars.MACRO_API_AUTH_HEADER || 'Authorization' }}
+      MACRO_API_AUTH_PREFIX: ${{ vars.MACRO_API_AUTH_PREFIX || 'Bearer' }}
+      MACRO_API_HEADERS_JSON: ${{ secrets.MACRO_API_HEADERS_JSON }}
+      MACRO_API_CODE_PARAM: ${{ vars.MACRO_API_CODE_PARAM || 'code' }}
+      MACRO_API_START_PARAM: ${{ vars.MACRO_API_START_PARAM || 'start_date' }}
+      MACRO_API_END_PARAM: ${{ vars.MACRO_API_END_PARAM || 'end_date' }}
+      MACRO_API_FREQUENCY_PARAM: ${{ vars.MACRO_API_FREQUENCY_PARAM || 'frequency' }}
+      MACRO_API_DATA_PATH: ${{ vars.MACRO_API_DATA_PATH }}
+      MACRO_API_DATE_FIELD: ${{ vars.MACRO_API_DATE_FIELD || 'date' }}
+      MACRO_API_VALUE_FIELD: ${{ vars.MACRO_API_VALUE_FIELD || 'value' }}
+      MACRO_API_CODE_MAP: ${{ vars.MACRO_API_CODE_MAP }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - name: Update dashboard data
+        run: python scripts/update_dashboard.py
+      - name: Test data adapters
+        run: python -m unittest discover -s tests -p "test_*.py"
+      - name: Validate dashboard data
+        run: python scripts/validate_dashboard.py --strict
+      - name: Build static site
+        run: |
+          npm ci
+          npm run build:github
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

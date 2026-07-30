@@ -1,0 +1,16 @@
+{
+  "ok": false,
+  "strict": true,
+  "summary": {
+    "configured_indicators": 112,
+    "generated_indicators": 112,
+    "coverage": 1.0,
+    "history_weeks": 78,
+    "categories": 9,
+    "mode": "自定义接口"
+  },
+  "errors": [],
+  "warnings": [
+    "secondhand 最新数据为2026-07-20，已滞后10天"
+  ]
+}

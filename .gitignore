@@ -1,0 +1,6 @@
+node_modules/
+data_cache/
+*.log
+.env
+__pycache__/
+pnpm-lock.yaml
