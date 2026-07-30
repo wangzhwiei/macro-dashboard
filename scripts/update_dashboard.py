@@ -572,6 +572,18 @@ def build_dashboard(
     overall_score = weighted_mean(
         [(category["score"], category["weight"]) for category in categories]
     )
+    overall_weekly = [
+        round(
+            weighted_mean(
+                [
+                    (category["weeklyScores"][index], category["weight"])
+                    for category in categories
+                ]
+            ),
+            1,
+        )
+        for index in range(len(evaluation_dates))
+    ]
     overall_signal = signal_from_score(overall_score, threshold)
     directional_categories = [
         category for category in categories if abs(category["score"]) >= threshold
@@ -629,6 +641,7 @@ def build_dashboard(
         "overall": {
             "score": round(overall_score, 1),
             "signal": overall_signal,
+            "weeklyScores": overall_weekly,
             "title": category_title(categories, overall_score),
             "narrative": narrative,
             "breadth": overall_breadth,

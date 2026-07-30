@@ -10,6 +10,7 @@ export interface BreadthDetail {
 export interface OverallSummary {
   score: number;
   signal: Signal;
+  weeklyScores: number[];
   title: string;
   narrative: string;
   breadth: number;

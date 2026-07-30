@@ -552,6 +552,225 @@ a {
   background: rgba(111, 120, 126, 0.22);
 }
 
+.outlook-panel {
+  padding-bottom: 24px;
+}
+
+.outlook-heading {
+  margin-bottom: 18px;
+}
+
+.outlook-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: #f6f6f0;
+}
+
+.trend-target-select > span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+}
+
+.trend-target-select select {
+  width: 166px;
+  height: 30px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.trend-range-tabs {
+  display: flex;
+  gap: 3px;
+}
+
+.trend-range-tabs button {
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.trend-range-tabs button.active,
+.trend-range-tabs button:hover {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+
+.trend-custom-range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.trend-custom-range input {
+  height: 30px;
+  padding: 0 7px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 10px;
+}
+
+.trend-custom-range span {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.outlook-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #fbfaf5;
+}
+
+.macro-chart-shell {
+  position: relative;
+  min-width: 0;
+  height: 390px;
+  padding: 42px 12px 4px 8px;
+}
+
+.macro-trend-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+.scale-switch {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 50px;
+  display: flex;
+  gap: 2px;
+}
+
+.scale-switch button {
+  height: 27px;
+  padding: 0 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.93);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.scale-switch button.active {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+
+.chart-reading {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  background: rgba(255, 253, 248, 0.93);
+  box-shadow: 0 6px 16px rgba(24, 33, 31, 0.07);
+}
+
+.chart-reading span,
+.chart-reading small {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.chart-reading strong {
+  font-size: 18px;
+  letter-spacing: -0.03em;
+}
+
+.outlook-insights {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.insight-title span {
+  display: block;
+  color: var(--lime);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.insight-title strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.insight-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 22px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.insight-metrics > div {
+  min-height: 92px;
+  padding: 13px;
+  background: rgba(23, 63, 67, 0.96);
+}
+
+.insight-metrics span,
+.insight-metrics strong,
+.insight-metrics small {
+  display: block;
+}
+
+.insight-metrics span,
+.insight-metrics small {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 9px;
+}
+
+.insight-metrics strong {
+  margin: 5px 0 3px;
+  color: #fff;
+  font-size: 21px;
+}
+
+.outlook-insights > p {
+  margin: auto 0 0;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 10px;
+  line-height: 1.7;
+}
+
 .matrix-toolbar {
   display: flex;
   align-items: center;
@@ -1434,6 +1653,23 @@ footer p {
     flex-wrap: wrap;
   }
 
+  .outlook-toolbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .trend-custom-range {
+    margin-left: 0;
+  }
+
+  .outlook-body {
+    grid-template-columns: 1fr;
+  }
+
+  .outlook-insights {
+    min-height: 310px;
+  }
+
   .matrix-count {
     width: 100%;
     margin-left: 0;
@@ -1566,6 +1802,40 @@ footer p {
   .matrix-range-tabs {
     overflow-x: auto;
     width: 100%;
+  }
+
+  .trend-target-select,
+  .trend-target-select select,
+  .trend-range-tabs {
+    width: 100%;
+  }
+
+  .trend-range-tabs {
+    overflow-x: auto;
+  }
+
+  .trend-custom-range {
+    width: 100%;
+  }
+
+  .trend-custom-range input {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .macro-chart-shell {
+    height: 360px;
+    padding-top: 78px;
+    padding-inline: 0;
+  }
+
+  .chart-reading {
+    top: 46px;
+    right: 10px;
+  }
+
+  .scale-switch {
+    left: 48px;
   }
 
   .matrix-custom-range {

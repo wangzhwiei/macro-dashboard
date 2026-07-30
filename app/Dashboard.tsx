@@ -47,6 +47,12 @@ function scoreTone(score: number) {
   return "var(--neutral)";
 }
 
+function signalForScore(score: number): Signal {
+  if (score >= 15) return "bullish";
+  if (score <= -15) return "bearish";
+  return "neutral";
+}
+
 function heatColor(score: number) {
   const strength = Math.min(1, Math.abs(score) / 100);
   if (score >= 15) return `rgba(213, 75, 72, ${0.16 + strength * 0.76})`;
@@ -73,6 +79,173 @@ function MiniTrend({ values }: { values: number[] }) {
         />
       ))}
     </div>
+  );
+}
+
+function MacroTrendCanvas({
+  points,
+  yLimit,
+  onHover,
+}: {
+  points: Array<{ date: string; value: number }>;
+  yLimit: number;
+  onHover: (point: { date: string; value: number } | null) => void;
+}) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+
+  const draw = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas || !points.length) return;
+    const rect = canvas.getBoundingClientRect();
+    const ratio = window.devicePixelRatio || 1;
+    canvas.width = Math.max(1, Math.round(rect.width * ratio));
+    canvas.height = Math.max(1, Math.round(rect.height * ratio));
+    const context = canvas.getContext("2d");
+    if (!context) return;
+    context.scale(ratio, ratio);
+
+    const width = rect.width;
+    const height = rect.height;
+    const padding = { left: 48, right: 18, top: 22, bottom: 34 };
+    const plotWidth = width - padding.left - padding.right;
+    const plotHeight = height - padding.top - padding.bottom;
+    const x = (index: number) =>
+      padding.left + (index / Math.max(1, points.length - 1)) * plotWidth;
+    const y = (value: number) =>
+      padding.top + ((yLimit - value) / (yLimit * 2)) * plotHeight;
+    const tone = (value: number) =>
+      value >= 15 ? "#d54b48" : value <= -15 ? "#008f66" : "#78827e";
+
+    context.clearRect(0, 0, width, height);
+    context.fillStyle = "rgba(213, 75, 72, .055)";
+    context.fillRect(
+      padding.left,
+      padding.top,
+      plotWidth,
+      y(15) - padding.top,
+    );
+    context.fillStyle = "rgba(120, 130, 126, .055)";
+    context.fillRect(padding.left, y(15), plotWidth, y(-15) - y(15));
+    context.fillStyle = "rgba(0, 143, 102, .055)";
+    context.fillRect(
+      padding.left,
+      y(-15),
+      plotWidth,
+      padding.top + plotHeight - y(-15),
+    );
+
+    const levels = [...new Set([yLimit, yLimit / 2, 15, 0, -15, -yLimit / 2, -yLimit])]
+      .sort((left, right) => right - left);
+    context.font = "10px Aptos, Microsoft YaHei UI, sans-serif";
+    context.textAlign = "right";
+    context.textBaseline = "middle";
+    levels.forEach((level) => {
+      const yPos = y(level);
+      context.beginPath();
+      context.moveTo(padding.left, yPos);
+      context.lineTo(width - padding.right, yPos);
+      context.setLineDash(level === 15 || level === -15 ? [5, 4] : []);
+      context.strokeStyle =
+        level === 0 ? "rgba(24, 33, 31, .48)" : "rgba(105, 115, 111, .16)";
+      context.lineWidth = level === 0 ? 1.4 : 1;
+      context.stroke();
+      context.fillStyle =
+        level > 0 ? "#b9413e" : level < 0 ? "#007c59" : "#69736f";
+      context.fillText(`${level > 0 ? "+" : ""}${level}`, padding.left - 8, yPos);
+    });
+    context.setLineDash([]);
+
+    context.beginPath();
+    context.moveTo(x(0), y(0));
+    points.forEach((point, index) => context.lineTo(x(index), y(point.value)));
+    context.lineTo(x(points.length - 1), y(0));
+    context.closePath();
+    const area = context.createLinearGradient(0, padding.top, 0, height);
+    area.addColorStop(0, "rgba(213, 75, 72, .22)");
+    area.addColorStop(0.5, "rgba(120, 130, 126, .025)");
+    area.addColorStop(1, "rgba(0, 143, 102, .2)");
+    context.fillStyle = area;
+    context.fill();
+
+    for (let index = 1; index < points.length; index += 1) {
+      const previous = points[index - 1];
+      const current = points[index];
+      context.beginPath();
+      context.moveTo(x(index - 1), y(previous.value));
+      context.lineTo(x(index), y(current.value));
+      context.strokeStyle = tone((previous.value + current.value) / 2);
+      context.lineWidth = 2.5;
+      context.lineCap = "round";
+      context.stroke();
+    }
+
+    const tickCount = Math.min(6, points.length);
+    context.fillStyle = "#69736f";
+    context.textBaseline = "top";
+    for (let tick = 0; tick < tickCount; tick += 1) {
+      const index = Math.round(
+        (tick / Math.max(1, tickCount - 1)) * (points.length - 1),
+      );
+      context.textAlign =
+        tick === 0 ? "left" : tick === tickCount - 1 ? "right" : "center";
+      context.fillText(
+        points[index].date.slice(2),
+        x(index),
+        padding.top + plotHeight + 11,
+      );
+    }
+
+    if (hoverIndex !== null && points[hoverIndex]) {
+      const point = points[hoverIndex];
+      const xPos = x(hoverIndex);
+      const yPos = y(point.value);
+      context.beginPath();
+      context.moveTo(xPos, padding.top);
+      context.lineTo(xPos, padding.top + plotHeight);
+      context.strokeStyle = "rgba(24, 33, 31, .34)";
+      context.lineWidth = 1;
+      context.stroke();
+      context.beginPath();
+      context.arc(xPos, yPos, 5, 0, Math.PI * 2);
+      context.fillStyle = "#fffdf8";
+      context.fill();
+      context.lineWidth = 3;
+      context.strokeStyle = tone(point.value);
+      context.stroke();
+    }
+  }, [hoverIndex, points, yLimit]);
+
+  useEffect(() => {
+    draw();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const observer = new ResizeObserver(draw);
+    observer.observe(canvas);
+    return () => observer.disconnect();
+  }, [draw]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="macro-trend-canvas"
+      onMouseMove={(event) => {
+        if (!points.length) return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        const ratio = Math.max(
+          0,
+          Math.min(1, (event.clientX - rect.left - 48) / (rect.width - 66)),
+        );
+        const index = Math.round(ratio * (points.length - 1));
+        setHoverIndex(index);
+        onHover(points[index]);
+      }}
+      onMouseLeave={() => {
+        setHoverIndex(null);
+        onHover(null);
+      }}
+      aria-label="宏观观点历史强度折线图，正值为债市利多，负值为债市利空"
+    />
   );
 }
 
@@ -553,6 +726,17 @@ export default function Dashboard() {
   const [search, setSearch] = useState("");
   const [showAuxiliary, setShowAuxiliary] = useState(false);
   const [sortBy, setSortBy] = useState("category");
+  const [trendTarget, setTrendTarget] = useState("overall");
+  const [trendRange, setTrendRange] = useState("52w");
+  const [trendScale, setTrendScale] = useState<"adaptive" | "fixed">(
+    "adaptive",
+  );
+  const [trendStart, setTrendStart] = useState("");
+  const [trendEnd, setTrendEnd] = useState("");
+  const [trendHover, setTrendHover] = useState<{
+    date: string;
+    value: number;
+  } | null>(null);
   const [matrixRange, setMatrixRange] = useState("13w");
   const [matrixStart, setMatrixStart] = useState("");
   const [matrixEnd, setMatrixEnd] = useState("");
@@ -627,6 +811,81 @@ export default function Dashboard() {
     };
   }, [data, matrixEnd, matrixRange, matrixStart]);
 
+  const trendSelection = useMemo(() => {
+    if (!data) {
+      return {
+        label: "",
+        points: [] as Array<{ date: string; value: number }>,
+      };
+    }
+    const category = data.categories.find((item) => item.id === trendTarget);
+    const values =
+      trendTarget === "overall"
+        ? data.overall.weeklyScores
+        : (category?.weeklyScores ?? []);
+    let indices = data.dates.map((_, index) => index);
+    if (trendRange === "custom") {
+      indices = indices.filter((index) => {
+        const day = data.dates[index];
+        return (
+          (!trendStart || day >= trendStart) &&
+          (!trendEnd || day <= trendEnd)
+        );
+      });
+    } else if (trendRange !== "all") {
+      indices = indices.slice(-Number.parseInt(trendRange, 10));
+    }
+    return {
+      label: trendTarget === "overall" ? "综合宏观观点" : (category?.name ?? ""),
+      points: indices.map((index) => ({
+        date: data.dates[index],
+        value: values[index] ?? 0,
+      })),
+    };
+  }, [data, trendEnd, trendRange, trendStart, trendTarget]);
+
+  const trendStats = useMemo(() => {
+    const points = trendSelection.points;
+    if (!points.length) {
+      return {
+        high: null,
+        low: null,
+        change: 0,
+        monthChange: 0,
+        reversals: 0,
+        streak: 0,
+      };
+    }
+    const high = points.reduce((best, point) =>
+      point.value > best.value ? point : best,
+    );
+    const low = points.reduce((best, point) =>
+      point.value < best.value ? point : best,
+    );
+    const regimes = points
+      .map((point) => signalForScore(point.value))
+      .filter((signal) => signal !== "neutral");
+    let reversals = 0;
+    for (let index = 1; index < regimes.length; index += 1) {
+      if (regimes[index] !== regimes[index - 1]) reversals += 1;
+    }
+    const latestSignal = signalForScore(points.at(-1)!.value);
+    let streak = 0;
+    for (let index = points.length - 1; index >= 0; index -= 1) {
+      if (signalForScore(points[index].value) !== latestSignal) break;
+      streak += 1;
+    }
+    const monthBase = points[Math.max(0, points.length - 5)].value;
+    return {
+      high,
+      low,
+      change: points.at(-1)!.value - points[0].value,
+      monthChange: points.at(-1)!.value - monthBase,
+      reversals,
+      streak,
+    };
+  }, [trendSelection.points]);
+
   if (error) {
     return (
       <main className="status-screen">
@@ -660,6 +919,18 @@ export default function Dashboard() {
     .sort((left, right) => left.score - right.score)
     .slice(0, 2);
   const overallBreadth = data.overall.breadthDetail;
+  const trendLimit =
+    trendScale === "fixed"
+      ? 100
+      : Math.max(
+          30,
+          Math.ceil(
+            Math.max(
+              ...trendSelection.points.map((point) => Math.abs(point.value)),
+              1,
+            ) / 10,
+          ) * 10,
+        );
 
   return (
     <main>
@@ -673,6 +944,7 @@ export default function Dashboard() {
         </a>
         <nav aria-label="页面导航">
           <a href="#overview">今日观点</a>
+          <a href="#outlook-trend">观点走势</a>
           <a href="#matrix">趋势矩阵</a>
           <a href="#indicators">数据研究</a>
         </nav>
@@ -795,6 +1067,210 @@ export default function Dashboard() {
             }
           />
         ))}
+      </section>
+
+      <section className="panel shell outlook-panel" id="outlook-trend">
+        <div className="section-heading outlook-heading">
+          <div>
+            <span className="eyebrow">时间序列视角</span>
+            <h2>宏观观点历史走势</h2>
+            <p>
+              零轴上方为债市利多、下方为债市利空；±15之间属于中性观察区。
+            </p>
+          </div>
+          <div className="legend" aria-label="观点走势颜色图例">
+            <span>
+              <i className="legend-bull" /> 利多增强
+            </span>
+            <span>
+              <i className="legend-neutral" /> 中性
+            </span>
+            <span>
+              <i className="legend-bear" /> 利空增强
+            </span>
+          </div>
+        </div>
+
+        <div className="outlook-toolbar">
+          <label className="trend-target-select">
+            <span>观察对象</span>
+            <select
+              value={trendTarget}
+              onChange={(event) => {
+                setTrendTarget(event.target.value);
+                setTrendHover(null);
+              }}
+            >
+              <option value="overall">综合宏观观点</option>
+              {data.categories.map((category) => (
+                <option value={category.id} key={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="trend-range-tabs" aria-label="观点走势时间范围">
+            {[
+              ["13w", "13周"],
+              ["26w", "26周"],
+              ["52w", "52周"],
+              ["all", "全部"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                className={trendRange === value ? "active" : ""}
+                onClick={() => {
+                  setTrendRange(value);
+                  setTrendHover(null);
+                }}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="trend-custom-range">
+            <input
+              type="date"
+              value={trendStart || data.dates[0]}
+              min={data.dates[0]}
+              max={trendEnd || data.dates.at(-1)}
+              onChange={(event) => {
+                setTrendStart(event.target.value);
+                setTrendRange("custom");
+                setTrendHover(null);
+              }}
+              aria-label="观点走势开始日期"
+            />
+            <span>至</span>
+            <input
+              type="date"
+              value={trendEnd || data.dates.at(-1)}
+              min={trendStart || data.dates[0]}
+              max={data.dates.at(-1)}
+              onChange={(event) => {
+                setTrendEnd(event.target.value);
+                setTrendRange("custom");
+                setTrendHover(null);
+              }}
+              aria-label="观点走势结束日期"
+            />
+          </div>
+        </div>
+
+        <div className="outlook-body">
+          <div className="macro-chart-shell">
+            <div className="scale-switch" aria-label="纵轴显示方式">
+              <button
+                className={trendScale === "adaptive" ? "active" : ""}
+                onClick={() => setTrendScale("adaptive")}
+              >
+                放大波动
+              </button>
+              <button
+                className={trendScale === "fixed" ? "active" : ""}
+                onClick={() => setTrendScale("fixed")}
+              >
+                固定±100
+              </button>
+            </div>
+            <div className="chart-reading">
+              <span>
+                {trendHover?.date ?? trendSelection.points.at(-1)?.date ?? "—"}
+              </span>
+              <strong
+                style={{
+                  color: scoreTone(
+                    trendHover?.value ??
+                      trendSelection.points.at(-1)?.value ??
+                      0,
+                  ),
+                }}
+              >
+                {(trendHover?.value ??
+                  trendSelection.points.at(-1)?.value ??
+                  0) > 0
+                  ? "+"
+                  : ""}
+                {Math.round(
+                  trendHover?.value ??
+                    trendSelection.points.at(-1)?.value ??
+                    0,
+                )}
+              </strong>
+              <small>
+                {
+                  signalMeta[
+                    signalForScore(
+                      trendHover?.value ??
+                        trendSelection.points.at(-1)?.value ??
+                        0,
+                    )
+                  ].label
+                }
+                {trendHover ? " · 悬停读数" : " · 区间最新"}
+              </small>
+            </div>
+            <MacroTrendCanvas
+              points={trendSelection.points}
+              yLimit={trendLimit}
+              onHover={setTrendHover}
+            />
+          </div>
+
+          <aside className="outlook-insights">
+            <div className="insight-title">
+              <span>{trendSelection.label}</span>
+              <strong>
+                {trendStats.monthChange >= 8
+                  ? "近一个月利多明显增强"
+                  : trendStats.monthChange <= -8
+                    ? "近一个月利空明显增强"
+                    : "近一个月方向变化温和"}
+              </strong>
+            </div>
+            <div className="insight-metrics">
+              <div>
+                <span>区间最高</span>
+                <strong
+                  style={{ color: scoreTone(trendStats.high?.value ?? 0) }}
+                >
+                  {(trendStats.high?.value ?? 0) > 0 ? "+" : ""}
+                  {Math.round(trendStats.high?.value ?? 0)}
+                </strong>
+                <small>{trendStats.high?.date ?? "—"}</small>
+              </div>
+              <div>
+                <span>区间最低</span>
+                <strong
+                  style={{ color: scoreTone(trendStats.low?.value ?? 0) }}
+                >
+                  {(trendStats.low?.value ?? 0) > 0 ? "+" : ""}
+                  {Math.round(trendStats.low?.value ?? 0)}
+                </strong>
+                <small>{trendStats.low?.date ?? "—"}</small>
+              </div>
+              <div>
+                <span>首尾变化</span>
+                <strong style={{ color: scoreTone(trendStats.change) }}>
+                  {trendStats.change > 0 ? "+" : ""}
+                  {Math.round(trendStats.change)}
+                </strong>
+                <small>信号强度点</small>
+              </div>
+              <div>
+                <span>方向切换</span>
+                <strong>{trendStats.reversals}</strong>
+                <small>区间内次数</small>
+              </div>
+            </div>
+            <p>
+              当前状态已连续 {trendStats.streak} 周。
+              {trendScale === "adaptive"
+                ? `当前纵轴放大至 ±${trendLimit}，便于观察细微变化；可切换固定刻度进行跨区间比较。`
+                : "当前使用固定 −100 至 +100刻度，便于不同区间和大类直接比较。"}
+            </p>
+          </aside>
+        </div>
       </section>
 
       <section className="panel shell" id="matrix">

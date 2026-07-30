@@ -54,6 +54,7 @@ test("ships generated dashboard data and removes starter preview", async () => {
   );
   assert.ok(dashboard.overall.breadthDetail.total === 9);
   assert.ok(dashboard.dates.length >= 52);
+  assert.equal(dashboard.dates.length, dashboard.overall.weeklyScores.length);
   assert.equal(
     dashboard.dates.length,
     dashboard.categories[0].weeklyScores.length,
