@@ -34,6 +34,17 @@ export interface CategorySummary {
   weeklyScores: number[];
 }
 
+export interface IndicatorMethodology {
+  title: string;
+  formula: string;
+  calibration: string;
+  steps: string[];
+  components: Array<{
+    code: string;
+    weight: number;
+  }>;
+}
+
 export interface Indicator {
   id: string;
   category: string;
@@ -54,6 +65,7 @@ export interface Indicator {
   reason: string;
   history: number[];
   series: Array<{ date: string; value: number }>;
+  methodology: IndicatorMethodology;
 }
 
 export interface DashboardData {

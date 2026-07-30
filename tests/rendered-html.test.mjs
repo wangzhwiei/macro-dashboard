@@ -53,7 +53,24 @@ test("ships generated dashboard data and removes starter preview", async () => {
     ),
   );
   assert.ok(dashboard.overall.breadthDetail.total === 9);
-  assert.equal(dashboard.dates.length, 13);
+  assert.ok(dashboard.dates.length >= 52);
+  assert.equal(
+    dashboard.dates.length,
+    dashboard.categories[0].weeklyScores.length,
+  );
+  assert.ok(
+    dashboard.indicators.every(
+      (indicator) =>
+        indicator.methodology?.formula &&
+        indicator.methodology?.steps?.length &&
+        indicator.methodology?.components?.length,
+    ),
+  );
+  const metro = dashboard.indicators.find(
+    (indicator) => indicator.id === "metro_composite",
+  );
+  assert.match(metro.methodology.formula, /MA7/);
+  assert.equal(metro.methodology.components.length, 2);
   await assert.rejects(
     access(new URL("../app/_sites-preview/SkeletonPreview.tsx", import.meta.url)),
   );

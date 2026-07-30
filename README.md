@@ -121,6 +121,9 @@ python scripts/update_dashboard.py --adapter custom
 - `rolling_7d_sum`：7日合计；
 - `rolling_4w_mean`：4周均值。
 
+合成指标的具体公式、预处理步骤、权重和债市信号算法见
+[`METHODOLOGY.md`](METHODOLOGY.md)。同样的信息也会随数据写入页面，点击指标名称即可查看。
+
 页面默认展示核心指标，点击“全部指标”即可显示辅助序列。点击任一指标名称
 可以打开历史走势，选择1个月、3个月、6个月、1年、全部或自定义日期，并可
 下载当前区间CSV。

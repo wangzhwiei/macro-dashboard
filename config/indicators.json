@@ -1,6 +1,7 @@
 {
   "version": 1,
   "score_threshold": 15,
+  "history_weeks": 78,
   "categories": [
     {
       "id": "liquidity",
@@ -150,6 +151,19 @@
         {"code": "CJHX:METRO_GUANGZHOU", "weight": 1}
       ],
       "aggregate": "standardized_mean",
+      "component_preprocess": "rolling_7d_mean",
+      "methodology": {
+        "title": "城市客流7日均值标准化等权合成",
+        "formula": "Metro_t = 100 + 10 × [z(MA7(上海)_t) + z(MA7(广州)_t)] ÷ 2",
+        "calibration": "各城市分别使用当前数据文件覆盖的历史区间计算均值和标准差；每日更新时同一窗口重估。",
+        "steps": [
+          "分别提取上海、广州地铁每日客运量，按日期去重并剔除非数值记录。",
+          "每个城市先计算自然日滚动7日均值，降低周内工作日结构和节假日错位噪声。",
+          "对每个城市的7日均值分别做 z 标准化：z=(x-历史均值)÷历史标准差。",
+          "按日期对齐两城数据；短暂缺数可沿用最近值，但最多允许向前填充10天。",
+          "两城 z 值等权平均后映射为基准100、1个标准差等于10点的综合指数。"
+        ]
+      },
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -342,6 +356,17 @@
         {"code": "CJHX:ALL_STEEL_TIRE_RATE", "weight": 1}
       ],
       "aggregate": "standardized_mean",
+      "methodology": {
+        "title": "半钢胎与全钢胎标准化等权合成",
+        "formula": "Tire_t = 100 + 10 × [z(半钢胎开工率_t) + z(全钢胎开工率_t)] ÷ 2",
+        "calibration": "各分项在当前数据文件覆盖的历史区间内独立标准化。",
+        "steps": [
+          "提取半钢胎和全钢胎开工率并按日期去重。",
+          "两个分项分别计算 z 分数，消除各自均值和波动率差异。",
+          "日期对齐后等权平均；单项短暂缺数最多向前填充10天。",
+          "将合成 z 分数映射为基准100、1个标准差等于10点的指数。"
+        ]
+      },
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -376,6 +401,17 @@
         {"code": "CJHX:MEDIUM_PLATE_INVENTORY", "weight": 0.6}
       ],
       "aggregate": "standardized_mean",
+      "methodology": {
+        "title": "四类钢材库存标准化加权合成",
+        "formula": "SteelInv_t = 100 + 10 × [1.2z(螺纹)+1.0z(热卷)+0.6z(冷轧)+0.6z(中板)] ÷ 3.4",
+        "calibration": "各品种在当前数据文件覆盖的历史区间内独立标准化。",
+        "steps": [
+          "四个库存分项分别清洗、去重并计算 z 分数。",
+          "日期对齐后按1.2、1.0、0.6、0.6加权，突出螺纹钢和热卷。",
+          "短暂缺数最多向前填充10天，再除以有效分项权重之和。",
+          "合成 z 分数映射为基准100、1个标准差等于10点的指数。"
+        ]
+      },
       "transform": "pct_change",
       "bond_direction": 1,
       "core": true,
@@ -394,6 +430,17 @@
         {"code": "IFIND:LME_COPPER_INVENTORY", "weight": 0.8}
       ],
       "aggregate": "standardized_mean",
+      "methodology": {
+        "title": "境内外铜库存标准化加权合成",
+        "formula": "CopperInv_t = 100 + 10 × [1.2z(上期所库存)+0.8z(LME库存)] ÷ 2.0",
+        "calibration": "上期所与LME库存分别在当前数据文件覆盖的历史区间内标准化。",
+        "steps": [
+          "分别提取上期所和LME铜库存，统一日期并去重。",
+          "两个市场分别计算 z 分数，避免绝对量级差异主导结果。",
+          "按境内1.2、境外0.8加权；短暂缺数最多向前填充10天。",
+          "合成 z 分数映射为基准100、1个标准差等于10点的指数。"
+        ]
+      },
       "transform": "pct_change",
       "bond_direction": 1,
       "core": true,

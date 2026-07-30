@@ -552,6 +552,65 @@ a {
   background: rgba(111, 120, 126, 0.22);
 }
 
+.matrix-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: -4px 0 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  background: #f6f6f0;
+}
+
+.matrix-range-tabs {
+  display: flex;
+  gap: 3px;
+}
+
+.matrix-range-tabs button {
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 750;
+}
+
+.matrix-range-tabs button.active,
+.matrix-range-tabs button:hover {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+
+.matrix-custom-range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.matrix-custom-range input {
+  height: 30px;
+  padding: 0 7px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-size: 10px;
+}
+
+.matrix-custom-range span,
+.matrix-count {
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.matrix-count {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
 .heatmap-scroll {
   overflow-x: auto;
 }
@@ -934,7 +993,8 @@ a {
 }
 
 .history-modal {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   width: min(1160px, 100%);
   max-height: calc(100vh - 56px);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -1108,6 +1168,110 @@ a {
   font-size: 12px;
 }
 
+.methodology-panel {
+  margin: 0 24px 18px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  background: #f6f6f0;
+}
+
+.methodology-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.methodology-heading h3 {
+  margin: 2px 0 0;
+  font-size: 16px;
+}
+
+.methodology-tag {
+  padding: 5px 8px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.formula-box {
+  overflow-x: auto;
+  margin: 14px 0 8px;
+  padding: 11px 13px;
+  border-left: 3px solid var(--lime);
+  background: var(--navy);
+  color: #fff;
+  font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.65;
+  white-space: nowrap;
+}
+
+.calibration-note,
+.signal-method-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.65;
+}
+
+.methodology-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
+  gap: 24px;
+  margin-top: 14px;
+}
+
+.methodology-grid ol {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.methodology-grid li + li {
+  margin-top: 4px;
+}
+
+.component-table > span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.component-table > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 10px;
+}
+
+.component-table code {
+  overflow: hidden;
+  color: var(--navy);
+  font-size: 9px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.component-table strong {
+  color: var(--ink);
+}
+
+.signal-method-note {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--line);
+}
+
 .history-footer {
   display: flex;
   justify-content: space-between;
@@ -1265,6 +1429,20 @@ footer p {
     flex-wrap: wrap;
   }
 
+  .matrix-toolbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .matrix-count {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .methodology-grid {
+    grid-template-columns: 1fr;
+  }
+
   .download-button {
     margin-left: 0;
   }
@@ -1385,6 +1563,20 @@ footer p {
     padding: 10px 12px;
   }
 
+  .matrix-range-tabs {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  .matrix-custom-range {
+    width: 100%;
+  }
+
+  .matrix-custom-range input {
+    min-width: 0;
+    flex: 1;
+  }
+
   .range-tabs {
     overflow-x: auto;
     width: 100%;
@@ -1408,6 +1600,11 @@ footer p {
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
+  }
+
+  .methodology-panel {
+    margin: 0 12px 14px;
+    padding: 15px;
   }
 
   footer {

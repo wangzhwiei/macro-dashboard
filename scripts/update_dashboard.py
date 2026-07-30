@@ -121,6 +121,17 @@ def aggregate_points(
 ) -> list[Point]:
     operation = indicator.get("aggregate", "")
     if operation == "standardized_mean":
+        preprocess = indicator.get("component_preprocess", "")
+        if preprocess == "rolling_7d_mean":
+            components = [
+                (rolling(points, 7, "mean"), weight)
+                for points, weight in components
+            ]
+        elif preprocess == "rolling_4w_mean":
+            components = [
+                (rolling(points, 28, "mean"), weight)
+                for points, weight in components
+            ]
         return standardized_mean(components)
 
     points = components[0][0] if components else []
@@ -131,6 +142,85 @@ def aggregate_points(
     if operation == "rolling_4w_mean":
         return rolling(points, 28, "mean")
     return points
+
+
+def methodology_for(indicator: dict[str, Any]) -> dict[str, Any]:
+    components = [
+        {
+            "code": series["code"],
+            "weight": float(series.get("weight", 1)),
+        }
+        for series in indicator["series"]
+    ]
+    configured = indicator.get("methodology")
+    if configured:
+        return {
+            "title": configured["title"],
+            "formula": configured["formula"],
+            "calibration": configured["calibration"],
+            "steps": configured["steps"],
+            "components": components,
+        }
+
+    operation = indicator.get("aggregate", "")
+    if operation == "rolling_7d_sum":
+        title = "原始日度序列滚动7日合计"
+        formula = "X_t = Σ(x_d)，d ∈ [t-6, t]"
+        steps = [
+            "按日期清洗、去重并剔除非数值记录。",
+            "把当日及此前6个自然日内的有效观测相加。",
+            "用本周值相对7日前的变化计算信号。",
+        ]
+    elif operation == "rolling_7d_mean":
+        title = "原始日度序列滚动7日均值"
+        formula = "X_t = mean(x_d)，d ∈ [t-6, t]"
+        steps = [
+            "按日期清洗、去重并剔除非数值记录。",
+            "计算当日及此前6个自然日内有效观测的算术平均。",
+            "用本周值相对7日前的变化计算信号。",
+        ]
+    elif operation == "rolling_4w_mean":
+        title = "原始序列滚动4周均值"
+        formula = "X_t = mean(x_d)，d ∈ [t-27, t]"
+        steps = [
+            "按日期清洗、去重并剔除非数值记录。",
+            "计算当日及此前27个自然日内有效观测的算术平均。",
+            "用本周值相对7日前的变化计算信号。",
+        ]
+    elif operation == "standardized_mean":
+        weights = " + ".join(
+            f"{item['weight']:g}×z({item['code']})" for item in components
+        )
+        denominator = sum(item["weight"] for item in components)
+        title = "多序列标准化加权合成"
+        formula = f"Index_t = 100 + 10 × ({weights}) ÷ {denominator:g}"
+        steps = [
+            "各分项分别按日期清洗、去重。",
+            "各分项独立计算 z=(x-历史均值)÷历史标准差。",
+            "按配置权重合成；短暂缺数最多向前填充10天。",
+            "将合成 z 分数映射为基准100的指数。",
+        ]
+    else:
+        method = indicator.get("transform", "pct_change")
+        title = "单一原始序列"
+        formula = (
+            "Δ_t = X_t - X_{t-7}"
+            if method in {"pp_change", "level_change"}
+            else "Δ_t = (X_t ÷ X_{t-7} - 1) × 100%"
+        )
+        steps = [
+            "按日期清洗、去重并剔除非数值记录。",
+            "读取最新有效值和7日前最近有效值。",
+            "按配置的周变化方法计算信号输入。",
+        ]
+
+    return {
+        "title": title,
+        "formula": formula,
+        "calibration": "信号标准化使用当前数据文件覆盖的历史区间，并在每日更新时重估。",
+        "steps": steps,
+        "components": components,
+    }
 
 
 def transformed_change(
@@ -331,6 +421,7 @@ def build_indicator(
             {"date": day.isoformat(), "value": round(value, 4)}
             for day, value in points
         ],
+        "methodology": methodology_for(definition),
     }
 
 
@@ -388,8 +479,10 @@ def build_dashboard(
 ) -> dict[str, Any]:
     threshold = float(config.get("score_threshold", 15))
     last_friday = end_date - timedelta(days=(end_date.weekday() - 4) % 7)
+    history_weeks = max(13, int(config.get("history_weeks", 78)))
     evaluation_dates = [
-        last_friday - timedelta(days=7 * offset) for offset in reversed(range(13))
+        last_friday - timedelta(days=7 * offset)
+        for offset in reversed(range(history_weeks))
     ]
     fetcher = get_fetcher(adapter)
     indicators: list[dict[str, Any]] = []
@@ -589,7 +682,7 @@ def main() -> int:
         choices=["mock", "http", "custom"],
         default=os.environ.get("MACRO_DATA_ADAPTER", "mock"),
     )
-    parser.add_argument("--days", type=int, default=540)
+    parser.add_argument("--days", type=int, default=600)
     parser.add_argument("--end-date", type=date.fromisoformat, default=date.today())
     args = parser.parse_args()
 

@@ -443,6 +443,42 @@ function HistoryModal({
           )}
         </div>
 
+        <section className="methodology-panel" aria-label="指标计算方法">
+          <div className="methodology-heading">
+            <div>
+              <span className="eyebrow">计算方法可复核</span>
+              <h3>{indicator.methodology.title}</h3>
+            </div>
+            <span className="methodology-tag">
+              {indicator.methodology.components.length > 1 ? "合成指标" : "单序列"}
+            </span>
+          </div>
+          <div className="formula-box">{indicator.methodology.formula}</div>
+          <p className="calibration-note">
+            {indicator.methodology.calibration}
+          </p>
+          <div className="methodology-grid">
+            <ol>
+              {indicator.methodology.steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+            <div className="component-table">
+              <span>原始分项与权重</span>
+              {indicator.methodology.components.map((component) => (
+                <div key={component.code}>
+                  <code>{component.code}</code>
+                  <strong>{component.weight.toFixed(1)}</strong>
+                </div>
+              ))}
+            </div>
+          </div>
+          <p className="signal-method-note">
+            页面信号分值还会将该指标的周变化减去历史周变化均值，再除以历史标准差，
+            乘以债市方向与35，最后限制在 −100 至 +100；正值为债市利多，负值为债市利空。
+          </p>
+        </section>
+
         <footer className="history-footer">
           <span>
             当前信号 <SignalBadge signal={indicator.signal} />
@@ -517,6 +553,9 @@ export default function Dashboard() {
   const [search, setSearch] = useState("");
   const [showAuxiliary, setShowAuxiliary] = useState(false);
   const [sortBy, setSortBy] = useState("category");
+  const [matrixRange, setMatrixRange] = useState("13w");
+  const [matrixStart, setMatrixStart] = useState("");
+  const [matrixEnd, setMatrixEnd] = useState("");
   const [historyIndicator, setHistoryIndicator] = useState<Indicator | null>(
     null,
   );
@@ -566,6 +605,27 @@ export default function Dashboard() {
       );
     });
   }, [data, search, selectedCategory, showAuxiliary, sortBy]);
+
+  const matrixSelection = useMemo(() => {
+    if (!data) return { dates: [] as string[], indices: [] as number[] };
+    let indices = data.dates.map((_, index) => index);
+    if (matrixRange === "custom") {
+      indices = indices.filter((index) => {
+        const day = data.dates[index];
+        return (
+          (!matrixStart || day >= matrixStart) &&
+          (!matrixEnd || day <= matrixEnd)
+        );
+      });
+    } else if (matrixRange !== "all") {
+      const count = Number.parseInt(matrixRange, 10);
+      indices = indices.slice(-count);
+    }
+    return {
+      dates: indices.map((index) => data.dates[index]),
+      indices,
+    };
+  }, [data, matrixEnd, matrixRange, matrixStart]);
 
   if (error) {
     return (
@@ -740,9 +800,13 @@ export default function Dashboard() {
       <section className="panel shell" id="matrix">
         <div className="section-heading">
           <div>
-            <span className="eyebrow">最近13周</span>
+            <span className="eyebrow">
+              {matrixSelection.dates.length}周历史 · 每格均显示信号分值
+            </span>
             <h2>宏观信号趋势矩阵</h2>
-            <p>红色为债市利多，绿色为债市利空；颜色越深，信号越强。</p>
+            <p>
+              红色为债市利多，绿色为债市利空；正负号表示方向，绝对值与颜色深浅表示强度。
+            </p>
           </div>
           <div className="legend" aria-label="颜色图例">
             <span>
@@ -756,15 +820,61 @@ export default function Dashboard() {
             </span>
           </div>
         </div>
+        <div className="matrix-toolbar">
+          <div className="matrix-range-tabs" aria-label="矩阵历史范围">
+            {[
+              ["13w", "13周"],
+              ["26w", "26周"],
+              ["52w", "52周"],
+              ["all", "全部"],
+            ].map(([value, label]) => (
+              <button
+                key={value}
+                className={matrixRange === value ? "active" : ""}
+                onClick={() => setMatrixRange(value)}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+          <div className="matrix-custom-range">
+            <input
+              type="date"
+              value={matrixStart || data.dates[0]}
+              min={data.dates[0]}
+              max={matrixEnd || data.dates.at(-1)}
+              onChange={(event) => {
+                setMatrixStart(event.target.value);
+                setMatrixRange("custom");
+              }}
+              aria-label="矩阵开始日期"
+            />
+            <span>至</span>
+            <input
+              type="date"
+              value={matrixEnd || data.dates.at(-1)}
+              min={matrixStart || data.dates[0]}
+              max={data.dates.at(-1)}
+              onChange={(event) => {
+                setMatrixEnd(event.target.value);
+                setMatrixRange("custom");
+              }}
+              aria-label="矩阵结束日期"
+            />
+          </div>
+          <span className="matrix-count">
+            {matrixSelection.dates[0]} — {matrixSelection.dates.at(-1)}
+          </span>
+        </div>
         <div className="heatmap-scroll">
           <div
             className="heatmap"
             style={{
-              gridTemplateColumns: `112px repeat(${data.dates.length}, minmax(42px, 1fr))`,
+              gridTemplateColumns: `112px repeat(${matrixSelection.dates.length}, minmax(42px, 1fr))`,
             }}
           >
             <div className="heatmap-corner">类别 / 周末</div>
-            {data.dates.map((date) => (
+            {matrixSelection.dates.map((date) => (
               <div className="heatmap-date" key={date}>
                 {date.slice(5)}
               </div>
@@ -782,17 +892,25 @@ export default function Dashboard() {
                 >
                   {category.name}
                 </button>
-                {category.weeklyScores.map((score, index) => (
-                  <button
-                    key={`${category.id}-${index}`}
-                    className="heat-cell"
-                    style={{ background: heatColor(score) }}
-                    title={`${category.name} ${data.dates[index]}：${score > 0 ? "+" : ""}${Math.round(score)}`}
-                    aria-label={`${category.name} ${data.dates[index]} 信号 ${Math.round(score)}`}
-                  >
-                    {Math.abs(score) >= 55 ? Math.round(score) : ""}
-                  </button>
-                ))}
+                {matrixSelection.indices.map((historyIndex) => {
+                  const score = category.weeklyScores[historyIndex] ?? 0;
+                  const day = data.dates[historyIndex];
+                  return (
+                    <button
+                      key={`${category.id}-${historyIndex}`}
+                      className="heat-cell"
+                      style={{
+                        background: heatColor(score),
+                        color: Math.abs(score) >= 45 ? "#fff" : "#27312e",
+                      }}
+                      title={`${category.name} ${day}：${score > 0 ? "+" : ""}${Math.round(score)}`}
+                      aria-label={`${category.name} ${day} 信号 ${Math.round(score)}`}
+                    >
+                      {score > 0 ? "+" : ""}
+                      {Math.round(score)}
+                    </button>
+                  );
+                })}
               </div>
             ))}
           </div>
