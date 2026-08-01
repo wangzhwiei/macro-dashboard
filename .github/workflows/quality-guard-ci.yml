@@ -1,0 +1,40 @@
+name: Quality guard CI
+
+on:
+  push:
+    branches:
+      - codex/data-quality-hardening-20260801
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Run data quality guard unit tests
+        run: npm test
+
+      - name: Build static site
+        run: npm run build:github
