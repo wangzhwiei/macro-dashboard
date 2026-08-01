@@ -8,7 +8,9 @@ import csv
 import json
 import math
 import sys
+from collections import defaultdict
 from datetime import date, datetime
+from statistics import median
 from pathlib import Path
 from typing import Any
 
@@ -16,6 +18,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "config" / "indicators.json"
 DEFAULT_AUXILIARY = ROOT / "config" / "auxiliary-indicators.csv"
 DEFAULT_DATA = ROOT / "public" / "data" / "dashboard.json"
+DEFAULT_PROVIDER_MAP = ROOT / "config" / "provider-code-map.json"
 
 ALLOWED_FREQUENCIES = {"daily", "weekly"}
 ALLOWED_TRANSFORMS = {"pct_change", "pp_change", "level_change"}
@@ -58,6 +61,145 @@ def load_definitions(
 
 def finite_number(value: Any) -> bool:
     return isinstance(value, (int, float)) and math.isfinite(float(value))
+
+
+def _provider_value(value: Any) -> str:
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, dict):
+        return str(value.get("provider_code") or value.get("code") or "").strip()
+    return ""
+
+
+def provider_code_collisions(
+    provider_map: dict[str, Any], definitions: list[dict[str, Any]]
+) -> list[tuple[str, list[str]]]:
+    required_codes = {
+        component.get("code", "")
+        for item in definitions
+        for component in item.get("series", [])
+        if component.get("code")
+    }
+    by_provider: dict[str, list[str]] = defaultdict(list)
+    for semantic_code in sorted(required_codes):
+        provider_code = _provider_value(provider_map.get(semantic_code))
+        if provider_code:
+            by_provider[provider_code].append(semantic_code)
+    return sorted(
+        (
+            (provider_code, semantic_codes)
+            for provider_code, semantic_codes in by_provider.items()
+            if len(semantic_codes) > 1
+        ),
+        key=lambda item: item[0],
+    )
+
+
+def validate_provider_code_map(
+    provider_map_path: Path,
+    definitions: list[dict[str, Any]],
+    errors: list[str],
+    warnings: list[str],
+) -> dict[str, Any]:
+    required_codes = sorted(
+        {
+            component.get("code", "")
+            for item in definitions
+            for component in item.get("series", [])
+            if component.get("code")
+        }
+    )
+    if not provider_map_path.exists():
+        warnings.append(f"供应商代码映射不存在：{provider_map_path}")
+        return {
+            "required_provider_codes": len(required_codes),
+            "mapped_provider_codes": 0,
+            "provider_code_collisions": 0,
+        }
+
+    provider_map = json.loads(provider_map_path.read_text(encoding="utf-8"))
+    missing = [
+        code
+        for code in required_codes
+        if not _provider_value(provider_map.get(code))
+        or "请替换" in _provider_value(provider_map.get(code))
+    ]
+    if missing:
+        errors.append(
+            f"供应商代码缺失或仍为占位符，共{len(missing)}项："
+            + ", ".join(missing[:20])
+        )
+
+    collisions = provider_code_collisions(provider_map, definitions)
+    for provider_code, semantic_codes in collisions:
+        errors.append(
+            "不同语义序列不得共用供应商代码 "
+            f"{provider_code}：{', '.join(semantic_codes)}"
+        )
+
+    extra = sorted(set(provider_map) - set(required_codes))
+    if extra:
+        warnings.append(f"供应商映射含{len(extra)}个配置未使用代码")
+
+    return {
+        "required_provider_codes": len(required_codes),
+        "mapped_provider_codes": len(required_codes) - len(missing),
+        "provider_code_collisions": len(collisions),
+    }
+
+
+def median_gap_days(series: list[dict[str, Any]]) -> float | None:
+    parsed_dates: list[date] = []
+    for point in series:
+        try:
+            parsed_dates.append(date.fromisoformat(str(point.get("date"))))
+        except ValueError:
+            continue
+    gaps = [
+        (current - previous).days
+        for previous, current in zip(parsed_dates, parsed_dates[1:])
+        if current > previous
+    ]
+    return float(median(gaps)) if gaps else None
+
+
+def duplicate_series_groups(
+    indicators: list[dict[str, Any]],
+) -> list[list[str]]:
+    signatures: dict[str, list[str]] = defaultdict(list)
+    for indicator in indicators:
+        series = indicator.get("series", [])
+        if not series:
+            continue
+        signature = json.dumps(
+            [
+                [point.get("date"), point.get("value")]
+                for point in series
+            ],
+            ensure_ascii=False,
+            separators=(",", ":"),
+        )
+        signatures[signature].append(str(indicator.get("id")))
+    return sorted(
+        (ids for ids in signatures.values() if len(ids) > 1),
+        key=lambda ids: (-len(ids), ids),
+    )
+
+
+def rate_bound_violations(
+    indicator: dict[str, Any],
+) -> list[dict[str, Any]]:
+    name = str(indicator.get("name", ""))
+    if indicator.get("unit") != "%" or not any(
+        token in name for token in ("开工率", "产能利用率")
+    ):
+        return []
+    return [
+        point
+        for point in indicator.get("series", [])
+        if finite_number(point.get("value"))
+        and not 0 <= float(point["value"]) <= 100
+    ]
 
 
 def validate_configuration(
@@ -184,6 +326,40 @@ def validate_generated_data(
             errors.append(f"{prefix} 历史序列含非有限数值")
         if indicator.get("updatedAt") != series_dates[-1]:
             errors.append(f"{prefix} updatedAt与历史末日不一致")
+        expected_unit = definition.get("unit", "")
+        if indicator.get("unit", "") != expected_unit:
+            errors.append(
+                f"{prefix} 页面单位{indicator.get('unit', '')!r}与配置{expected_unit!r}不一致"
+            )
+        if indicator.get("source") != definition.get("source"):
+            errors.append(
+                f"{prefix} 页面来源{indicator.get('source')!r}与配置"
+                f"{definition.get('source')!r}不一致"
+            )
+        expected_frequency = (
+            "日频" if definition["frequency"] == "daily" else "周频"
+        )
+        if indicator.get("frequency") != expected_frequency:
+            errors.append(
+                f"{prefix} 页面频率{indicator.get('frequency')!r}与配置"
+                f"{expected_frequency!r}不一致"
+            )
+        if definition["frequency"] == "weekly":
+            gap = median_gap_days(series)
+            if gap is not None and gap < 4:
+                warnings.append(
+                    f"{prefix} 标记为周频但历史观测间隔中位数仅{gap:g}天"
+                )
+        bound_violations = rate_bound_violations(indicator)
+        if bound_violations:
+            samples = ", ".join(
+                f"{point.get('date')}={point.get('value')}"
+                for point in bound_violations[-3:]
+            )
+            errors.append(
+                f"{prefix} 百分比率指标超出0～100，共"
+                f"{len(bound_violations)}个点；末尾样本：{samples}"
+            )
         if abs(float(indicator.get("latest", 0)) - float(series[-1]["value"])) > 1e-3:
             errors.append(f"{prefix} latest与历史末值不一致")
         if len(indicator.get("history", [])) != len(dates):
@@ -197,6 +373,13 @@ def validate_generated_data(
             warnings.append(
                 f"{prefix} 最新数据为{series_dates[-1]}，已滞后{stale_days}天"
             )
+
+    duplicates = duplicate_series_groups(indicators)
+    for ids in duplicates:
+        errors.append(
+            "不同指标历史序列完全相同，疑似代码映射错误："
+            + ", ".join(ids)
+        )
 
     return {
         "configured_indicators": len(expected),
@@ -214,6 +397,12 @@ def main() -> int:
     parser.add_argument("--auxiliary", type=Path, default=DEFAULT_AUXILIARY)
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA)
     parser.add_argument(
+        "--provider-map",
+        type=Path,
+        default=DEFAULT_PROVIDER_MAP,
+        help="语义代码到供应商真实代码的映射文件",
+    )
+    parser.add_argument(
         "--strict",
         action="store_true",
         help="把新鲜度、缺少辅助指标等警告也视为发布失败",
@@ -226,8 +415,12 @@ def main() -> int:
     try:
         config, definitions = load_definitions(args.config, args.auxiliary)
         validate_configuration(config, definitions, errors, warnings)
+        mapping_summary = validate_provider_code_map(
+            args.provider_map, definitions, errors, warnings
+        )
         dashboard = json.loads(args.data.read_text(encoding="utf-8"))
         summary = validate_generated_data(dashboard, definitions, errors, warnings)
+        summary.update(mapping_summary)
     except Exception as error:
         errors.append(f"校验器无法读取输入：{error}")
         summary = {}
