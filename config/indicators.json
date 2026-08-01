@@ -76,12 +76,7 @@
       "frequency": "daily",
       "unit": "%",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:FR007_IRS_1Y",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:FR007_IRS_1Y", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -95,12 +90,7 @@
       "frequency": "daily",
       "unit": "%",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:FR007_IRS_5Y",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:FR007_IRS_5Y", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -114,12 +104,7 @@
       "frequency": "daily",
       "unit": "%",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:SHIBOR_3M",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:SHIBOR_3M", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -133,12 +118,7 @@
       "frequency": "daily",
       "unit": "%",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:BILL_DISCOUNT_6M",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:BILL_DISCOUNT_6M", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -152,12 +132,7 @@
       "frequency": "weekly",
       "unit": "%",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:CAR_RETAIL_WEEKLY_YOY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:CAR_RETAIL_WEEKLY_YOY", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -172,14 +147,8 @@
       "unit": "指数",
       "source": "CJHX",
       "series": [
-        {
-          "code": "CJHX:METRO_SHANGHAI",
-          "weight": 1
-        },
-        {
-          "code": "CJHX:METRO_GUANGZHOU",
-          "weight": 1
-        }
+        {"code": "CJHX:METRO_SHANGHAI", "weight": 1},
+        {"code": "CJHX:METRO_GUANGZHOU", "weight": 1}
       ],
       "aggregate": "standardized_mean",
       "component_preprocess": "rolling_7d_mean",
@@ -208,12 +177,7 @@
       "frequency": "daily",
       "unit": "亿元",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:BOX_OFFICE_DAILY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:BOX_OFFICE_DAILY", "weight": 1}],
       "aggregate": "rolling_7d_sum",
       "transform": "pct_change",
       "bond_direction": -1,
@@ -228,12 +192,7 @@
       "frequency": "daily",
       "unit": "架次",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:FLIGHTS_DAILY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:FLIGHTS_DAILY", "weight": 1}],
       "aggregate": "rolling_7d_mean",
       "transform": "pct_change",
       "bond_direction": -1,
@@ -248,12 +207,7 @@
       "frequency": "weekly",
       "unit": "万㎡",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:LAND_100_CITIES_TOTAL",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:LAND_100_CITIES_TOTAL", "weight": 1}],
       "aggregate": "rolling_4w_mean",
       "transform": "pct_change",
       "bond_direction": -1,
@@ -268,12 +222,7 @@
       "frequency": "daily",
       "unit": "万㎡",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:NEW_HOME_30_CITIES",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:NEW_HOME_30_CITIES", "weight": 1}],
       "aggregate": "rolling_7d_mean",
       "transform": "pct_change",
       "bond_direction": -1,
@@ -288,12 +237,7 @@
       "frequency": "daily",
       "unit": "套",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:SECOND_HAND_HOME",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:SECOND_HAND_HOME", "weight": 1}],
       "aggregate": "rolling_7d_mean",
       "transform": "pct_change",
       "bond_direction": -1,
@@ -308,12 +252,7 @@
       "frequency": "weekly",
       "unit": "指数",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:SECOND_HAND_LISTING_PRICE_NATIONAL",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:SECOND_HAND_LISTING_PRICE_NATIONAL", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -327,12 +266,7 @@
       "frequency": "weekly",
       "unit": "万吨",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:CONSTRUCTION_STEEL_TRANSACTION",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:CONSTRUCTION_STEEL_TRANSACTION", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -346,12 +280,7 @@
       "frequency": "weekly",
       "unit": "%",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:ASPHALT_OPERATING_RATE",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:ASPHALT_OPERATING_RATE", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -365,12 +294,7 @@
       "frequency": "daily",
       "unit": "万吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:POWER_PLANT_COAL_CONSUMPTION",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:POWER_PLANT_COAL_CONSUMPTION", "weight": 1}],
       "aggregate": "rolling_7d_mean",
       "transform": "pct_change",
       "bond_direction": -1,
@@ -385,12 +309,7 @@
       "frequency": "weekly",
       "unit": "%",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:BLAST_FURNACE_RATE",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:BLAST_FURNACE_RATE", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -404,12 +323,7 @@
       "frequency": "weekly",
       "unit": "万吨",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:CRUDE_STEEL_DAILY_OUTPUT",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:CRUDE_STEEL_DAILY_OUTPUT", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -424,14 +338,8 @@
       "unit": "指数",
       "source": "CJHX",
       "series": [
-        {
-          "code": "CJHX:SEMI_STEEL_TIRE_RATE",
-          "weight": 1
-        },
-        {
-          "code": "CJHX:ALL_STEEL_TIRE_RATE",
-          "weight": 1
-        }
+        {"code": "CJHX:SEMI_STEEL_TIRE_RATE", "weight": 1},
+        {"code": "CJHX:ALL_STEEL_TIRE_RATE", "weight": 1}
       ],
       "aggregate": "standardized_mean",
       "methodology": {
@@ -458,12 +366,7 @@
       "frequency": "daily",
       "unit": "%",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:POLYESTER_RATE",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:POLYESTER_RATE", "weight": 1}],
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
@@ -478,22 +381,10 @@
       "unit": "指数",
       "source": "CJHX",
       "series": [
-        {
-          "code": "CJHX:REBAR_INVENTORY",
-          "weight": 1.2
-        },
-        {
-          "code": "CJHX:HRC_INVENTORY",
-          "weight": 1
-        },
-        {
-          "code": "CJHX:COLD_ROLLED_INVENTORY",
-          "weight": 0.6
-        },
-        {
-          "code": "CJHX:MEDIUM_PLATE_INVENTORY",
-          "weight": 0.6
-        }
+        {"code": "CJHX:REBAR_INVENTORY", "weight": 1.2},
+        {"code": "CJHX:HRC_INVENTORY", "weight": 1},
+        {"code": "CJHX:COLD_ROLLED_INVENTORY", "weight": 0.6},
+        {"code": "CJHX:MEDIUM_PLATE_INVENTORY", "weight": 0.6}
       ],
       "aggregate": "standardized_mean",
       "methodology": {
@@ -521,14 +412,8 @@
       "unit": "指数",
       "source": "iFinD",
       "series": [
-        {
-          "code": "IFIND:SHFE_COPPER_INVENTORY",
-          "weight": 1.2
-        },
-        {
-          "code": "IFIND:LME_COPPER_INVENTORY",
-          "weight": 0.8
-        }
+        {"code": "IFIND:SHFE_COPPER_INVENTORY", "weight": 1.2},
+        {"code": "IFIND:LME_COPPER_INVENTORY", "weight": 0.8}
       ],
       "aggregate": "standardized_mean",
       "methodology": {
@@ -555,12 +440,7 @@
       "frequency": "daily",
       "unit": "万吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:POWER_PLANT_COAL_INVENTORY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:POWER_PLANT_COAL_INVENTORY", "weight": 1}],
       "aggregate": "rolling_7d_mean",
       "transform": "pct_change",
       "bond_direction": 1,
@@ -575,12 +455,7 @@
       "frequency": "daily",
       "unit": "万吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:QHD_COAL_INVENTORY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:QHD_COAL_INVENTORY", "weight": 1}],
       "aggregate": "rolling_7d_mean",
       "transform": "pct_change",
       "bond_direction": 1,
@@ -595,12 +470,7 @@
       "frequency": "daily",
       "unit": "指数",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:AGRI_WHOLESALE_200",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:AGRI_WHOLESALE_200", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -614,12 +484,7 @@
       "frequency": "daily",
       "unit": "元/公斤",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:PORK_WHOLESALE_PRICE",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:PORK_WHOLESALE_PRICE", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -633,12 +498,7 @@
       "frequency": "daily",
       "unit": "美元/桶",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:BRENT",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:BRENT", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -652,12 +512,7 @@
       "frequency": "daily",
       "unit": "元/吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:QHD_THERMAL_COAL_PRICE",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:QHD_THERMAL_COAL_PRICE", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -671,12 +526,7 @@
       "frequency": "daily",
       "unit": "元/吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:COPPER_SPOT_1",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:COPPER_SPOT_1", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -690,12 +540,7 @@
       "frequency": "weekly",
       "unit": "指数",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:NANHUA_INDUSTRY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:NANHUA_INDUSTRY", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -709,12 +554,7 @@
       "frequency": "daily",
       "unit": "指数",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:CEMENT_PRICE_NATIONAL",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:CEMENT_PRICE_NATIONAL", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -728,12 +568,7 @@
       "frequency": "daily",
       "unit": "元/吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:REBAR_SPOT",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:REBAR_SPOT", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -747,12 +582,7 @@
       "frequency": "daily",
       "unit": "美元/吨",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:IRON_ORE_62",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:IRON_ORE_62", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -766,12 +596,7 @@
       "frequency": "weekly",
       "unit": "元/吨",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:GLASS_SPOT",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:GLASS_SPOT", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -785,12 +610,7 @@
       "frequency": "daily",
       "unit": "点",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:BDI",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:BDI", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -804,12 +624,7 @@
       "frequency": "weekly",
       "unit": "点",
       "source": "CJHX",
-      "series": [
-        {
-          "code": "CJHX:SCFI",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "CJHX:SCFI", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -823,12 +638,7 @@
       "frequency": "weekly",
       "unit": "万TEU",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:PORT_CONTAINER_THROUGHPUT_WEEKLY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:PORT_CONTAINER_THROUGHPUT_WEEKLY", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -842,12 +652,7 @@
       "frequency": "daily",
       "unit": "",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:USDCNY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:USDCNY", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": 1,
       "core": true,
@@ -861,12 +666,7 @@
       "frequency": "daily",
       "unit": "指数",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:CNY_CFETS",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:CNY_CFETS", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": -1,
       "core": true,
@@ -880,12 +680,7 @@
       "frequency": "daily",
       "unit": "点",
       "source": "iFinD",
-      "series": [
-        {
-          "code": "IFIND:DXY",
-          "weight": 1
-        }
-      ],
+      "series": [{"code": "IFIND:DXY", "weight": 1}],
       "transform": "pct_change",
       "bond_direction": 1,
       "core": true,
