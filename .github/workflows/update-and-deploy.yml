@@ -1,0 +1,75 @@
+name: Update, validate and deploy macro dashboard
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:30 Asia/Shanghai, Monday to Friday.
+    - cron: "30 0 * * 1-5"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: macro-dashboard-production
+  cancel-in-progress: false
+
+jobs:
+  update-and-build:
+    # Internal CJHX/iFinD endpoints and credential stores are not reachable
+    # from GitHub-hosted runners. Register an internal runner with this label.
+    runs-on: [self-hosted, cjhx-internal]
+    timeout-minutes: 45
+    env:
+      MACRO_DATA_ADAPTER: custom
+      PYTHONUTF8: "1"
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install runtime dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install requests cryptography
+          npm ci
+
+      - name: Fetch data, run strict quality gates, test and build
+        run: python scripts/run_pipeline.py --adapter "$MACRO_DATA_ADAPTER" --days 600
+
+      - name: Upload quality report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-quality-report
+          path: outputs/data-quality-report.json
+          if-no-files-found: warn
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: update-and-build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy validated artifact
+        id: deployment
+        uses: actions/deploy-pages@v4
