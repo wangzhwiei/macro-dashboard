@@ -65,7 +65,7 @@ rare_earth_index,prices,新能源材料,稀土价格指数,daily,指数,iFinD,IF
 titanium_price,prices,化工品,钛白粉现货价,daily,元/吨,iFinD,IFIND:TITANIUM_DIOXIDE,pct_change,-1,0.3
 gold_spot,prices,贵金属,伦敦现货黄金,daily,美元/盎司,iFinD,IFIND:GOLD_SPOT,pct_change,1,0.2
 silver_spot,prices,贵金属,伦敦现货白银,daily,美元/盎司,iFinD,IFIND:SILVER_SPOT,pct_change,1,0.2
-gasoline_retail,prices,能源,汽油零售价,weekly,元/吨,CJHX,CJHX:GASOLINE_RETAIL,pct_change,-1,0.2
+gasoline_ex_factory_taxed,prices,能源,国内汽油出厂价（含税）,daily,元/吨,iFinD,IFIND:GASOLINE_EX_FACTORY_TAXED,pct_change,-1,0.2
 ccfi,trade,集装箱运价,CCFI,weekly,点,CJHX,CJHX:CCFI,pct_change,-1,0.5
 bci,trade,干散货运价,好望角型运费指数 BCI,daily,点,iFinD,IFIND:BCI,pct_change,-1,0.4
 bpi,trade,干散货运价,巴拿马型运费指数 BPI,daily,点,iFinD,IFIND:BPI,pct_change,-1,0.4
