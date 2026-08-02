@@ -2114,6 +2114,78 @@ footer p {
   color: var(--muted);
 }
 
+.historical-category-counts {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.historical-category-counts > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.indicator-role-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 38px;
+  padding: 3px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.indicator-role-badge.is-core {
+  background: rgba(31, 99, 235, 0.12);
+  color: #1f63eb;
+}
+
+.indicator-role-badge.is-auxiliary {
+  background: rgba(180, 112, 20, 0.13);
+  color: #9a5d0a;
+}
+
+.historical-indicator-group + .historical-indicator-group {
+  margin-top: 18px;
+}
+
+.historical-indicator-group-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 14px;
+  border-radius: 10px 10px 0 0;
+}
+
+.historical-indicator-group.is-core .historical-indicator-group-title {
+  background: rgba(31, 99, 235, 0.07);
+}
+
+.historical-indicator-group.is-auxiliary .historical-indicator-group-title {
+  background: rgba(180, 112, 20, 0.08);
+}
+
+.historical-indicator-group-title strong {
+  font-size: 13px;
+}
+
+.historical-indicator-group-title small {
+  color: var(--muted);
+}
+
+.historical-indicator-row.is-core {
+  border-left: 3px solid rgba(31, 99, 235, 0.5);
+  background: rgba(31, 99, 235, 0.025);
+}
+
+.historical-indicator-row.is-auxiliary {
+  border-left: 3px solid rgba(180, 112, 20, 0.48);
+  background: rgba(180, 112, 20, 0.03);
+}
 @media (max-width: 760px) {
   .historical-category-grid {
     grid-template-columns: 1fr;

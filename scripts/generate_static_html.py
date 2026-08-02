@@ -375,7 +375,7 @@ def generate_html() -> str:
         </div>
         <div class="right">
             <div class="signal-badge">{comp_sig_text}</div>
-            <div class="updated">数据更新: {composite_updated} · 112 个指标 · 9 大类 · 78 周历史</div>
+            <div class="updated">数据更新: {composite_updated} · {len(indicators)} 个指标 · {len(categories)} 大类 · {len(data.get("dates", []))} 周历史</div>
         </div>
     </div>
     

@@ -335,7 +335,7 @@ python scripts/validate_dashboard.py --strict \
 - 所有核心指标是否生成。
 - 总指标覆盖率是否达到95%以上。
 - 日频指标是否至少有120个历史点，周频至少26个。
-- 78周矩阵日期、指标历史、大类历史和综合历史是否完全对齐。
+- 2023年至今的周度矩阵日期、指标历史、大类历史和综合历史是否完全对齐。
 - 历史日期是否升序且无重复。
 - `latest`、`updatedAt` 是否与历史末值一致。
 - 是否包含非有限数值。
@@ -360,7 +360,7 @@ npm run build:github
 - `data:validate` 退出码为0；
 - `npm test` 全部通过；
 - `docs/` 中生成静态页面、Logo、脚本资源和 `data/dashboard.json`；
-- 页面显示112个指标，九大类和78周历史完整；
+- 页面显示全部指标、九大类和2023年至今周度历史完整；
 - 任一指标历史弹窗可正常打开并显示数据与计算方法。
 
 ## 11. 每日自动更新
@@ -405,12 +405,12 @@ Repository secret：
 [ ] 已完成所有核心指标代码映射
 [ ] 已完成辅助指标映射或列出待补清单
 [ ] 已确认百分数、金额和数量单位
-[ ] 已成功拉取至少600天历史
+[ ] 已成功拉取2023-01-01至今的完整历史
 [ ] 已生成public/data/dashboard.json
 [ ] 严格校验无错误、无警告
 [ ] 112个指标全部生成
 [ ] 9个大类全部生成
-[ ] 78周历史完全对齐
+[ ] 2023年至今周度历史完全对齐
 [ ] npm test通过
 [ ] 静态页面构建通过
 ```
@@ -443,8 +443,8 @@ public/data/dashboard.json，并构建现有页面。不得改变页面交互、
 4. 优先通过.env和config/provider-code-map.json接入http_adapter.py；
    只有接口分页、SDK或数据库调用无法通用配置时才实现custom_adapter.py。
 5. 先用一个日频和一个周频序列做小样本调用，检查日期、单位、排序和缺失。
-6. 拉取全部序列至少600天历史。
-7. 运行python scripts/update_dashboard.py --adapter <http或custom> --days 600。
+6. 拉取全部序列自2023-01-01至今的完整历史。
+7. 运行python scripts/update_dashboard.py --adapter <http或custom> --days 1310（脚本仍会按配置保留2023年至今）。
 8. 运行python scripts/validate_dashboard.py --strict
    --report outputs/data-quality-report.json。
 9. 如果有错误或警告，修复接口映射或数据口径；不得删除核心指标或伪造数据。
@@ -452,7 +452,7 @@ public/data/dashboard.json，并构建现有页面。不得改变页面交互、
 11. 输出验收清单、缺失序列清单、单位转换说明、校验摘要和构建结果。
 
 完成标准：
-核心指标零缺失；总覆盖率100%；9个大类；78周历史对齐；
+核心指标零缺失；总覆盖率100%；9个大类；2023年至今周度历史对齐；
 严格校验零错误零警告；所有测试和构建通过。
 
 安全要求：

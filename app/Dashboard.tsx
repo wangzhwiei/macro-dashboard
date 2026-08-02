@@ -45,8 +45,9 @@ function formatNumber(value: number, unit: string) {
 }
 
 function scoreTone(score: number) {
-  if (score >= 15) return "var(--bull)";
-  if (score <= -15) return "var(--bear)";
+  const signal = signalForScore(score);
+  if (signal === "bullish") return "var(--bull)";
+  if (signal === "bearish") return "var(--bear)";
   return "var(--neutral)";
 }
 
@@ -59,8 +60,11 @@ function signalForScore(score: number): Signal {
 
 function heatColor(score: number) {
   const strength = Math.min(1, Math.abs(score) / 100);
-  if (score >= 15) return `rgba(213, 75, 72, ${0.16 + strength * 0.76})`;
-  if (score <= -15) return `rgba(0, 143, 102, ${0.16 + strength * 0.76})`;
+  const signal = signalForScore(score);
+  if (signal === "bullish")
+    return `rgba(213, 75, 72, ${0.16 + strength * 0.76})`;
+  if (signal === "bearish")
+    return `rgba(0, 143, 102, ${0.16 + strength * 0.76})`;
   return "rgba(111, 120, 126, .12)";
 }
 
@@ -120,8 +124,14 @@ function MacroTrendCanvas({
       padding.left + (index / Math.max(1, points.length - 1)) * plotWidth;
     const y = (value: number) =>
       padding.top + ((yLimit - value) / (yLimit * 2)) * plotHeight;
-    const tone = (value: number) =>
-      value >= 15 ? "#d54b48" : value <= -15 ? "#008f66" : "#78827e";
+    const tone = (value: number) => {
+      const signal = signalForScore(value);
+      return signal === "bullish"
+        ? "#d54b48"
+        : signal === "bearish"
+          ? "#008f66"
+          : "#78827e";
+    };
 
     context.clearRect(0, 0, width, height);
     context.fillStyle = "rgba(213, 75, 72, .055)";
@@ -304,9 +314,9 @@ function CategoryCard({
       <MiniTrend values={category.weeklyScores} />
       <div className="category-foot">
         <span
-          title={`利多指标族 ${detail.bullish}，利空指标族 ${detail.bearish}，中性 ${detail.neutral}；中性不计入扩散度分母`}
+          title={`核心指标族：利多 ${detail.bullish}，利空 ${detail.bearish}，中性 ${detail.neutral}；扩散率=${detail.bullish}÷(${detail.bullish}+${detail.bearish})，中性不计入分母`}
         >
-          利多扩散 {category.breadth}%
+          核心指标族扩散 {category.breadth}%
         </span>
         <span>
           核心 {category.validCount}/{category.totalCount}
@@ -915,7 +925,7 @@ export default function Dashboard() {
 
   const focusCategoryAndScroll = useCallback((categoryId: string) => {
     setSelectedCategory(categoryId);
-    setShowAuxiliary(true);
+    setShowAuxiliary(false);
     window.requestAnimationFrame(() =>
       document
         .getElementById("indicators")
