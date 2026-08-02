@@ -1,16 +1,17 @@
 {
-  "ok": false,
+  "ok": true,
   "strict": true,
   "summary": {
-    "configured_indicators": 112,
-    "generated_indicators": 112,
+    "configured_indicators": 111,
+    "generated_indicators": 111,
     "coverage": 1.0,
     "history_weeks": 78,
     "categories": 9,
-    "mode": "自定义接口"
+    "mode": "CJHX+iFinD生产数据",
+    "required_provider_codes": 111,
+    "mapped_provider_codes": 111,
+    "provider_code_collisions": 0
   },
   "errors": [],
-  "warnings": [
-    "secondhand 最新数据为2026-07-20，已滞后10天"
-  ]
+  "warnings": []
 }

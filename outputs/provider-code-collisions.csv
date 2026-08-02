@@ -1,0 +1,7 @@
+provider_code,semantic_codes,problem,required_action
+S2772559,"CJHX:SECOND_HAND_HOME | CJHX:SECOND_HAND_LISTING_PRICE_NATIONAL","二手房成交与挂牌价不是同一序列","向数据负责人确认两个真实代码"
+S6124650,"CJHX:ASPHALT_OPERATING_RATE | CJHX:BLAST_FURNACE_RATE | CJHX:ALL_STEEL_TIRE_RATE","三种不同行业开工率共用代码","分别确认沥青、高炉、全钢胎代码"
+S5446172,"CJHX:POLYESTER_RATE | CJHX:FILAMENT_RATE | CJHX:GLASS_RATE","聚酯、长丝、玻璃开工率共用代码","分别确认三个真实代码"
+S5456780,"CJHX:PX_RATE | CJHX:GLASS_SPOT","开工率与现货价格共用代码","分别确认PX开工率和玻璃现货价代码"
+S5914463,"CJHX:STYRENE_RATE | CJHX:COLD_ROLLED_RATE","苯乙烯与冷轧开工率共用代码","分别确认两个真实代码"
+S5707795,"CJHX:MEDIUM_PLATE_INVENTORY | CJHX:WIRE_INVENTORY","中厚板与线材库存共用代码","分别确认两个真实代码"

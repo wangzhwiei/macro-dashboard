@@ -4,6 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "vite --config vite.github.config.ts",
+    "data:catalog": "python3 scripts/export_series_catalog.py",
+    "data:validate": "python3 scripts/validate_dashboard.py --strict",
+    "pipeline:update": "python3 scripts/run_pipeline.py",
+    "test": "python3 -m unittest discover -s tests -p \"test_*.py\"",
     "build:github": "vite build --config vite.github.config.ts"
   },
   "dependencies": {
@@ -11,7 +16,7 @@
     "react-dom": "19.2.6"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/postcss": "4.3.3",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "6.0.2",
