@@ -260,19 +260,28 @@ def weekly_scores(
                 transformed_change(current[1], previous[1], method)[0]
             )
 
-    center = statistics.fmean(historical_changes) if historical_changes else 0.0
-    scale = statistics.pstdev(historical_changes) if len(historical_changes) > 1 else 1
+    # Zero change is the economic direction anchor. Historical RMS only
+    # calibrates magnitude, so de-meaning can never reverse a raw decline/rise.
+    scale = (
+        math.sqrt(statistics.fmean(change**2 for change in historical_changes))
+        if historical_changes
+        else 1
+    )
     if scale < 1e-8:
         scale = 1
 
+    latest_observation_day = points[-1][0]
     for week_end in evaluation_dates:
-        current = value_at(points, week_end)
-        previous = value_at(points, week_end - timedelta(days=7))
+        # Do not turn a weekly series into a false zero-change signal merely
+        # because the global dashboard date is later than its latest release.
+        anchor_day = min(week_end, latest_observation_day)
+        current = value_at(points, anchor_day)
+        previous = value_at(points, anchor_day - timedelta(days=7))
         if not current or not previous:
             weekly_values.append(0)
             continue
         change = transformed_change(current[1], previous[1], method)[0]
-        score = (change - center) / scale * 35 * bond_direction
+        score = change / scale * 35 * bond_direction
         weekly_values.append(round(clamp(score), 1))
     return weekly_values, historical_changes
 
@@ -284,9 +293,12 @@ def percentile(values: list[float], current: float) -> int:
 
 
 def signal_from_score(score: float, threshold: float) -> str:
-    if score >= threshold:
+    # Classify the same integer strength shown on the page, avoiding cases
+    # where +14.7 is displayed as +15 but labelled neutral.
+    displayed_score = round(score)
+    if displayed_score >= threshold:
         return "bullish"
-    if score <= -threshold:
+    if displayed_score <= -threshold:
         return "bearish"
     return "neutral"
 
@@ -416,7 +428,7 @@ def build_indicator(
         "reason": (
             f"近一周指标{direction_word}{abs(change):.2f}"
             f"{'个百分点' if method == 'pp_change' else '%'}；"
-            f"按该指标独立方向和历史波动标准化后，当前对债市{signal_word}。"
+            f"以零变化为方向中轴并按历史波动校准后，当前对债市{signal_word}。"
         ),
         "history": scores,
         "series": [
