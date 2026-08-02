@@ -303,6 +303,13 @@ def signal_from_score(score: float, threshold: float) -> str:
     return "neutral"
 
 
+def signal_counts(scores: list[float], threshold: float) -> dict[str, int]:
+    counts = {"bullish": 0, "bearish": 0, "neutral": 0}
+    for score in scores:
+        counts[signal_from_score(score, threshold)] += 1
+    return counts
+
+
 def stable_seed(value: str) -> int:
     return int(hashlib.sha256(value.encode("utf-8")).hexdigest()[:12], 16)
 
@@ -485,6 +492,18 @@ def category_title(category_scores: list[dict[str, Any]], overall_score: float) 
     return prefix
 
 
+def weekly_evaluation_dates(start_date: date, end_date: date) -> list[date]:
+    """Return every Friday in the requested inclusive date range."""
+    if start_date > end_date:
+        raise ValueError("历史起始日不能晚于结束日")
+    first_friday = start_date + timedelta(days=(4 - start_date.weekday()) % 7)
+    last_friday = end_date - timedelta(days=(end_date.weekday() - 4) % 7)
+    if first_friday > last_friday:
+        return []
+    week_count = (last_friday - first_friday).days // 7 + 1
+    return [first_friday + timedelta(days=7 * offset) for offset in range(week_count)]
+
+
 def build_dashboard(
     config: dict[str, Any],
     adapter: str,
@@ -492,12 +511,13 @@ def build_dashboard(
     end_date: date,
 ) -> dict[str, Any]:
     threshold = float(config.get("score_threshold", 15))
-    last_friday = end_date - timedelta(days=(end_date.weekday() - 4) % 7)
-    history_weeks = max(13, int(config.get("history_weeks", 78)))
-    evaluation_dates = [
-        last_friday - timedelta(days=7 * offset)
-        for offset in reversed(range(history_weeks))
-    ]
+    configured_start = date.fromisoformat(
+        str(config.get("history_start_date", start_date.isoformat()))
+    )
+    evaluation_start = max(start_date, configured_start)
+    evaluation_dates = weekly_evaluation_dates(evaluation_start, end_date)
+    if not evaluation_dates:
+        raise ValueError("历史区间内没有可用的周五评价日")
     fetcher = get_fetcher(adapter)
     indicators: list[dict[str, Any]] = []
     failures: list[str] = []
@@ -538,9 +558,10 @@ def build_dashboard(
         ]
         score = weekly[-1] if weekly else 0
         family_scores = list(scores_by_family(category_indicators).values())
-        bullish = sum(score >= threshold for score in family_scores)
-        bearish = sum(score <= -threshold for score in family_scores)
-        neutral = len(family_scores) - bullish - bearish
+        family_signal_counts = signal_counts(family_scores, threshold)
+        bullish = family_signal_counts["bullish"]
+        bearish = family_signal_counts["bearish"]
+        neutral = family_signal_counts["neutral"]
         directional_count = bullish + bearish
         breadth = (
             round(bullish / directional_count * 100)
@@ -599,22 +620,15 @@ def build_dashboard(
         for index in range(len(evaluation_dates))
     ]
     overall_signal = signal_from_score(overall_score, threshold)
-    directional_categories = [
-        category for category in categories if abs(category["score"]) >= threshold
-    ]
-    bullish_categories = sum(
-        category["score"] >= threshold for category in categories
+    category_signal_counts = signal_counts(
+        [category["score"] for category in categories], threshold
     )
-    bearish_categories = sum(
-        category["score"] <= -threshold for category in categories
-    )
-    neutral_categories = len(categories) - bullish_categories - bearish_categories
+    bullish_categories = category_signal_counts["bullish"]
+    bearish_categories = category_signal_counts["bearish"]
+    neutral_categories = category_signal_counts["neutral"]
+    directional_categories = bullish_categories + bearish_categories
     overall_breadth = (
-        round(
-            sum(category["score"] > 0 for category in directional_categories)
-            / len(directional_categories)
-            * 100
-        )
+        round(bullish_categories / directional_categories * 100)
         if directional_categories
         else 50
     )
@@ -718,7 +732,11 @@ def main() -> int:
 
     config = json.loads(args.config.read_text(encoding="utf-8"))
     config["indicators"].extend(load_auxiliary_indicators(args.auxiliary))
-    start_date = args.end_date - timedelta(days=args.days)
+    requested_start = args.end_date - timedelta(days=args.days)
+    configured_start = date.fromisoformat(
+        str(config.get("history_start_date", requested_start.isoformat()))
+    )
+    start_date = min(requested_start, configured_start)
     dashboard = build_dashboard(config, args.adapter, start_date, args.end_date)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

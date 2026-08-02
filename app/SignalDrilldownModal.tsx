@@ -23,8 +23,9 @@ function signalForScore(score: number): Signal {
 }
 
 function scoreTone(score: number) {
-  if (score >= 15) return "var(--bull)";
-  if (score <= -15) return "var(--bear)";
+  const signal = signalForScore(score);
+  if (signal === "bullish") return "var(--bull)";
+  if (signal === "bearish") return "var(--bear)";
   return "var(--neutral)";
 }
 
@@ -40,6 +41,18 @@ function valueAtOrBefore(indicator: Indicator, date: string) {
     if (indicator.series[index].date <= date) return indicator.series[index].value;
   }
   return null;
+}
+
+type SignalCounts = Record<Signal, number>;
+
+function countSignals(indicators: Indicator[], historyIndex: number): SignalCounts {
+  return indicators.reduce<SignalCounts>(
+    (counts, indicator) => {
+      counts[signalForScore(indicator.history[historyIndex] ?? 0)] += 1;
+      return counts;
+    },
+    { bullish: 0, bearish: 0, neutral: 0 },
+  );
 }
 
 export default function SignalDrilldownModal({
@@ -71,20 +84,20 @@ export default function SignalDrilldownModal({
     () =>
       data.categories.map((category) => {
         const score = category.weeklyScores[selection.historyIndex] ?? 0;
-        const indicators = data.indicators.filter(
+        const categoryIndicators = data.indicators.filter(
           (indicator) => indicator.category === category.id,
         );
-        const detail = indicators.reduce(
-          (counts, indicator) => {
-            const signal = signalForScore(
-              indicator.history[selection.historyIndex] ?? 0,
-            );
-            counts[signal] += 1;
-            return counts;
+        const core = categoryIndicators.filter((indicator) => indicator.core);
+        const auxiliary = categoryIndicators.filter((indicator) => !indicator.core);
+        return {
+          category,
+          score,
+          signal: signalForScore(score),
+          detail: {
+            core: countSignals(core, selection.historyIndex),
+            auxiliary: countSignals(auxiliary, selection.historyIndex),
           },
-          { bullish: 0, bearish: 0, neutral: 0 },
-        );
-        return { category, score, signal: signalForScore(score), detail };
+        };
       }),
     [data, selection.historyIndex],
   );
@@ -110,6 +123,21 @@ export default function SignalDrilldownModal({
         ),
     [categoryId, data.indicators, selection.date, selection.historyIndex],
   );
+
+  const indicatorGroups = [
+    {
+      id: "core",
+      label: "核心指标",
+      description: "参与指标族与大类观点计算",
+      items: indicators.filter(({ indicator }) => indicator.core),
+    },
+    {
+      id: "auxiliary",
+      label: "辅助指标",
+      description: "用于交叉验证，不重复计入观点",
+      items: indicators.filter(({ indicator }) => !indicator.core),
+    },
+  ].filter((group) => group.items.length > 0);
 
   const overallScore = data.overall.weeklyScores[selection.historyIndex] ?? 0;
 
@@ -162,7 +190,16 @@ export default function SignalDrilldownModal({
                 <small className={signalMeta[signal].className}>
                   {signalMeta[signal].label}
                 </small>
-                <em>利多 {detail.bullish} · 利空 {detail.bearish} · 中性 {detail.neutral}</em>
+                <em className="historical-category-counts">
+                  <span>
+                    <i className="indicator-role-badge is-core">核心</i>
+                    利多 {detail.core.bullish} · 利空 {detail.core.bearish} · 中性 {detail.core.neutral}
+                  </span>
+                  <span>
+                    <i className="indicator-role-badge is-auxiliary">辅助</i>
+                    利多 {detail.auxiliary.bullish} · 利空 {detail.auxiliary.bearish} · 中性 {detail.auxiliary.neutral}
+                  </span>
+                </em>
               </button>
             ))}
           </div>
@@ -177,20 +214,32 @@ export default function SignalDrilldownModal({
               <div className="historical-indicator-columns" aria-hidden="true">
                 <span>高频指标</span><span>当时值</span><span>强度</span><span>债市方向</span>
               </div>
-              {indicators.map(({ indicator, score, signal, value }) => (
-                <div className="historical-indicator-row" key={indicator.id}>
-                  <button onClick={() => onOpenIndicator(indicator)}>
-                    <strong>{indicator.name}</strong>
-                    <small>{indicator.family} · {indicator.frequency} · {indicator.core ? "核心" : "辅助"}</small>
-                  </button>
-                  <span>{formatValue(value, indicator.unit)}</span>
-                  <b style={{ color: scoreTone(score) }}>
-                    {score > 0 ? "+" : ""}{Math.round(score)}
-                  </b>
-                  <span className={`signal-badge ${signalMeta[signal].className}`}>
-                    {signalMeta[signal].label}
-                  </span>
-                </div>
+              {indicatorGroups.map((group) => (
+                <section className={`historical-indicator-group is-${group.id}`} key={group.id}>
+                  <div className="historical-indicator-group-title">
+                    <span className={`indicator-role-badge is-${group.id}`}>{group.label}</span>
+                    <strong>{group.items.length}项</strong>
+                    <small>{group.description}</small>
+                  </div>
+                  {group.items.map(({ indicator, score, signal, value }) => (
+                    <div
+                      className={`historical-indicator-row ${indicator.core ? "is-core" : "is-auxiliary"}`}
+                      key={indicator.id}
+                    >
+                      <button onClick={() => onOpenIndicator(indicator)}>
+                        <strong>{indicator.name}</strong>
+                        <small>{indicator.family} · {indicator.frequency}</small>
+                      </button>
+                      <span>{formatValue(value, indicator.unit)}</span>
+                      <b style={{ color: scoreTone(score) }}>
+                        {score > 0 ? "+" : ""}{Math.round(score)}
+                      </b>
+                      <span className={`signal-badge ${signalMeta[signal].className}`}>
+                        {signalMeta[signal].label}
+                      </span>
+                    </div>
+                  ))}
+                </section>
               ))}
             </div>
           </>
