@@ -21,8 +21,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--adapter",
-        choices=["mock", "http", "custom"],
-        default="http",
+        choices=["mock", "http", "custom", "hybrid"],
+        default="hybrid",
     )
     parser.add_argument("--days", type=int, default=600)
     parser.add_argument("--end-date")

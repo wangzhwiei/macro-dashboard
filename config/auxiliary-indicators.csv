@@ -1,73 +1,73 @@
-id,category,family,name,frequency,unit,source,code,transform,bond_direction,weight
-irs_3m,liquidity,利率预期,FR007 IRS 3M,daily,%,CJHX,CJHX:FR007_IRS_3M,pp_change,-1,0.5
-irs_6m,liquidity,利率预期,FR007 IRS 6M,daily,%,CJHX,CJHX:FR007_IRS_6M,pp_change,-1,0.5
-shibor_6m,liquidity,银行负债,SHIBOR 6M,daily,%,iFinD,IFIND:SHIBOR_6M,pp_change,-1,0.5
-shibor_1y,liquidity,银行负债,SHIBOR 1Y,daily,%,iFinD,IFIND:SHIBOR_1Y,pp_change,-1,0.5
-bill_3m,liquidity,信用需求,票据转贴 3M,daily,%,iFinD,IFIND:BILL_DISCOUNT_3M,pp_change,-1,0.5
-car_wholesale_yoy,consumption,汽车消费,乘用车厂家批发当周同比,weekly,%,CJHX,CJHX:CAR_WHOLESALE_WEEKLY_YOY,pp_change,-1,0.5
-metro_shanghai,consumption,市内出行,上海地铁客运量,daily,万人次,CJHX,CJHX:METRO_SHANGHAI,pct_change,-1,0.5
-metro_guangzhou,consumption,市内出行,广州地铁客运量,daily,万人次,CJHX,CJHX:METRO_GUANGZHOU,pct_change,-1,0.5
-movie_audience,consumption,服务消费,全国当日观影人次,daily,万人次,CJHX,CJHX:MOVIE_AUDIENCE_DAILY,pct_change,-1,0.5
-land_tier1,real_estate,土地市场,100城土地成交面积：一线,weekly,万㎡,CJHX,CJHX:LAND_TIER1,pct_change,-1,0.4
-land_tier2,real_estate,土地市场,100城土地成交面积：二线,weekly,万㎡,CJHX,CJHX:LAND_TIER2,pct_change,-1,0.4
-land_tier3,real_estate,土地市场,100城土地成交面积：三线,weekly,万㎡,CJHX,CJHX:LAND_TIER3,pct_change,-1,0.4
-land_premium,real_estate,土地价格,100城土地成交溢价率,weekly,%,CJHX,CJHX:LAND_PREMIUM,pp_change,-1,0.5
-newhome_tier1,real_estate,新房销售,30城商品房成交：一线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER1,pct_change,-1,0.4
-newhome_tier2,real_estate,新房销售,30城商品房成交：二线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER2,pct_change,-1,0.4
-newhome_tier3,real_estate,新房销售,30城商品房成交：三线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER3,pct_change,-1,0.4
-listing_tier1,real_estate,房价,二手房挂牌价指数：一线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER1,pct_change,-1,0.4
-listing_tier2,real_estate,房价,二手房挂牌价指数：二线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER2,pct_change,-1,0.4
-pvc_rate,infrastructure,建材生产,PVC开工率,weekly,%,CJHX,CJHX:PVC_RATE,pp_change,-1,0.4
-cold_rolled_rate,infrastructure,建材生产,冷轧开工率,weekly,%,CJHX,CJHX:COLD_ROLLED_RATE,pp_change,-1,0.4
-glass_rate,infrastructure,建材生产,玻璃开工率,weekly,%,CJHX,CJHX:GLASS_RATE,pp_change,-1,0.4
-pta_rate,production,化纤产业链,PTA开工率,daily,%,CJHX,CJHX:PTA_RATE,pp_change,-1,0.35
-px_rate,production,化纤产业链,PX开工率,daily,%,CJHX,CJHX:PX_RATE,pp_change,-1,0.35
-full_tire_rate,production,汽车产业链,全钢胎开工率,weekly,%,CJHX,CJHX:ALL_STEEL_TIRE_RATE,pp_change,-1,0.4
-semi_tire_rate,production,汽车产业链,半钢胎开工率,weekly,%,CJHX,CJHX:SEMI_STEEL_TIRE_RATE,pp_change,-1,0.4
-daqin_volume,production,煤炭运输,大秦线煤炭运量,daily,万吨,iFinD,IFIND:DAQIN_COAL_VOLUME,pct_change,-1,0.6
-filament_rate,production,化纤产业链,江浙涤纶长丝开工率,weekly,%,CJHX,CJHX:FILAMENT_RATE,pp_change,-1,0.35
-staple_rate,production,化纤产业链,涤纶短纤开工率,weekly,%,CJHX,CJHX:STAPLE_RATE,pp_change,-1,0.35
-coking_rate,production,黑色产业链,焦化开工率,weekly,%,CJHX,CJHX:COKING_RATE,pp_change,-1,0.4
-methanol_rate,production,化工产业链,甲醇开工率,weekly,%,CJHX,CJHX:METHANOL_RATE,pp_change,-1,0.5
-styrene_rate,production,化工产业链,苯乙烯开工率,weekly,%,CJHX,CJHX:STYRENE_RATE,pp_change,-1,0.5
-eia_crude_inventory,inventory,海外能源库存,EIA原油库存,weekly,万桶,iFinD,IFIND:EIA_CRUDE_INVENTORY,pct_change,1,0.3
-lme_copper_inventory,inventory,有色库存,LME铜库存,daily,吨,iFinD,IFIND:LME_COPPER_INVENTORY,pct_change,1,0.4
-shfe_copper_inventory,inventory,有色库存,上期所铜库存,weekly,吨,iFinD,IFIND:SHFE_COPPER_INVENTORY,pct_change,1,0.5
-medium_plate_inventory,inventory,钢材库存,中厚板库存,weekly,万吨,CJHX,CJHX:MEDIUM_PLATE_INVENTORY,pct_change,1,0.3
-cold_rolled_inventory,inventory,钢材库存,冷轧库存,weekly,万吨,CJHX,CJHX:COLD_ROLLED_INVENTORY,pct_change,1,0.3
-rebar_inventory,inventory,钢材库存,螺纹钢库存,weekly,万吨,CJHX,CJHX:REBAR_INVENTORY,pct_change,1,0.5
-hrc_inventory,inventory,钢材库存,热轧卷板库存,weekly,万吨,CJHX,CJHX:HRC_INVENTORY,pct_change,1,0.4
-wire_inventory,inventory,钢材库存,线材库存,weekly,万吨,CJHX,CJHX:WIRE_INVENTORY,pct_change,1,0.3
-vegetable_price,prices,食品,28种重点监测蔬菜均价,daily,元/公斤,CJHX,CJHX:VEGETABLE_28_PRICE,pct_change,-1,0.4
-fruit_price,prices,食品,7种重点监测水果均价,daily,元/公斤,CJHX,CJHX:FRUIT_7_PRICE,pct_change,-1,0.3
-beef_price,prices,食品,牛肉批发价,daily,元/公斤,CJHX,CJHX:BEEF_PRICE,pct_change,-1,0.3
-mutton_price,prices,食品,羊肉批发价,daily,元/公斤,CJHX,CJHX:MUTTON_PRICE,pct_change,-1,0.3
-egg_price,prices,食品,鸡蛋批发价,daily,元/公斤,CJHX,CJHX:EGG_PRICE,pct_change,-1,0.3
-chicken_price,prices,食品,白条鸡批发价,daily,元/公斤,CJHX,CJHX:CHICKEN_PRICE,pct_change,-1,0.3
-lme_zinc,prices,有色,LME锌价,daily,美元/吨,iFinD,IFIND:LME_ZINC,pct_change,-1,0.3
-aluminum_price,prices,有色,A00铝现货均价,daily,元/吨,iFinD,IFIND:ALUMINUM_A00,pct_change,-1,0.3
-nickel_price,prices,有色,1#镍板现货均价,daily,元/吨,iFinD,IFIND:NICKEL_1,pct_change,-1,0.3
-nanhua_agri,prices,食品,南华农产品指数,daily,指数,iFinD,IFIND:NANHUA_AGRI,pct_change,-1,0.35
-nanhua_energy,prices,工业品综合,南华能化指数,weekly,指数,iFinD,IFIND:NANHUA_ENERGY,pct_change,-1,0.35
-nanhua_metals,prices,工业品综合,南华金属指数,weekly,指数,iFinD,IFIND:NANHUA_METALS,pct_change,-1,0.35
-wti,prices,能源,WTI原油期货,daily,美元/桶,iFinD,IFIND:WTI,pct_change,-1,0.4
-thermal_coal_futures,prices,能源,动力煤期货结算价,daily,元/吨,iFinD,IFIND:THERMAL_COAL_FUTURES,pct_change,-1,0.3
-coke_futures,prices,黑色,焦炭期货结算价,daily,元/吨,iFinD,IFIND:COKE_FUTURES,pct_change,-1,0.3
-coking_coal_futures,prices,黑色,焦煤期货结算价,daily,元/吨,iFinD,IFIND:COKING_COAL_FUTURES,pct_change,-1,0.3
-iron_ore_futures,prices,黑色,铁矿石期货结算价,daily,元/吨,iFinD,IFIND:IRON_ORE_FUTURES,pct_change,-1,0.3
-hot_rolled_price,prices,黑色,热轧板卷现货价,daily,元/吨,iFinD,IFIND:HRC_SPOT,pct_change,-1,0.3
-steel_plate_index,prices,黑色,钢材价格指数：板材,weekly,指数,CJHX,CJHX:STEEL_PLATE_INDEX,pct_change,-1,0.3
-steel_long_index,prices,黑色,钢材价格指数：长材,weekly,指数,CJHX,CJHX:STEEL_LONG_INDEX,pct_change,-1,0.3
-cement_east,prices,建材,水泥价格指数：华东,daily,指数,CJHX,CJHX:CEMENT_PRICE_EAST,pct_change,-1,0.3
-cement_yangtze,prices,建材,水泥价格指数：长江,daily,指数,CJHX,CJHX:CEMENT_PRICE_YANGTZE,pct_change,-1,0.3
-lithium_price,prices,新能源材料,碳酸锂价格,daily,元/吨,iFinD,IFIND:LITHIUM_CARBONATE,pct_change,-1,0.3
-rare_earth_index,prices,新能源材料,稀土价格指数,daily,指数,iFinD,IFIND:RARE_EARTH_INDEX,pct_change,-1,0.3
-titanium_price,prices,化工品,钛白粉现货价,daily,元/吨,iFinD,IFIND:TITANIUM_DIOXIDE,pct_change,-1,0.3
-gold_spot,prices,贵金属,伦敦现货黄金,daily,美元/盎司,iFinD,IFIND:GOLD_SPOT,pct_change,1,0.2
-silver_spot,prices,贵金属,伦敦现货白银,daily,美元/盎司,iFinD,IFIND:SILVER_SPOT,pct_change,1,0.2
-gasoline_ex_factory_taxed,prices,能源,国内汽油出厂价（含税）,daily,元/吨,iFinD,IFIND:GASOLINE_EX_FACTORY_TAXED,pct_change,-1,0.2
-ccfi,trade,集装箱运价,CCFI,weekly,点,CJHX,CJHX:CCFI,pct_change,-1,0.5
-bci,trade,干散货运价,好望角型运费指数 BCI,daily,点,iFinD,IFIND:BCI,pct_change,-1,0.4
-bpi,trade,干散货运价,巴拿马型运费指数 BPI,daily,点,iFinD,IFIND:BPI,pct_change,-1,0.4
-eurusd,fx,外部美元环境,EUR/USD,daily,,iFinD,IFIND:EURUSD,pct_change,-1,0.3
-usdjpy,fx,海外利差,USD/JPY,daily,,iFinD,IFIND:USDJPY,pct_change,-1,0.3
+id,category,family,name,frequency,unit,source,code,transform,bond_direction,weight,stale_tolerance_days
+irs_3m,liquidity,利率预期,FR007 IRS 3M,daily,%,CJHX,CJHX:FR007_IRS_3M,pp_change,-1,0.5,
+irs_6m,liquidity,利率预期,FR007 IRS 6M,daily,%,CJHX,CJHX:FR007_IRS_6M,pp_change,-1,0.5,
+shibor_6m,liquidity,银行负债,SHIBOR 6M,daily,%,iFinD,IFIND:SHIBOR_6M,pp_change,-1,0.5,
+shibor_1y,liquidity,银行负债,SHIBOR 1Y,daily,%,CJHX,IFIND:SHIBOR_1Y,pp_change,-1,0.5,
+bill_3m,liquidity,信用需求,票据转贴 3M,daily,%,iFinD,IFIND:BILL_DISCOUNT_3M,pp_change,-1,0.5,
+car_wholesale_yoy,consumption,汽车消费,乘用车厂家批发当周同比,weekly,%,CJHX,CJHX:CAR_WHOLESALE_WEEKLY_YOY,pp_change,-1,0.5,
+metro_shanghai,consumption,市内出行,上海地铁客运量,daily,万人次,CJHX,CJHX:METRO_SHANGHAI,pct_change,-1,0.5,
+metro_guangzhou,consumption,市内出行,广州地铁客运量,daily,万人次,CJHX,CJHX:METRO_GUANGZHOU,pct_change,-1,0.5,
+movie_audience,consumption,服务消费,全国当日观影人次,daily,万人次,CJHX,CJHX:MOVIE_AUDIENCE_DAILY,pct_change,-1,0.5,
+land_tier1,real_estate,土地市场,100城土地成交面积：一线,weekly,万㎡,CJHX,CJHX:LAND_TIER1,pct_change,-1,0.4,
+land_tier2,real_estate,土地市场,100城土地成交面积：二线,weekly,万㎡,CJHX,CJHX:LAND_TIER2,pct_change,-1,0.4,
+land_tier3,real_estate,土地市场,100城土地成交面积：三线,weekly,万㎡,CJHX,CJHX:LAND_TIER3,pct_change,-1,0.4,
+land_premium,real_estate,土地价格,100城土地成交溢价率,weekly,%,CJHX,CJHX:LAND_PREMIUM,pp_change,-1,0.5,
+newhome_tier1,real_estate,新房销售,30城商品房成交：一线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER1,pct_change,-1,0.4,
+newhome_tier2,real_estate,新房销售,30城商品房成交：二线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER2,pct_change,-1,0.4,
+newhome_tier3,real_estate,新房销售,30城商品房成交：三线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER3,pct_change,-1,0.4,
+listing_tier1,real_estate,房价,二手房挂牌价指数：一线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER1,pct_change,-1,0.4,
+listing_tier2,real_estate,房价,二手房挂牌价指数：二线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER2,pct_change,-1,0.4,
+pvc_rate,infrastructure,建材生产,PVC开工率,weekly,%,iFinD,CJHX:PVC_RATE,pp_change,-1,0.4,
+cold_rolled_rate,infrastructure,建材生产,冷轧开工率,weekly,%,iFinD,CJHX:COLD_ROLLED_RATE,pp_change,-1,0.4,
+glass_rate,infrastructure,建材生产,玻璃开工率,weekly,%,iFinD,CJHX:GLASS_RATE,pp_change,-1,0.4,
+pta_rate,production,化纤产业链,PTA开工率,daily,%,iFinD,CJHX:PTA_RATE,pp_change,-1,0.35,
+px_rate,production,化纤产业链,PX开工率,daily,%,iFinD,CJHX:PX_RATE,pp_change,-1,0.35,
+full_tire_rate,production,汽车产业链,全钢胎开工率,weekly,%,CJHX,CJHX:ALL_STEEL_TIRE_RATE,pp_change,-1,0.4,
+semi_tire_rate,production,汽车产业链,半钢胎开工率,weekly,%,CJHX,CJHX:SEMI_STEEL_TIRE_RATE,pp_change,-1,0.4,
+daqin_volume,production,煤炭运输,大秦线煤炭运量,daily,万吨,iFinD,IFIND:DAQIN_COAL_VOLUME,pct_change,-1,0.6,
+filament_rate,production,化纤产业链,江浙涤纶长丝开工率,weekly,%,CJHX,CJHX:FILAMENT_RATE,pp_change,-1,0.35,
+staple_rate,production,化纤产业链,涤纶短纤开工率,weekly,%,iFinD,CJHX:STAPLE_RATE,pp_change,-1,0.35,
+coking_rate,production,黑色产业链,焦化开工率,weekly,%,iFinD,CJHX:COKING_RATE,pp_change,-1,0.4,21
+methanol_rate,production,化工产业链,甲醇开工率,weekly,%,iFinD,CJHX:METHANOL_RATE,pp_change,-1,0.5,
+styrene_rate,production,化工产业链,苯乙烯开工率,weekly,%,iFinD,CJHX:STYRENE_RATE,pp_change,-1,0.5,
+eia_crude_inventory,inventory,海外能源库存,EIA原油库存,weekly,万桶,iFinD,IFIND:EIA_CRUDE_INVENTORY,pct_change,1,0.3,
+lme_copper_inventory,inventory,有色库存,LME铜库存,daily,吨,iFinD,IFIND:LME_COPPER_INVENTORY,pct_change,1,0.4,
+shfe_copper_inventory,inventory,有色库存,上期所铜库存,weekly,吨,iFinD,IFIND:SHFE_COPPER_INVENTORY,pct_change,1,0.5,
+medium_plate_inventory,inventory,钢材库存,中厚板库存,weekly,万吨,iFinD,CJHX:MEDIUM_PLATE_INVENTORY,pct_change,1,0.3,
+cold_rolled_inventory,inventory,钢材库存,冷轧库存,weekly,万吨,iFinD,CJHX:COLD_ROLLED_INVENTORY,pct_change,1,0.3,
+rebar_inventory,inventory,钢材库存,螺纹钢库存,weekly,万吨,CJHX,CJHX:REBAR_INVENTORY,pct_change,1,0.5,
+hrc_inventory,inventory,钢材库存,热轧卷板库存,weekly,万吨,iFinD,CJHX:HRC_INVENTORY,pct_change,1,0.4,
+wire_inventory,inventory,钢材库存,线材库存,weekly,万吨,iFinD,CJHX:WIRE_INVENTORY,pct_change,1,0.3,
+vegetable_price,prices,食品,28种重点监测蔬菜均价,daily,元/公斤,CJHX,CJHX:VEGETABLE_28_PRICE,pct_change,-1,0.4,
+fruit_price,prices,食品,7种重点监测水果均价,daily,元/公斤,CJHX,CJHX:FRUIT_7_PRICE,pct_change,-1,0.3,
+beef_price,prices,食品,牛肉批发价,daily,元/公斤,CJHX,CJHX:BEEF_PRICE,pct_change,-1,0.3,
+mutton_price,prices,食品,羊肉批发价,daily,元/公斤,CJHX,CJHX:MUTTON_PRICE,pct_change,-1,0.3,
+egg_price,prices,食品,鸡蛋批发价,daily,元/公斤,CJHX,CJHX:EGG_PRICE,pct_change,-1,0.3,
+chicken_price,prices,食品,白条鸡批发价,daily,元/公斤,CJHX,CJHX:CHICKEN_PRICE,pct_change,-1,0.3,
+lme_zinc,prices,有色,LME锌价,daily,美元/吨,CJHX,IFIND:LME_ZINC,pct_change,-1,0.3,
+aluminum_price,prices,有色,A00铝现货均价,daily,元/吨,CJHX,IFIND:ALUMINUM_A00,pct_change,-1,0.3,
+nickel_price,prices,有色,1#镍板现货均价,daily,元/吨,CJHX,IFIND:NICKEL_1,pct_change,-1,0.3,
+nanhua_agri,prices,食品,南华农产品指数,daily,指数,iFinD,IFIND:NANHUA_AGRI,pct_change,-1,0.35,
+nanhua_energy,prices,工业品综合,南华能化指数,daily,指数,iFinD,IFIND:NANHUA_ENERGY,pct_change,-1,0.35,
+nanhua_metals,prices,工业品综合,南华金属指数,daily,指数,iFinD,IFIND:NANHUA_METALS,pct_change,-1,0.35,
+wti,prices,能源,WTI原油期货,daily,美元/桶,CJHX,IFIND:WTI,pct_change,-1,0.4,
+thermal_coal_futures,prices,能源,动力煤期货结算价,daily,元/吨,CJHX,IFIND:THERMAL_COAL_FUTURES,pct_change,-1,0.3,
+coke_futures,prices,黑色,焦炭期货结算价,daily,元/吨,CJHX,IFIND:COKE_FUTURES,pct_change,-1,0.3,
+coking_coal_futures,prices,黑色,焦煤期货结算价,daily,元/吨,CJHX,IFIND:COKING_COAL_FUTURES,pct_change,-1,0.3,
+iron_ore_futures,prices,黑色,铁矿石期货结算价,daily,元/吨,iFinD,IFIND:IRON_ORE_FUTURES,pct_change,-1,0.3,
+hot_rolled_price,prices,黑色,热轧板卷现货价,daily,元/吨,CJHX,IFIND:HRC_SPOT,pct_change,-1,0.3,
+steel_plate_index,prices,黑色,钢材价格指数：板材,weekly,指数,CJHX,CJHX:STEEL_PLATE_INDEX,pct_change,-1,0.3,
+steel_long_index,prices,黑色,钢材价格指数：长材,weekly,指数,CJHX,CJHX:STEEL_LONG_INDEX,pct_change,-1,0.3,
+cement_east,prices,建材,水泥价格指数：华东,daily,指数,CJHX,CJHX:CEMENT_PRICE_EAST,pct_change,-1,0.3,
+cement_yangtze,prices,建材,水泥价格指数：长江,daily,指数,CJHX,CJHX:CEMENT_PRICE_YANGTZE,pct_change,-1,0.3,
+lithium_price,prices,新能源材料,碳酸锂价格,daily,元/吨,CJHX,IFIND:LITHIUM_CARBONATE,pct_change,-1,0.3,
+rare_earth_index,prices,新能源材料,稀土价格指数,daily,指数,CJHX,IFIND:RARE_EARTH_INDEX,pct_change,-1,0.3,
+titanium_price,prices,化工品,钛白粉现货价,daily,元/吨,CJHX,IFIND:TITANIUM_DIOXIDE,pct_change,-1,0.3,
+gold_spot,prices,贵金属,伦敦现货黄金,daily,美元/盎司,CJHX,IFIND:GOLD_SPOT,pct_change,1,0.2,
+silver_spot,prices,贵金属,伦敦现货白银,daily,美元/盎司,CJHX,IFIND:SILVER_SPOT,pct_change,1,0.2,
+gasoline_ex_factory_taxed,prices,能源,国内汽油出厂价（含税）,weekly,元/吨,iFinD,IFIND:GASOLINE_EX_FACTORY_TAXED,pct_change,-1,0.2,
+ccfi,trade,集装箱运价,CCFI,weekly,点,CJHX,CJHX:CCFI,pct_change,-1,0.5,
+bci,trade,干散货运价,好望角型运费指数 BCI,daily,点,CJHX,IFIND:BCI,pct_change,-1,0.4,
+bpi,trade,干散货运价,巴拿马型运费指数 BPI,daily,点,CJHX,IFIND:BPI,pct_change,-1,0.4,
+eurusd,fx,外部美元环境,EUR/USD,daily,,CJHX,IFIND:EURUSD,pct_change,-1,0.3,
+usdjpy,fx,海外利差,USD/JPY,daily,,CJHX,IFIND:USDJPY,pct_change,-1,0.3,

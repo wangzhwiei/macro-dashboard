@@ -1,0 +1,122 @@
+﻿indicator_id,indicator_name,category,family,frequency,unit,source,semantic_code,provider_code,mapping_status,component_weight,core,aggregate,transform,bond_direction
+irs_1y,FR007 IRS 1Y,liquidity,利率预期,daily,%,CJHX,CJHX:FR007_IRS_1Y,,pending,1,true,,pp_change,-1
+irs_5y,FR007 IRS 5Y,liquidity,利率预期,daily,%,CJHX,CJHX:FR007_IRS_5Y,,pending,1,true,,pp_change,-1
+shibor_3m,SHIBOR 3M,liquidity,银行负债,daily,%,CJHX,IFIND:SHIBOR_3M,,pending,1,true,,pp_change,-1
+bill_6m,票据转贴 6M,liquidity,信用需求,daily,%,iFinD,IFIND:BILL_DISCOUNT_6M,,pending,1,true,,pp_change,-1
+car_retail_yoy,乘用车厂家零售当周同比,consumption,汽车消费,weekly,%,CJHX,CJHX:CAR_RETAIL_WEEKLY_YOY,,pending,1,true,,pp_change,-1
+metro_composite,重点城市地铁客流指数,consumption,市内出行,daily,指数,CJHX,CJHX:METRO_SHANGHAI,,pending,1,true,standardized_mean,pct_change,-1
+metro_composite,重点城市地铁客流指数,consumption,市内出行,daily,指数,CJHX,CJHX:METRO_GUANGZHOU,,pending,1,true,standardized_mean,pct_change,-1
+boxoffice_7d,全国电影票房 7日合计,consumption,服务消费,daily,亿元,CJHX,CJHX:BOX_OFFICE_DAILY,,pending,1,true,rolling_7d_sum,pct_change,-1
+flights_7d,国内航班执行量 7日均值,consumption,跨城出行,daily,架次,iFinD,IFIND:FLIGHTS_DAILY,,pending,1,true,rolling_7d_mean,pct_change,-1
+land_4w,100城土地成交面积 4周均值,real_estate,土地市场,weekly,万㎡,CJHX,CJHX:LAND_100_CITIES_TOTAL,,pending,1,true,rolling_4w_mean,pct_change,-1
+newhome_30c,30城商品房成交 7日均值,real_estate,新房销售,daily,万㎡,CJHX,CJHX:NEW_HOME_30_CITIES,,pending,1,true,rolling_7d_mean,pct_change,-1
+secondhand,重点城市二手房成交指数,real_estate,二手房销售,daily,指数,iFinD,IFIND:SECONDHAND_SHANGHAI_AREA,,pending,1,true,standardized_mean,pct_change,-1
+secondhand,重点城市二手房成交指数,real_estate,二手房销售,daily,指数,iFinD,IFIND:SECONDHAND_BEIJING_UNITS,,pending,1,true,standardized_mean,pct_change,-1
+secondhand,重点城市二手房成交指数,real_estate,二手房销售,daily,指数,iFinD,IFIND:SECONDHAND_SHENZHEN_UNITS,,pending,1,true,standardized_mean,pct_change,-1
+secondhand,重点城市二手房成交指数,real_estate,二手房销售,daily,指数,iFinD,IFIND:SECONDHAND_NANJING_UNITS,,pending,1,true,standardized_mean,pct_change,-1
+secondhand,重点城市二手房成交指数,real_estate,二手房销售,daily,指数,iFinD,IFIND:SECONDHAND_CHENGDU_UNITS,,pending,1,true,standardized_mean,pct_change,-1
+listing_price,全国二手房挂牌价指数,real_estate,房价,weekly,指数,CJHX,CJHX:SECOND_HAND_LISTING_PRICE_NATIONAL,,pending,1,true,,pct_change,-1
+construction_steel,建筑钢材成交,infrastructure,施工需求,daily,万吨,iFinD,CJHX:CONSTRUCTION_STEEL_TRANSACTION,,pending,1,true,,pct_change,-1
+asphalt_rate,沥青装置开工率,infrastructure,道路施工,weekly,%,iFinD,CJHX:ASPHALT_OPERATING_RATE,,pending,1,true,,pp_change,-1
+power_coal,六大发电集团日均耗煤,production,电力,daily,万吨,iFinD,IFIND:POWER_PLANT_COAL_CONSUMPTION,,pending,1,true,rolling_7d_mean,pct_change,-1
+blast_furnace,高炉开工率,production,黑色产业链,weekly,%,iFinD,IFIND:BLAST_FURNACE_TANGSHAN,,pending,1,true,,pp_change,-1
+crude_steel,粗钢日均产量,production,黑色产业链,weekly,万吨,CJHX,CJHX:CRUDE_STEEL_DAILY_OUTPUT,,pending,1,true,,pct_change,-1
+tire_composite,轮胎开工综合指数,production,汽车产业链,weekly,指数,CJHX,CJHX:SEMI_STEEL_TIRE_RATE,,pending,1,true,standardized_mean,pct_change,-1
+tire_composite,轮胎开工综合指数,production,汽车产业链,weekly,指数,CJHX,CJHX:ALL_STEEL_TIRE_RATE,,pending,1,true,standardized_mean,pct_change,-1
+polyester_rate,聚酯综合开工率,production,化纤产业链,daily,%,iFinD,CJHX:POLYESTER_RATE,,pending,1,true,,pp_change,-1
+steel_inventory,钢材社会库存综合指数,inventory,钢材库存,weekly,指数,CJHX+iFinD,CJHX:REBAR_INVENTORY,,pending,1.2,true,standardized_mean,pct_change,1
+steel_inventory,钢材社会库存综合指数,inventory,钢材库存,weekly,指数,CJHX+iFinD,CJHX:HRC_INVENTORY,,pending,1,true,standardized_mean,pct_change,1
+steel_inventory,钢材社会库存综合指数,inventory,钢材库存,weekly,指数,CJHX+iFinD,CJHX:COLD_ROLLED_INVENTORY,,pending,0.6,true,standardized_mean,pct_change,1
+steel_inventory,钢材社会库存综合指数,inventory,钢材库存,weekly,指数,CJHX+iFinD,CJHX:MEDIUM_PLATE_INVENTORY,,pending,0.6,true,standardized_mean,pct_change,1
+copper_inventory,铜库存综合指数,inventory,有色库存,daily,指数,iFinD,IFIND:SHFE_COPPER_INVENTORY,,pending,1.2,true,standardized_mean,pct_change,1
+copper_inventory,铜库存综合指数,inventory,有色库存,daily,指数,iFinD,IFIND:LME_COPPER_INVENTORY,,pending,0.8,true,standardized_mean,pct_change,1
+power_inventory,六大发电集团煤炭库存,inventory,煤炭库存,daily,万吨,iFinD,IFIND:POWER_PLANT_COAL_INVENTORY,,pending,1,true,rolling_7d_mean,pct_change,1
+port_coal_inventory,秦皇岛港煤炭库存,inventory,煤炭库存,daily,万吨,iFinD,IFIND:QHD_COAL_INVENTORY,,pending,1,true,rolling_7d_mean,pct_change,1
+agri_200,农产品批发价格200指数,prices,食品,daily,指数,CJHX,CJHX:AGRI_WHOLESALE_200,,pending,1,true,,pct_change,-1
+pork_price,猪肉批发价,prices,食品,daily,元/公斤,CJHX,CJHX:PORK_WHOLESALE_PRICE,,pending,1,true,,pct_change,-1
+brent,布伦特原油,prices,能源,daily,美元/桶,CJHX,IFIND:BRENT,,pending,1,true,,pct_change,-1
+qhd_coal_price,秦皇岛港动力煤现货价,prices,能源,daily,元/吨,CJHX,IFIND:QHD_THERMAL_COAL_PRICE,,pending,1,true,,pct_change,-1
+copper_price,1#铜现货均价,prices,有色,daily,元/吨,CJHX,IFIND:COPPER_SPOT_1,,pending,1,true,,pct_change,-1
+nanhua_industry,南华工业品指数,prices,工业品综合,daily,指数,CJHX,IFIND:NANHUA_INDUSTRY,,pending,1,true,,pct_change,-1
+cement_national,全国水泥价格指数,prices,建材,daily,指数,CJHX,CJHX:CEMENT_PRICE_NATIONAL,,pending,1,true,,pct_change,-1
+rebar_price,螺纹钢现货价格,prices,黑色,daily,元/吨,CJHX,IFIND:REBAR_SPOT,,pending,1,true,,pct_change,-1
+iron_ore_62,铁矿石价格指数 62%Fe,prices,黑色,daily,美元/吨,CJHX,IFIND:IRON_ORE_62,,pending,1,true,,pct_change,-1
+glass_spot,玻璃现货价,prices,建材,daily,元/平方米,iFinD,IFIND:GLASS_SPOT,,pending,1,true,,pct_change,-1
+bdi,BDI指数,trade,干散货运价,daily,点,CJHX,IFIND:BDI,,pending,1,true,,pct_change,-1
+scfi,SCFI,trade,集装箱运价,weekly,点,CJHX,CJHX:SCFI,,pending,1,true,,pct_change,-1
+port_container,港口完成集装箱吞吐量：当周值,trade,贸易数量,weekly,万TEU,iFinD,IFIND:PORT_CONTAINER_THROUGHPUT_WEEKLY,,pending,1,true,,pct_change,-1
+usdcny,USD/CNY,fx,人民币双边汇率,daily,,CJHX,IFIND:USDCNY,,pending,1,true,,pct_change,1
+cfets,CFETS人民币汇率指数,fx,人民币有效汇率,weekly,指数,iFinD,IFIND:CNY_CFETS,,pending,1,true,,pct_change,-1
+dxy,美元指数,fx,外部美元环境,daily,点,CJHX,IFIND:DXY,,pending,1,true,,pct_change,1
+irs_3m,FR007 IRS 3M,liquidity,利率预期,daily,%,CJHX,CJHX:FR007_IRS_3M,,pending,1,false,,pp_change,-1
+irs_6m,FR007 IRS 6M,liquidity,利率预期,daily,%,CJHX,CJHX:FR007_IRS_6M,,pending,1,false,,pp_change,-1
+shibor_6m,SHIBOR 6M,liquidity,银行负债,daily,%,iFinD,IFIND:SHIBOR_6M,,pending,1,false,,pp_change,-1
+shibor_1y,SHIBOR 1Y,liquidity,银行负债,daily,%,CJHX,IFIND:SHIBOR_1Y,,pending,1,false,,pp_change,-1
+bill_3m,票据转贴 3M,liquidity,信用需求,daily,%,iFinD,IFIND:BILL_DISCOUNT_3M,,pending,1,false,,pp_change,-1
+car_wholesale_yoy,乘用车厂家批发当周同比,consumption,汽车消费,weekly,%,CJHX,CJHX:CAR_WHOLESALE_WEEKLY_YOY,,pending,1,false,,pp_change,-1
+metro_shanghai,上海地铁客运量,consumption,市内出行,daily,万人次,CJHX,CJHX:METRO_SHANGHAI,,pending,1,false,,pct_change,-1
+metro_guangzhou,广州地铁客运量,consumption,市内出行,daily,万人次,CJHX,CJHX:METRO_GUANGZHOU,,pending,1,false,,pct_change,-1
+movie_audience,全国当日观影人次,consumption,服务消费,daily,万人次,CJHX,CJHX:MOVIE_AUDIENCE_DAILY,,pending,1,false,,pct_change,-1
+land_tier1,100城土地成交面积：一线,real_estate,土地市场,weekly,万㎡,CJHX,CJHX:LAND_TIER1,,pending,1,false,,pct_change,-1
+land_tier2,100城土地成交面积：二线,real_estate,土地市场,weekly,万㎡,CJHX,CJHX:LAND_TIER2,,pending,1,false,,pct_change,-1
+land_tier3,100城土地成交面积：三线,real_estate,土地市场,weekly,万㎡,CJHX,CJHX:LAND_TIER3,,pending,1,false,,pct_change,-1
+land_premium,100城土地成交溢价率,real_estate,土地价格,weekly,%,CJHX,CJHX:LAND_PREMIUM,,pending,1,false,,pp_change,-1
+newhome_tier1,30城商品房成交：一线,real_estate,新房销售,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER1,,pending,1,false,,pct_change,-1
+newhome_tier2,30城商品房成交：二线,real_estate,新房销售,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER2,,pending,1,false,,pct_change,-1
+newhome_tier3,30城商品房成交：三线,real_estate,新房销售,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER3,,pending,1,false,,pct_change,-1
+listing_tier1,二手房挂牌价指数：一线,real_estate,房价,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER1,,pending,1,false,,pct_change,-1
+listing_tier2,二手房挂牌价指数：二线,real_estate,房价,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER2,,pending,1,false,,pct_change,-1
+pvc_rate,PVC开工率,infrastructure,建材生产,weekly,%,iFinD,CJHX:PVC_RATE,,pending,1,false,,pp_change,-1
+cold_rolled_rate,冷轧开工率,infrastructure,建材生产,weekly,%,iFinD,CJHX:COLD_ROLLED_RATE,,pending,1,false,,pp_change,-1
+glass_rate,玻璃开工率,infrastructure,建材生产,weekly,%,iFinD,CJHX:GLASS_RATE,,pending,1,false,,pp_change,-1
+pta_rate,PTA开工率,production,化纤产业链,daily,%,iFinD,CJHX:PTA_RATE,,pending,1,false,,pp_change,-1
+px_rate,PX开工率,production,化纤产业链,daily,%,iFinD,CJHX:PX_RATE,,pending,1,false,,pp_change,-1
+full_tire_rate,全钢胎开工率,production,汽车产业链,weekly,%,CJHX,CJHX:ALL_STEEL_TIRE_RATE,,pending,1,false,,pp_change,-1
+semi_tire_rate,半钢胎开工率,production,汽车产业链,weekly,%,CJHX,CJHX:SEMI_STEEL_TIRE_RATE,,pending,1,false,,pp_change,-1
+daqin_volume,大秦线煤炭运量,production,煤炭运输,daily,万吨,iFinD,IFIND:DAQIN_COAL_VOLUME,,pending,1,false,,pct_change,-1
+filament_rate,江浙涤纶长丝开工率,production,化纤产业链,weekly,%,CJHX,CJHX:FILAMENT_RATE,,pending,1,false,,pp_change,-1
+staple_rate,涤纶短纤开工率,production,化纤产业链,weekly,%,iFinD,CJHX:STAPLE_RATE,,pending,1,false,,pp_change,-1
+coking_rate,焦化开工率,production,黑色产业链,weekly,%,iFinD,CJHX:COKING_RATE,,pending,1,false,,pp_change,-1
+methanol_rate,甲醇开工率,production,化工产业链,weekly,%,iFinD,CJHX:METHANOL_RATE,,pending,1,false,,pp_change,-1
+styrene_rate,苯乙烯开工率,production,化工产业链,weekly,%,iFinD,CJHX:STYRENE_RATE,,pending,1,false,,pp_change,-1
+eia_crude_inventory,EIA原油库存,inventory,海外能源库存,weekly,万桶,iFinD,IFIND:EIA_CRUDE_INVENTORY,,pending,1,false,,pct_change,1
+lme_copper_inventory,LME铜库存,inventory,有色库存,daily,吨,iFinD,IFIND:LME_COPPER_INVENTORY,,pending,1,false,,pct_change,1
+shfe_copper_inventory,上期所铜库存,inventory,有色库存,weekly,吨,iFinD,IFIND:SHFE_COPPER_INVENTORY,,pending,1,false,,pct_change,1
+medium_plate_inventory,中厚板库存,inventory,钢材库存,weekly,万吨,iFinD,CJHX:MEDIUM_PLATE_INVENTORY,,pending,1,false,,pct_change,1
+cold_rolled_inventory,冷轧库存,inventory,钢材库存,weekly,万吨,iFinD,CJHX:COLD_ROLLED_INVENTORY,,pending,1,false,,pct_change,1
+rebar_inventory,螺纹钢库存,inventory,钢材库存,weekly,万吨,CJHX,CJHX:REBAR_INVENTORY,,pending,1,false,,pct_change,1
+hrc_inventory,热轧卷板库存,inventory,钢材库存,weekly,万吨,iFinD,CJHX:HRC_INVENTORY,,pending,1,false,,pct_change,1
+wire_inventory,线材库存,inventory,钢材库存,weekly,万吨,iFinD,CJHX:WIRE_INVENTORY,,pending,1,false,,pct_change,1
+vegetable_price,28种重点监测蔬菜均价,prices,食品,daily,元/公斤,CJHX,CJHX:VEGETABLE_28_PRICE,,pending,1,false,,pct_change,-1
+fruit_price,7种重点监测水果均价,prices,食品,daily,元/公斤,CJHX,CJHX:FRUIT_7_PRICE,,pending,1,false,,pct_change,-1
+beef_price,牛肉批发价,prices,食品,daily,元/公斤,CJHX,CJHX:BEEF_PRICE,,pending,1,false,,pct_change,-1
+mutton_price,羊肉批发价,prices,食品,daily,元/公斤,CJHX,CJHX:MUTTON_PRICE,,pending,1,false,,pct_change,-1
+egg_price,鸡蛋批发价,prices,食品,daily,元/公斤,CJHX,CJHX:EGG_PRICE,,pending,1,false,,pct_change,-1
+chicken_price,白条鸡批发价,prices,食品,daily,元/公斤,CJHX,CJHX:CHICKEN_PRICE,,pending,1,false,,pct_change,-1
+lme_zinc,LME锌价,prices,有色,daily,美元/吨,CJHX,IFIND:LME_ZINC,,pending,1,false,,pct_change,-1
+aluminum_price,A00铝现货均价,prices,有色,daily,元/吨,CJHX,IFIND:ALUMINUM_A00,,pending,1,false,,pct_change,-1
+nickel_price,1#镍板现货均价,prices,有色,daily,元/吨,CJHX,IFIND:NICKEL_1,,pending,1,false,,pct_change,-1
+nanhua_agri,南华农产品指数,prices,食品,daily,指数,iFinD,IFIND:NANHUA_AGRI,,pending,1,false,,pct_change,-1
+nanhua_energy,南华能化指数,prices,工业品综合,daily,指数,iFinD,IFIND:NANHUA_ENERGY,,pending,1,false,,pct_change,-1
+nanhua_metals,南华金属指数,prices,工业品综合,daily,指数,iFinD,IFIND:NANHUA_METALS,,pending,1,false,,pct_change,-1
+wti,WTI原油期货,prices,能源,daily,美元/桶,CJHX,IFIND:WTI,,pending,1,false,,pct_change,-1
+thermal_coal_futures,动力煤期货结算价,prices,能源,daily,元/吨,CJHX,IFIND:THERMAL_COAL_FUTURES,,pending,1,false,,pct_change,-1
+coke_futures,焦炭期货结算价,prices,黑色,daily,元/吨,CJHX,IFIND:COKE_FUTURES,,pending,1,false,,pct_change,-1
+coking_coal_futures,焦煤期货结算价,prices,黑色,daily,元/吨,CJHX,IFIND:COKING_COAL_FUTURES,,pending,1,false,,pct_change,-1
+iron_ore_futures,铁矿石期货结算价,prices,黑色,daily,元/吨,iFinD,IFIND:IRON_ORE_FUTURES,,pending,1,false,,pct_change,-1
+hot_rolled_price,热轧板卷现货价,prices,黑色,daily,元/吨,CJHX,IFIND:HRC_SPOT,,pending,1,false,,pct_change,-1
+steel_plate_index,钢材价格指数：板材,prices,黑色,weekly,指数,CJHX,CJHX:STEEL_PLATE_INDEX,,pending,1,false,,pct_change,-1
+steel_long_index,钢材价格指数：长材,prices,黑色,weekly,指数,CJHX,CJHX:STEEL_LONG_INDEX,,pending,1,false,,pct_change,-1
+cement_east,水泥价格指数：华东,prices,建材,daily,指数,CJHX,CJHX:CEMENT_PRICE_EAST,,pending,1,false,,pct_change,-1
+cement_yangtze,水泥价格指数：长江,prices,建材,daily,指数,CJHX,CJHX:CEMENT_PRICE_YANGTZE,,pending,1,false,,pct_change,-1
+lithium_price,碳酸锂价格,prices,新能源材料,daily,元/吨,CJHX,IFIND:LITHIUM_CARBONATE,,pending,1,false,,pct_change,-1
+rare_earth_index,稀土价格指数,prices,新能源材料,daily,指数,CJHX,IFIND:RARE_EARTH_INDEX,,pending,1,false,,pct_change,-1
+titanium_price,钛白粉现货价,prices,化工品,daily,元/吨,CJHX,IFIND:TITANIUM_DIOXIDE,,pending,1,false,,pct_change,-1
+gold_spot,伦敦现货黄金,prices,贵金属,daily,美元/盎司,CJHX,IFIND:GOLD_SPOT,,pending,1,false,,pct_change,1
+silver_spot,伦敦现货白银,prices,贵金属,daily,美元/盎司,CJHX,IFIND:SILVER_SPOT,,pending,1,false,,pct_change,1
+gasoline_ex_factory_taxed,国内汽油出厂价（含税）,prices,能源,weekly,元/吨,iFinD,IFIND:GASOLINE_EX_FACTORY_TAXED,,pending,1,false,,pct_change,-1
+ccfi,CCFI,trade,集装箱运价,weekly,点,CJHX,CJHX:CCFI,,pending,1,false,,pct_change,-1
+bci,好望角型运费指数 BCI,trade,干散货运价,daily,点,CJHX,IFIND:BCI,,pending,1,false,,pct_change,-1
+bpi,巴拿马型运费指数 BPI,trade,干散货运价,daily,点,CJHX,IFIND:BPI,,pending,1,false,,pct_change,-1
+eurusd,EUR/USD,fx,外部美元环境,daily,,CJHX,IFIND:EURUSD,,pending,1,false,,pct_change,-1
+usdjpy,USD/JPY,fx,海外利差,daily,,CJHX,IFIND:USDJPY,,pending,1,false,,pct_change,-1

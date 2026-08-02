@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --config vite.github.config.ts",
-    "data:catalog": "python scripts/export_series_catalog.py",
-    "data:validate": "python scripts/validate_dashboard.py --strict",
-    "pipeline:update": "python scripts/run_pipeline.py",
-    "test": "python -m unittest discover -s tests -p \"test_*.py\"",
+    "data:catalog": "python3 scripts/export_series_catalog.py",
+    "data:validate": "python3 scripts/validate_dashboard.py --strict",
+    "pipeline:update": "python3 scripts/run_pipeline.py",
+    "test": "python3 -m unittest discover -s tests -p \"test_*.py\"",
     "build:github": "vite build --config vite.github.config.ts"
   },
   "dependencies": {

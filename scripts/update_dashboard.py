@@ -19,6 +19,8 @@ from pathlib import Path
 from typing import Any, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 DEFAULT_CONFIG = ROOT / "config" / "indicators.json"
 DEFAULT_AUXILIARY = ROOT / "config" / "auxiliary-indicators.csv"
 DEFAULT_OUTPUT = ROOT / "public" / "data" / "dashboard.json"
@@ -348,7 +350,7 @@ def mock_fetcher(
 def get_fetcher(adapter: str) -> Callable[..., list[dict[str, Any]]]:
     if adapter == "mock":
         return mock_fetcher
-    if adapter not in {"http", "custom"}:
+    if adapter not in {"http", "custom", "hybrid"}:
         raise ValueError(f"不支持的数据适配器: {adapter}")
     module = importlib.import_module(f"scripts.adapters.{adapter}_adapter")
     return module.fetch_series
@@ -634,9 +636,12 @@ def build_dashboard(
 
     return {
         "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "mode": {"mock": "示例数据", "http": "HTTP接口", "custom": "自定义接口"}[
-            adapter
-        ],
+        "mode": {
+            "mock": "示例数据",
+            "http": "HTTP接口",
+            "custom": "自定义接口",
+            "hybrid": "CJHX+iFinD生产数据",
+        }[adapter],
         "dates": [day.isoformat() for day in evaluation_dates],
         "overall": {
             "score": round(overall_score, 1),
@@ -692,7 +697,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument(
         "--adapter",
-        choices=["mock", "http", "custom"],
+        choices=["mock", "http", "custom", "hybrid"],
         default=os.environ.get("MACRO_DATA_ADAPTER", "mock"),
     )
     parser.add_argument("--days", type=int, default=600)

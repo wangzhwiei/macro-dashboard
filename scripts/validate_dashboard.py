@@ -54,6 +54,9 @@ def load_definitions(
                         "bond_direction": float(row.get("bond_direction") or -1),
                         "core": False,
                         "weight": float(row.get("weight") or 0.3),
+                        "stale_tolerance_days": int(
+                            row.get("stale_tolerance_days") or 0
+                        ),
                     }
                 )
     return config, definitions
@@ -368,7 +371,9 @@ def validate_generated_data(
         if not methodology.get("formula") or not methodology.get("steps"):
             errors.append(f"{prefix} 缺少页面计算方法说明")
         stale_days = (generated_day - date.fromisoformat(series_dates[-1])).days
-        stale_limit = 7 if definition["frequency"] == "daily" else 14
+        stale_limit = int(definition.get("stale_tolerance_days") or 0)
+        if not stale_limit:
+            stale_limit = 7 if definition["frequency"] == "daily" else 14
         if stale_days > stale_limit:
             warnings.append(
                 f"{prefix} 最新数据为{series_dates[-1]}，已滞后{stale_days}天"
