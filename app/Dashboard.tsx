@@ -44,6 +44,16 @@ function formatNumber(value: number, unit: string) {
   return unit === "指数" || unit === "z" || !unit ? number : `${number} ${unit}`;
 }
 
+function percentileAtValue(
+  series: Array<{ date: string; value: number }>,
+  value: number,
+) {
+  if (!series.length || !Number.isFinite(value)) return null;
+  return Math.round(
+    (series.filter((point) => point.value <= value).length / series.length) * 100,
+  );
+}
+
 function scoreTone(score: number) {
   const signal = signalForScore(score);
   if (signal === "bullish") return "var(--bull)";
@@ -460,10 +470,14 @@ function HistoryModal({
   indicator,
   category,
   onClose,
+  onBack,
+  backLabel,
 }: {
   indicator: Indicator;
   category?: CategorySummary;
   onClose: () => void;
+  onBack?: () => void;
+  backLabel?: string;
 }) {
   const [range, setRange] = useState("1y");
   const firstDate = indicator.series[0]?.date ?? "";
@@ -501,6 +515,9 @@ function HistoryModal({
   }, [customEnd, customStart, indicator.series, lastDate, range]);
 
   const displayed = hovered ?? filtered.at(-1) ?? null;
+  const displayedPercentile = displayed
+    ? percentileAtValue(indicator.series, displayed.value)
+    : null;
   const values = filtered.map((point) => point.value);
   const periodChange =
     values.length > 1 && values[0] !== 0
@@ -548,9 +565,20 @@ function HistoryModal({
             <h2>{indicator.name}</h2>
             <p>{indicator.reason}</p>
           </div>
-          <button className="modal-close" onClick={onClose} aria-label="关闭">
-            ×
-          </button>
+          <div className="history-header-actions">
+            {onBack && (
+              <button className="history-back-button" onClick={onBack}>
+                ← 返回{backLabel ? ` ${backLabel}` : "上层"}
+              </button>
+            )}
+            <button
+              className="modal-close"
+              onClick={onClose}
+              aria-label="关闭全部弹窗"
+            >
+              ×
+            </button>
+          </div>
         </header>
 
         <div className="history-kpis">
@@ -572,19 +600,17 @@ function HistoryModal({
             <small>{filtered.length} 个数据点</small>
           </div>
           <div>
-            <span>区间最高</span>
+            <span>历史分位</span>
             <strong>
-              {values.length
-                ? formatNumber(Math.max(...values), indicator.unit)
-                : "—"}
+              {displayedPercentile === null ? "—" : `${displayedPercentile}%`}
             </strong>
-            <small>历史分位 {indicator.percentile}%</small>
+            <small>{hovered ? "随悬停点同步" : "区间最新值对应水平"}</small>
           </div>
           <div>
-            <span>区间最低</span>
-            <strong>
+            <span>区间范围</span>
+            <strong className="history-range-value">
               {values.length
-                ? formatNumber(Math.min(...values), indicator.unit)
+                ? `${formatNumber(Math.min(...values), indicator.unit)} — ${formatNumber(Math.max(...values), indicator.unit)}`
                 : "—"}
             </strong>
             <small>{indicator.source}</small>
@@ -777,6 +803,8 @@ export default function Dashboard() {
   const [historyIndicator, setHistoryIndicator] = useState<Indicator | null>(
     null,
   );
+  const [historyReturnTarget, setHistoryReturnTarget] =
+    useState<SignalDrilldownSelection | null>(null);
   const [signalDrilldown, setSignalDrilldown] =
     useState<SignalDrilldownSelection | null>(null);
 
@@ -1549,7 +1577,10 @@ export default function Dashboard() {
               key={indicator.id}
               indicator={indicator}
               category={categoryMap.get(indicator.category)}
-              onOpenHistory={() => setHistoryIndicator(indicator)}
+              onOpenHistory={() => {
+                setHistoryReturnTarget(null);
+                setHistoryIndicator(indicator);
+              }}
             />
           ))}
           {!filteredIndicators.length && (
@@ -1572,6 +1603,7 @@ export default function Dashboard() {
           selection={signalDrilldown}
           onClose={() => setSignalDrilldown(null)}
           onOpenIndicator={(indicator) => {
+            setHistoryReturnTarget(signalDrilldown);
             setSignalDrilldown(null);
             setHistoryIndicator(indicator);
           }}
@@ -1582,7 +1614,24 @@ export default function Dashboard() {
         <HistoryModal
           indicator={historyIndicator}
           category={categoryMap.get(historyIndicator.category)}
-          onClose={() => setHistoryIndicator(null)}
+          onClose={() => {
+            setHistoryIndicator(null);
+            setHistoryReturnTarget(null);
+          }}
+          onBack={
+            historyReturnTarget
+              ? () => {
+                  setHistoryIndicator(null);
+                  setSignalDrilldown(historyReturnTarget);
+                  setHistoryReturnTarget(null);
+                }
+              : undefined
+          }
+          backLabel={
+            historyReturnTarget
+              ? `${historyReturnTarget.date} 信号明细`
+              : undefined
+          }
         />
       )}
     </main>

@@ -1251,6 +1251,41 @@ a {
   line-height: 1.65;
 }
 
+.history-header-actions {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-back-button {
+  overflow: hidden;
+  max-width: 280px;
+  height: 36px;
+  padding: 0 13px;
+  border: 1px solid rgba(31, 99, 235, 0.24);
+  background: rgba(31, 99, 235, 0.07);
+  color: #1f63eb;
+  cursor: pointer;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-back-button:hover {
+  border-color: rgba(31, 99, 235, 0.48);
+  background: rgba(31, 99, 235, 0.12);
+}
+
+.history-back-button:focus-visible {
+  outline: 3px solid rgba(31, 99, 235, 0.24);
+  outline-offset: 2px;
+}
+
+.history-range-value {
+  font-size: 15px !important;
+  line-height: 1.35;
+}
 .modal-close {
   width: 36px;
   height: 36px;
@@ -2215,5 +2250,19 @@ footer p {
 
   .chart-click-hint {
     margin-left: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .history-header-actions {
+    align-items: flex-end;
+    flex-direction: column-reverse;
+  }
+
+  .history-back-button {
+    max-width: 190px;
+    height: 32px;
+    padding: 0 10px;
+    font-size: 11px;
   }
 }
