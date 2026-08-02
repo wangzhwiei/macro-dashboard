@@ -13,6 +13,9 @@ import type {
   Indicator,
   Signal,
 } from "./types";
+import SignalDrilldownModal, {
+  type SignalDrilldownSelection,
+} from "./SignalDrilldownModal";
 
 const signalMeta: Record<
   Signal,
@@ -48,8 +51,9 @@ function scoreTone(score: number) {
 }
 
 function signalForScore(score: number): Signal {
-  if (score >= 15) return "bullish";
-  if (score <= -15) return "bearish";
+  const displayedScore = Math.round(score);
+  if (displayedScore >= 15) return "bullish";
+  if (displayedScore <= -15) return "bearish";
   return "neutral";
 }
 
@@ -86,10 +90,12 @@ function MacroTrendCanvas({
   points,
   yLimit,
   onHover,
+  onSelect,
 }: {
-  points: Array<{ date: string; value: number }>;
+  points: Array<{ date: string; value: number; historyIndex: number }>;
   yLimit: number;
-  onHover: (point: { date: string; value: number } | null) => void;
+  onHover: (point: { date: string; value: number; historyIndex: number } | null) => void;
+  onSelect: (point: { date: string; value: number; historyIndex: number }) => void;
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
@@ -228,7 +234,25 @@ function MacroTrendCanvas({
   return (
     <canvas
       ref={canvasRef}
-      className="macro-trend-canvas"
+      className="macro-trend-canvas is-clickable"
+      role="button"
+      tabIndex={0}
+      title="点击图中任一点查看当时信号明细"
+      onClick={(event) => {
+        if (!points.length) return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        const ratio = Math.max(
+          0,
+          Math.min(1, (event.clientX - rect.left - 48) / (rect.width - 66)),
+        );
+        onSelect(points[Math.round(ratio * (points.length - 1))]);
+      }}
+      onKeyDown={(event) => {
+        if ((event.key === "Enter" || event.key === " ") && points.length) {
+          event.preventDefault();
+          onSelect(points[hoverIndex ?? points.length - 1]);
+        }
+      }}
       onMouseMove={(event) => {
         if (!points.length) return;
         const rect = event.currentTarget.getBoundingClientRect();
@@ -647,8 +671,8 @@ function HistoryModal({
             </div>
           </div>
           <p className="signal-method-note">
-            页面信号分值还会将该指标的周变化减去历史周变化均值，再除以历史标准差，
-            乘以债市方向与35，最后限制在 −100 至 +100；正值为债市利多，负值为债市利空。
+            页面信号以零变化为方向中轴，再用历史周变化的均方根波动归一化，
+            乘以债市方向与35，最后限制在 −100 至 +100；实际走弱且方向系数为−1时必为利多。
           </p>
         </section>
 
@@ -743,6 +767,8 @@ export default function Dashboard() {
   const [historyIndicator, setHistoryIndicator] = useState<Indicator | null>(
     null,
   );
+  const [signalDrilldown, setSignalDrilldown] =
+    useState<SignalDrilldownSelection | null>(null);
 
   useEffect(() => {
     fetch("./data/dashboard.json", { cache: "no-store" })
@@ -815,7 +841,7 @@ export default function Dashboard() {
     if (!data) {
       return {
         label: "",
-        points: [] as Array<{ date: string; value: number }>,
+        points: [] as Array<{ date: string; value: number; historyIndex: number }>,
       };
     }
     const category = data.categories.find((item) => item.id === trendTarget);
@@ -840,6 +866,7 @@ export default function Dashboard() {
       points: indices.map((index) => ({
         date: data.dates[index],
         value: values[index] ?? 0,
+        historyIndex: index,
       })),
     };
   }, [data, trendEnd, trendRange, trendStart, trendTarget]);
@@ -885,6 +912,16 @@ export default function Dashboard() {
       streak,
     };
   }, [trendSelection.points]);
+
+  const focusCategoryAndScroll = useCallback((categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setShowAuxiliary(true);
+    window.requestAnimationFrame(() =>
+      document
+        .getElementById("indicators")
+        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  }, []);
 
   if (error) {
     return (
@@ -995,7 +1032,7 @@ export default function Dashboard() {
               {supportive.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
+                  onClick={() => focusCategoryAndScroll(category.id)}
                   className="driver-bull"
                 >
                   {category.name} {category.score > 0 ? "+" : ""}
@@ -1008,7 +1045,7 @@ export default function Dashboard() {
               {headwinds.map((category) => (
                 <button
                   key={category.id}
-                  onClick={() => setSelectedCategory(category.id)}
+                  onClick={() => focusCategoryAndScroll(category.id)}
                   className="driver-bear"
                 >
                   {category.name} {Math.round(category.score)}
@@ -1070,11 +1107,7 @@ export default function Dashboard() {
             key={category.id}
             category={category}
             active={selectedCategory === category.id}
-            onSelect={() =>
-              setSelectedCategory((current) =>
-                current === category.id ? "all" : category.id,
-              )
-            }
+            onSelect={() => focusCategoryAndScroll(category.id)}
           />
         ))}
       </section>
@@ -1224,7 +1257,16 @@ export default function Dashboard() {
               points={trendSelection.points}
               yLimit={trendLimit}
               onHover={setTrendHover}
+              onSelect={(point) =>
+                setSignalDrilldown({
+                  date: point.date,
+                  historyIndex: point.historyIndex,
+                  categoryId:
+                    trendTarget === "overall" ? undefined : trendTarget,
+                })
+              }
             />
+            <p className="chart-click-hint">点击任一数据点，查看当时大类与高频指标的利多利空。</p>
           </div>
 
           <aside className="outlook-insights">
@@ -1390,7 +1432,14 @@ export default function Dashboard() {
                         color: Math.abs(score) >= 45 ? "#fff" : "#27312e",
                       }}
                       title={`${category.name} ${day}：${score > 0 ? "+" : ""}${Math.round(score)}`}
-                      aria-label={`${category.name} ${day} 信号 ${Math.round(score)}`}
+                      aria-label={`${category.name} ${day} 信号 ${Math.round(score)}，点击查看指标明细`}
+                      onClick={() =>
+                        setSignalDrilldown({
+                          date: day,
+                          historyIndex,
+                          categoryId: category.id,
+                        })
+                      }
                     >
                       {score > 0 ? "+" : ""}
                       {Math.round(score)}
@@ -1506,6 +1555,18 @@ export default function Dashboard() {
           信号仅用于宏观观察，不构成投资建议。
         </p>
       </footer>
+
+      {signalDrilldown && (
+        <SignalDrilldownModal
+          data={data}
+          selection={signalDrilldown}
+          onClose={() => setSignalDrilldown(null)}
+          onOpenIndicator={(indicator) => {
+            setSignalDrilldown(null);
+            setHistoryIndicator(indicator);
+          }}
+        />
+      )}
 
       {historyIndicator && (
         <HistoryModal
