@@ -31,7 +31,7 @@ jobs:
           cache: npm
 
       - name: Install frontend dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Run data quality guard unit tests
         run: npm test
