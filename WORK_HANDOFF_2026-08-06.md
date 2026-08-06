@@ -146,3 +146,18 @@ https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json?verify=TIMESTAM
 ```
 
 核对 `generatedAt` 后才能确认本次版本真正上线。
+
+## 7. iFinD 接通与自动化更新（2026-08-06 追加）
+
+本次已通过 WSL skill 实际完成 iFinD 增量更新：
+
+- skill 路径：`/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data`
+- MCP 调用返回 HTTP 200，认证有效
+- 已取消 `IFIND_CACHE_ONLY`，实际查询并更新 `data_cache`
+- 最新面板数据：`2026-08-06T12:19:12.361520+00:00`
+- iFinD 指标最新日期：`2026-08-06`
+- 严格质量校验：通过，无错误、无告警
+
+自动工作流已提交到 `main`：`006ec16`。工作流会在 Windows runner 中调用 WSL iFinD，再使用 Windows Node 构建静态页面。当前仓库仍没有注册 self-hosted runner；注册 runner 会允许 GitHub 仓库代码在本机执行，需要项目负责人明确批准后再执行。未注册前，GitHub Actions 的每日调度不会真正抓取数据。
+
+本次 iFinD 数据发布提交：`981c71b`。线上地址已验证为新数据版本。
