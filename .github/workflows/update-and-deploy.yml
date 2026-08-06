@@ -46,30 +46,20 @@ jobs:
             ifind-cache-${{ runner.os }}-
 
       - name: Install frontend dependencies
+        shell: cmd
         run: npm ci --no-audit --no-fund
 
       - name: Verify WSL iFinD skill
-        shell: pwsh
-        run: |
-          wsl.exe -d Ubuntu -- bash -lc "test -f /home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/call.py && test -s /home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/mcp_config.json"
+        shell: cmd
+        run: wsl.exe -d Ubuntu -- bash -lc "test -f /home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/call.py && test -s /home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/mcp_config.json"
 
       - name: Fetch data with WSL iFinD skill
-        shell: pwsh
-        run: |
-          $workspaceWsl = (& wsl.exe -d Ubuntu -- wslpath -a "$env:GITHUB_WORKSPACE").Trim()
-          $script = @"
-          set -euo pipefail
-          cd '$workspaceWsl'
-          export PYTHONUTF8=1
-          export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'
-          export MACRO_DATA_CACHE_DIR='$workspaceWsl/data_cache'
-          unset IFIND_CACHE_ONLY
-          python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only
-          "@
-          $b64 = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($script))
-          wsl.exe -d Ubuntu -- bash -lc "echo $b64 | base64 -d | bash"
+        shell: cmd
+        run: >-
+          wsl.exe -d Ubuntu -- bash -lc "workspace=$(wslpath -a '%GITHUB_WORKSPACE%'); cd \"$workspace\"; export PYTHONUTF8=1; export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'; export MACRO_DATA_CACHE_DIR=\"$workspace/data_cache\"; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only"
 
       - name: Build static site
+        shell: cmd
         run: npm run build:github
 
       - name: Upload quality report
