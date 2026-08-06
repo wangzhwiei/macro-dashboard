@@ -15,8 +15,8 @@ land_premium,real_estate,土地价格,100城土地成交溢价率,weekly,%,CJHX,
 newhome_tier1,real_estate,新房销售,30城商品房成交：一线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER1,pct_change,-1,0.4,
 newhome_tier2,real_estate,新房销售,30城商品房成交：二线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER2,pct_change,-1,0.4,
 newhome_tier3,real_estate,新房销售,30城商品房成交：三线,daily,万㎡,CJHX,CJHX:NEW_HOME_TIER3,pct_change,-1,0.4,
-listing_tier1,real_estate,房价,二手房挂牌价指数：一线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER1,pct_change,-1,0.4,
-listing_tier2,real_estate,房价,二手房挂牌价指数：二线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER2,pct_change,-1,0.4,
+listing_tier1,real_estate,房价,二手房挂牌价指数：一线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER1,pct_change,-1,0.4,21
+listing_tier2,real_estate,房价,二手房挂牌价指数：二线,weekly,指数,CJHX,CJHX:LISTING_PRICE_TIER2,pct_change,-1,0.4,21
 pvc_rate,infrastructure,建材生产,PVC开工率,weekly,%,iFinD,CJHX:PVC_RATE,pp_change,-1,0.4,
 cold_rolled_rate,infrastructure,建材生产,冷轧开工率,weekly,%,iFinD,CJHX:COLD_ROLLED_RATE,pp_change,-1,0.4,
 glass_rate,infrastructure,建材生产,玻璃开工率,weekly,%,iFinD,CJHX:GLASS_RATE,pp_change,-1,0.4,
