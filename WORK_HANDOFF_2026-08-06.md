@@ -174,3 +174,29 @@ https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json?verify=TIMESTAM
 - 线上生成时间：`2026-08-06T13:50:52.453380+00:00`
 
 当前 runner 通过用户会话中的 `run.cmd` 进程运行，GitHub 显示 online。Windows 服务尚未安装；机器注销或重启后 runner 会离线，每日定时任务不会执行。安装持久 Windows 服务需要额外明确授权。
+
+## 9. 日频数据源审计与南华金属修复（2026-08-06 追加）
+
+本次严格按项目既有数据源配置审计，没有因指标代码前缀或数据日期较旧而跨源替换：
+
+- 配置 `source=iFinD` 的日频指标中，只有 `nanhua_metals` 停在 `2026-07-31`。
+- 根因是查询名 `南华期货:金属指数` 带日期后触发 iFinD 模糊匹配漂移，返回错误 provider ID `S005430044`。
+- 将 iFinD 查询名改为 `南华金属指数` 后，稳定返回配置中的正确 provider ID `S004094486`。
+- 线上结果：`nanhua_metals` 保持 `source=iFinD`，更新至 `2026-08-06`，最新值 `7065.47`。
+- 修复提交：`ccff75b`。
+
+仍早于 `2026-08-03` 的日频指标全部配置为 CJHX，不允许用 iFinD 补写：
+
+- `2026-07-30`：`cement_east`、`cement_yangtze`、`iron_ore_62`
+- `2026-07-31`：`brent`、`cement_national`、`dxy`、`eurusd`、`gold_spot`、`lme_zinc`、`silver_spot`、`usdjpy`、`wti`
+- `2026-08-01`：`metro_composite`、`metro_guangzhou`、`metro_shanghai`、`newhome_30c`、`newhome_tier3`
+
+这些日期与 CJHX 原始 `macro_extract_70_results.csv` 尾部一致。当前机器没有项目声明的 `cjhx-cais-bis-skill`，因此只能等待或接入 CJHX 上游更新，不能改走 iFinD。
+
+自动更新与部署验证：
+
+- 完整成功运行：https://github.com/wangzhwiei/macro-dashboard/actions/runs/31111357483
+- Pages deployment：`5781602244`，状态 success
+- 线上生成时间：`2026-08-06T14:43:49.566017+00:00`
+- GitHub Pages JSON 缓存策略：`max-age=600`，部署成功后最多约 10 分钟才会看到新数据
+- 最终线上验证：南华金属日期 `2026-08-06`，最新值 `7065.47`
