@@ -228,7 +228,11 @@ Windows 服务安装需要管理员权限，且系统服务账户通常无法访
 - `Fetch data with WSL iFinD skill`：成功，`15:36:04Z` 至 `15:45:16Z`，耗时 9 分 12 秒
 - `Build static site`：成功，约 4 秒
 - `update-and-build` 总耗时：11 分 26 秒
-- 首次 `deploy` 在 GitHub 托管 runner 的 `Set up job` 阶段失败，部署代码未开始；已只重跑失败任务（attempt 2），没有重复抓取数据
-- 记录本文时 attempt 2 仍在 GitHub Pages 托管队列等待，属于 GitHub 外部资源问题，不是本机 runner、iFinD 或 CJHX 故障
+- 本次构建产物 `generatedAt=2026-08-06T15:45:15.295921+00:00`
+- 日频 iFinD：15 项更新至 `2026-08-06`，5 项更新至 `2026-08-05`，没有早于 `2026-08-05` 的 iFinD 日频项
+- 日频 CJHX：35 项为 `2026-08-05`；其余 17 项仍为上游真实的 `2026-07-30`、`2026-07-31` 或 `2026-08-01`
+- 首次 `deploy` 在 GitHub 托管 runner 的 `Set up job` 阶段失败，部署代码未开始
+- attempt 2 的 `deploy-pages` 因 GitHub OIDC 服务返回 HTTP 503（`upstream ... overflow`）失败；权限已确认包含 `Pages: write` 和 `id-token: write`
+- 已只重跑失败的部署任务（attempt 3），没有重复抓取数据；记录本文时仍在 GitHub Pages 托管队列等待，属于 GitHub 外部服务问题
 
 运行时间较长的原因不是人工发布：流程已经自动化，但当前有 41 个 iFinD 序列按顺序执行增量 API 请求，每个请求还保留最多 3 次重试。`--days 1310` 是面板历史保留窗口；本机缓存存在时只请求最后缓存日期之后的数据，并非每天全量下载 1310 天。正常情况下数据抓取约 5 至 10 分钟，随后页面构建只需数秒，Pages 上线时间还受 GitHub 托管队列和约 10 分钟 CDN 缓存影响。
