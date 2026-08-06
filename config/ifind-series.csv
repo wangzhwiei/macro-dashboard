@@ -1,4 +1,4 @@
-﻿semantic_code,query_name,provider_id,frequency,raw_unit,scale
+semantic_code,query_name,provider_id,frequency,raw_unit,scale
 IFIND:BILL_DISCOUNT_6M,转贴(国股贴)半年国股,M021397974,D,%,1
 IFIND:BILL_DISCOUNT_3M,转贴(国股贴)3M国股,M021397977,D,%,1
 IFIND:FLIGHTS_DAILY,航班执行情况:执行航班数:国内航班:中国,S009089641,D,班次,1
@@ -35,7 +35,7 @@ IFIND:EIA_CRUDE_INVENTORY,库存:商业原油,S004382967,W,千桶,0.1
 CJHX:WIRE_INVENTORY,库存:线材:合计,S002837284,W,吨,0.0001
 IFIND:NANHUA_AGRI,南华期货:农产品指数,S004094485,D,指数,1
 IFIND:NANHUA_ENERGY,南华期货:能化指数,S004094484,D,指数,1
-IFIND:NANHUA_METALS,南华期货:金属指数,S004094486,D,指数,1
+IFIND:NANHUA_METALS,南华金属指数,S004094486,D,指数,1
 IFIND:IRON_ORE_FUTURES,期货结算价(活跃):铁矿石,S012107746,D,元/吨,1
 IFIND:GASOLINE_EX_FACTORY_TAXED,国内汽油出厂价(含税),S000006482,W,元/吨,1
 IFIND:GLASS_SPOT,现货价:玻璃,S004242725,D,元/平方米,1
