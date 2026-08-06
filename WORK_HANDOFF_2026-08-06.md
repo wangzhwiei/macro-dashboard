@@ -161,3 +161,16 @@ https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json?verify=TIMESTAM
 自动工作流已提交到 `main`：`006ec16`。工作流会在 Windows runner 中调用 WSL iFinD，再使用 Windows Node 构建静态页面。当前仓库仍没有注册 self-hosted runner；注册 runner 会允许 GitHub 仓库代码在本机执行，需要项目负责人明确批准后再执行。未注册前，GitHub Actions 的每日调度不会真正抓取数据。
 
 本次 iFinD 数据发布提交：`981c71b`。线上地址已验证为新数据版本。
+
+## 8. 自动化端到端验证完成（2026-08-06 追加）
+
+- self-hosted runner：`macro-dashboard-windows`
+- runner 标签：`self-hosted`、`Windows`、`X64`、`cjhx-internal`
+- iFinD 缓存：仅保存在本机 `github-runner/ifind-cache`，未提交供应商历史数据或 token 到 GitHub
+- Pages 模式：已从 `legacy` 切换为 `workflow`，避免双重部署互相取消
+- 完整验证运行：https://github.com/wangzhwiei/macro-dashboard/actions/runs/31107071046
+- `update-and-build`：成功
+- `deploy`：成功（run attempt 2）
+- 线上生成时间：`2026-08-06T13:50:52.453380+00:00`
+
+当前 runner 通过用户会话中的 `run.cmd` 进程运行，GitHub 显示 online。Windows 服务尚未安装；机器注销或重启后 runner 会离线，每日定时任务不会执行。安装持久 Windows 服务需要额外明确授权。
