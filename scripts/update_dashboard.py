@@ -540,7 +540,7 @@ def build_dashboard(
             failures.append(f"{definition['id']}: {error}")
 
     if not indicators:
-        raise RuntimeError("没有任何指标成功更新")
+        raise RuntimeError("没有任何指标成功更新：" + "; ".join(failures[:10]))
 
     categories: list[dict[str, Any]] = []
     for category in config["categories"]:
