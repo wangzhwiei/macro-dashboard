@@ -1,4 +1,6 @@
-# 工作交接记录（2026-08-06）
+# 宏观网页面板工作交接与运维手册
+
+> 最后更新：2026-08-07。首次接手优先阅读第 11 至 18 节；第 1 至 10 节保留 2026-08-06 的实施历史和故障背景。
 
 ## 1. 本次工作结果
 
@@ -233,6 +235,256 @@ Windows 服务安装需要管理员权限，且系统服务账户通常无法访
 - 日频 CJHX：35 项为 `2026-08-05`；其余 17 项仍为上游真实的 `2026-07-30`、`2026-07-31` 或 `2026-08-01`
 - 首次 `deploy` 在 GitHub 托管 runner 的 `Set up job` 阶段失败，部署代码未开始
 - attempt 2 的 `deploy-pages` 因 GitHub OIDC 服务返回 HTTP 503（`upstream ... overflow`）失败；权限已确认包含 `Pages: write` 和 `id-token: write`
-- 已只重跑失败的部署任务（attempt 3），没有重复抓取数据；记录本文时仍在 GitHub Pages 托管队列等待，属于 GitHub 外部服务问题
+- attempt 3 在 GitHub 托管队列等待 15 分钟后被平台取消；attempt 4 仅重跑 `deploy` 并成功，没有重复抓取数据
+- 最终 run 结论：`success`；线上 `generatedAt=2026-08-06T15:45:15.295921+00:00`
 
 运行时间较长的原因不是人工发布：流程已经自动化，但当前有 41 个 iFinD 序列按顺序执行增量 API 请求，每个请求还保留最多 3 次重试。`--days 1310` 是面板历史保留窗口；本机缓存存在时只请求最后缓存日期之后的数据，并非每天全量下载 1310 天。正常情况下数据抓取约 5 至 10 分钟，随后页面构建只需数秒，Pages 上线时间还受 GitHub 托管队列和约 10 分钟 CDN 缓存影响。
+
+## 11. 当前生产状态
+
+| 项目 | 当前值 |
+| --- | --- |
+| 线上页面 | <https://wangzhwiei.github.io/macro-dashboard/> |
+| 线上数据 | <https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json> |
+| GitHub 仓库 | <https://github.com/wangzhwiei/macro-dashboard> |
+| 源码分支 | `main` |
+| GitHub 默认分支 | `gh-pages` |
+| 每日 workflow | `Update, validate and deploy macro dashboard`，ID `328604569` |
+| 自动时间 | 每天北京时间 08:30，cron `30 0 * * *` |
+| 本机 runner | `macro-dashboard-windows`，标签 `self-hosted, Windows, X64, cjhx-internal` |
+| 最近完整验证 | run `31116483522`，attempt 4 最终成功 |
+| 最近线上版本 | `generatedAt=2026-08-06T15:45:15.295921+00:00` |
+
+每日自动运行的前提：Windows 机器开机、网络正常、`wangzhiwei202307` 已登录。runner 通过当前用户启动目录的快捷方式启动，从而能访问该用户的 WSL Ubuntu 和 iFinD skill。机器重启后必须先登录 Windows；不需要手工打开终端。
+
+## 12. 端到端流程
+
+生产流程只有一条主链：
+
+1. GitHub 在每天北京时间 08:30 触发 `.github/workflows/update-and-deploy.yml`。由于仓库默认分支是 `gh-pages`，GitHub 实际读取默认分支上的 workflow 定义。
+2. `update-and-build` 被标签为 `cjhx-internal` 的本机 Windows runner 接单，随后明确 checkout `main`，所以业务代码和配置来自 `main`。
+3. workflow 安装 Node.js 22 和前端依赖，验证 WSL 中 iFinD skill 的 `call.py` 与 `mcp_config.json` 存在。
+4. WSL 执行 `scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only`。
+5. `run_pipeline.py` 依次导出序列目录、生成页面数据、严格校验、运行 Python 单元测试。任一步失败都会阻止发布。
+6. `hybrid_adapter.py` 按配置为每个语义代码选择 CJHX 或 iFinD。CJHX CSV 每次运行只下载一次；iFinD 使用本机持久缓存并按序列做增量请求。
+7. `update_dashboard.py` 生成 `public/data/dashboard.json`；`validate_dashboard.py --strict` 生成 `outputs/data-quality-report.json` 并执行硬性质量门禁。
+8. `npm run build:github` 由 Vite 将 `static/`、`app/` 和 `public/` 构建到 `docs/`。
+9. workflow 将 `docs/` 打包为 `github-pages` artifact。GitHub 托管 Ubuntu runner 用 `actions/deploy-pages@v4` 发布。
+10. 部署成功后，GitHub Pages CDN 最多可能继续缓存旧 JSON 约 10 分钟。验收必须读取带随机查询参数的 `dashboard.json` 并核对 `generatedAt`。
+
+自动化消除了手工操作，但不会消除外部 API 和 GitHub 队列耗时。当前有 41 个实际使用的 iFinD 唯一序列顺序增量请求，供应商响应和重试会累计；最近实测 iFinD 抓取 9 分 12 秒，静态构建约 4 秒。
+
+## 13. 本机目录
+
+| 路径 | 用途 | 注意事项 |
+| --- | --- | --- |
+| `C:\Users\wangzhiwei202307\Documents\宏观网页面板\source-main` | 当前权威源码工作区，跟踪 `main` | 代码、配置、文档修改在这里完成 |
+| `C:\Users\wangzhiwei202307\Documents\宏观网页面板\github-runner` | GitHub Actions runner 安装目录 | 不提交；包含 runner 凭据、日志、工作副本和 iFinD 缓存 |
+| `github-runner\ifind-cache` | iFinD 持久历史缓存和 CJHX CSV 缓存 | 生产增量更新依赖此目录；不要清空或上传 |
+| `github-runner\_work` | Actions 临时 checkout 和构建目录 | 不要在这里手工改源码，下一次 job 会覆盖 |
+| `C:\Users\wangzhiwei202307\Documents\宏观网页面板\macro-dashboard-main` | 前期实施工作副本 | 仅供历史比对，不作为后续权威源码 |
+| `C:\Users\wangzhiwei202307\Documents\宏观网页面板\release-gh-pages` | 旧的手工发布副本 | 当前 artifact 部署链不依赖它 |
+| `C:\Users\wangzhiwei202307\Documents\宏观网页面板\runtime` | 本地 Python/Node 运行时 | 手工运行时可用，workflow 主要使用 runner 与 WSL 环境 |
+| `/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data` | WSL iFinD 调用 skill | `mcp_config.json` 是本机敏感配置，不得进仓库 |
+
+runner 登录自启文件：
+
+```text
+C:\Users\wangzhiwei202307\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\Macro Dashboard GitHub Runner.lnk
+```
+
+它直接指向 `github-runner\run.cmd`。runner 注册文件 `.runner`、`.credentials`、`.credentials_rsaparams` 都属于敏感本机状态，不能复制进项目或日志。
+
+## 14. 关键文件职责
+
+### 自动化与发布
+
+| 文件 | 职责 |
+| --- | --- |
+| `.github/workflows/update-and-deploy.yml` | 每日数据更新、质量校验、静态构建、artifact 上传和 Pages 部署的主 workflow |
+| `.github/workflows/pages.yml` | 仅在 `gh-pages` push、手工或 repository dispatch 时运行的第二条 Pages 链；正常每日流程不应触发它 |
+| `.github/workflows/quality-guard-ci.yml` | pull request 和指定质量分支的 CI，不负责生产定时更新 |
+| `.github/workflows.disabled/update-and-deploy.yml` | 历史禁用副本，仅供参考，不会运行 |
+| `vite.github.config.ts` | GitHub Pages 构建配置；入口 `static/`、基础路径 `./`、产物目录 `docs/` |
+| `package.json` | Node 依赖和 `dev`、`test`、`build:github`、`pipeline:update` 命令 |
+
+### 数据配置
+
+| 文件 | 职责 |
+| --- | --- |
+| `config/indicators.json` | 39 个主指标定义：分类、频率、单位、展示来源、组件、权重、变换、债市方向 |
+| `config/auxiliary-indicators.csv` | 72 个辅助指标定义；与主指标一起进入最终 dashboard，总计 111 个唯一指标 |
+| `config/cjhx-series-map.json` | CJHX 路由表，语义代码映射到 CJHX CSV 的 `series_key`，可配置 `scale` 和 `exclude_dates` |
+| `config/ifind-series.csv` | iFinD 路由与身份表：`semantic_code`、`query_name`、`provider_id`、频率、原始单位、缩放 |
+| `config/provider-code-map.json` | 供应商代码映射和碰撞校验基线 |
+| `config/provider-code-map.example.json` | 映射格式示例，不是生产路由 |
+
+### 数据处理
+
+| 文件 | 职责 |
+| --- | --- |
+| `scripts/run_pipeline.py` | 一键编排入口；失败即返回非零退出码 |
+| `scripts/update_dashboard.py` | 拉取所有组件、计算指标/评分/历史、生成 `public/data/dashboard.json` |
+| `scripts/validate_dashboard.py` | 严格质量门禁，检查配置、映射、数值、日期、新鲜度和输出结构 |
+| `scripts/export_series_catalog.py` | 导出 `outputs/series-catalog.csv`，用于审计 121 个组件行和供应商代码 |
+| `scripts/adapters/hybrid_adapter.py` | 当前生产 adapter；CJHX 优先路由，iFinD 增量调用和缓存 |
+| `scripts/adapters/common.py` | adapter 共用代码解析和 provider code 映射 |
+| `scripts/adapters/http_adapter.py` | 通用 HTTP 接口备选方案，当前生产不用 |
+| `scripts/adapters/custom_adapter.py` | 旧的直接 CJHX/iFinD 函数方案，当前生产 workflow 不用 |
+| `scripts/fetch_cjhx_raw.py` | 在具备 `cjhx-cais-bis-skill` 时直接抓 CJHX 原始数据；当前机器缺该 skill |
+| `scripts/generate_cjhx_report.py` | CJHX 原始数据质量报告工具 |
+| `scripts/incremental_update.py` | 早期增量更新工具，不是当前每日入口 |
+| `scripts/sync_auxiliary_sources.py` | 辅助指标来源同步维护工具，运行后必须审查 diff |
+| `scripts/sync_provider_code_map.py` | provider code 映射同步工具，运行后必须跑严格校验 |
+| `scripts/generate_static_html.py` | 旧静态 HTML 生成工具；当前生产使用 Vite |
+
+### 前端与产物
+
+| 文件或目录 | 职责 |
+| --- | --- |
+| `static/index.html`、`static/main.tsx` | Vite 静态页面入口 |
+| `app/Dashboard.tsx` | 面板主界面和交互 |
+| `app/SignalDrilldownModal.tsx` | 指标详情/信号下钻弹窗 |
+| `app/globals.css` | 页面全局样式 |
+| `app/types.ts` | dashboard JSON 的 TypeScript 类型 |
+| `public/data/dashboard.json` | 数据管线生成的前端输入源 |
+| `public/cjhx-logo.png` | 构建时复制的品牌资源 |
+| `docs/` | `build:github` 生成的可发布静态站点；不要只手改这里 |
+| `outputs/data-quality-report.json` | 最近一次严格校验报告 |
+| `outputs/series-catalog.csv` | 完整序列目录审计产物 |
+| `outputs/provider-code-collisions.csv` | provider code 冲突审计产物 |
+
+### 测试与说明
+
+| 文件或目录 | 职责 |
+| --- | --- |
+| `tests/test_hybrid_adapter.py` | CJHX/iFinD 路由、缓存和 provider 身份保护测试 |
+| `tests/test_data_quality_guards.py` | 严格质量门禁测试 |
+| `tests/test_data_pipeline.py` | 数据生成主流程测试 |
+| `tests/test_latest_observation_anchor.py` | 最新观测日期锚定测试 |
+| `tests/test_full_history_range.py` | 历史窗口覆盖测试 |
+| `tests/test_scoring_direction.py`、`test_signal_threshold.py` | 评分方向和阈值测试 |
+| `tests/rendered-html.test.mjs` | 旧渲染测试；当前 `npm test` 实际映射到 Python unittest |
+| `README.md` | 开发、接口和基础结构说明 |
+| `METHODOLOGY.md` | 指标计算和评分方法 |
+| `INTERNAL_AI_INTEGRATION.md` | 内部 AI 集成说明，不参与 Pages 生产运行 |
+| `db/`、`worker/`、`examples/`、`next.config.ts` | 其他部署/示例脚手架；当前 GitHub Pages 生产链不使用 |
+
+## 15. 数据源边界和路由真相
+
+这是本项目最重要的约束：不要根据语义代码的文本前缀判断真实来源，也不要因为某个 CJHX 日期旧就临时改走 iFinD。
+
+`hybrid_adapter.fetch_series()` 的真实顺序是：
+
+1. 如果代码存在于 `config/cjhx-series-map.json`，走 CJHX。
+2. 否则如果代码存在于 `config/ifind-series.csv`，走 iFinD。
+3. 两边都没有就立即失败。
+
+因此类似 `IFIND:BRENT` 的代码也可能因存在于 CJHX 路由表而实际走 CJHX。文本前缀是历史语义标识，不是运行时路由开关。
+
+2026-08-07 机械审计结果：
+
+- 111 个唯一指标，121 个组件行。
+- 111 个唯一语义代码中，70 个路由到 CJHX，41 个路由到 iFinD。
+- 缺失路由 0 个，同时存在于两张路由表的代码 0 个。
+- 主配置有 39 个主指标、49 个组件：27 个组件走 CJHX，22 个组件走 iFinD。
+- `steel_inventory` 是显式 `CJHX+iFinD` 复合指标：螺纹库存走 CJHX，热卷/冷轧/中板库存走 iFinD。只能按组件分别取数，不能互相补写。
+
+修改来源时必须同时审查：指标定义中的 `source` 展示值、组件 `code`、CJHX 路由表、iFinD 路由表、provider code 映射和相关测试。禁止让同一个代码同时出现在两张路由表；因为 CJHX 优先，这会静默遮蔽 iFinD 配置。
+
+### CJHX
+
+- 默认上游：`https://raw.githubusercontent.com/wangzhwiei/macro-data/main/macro_extract_70_results.csv`。
+- 每次 pipeline 运行下载一次并缓存到 `github-runner\ifind-cache\macro_extract_70_results.csv`。
+- 下载失败且存在旧缓存时会继续使用旧 CSV，并写 warning；验收必须看 `updatedAt`，不能只看 workflow success。
+- 当前机器没有 `cjhx-cais-bis-skill`，不能直接刷新 CJHX API。CJHX 旧日期只能等待 `macro-data` 上游更新，不能用 iFinD 补齐。
+
+### iFinD
+
+- 调用入口是 WSL skill 的 `call.py`，workflow 会先验证 `call.py` 和 `mcp_config.json`。
+- `ifind-series.csv` 的 `provider_id` 是身份断言。返回数据出现不同 provider ID 时必须失败，防止模糊匹配漂移。
+- 本机缓存存在时，从最后缓存日期加一天开始请求；`--days 1310` 是最终历史窗口，不代表每天全量抓 1310 天。
+- 单序列最多重试 3 次；如果增量区间无新观测且已有验证缓存，会保留缓存。因此节假日/非交易日不应强行制造新日期。
+- `nanhua_metals` 的正确查询名是 `南华金属指数`，正确 provider ID 是 `S004094486`。不要恢复为 `南华期货:金属指数`，否则会漂移到错误序列。
+
+## 16. 日常运行和验收
+
+### 正常自动运行
+
+- 07:00 左右等待 CJHX 上游更新。
+- 08:30 GitHub schedule 触发。
+- 本机 runner 完成数据和构建，正常约 5 至 15 分钟。
+- GitHub Pages 部署通常再需 1 至数分钟；CDN 最多约 10 分钟。
+
+不要在前一轮尚未结束时反复点 `Run workflow`。workflow 的 concurrency 为 `macro-dashboard-production` 且 `cancel-in-progress: false`，重复运行会排队并延长总时间。
+
+### 本机手工验证
+
+在 `source-main` 中执行：
+
+```powershell
+$env:PYTHONUTF8 = '1'
+wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'; export MACRO_DATA_CACHE_DIR='/mnt/c/Users/wangzhiwei202307/Documents/宏观网页面板/github-runner/ifind-cache'; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only"
+npm ci --no-audit --no-fund
+npm run build:github
+```
+
+只做离线缓存验证时才可临时设置 `IFIND_CACHE_ONLY=1`；生产每日 workflow 必须 `unset IFIND_CACHE_ONLY`，否则 iFinD 不会查询最新数据。
+
+### 必查验收项
+
+1. Actions 的 `update-and-build` 和 `deploy` 都是 `success`。
+2. `outputs/data-quality-report.json` 无 error；warning 必须逐条理解，不能机械忽略。
+3. 线上 JSON 的 `generatedAt` 等于本次构建值。
+4. 按 `source, updatedAt` 汇总日频指标，分别判断 CJHX 与 iFinD 新鲜度。
+5. 核对 `nanhua_metals.source=iFinD`、provider 身份未漂移、日期和值合理。
+6. 打开线上页面检查静态资源和交互，不要只验证 JSON。
+
+绕过 CDN 的验证地址格式：
+
+```text
+https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json?verify=UNIX_TIMESTAMP
+```
+
+## 17. 故障恢复手册
+
+| 现象 | 最可能原因 | 处理 |
+| --- | --- | --- |
+| `update-and-build` 一直 queued | 本机 runner offline 或用户未登录 | 登录 Windows；检查 `Runner.Listener`；必要时运行 `github-runner\run.cmd` |
+| `Verify WSL iFinD skill` 失败 | 服务账户/用户不对、WSL 未启动、skill 路径或配置缺失 | 确保由当前用户 runner 启动；验证 Ubuntu、`call.py`、`mcp_config.json` |
+| iFinD 步骤慢 | 41 个序列顺序请求、网络延迟、重试 | 先看具体 step；正常 5 至 10 分钟，不要并发触发第二轮 |
+| iFinD provider 漂移 | 查询名模糊匹配到其他序列 | 修正 `query_name`，保留/核实 `provider_id`，添加回归测试；不能接受错误 ID |
+| CJHX 日期旧但 workflow success | 上游 CSV 本身旧，或下载失败后使用本地缓存 | 对比 `macro-data` CSV 尾部和缓存；不能改走 iFinD |
+| strict validation 失败 | 配置、日期、数值、映射或输出不满足门禁 | 修复根因后重跑全 pipeline；禁止跳过校验发布 |
+| `deploy` 的 `Set up job` 失败 | GitHub hosted runner provisioning 故障 | 只重跑 failed jobs，不重复 iFinD 抓取 |
+| `deploy-pages` 报 OIDC 503 | GitHub OIDC/Pages 外部故障 | 确认权限仍有 `pages: write`、`id-token: write`；只重跑 failed jobs |
+| deploy success 但线上仍旧 | CDN `max-age=600` | 等待并用随机查询参数核对 `generatedAt` |
+| 两条 Pages workflow 同时运行 | 有人 push 了 `gh-pages`，触发 `pages.yml` | 保持当前 artifact 主链；不要日常 push `gh-pages` |
+| 改了 main workflow 但 schedule 未变化 | 默认分支是 `gh-pages`，GitHub 从默认分支读 schedule | 将主 workflow 同步到 `gh-pages`，或经过评审后把默认分支改为 `main` |
+
+2026-08-06/07 实际故障样本：run `31116483522` 的数据与构建一次成功；deploy attempt 1 在 hosted runner setup 失败，attempt 2 因 OIDC HTTP 503 失败，attempt 3 排队后被取消，attempt 4 成功。恢复过程只重跑 failed jobs，没有重复抓取 iFinD。
+
+## 18. 安全边界和禁止事项
+
+- 不提交 `github-runner` 目录、`ifind-cache`、runner `.credentials*`、iFinD `mcp_config.json`、token、密码或供应商历史缓存。
+- 不在命令输出、Actions 日志、Markdown 或 issue 中打印 GitHub token。runner 注册 token 只能短期存在于进程内存。
+- 不清空 `github-runner\ifind-cache`。清空会丢失增量基线并显著增加供应商调用量。
+- 不直接编辑 `github-runner\_work`、`docs/assets` 或 `docs/data/dashboard.json` 来修数据。应改配置/adapter，重新生成 `public/data/dashboard.json`，再构建。
+- 不因数据日期旧跨源补写。CJHX 与 iFinD 的来源边界由项目配置决定，不由当日数据新鲜度决定。
+- 不只看语义代码前缀判断来源；必须按 CJHX 路由表优先规则核对。
+- 不把 Windows runner 改为默认系统服务账户后直接认为可用；该账户通常访问不到当前用户的 WSL Ubuntu。
+- 不在 Pages workflow 模式和 legacy branch 模式之间来回切换。切换前必须先设计唯一发布链并停用另一条。
+- 不把 `workflow success` 等同于所有日频指标当天有值。交易日、频率、上游发布时间和缓存回退都可能让日期不同。
+- 不随意并行化 41 个 iFinD 请求。供应商并发限制未知，贸然并发可能触发限流、认证异常或结果错配。
+
+### 修改后最低检查清单
+
+```powershell
+python -m unittest discover -s tests -p "test_*.py"
+python scripts/validate_dashboard.py --strict --report outputs/data-quality-report.json
+npm run build:github
+git diff --check
+git status --short
+```
+
+涉及真实数据源、workflow 或发布行为的修改，还必须完成一次 `workflow_dispatch` 端到端运行并核对线上 `generatedAt`。涉及 workflow 的修改需要特别确认默认分支 `gh-pages` 上的定义是否同步。
