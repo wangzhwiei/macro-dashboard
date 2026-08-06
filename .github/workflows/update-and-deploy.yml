@@ -70,10 +70,17 @@ jobs:
           path: outputs/data-quality-report.json
           if-no-files-found: warn
 
+      - name: Archive Pages artifact
+        shell: cmd
+        run: wsl.exe -d Ubuntu -- bash -lc "tar --dereference --hard-dereference --directory docs -cvf $PWD/github-pages.tar --exclude=.git --exclude=.github --force-local ."
+
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: docs
+          name: github-pages
+          path: github-pages.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: update-and-build
