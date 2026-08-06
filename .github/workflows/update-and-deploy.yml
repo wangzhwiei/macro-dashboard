@@ -56,7 +56,7 @@ jobs:
       - name: Fetch data with WSL iFinD skill
         shell: cmd
         run: >-
-          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'; export MACRO_DATA_CACHE_DIR=$PWD/data_cache; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only"
+          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'; export MACRO_DATA_CACHE_DIR='/mnt/c/Users/wangzhiwei202307/Documents/宏观网页面板/github-runner/ifind-cache'; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only"
 
       - name: Build static site
         shell: cmd
