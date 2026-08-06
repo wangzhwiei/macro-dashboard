@@ -200,3 +200,35 @@ https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json?verify=TIMESTAM
 - 线上生成时间：`2026-08-06T14:43:49.566017+00:00`
 - GitHub Pages JSON 缓存策略：`max-age=600`，部署成功后最多约 10 分钟才会看到新数据
 - 最终线上验证：南华金属日期 `2026-08-06`，最新值 `7065.47`
+
+## 10. 每日自动运行与持久 runner（2026-08-06 晚间追加）
+
+已获得项目负责人授权，将本机注册为仓库的 `cjhx-internal` GitHub Actions runner。当前状态如下：
+
+- runner 名称：`macro-dashboard-windows`
+- 标签：`self-hosted`、`Windows`、`X64`、`cjhx-internal`
+- runner 目录：`C:\Users\wangzhiwei202307\Documents\宏观网页面板\github-runner`
+- iFinD 持久缓存：`github-runner\ifind-cache`，只保存在本机，不提交到 GitHub
+- 自启动入口：当前 Windows 用户启动目录中的 `Macro Dashboard GitHub Runner.lnk`
+- 启动目标：runner 官方 `run.cmd`，已实测出现 `Listening for Jobs`
+- GitHub Actions 定时：每天北京时间 `08:30`（UTC cron：`30 0 * * *`）
+
+Windows 服务安装需要管理员权限，且系统服务账户通常无法访问当前用户拥有的 WSL Ubuntu 和 iFinD skill。本机当前改用“用户登录时启动”方式，以保证 WSL 权限正确。因此每日自动更新的运行前提是：机器已开机、网络正常，并且 `wangzhiwei202307` 用户已登录 Windows。机器重启后只需登录，runner 会自动恢复；无需手工打开终端或执行脚本。
+
+数据源边界保持不变：
+
+- CJHX 指标只从 CJHX `macro_extract_70_results.csv` 读取；CJHX 上游未更新时保留其真实日期，不得改用 iFinD 补写。
+- iFinD 只更新 `config/ifind-series.csv` 中配置的 41 个序列，通过 WSL `ifind-finance-data` skill 调用。
+- `hybrid` adapter 按项目配置选择来源，不按数据新旧临时切换供应商。
+
+本次端到端验证运行：
+
+- Actions run：<https://github.com/wangzhwiei/macro-dashboard/actions/runs/31116483522>
+- `Verify WSL iFinD skill`：成功
+- `Fetch data with WSL iFinD skill`：成功，`15:36:04Z` 至 `15:45:16Z`，耗时 9 分 12 秒
+- `Build static site`：成功，约 4 秒
+- `update-and-build` 总耗时：11 分 26 秒
+- 首次 `deploy` 在 GitHub 托管 runner 的 `Set up job` 阶段失败，部署代码未开始；已只重跑失败任务（attempt 2），没有重复抓取数据
+- 记录本文时 attempt 2 仍在 GitHub Pages 托管队列等待，属于 GitHub 外部资源问题，不是本机 runner、iFinD 或 CJHX 故障
+
+运行时间较长的原因不是人工发布：流程已经自动化，但当前有 41 个 iFinD 序列按顺序执行增量 API 请求，每个请求还保留最多 3 次重试。`--days 1310` 是面板历史保留窗口；本机缓存存在时只请求最后缓存日期之后的数据，并非每天全量下载 1310 天。正常情况下数据抓取约 5 至 10 分钟，随后页面构建只需数秒，Pages 上线时间还受 GitHub 托管队列和约 10 分钟 CDN 缓存影响。
