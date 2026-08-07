@@ -67,6 +67,10 @@ def main() -> int:
         )
         run_step("调用接口并生成页面数据", update_command)
         run_step(
+            "导出频率与新鲜度审计",
+            [python, "scripts/audit_freshness.py"],
+        )
+        run_step(
             "严格数据质量校验",
             [
                 python,

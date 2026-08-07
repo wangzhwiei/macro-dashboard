@@ -30,6 +30,7 @@ ALLOWED_AGGREGATES = {
     "rolling_4w_mean",
 }
 ALLOWED_PREPROCESS = {"", "rolling_7d_mean", "rolling_4w_mean"}
+DEFAULT_STALE_TOLERANCE_DAYS = {"daily": 4, "weekly": 10}
 
 
 def load_definitions(
@@ -64,6 +65,24 @@ def load_definitions(
 
 def finite_number(value: Any) -> bool:
     return isinstance(value, (int, float)) and math.isfinite(float(value))
+
+
+def stale_tolerance_days(definition: dict[str, Any]) -> int:
+    configured = int(definition.get("stale_tolerance_days") or 0)
+    return configured or DEFAULT_STALE_TOLERANCE_DAYS[definition["frequency"]]
+
+
+def cadence_issue(frequency: str, series: list[dict[str, Any]]) -> str | None:
+    gap = median_gap_days(series)
+    if gap is None:
+        return None
+    if frequency == "daily" and gap > 3:
+        return f"标记为日频但历史观测间隔中位数为{gap:g}天"
+    if frequency == "weekly" and gap < 4:
+        return f"标记为周频但历史观测间隔中位数仅{gap:g}天"
+    if frequency == "weekly" and gap > 14:
+        return f"标记为周频但历史观测间隔中位数为{gap:g}天"
+    return None
 
 
 def _provider_value(value: Any) -> str:
@@ -310,6 +329,8 @@ def validate_generated_data(
     generated_day = datetime.fromisoformat(
         dashboard["generatedAt"].replace("Z", "+00:00")
     ).date()
+    stale_indicators = 0
+    cadence_issues = 0
     for item_id, indicator in actual.items():
         definition = expected.get(item_id)
         if not definition:
@@ -347,12 +368,10 @@ def validate_generated_data(
                 f"{prefix} 页面频率{indicator.get('frequency')!r}与配置"
                 f"{expected_frequency!r}不一致"
             )
-        if definition["frequency"] == "weekly":
-            gap = median_gap_days(series)
-            if gap is not None and gap < 4:
-                warnings.append(
-                    f"{prefix} 标记为周频但历史观测间隔中位数仅{gap:g}天"
-                )
+        issue = cadence_issue(definition["frequency"], series)
+        if issue:
+            cadence_issues += 1
+            warnings.append(f"{prefix} {issue}")
         bound_violations = rate_bound_violations(indicator)
         if bound_violations:
             samples = ", ".join(
@@ -371,12 +390,12 @@ def validate_generated_data(
         if not methodology.get("formula") or not methodology.get("steps"):
             errors.append(f"{prefix} 缺少页面计算方法说明")
         stale_days = (generated_day - date.fromisoformat(series_dates[-1])).days
-        stale_limit = int(definition.get("stale_tolerance_days") or 0)
-        if not stale_limit:
-            stale_limit = 7 if definition["frequency"] == "daily" else 14
+        stale_limit = stale_tolerance_days(definition)
         if stale_days > stale_limit:
+            stale_indicators += 1
             warnings.append(
                 f"{prefix} 最新数据为{series_dates[-1]}，已滞后{stale_days}天"
+                f"（{definition['frequency']}容忍{stale_limit}天）"
             )
 
     duplicates = duplicate_series_groups(indicators)
@@ -393,6 +412,8 @@ def validate_generated_data(
         "history_weeks": len(dates),
         "categories": len(categories),
         "mode": dashboard.get("mode", ""),
+        "stale_indicators": stale_indicators,
+        "cadence_issues": cadence_issues,
     }
 
 

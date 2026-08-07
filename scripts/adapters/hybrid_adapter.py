@@ -89,12 +89,22 @@ def _merge_records(
     ]
 
 
+def _cache_busted_url(url: str, nonce: int | None = None) -> str:
+    separator = "&" if "?" in url else "?"
+    value = int(time.time()) if nonce is None else nonce
+    return f"{url}{separator}cache_bust={value}"
+
+
 def _download_cjhx_csv() -> Path:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     cached = CACHE_DIR / "macro_extract_70_results.csv"
     request = urllib.request.Request(
-        CJHX_DATA_URL,
-        headers={"User-Agent": "macro-dashboard-data-pipeline/1.0"},
+        _cache_busted_url(CJHX_DATA_URL),
+        headers={
+            "User-Agent": "macro-dashboard-data-pipeline/1.0",
+            "Cache-Control": "no-cache",
+            "Pragma": "no-cache",
+        },
     )
     try:
         with urllib.request.urlopen(request, timeout=60) as response:

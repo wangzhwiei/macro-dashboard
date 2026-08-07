@@ -3,10 +3,12 @@ from __future__ import annotations
 import unittest
 
 from scripts.validate_dashboard import (
+    cadence_issue,
     duplicate_series_groups,
     median_gap_days,
     provider_code_collisions,
     rate_bound_violations,
+    stale_tolerance_days,
 )
 
 
@@ -42,6 +44,36 @@ class DataQualityGuardTests(unittest.TestCase):
             {"date": "2026-07-03", "value": 3},
         ]
         self.assertEqual(median_gap_days(daily), 1.0)
+
+    def test_cadence_issue_checks_both_frequency_directions(self) -> None:
+        daily_points = [
+            {"date": "2026-07-01", "value": 1},
+            {"date": "2026-07-08", "value": 2},
+            {"date": "2026-07-15", "value": 3},
+        ]
+        dense_weekly_points = [
+            {"date": "2026-07-01", "value": 1},
+            {"date": "2026-07-02", "value": 2},
+            {"date": "2026-07-03", "value": 3},
+        ]
+        sparse_weekly_points = [
+            {"date": "2026-06-01", "value": 1},
+            {"date": "2026-07-01", "value": 2},
+            {"date": "2026-08-01", "value": 3},
+        ]
+        self.assertIn("标记为日频", cadence_issue("daily", daily_points) or "")
+        self.assertIn("中位数仅", cadence_issue("weekly", dense_weekly_points) or "")
+        self.assertIn("中位数为", cadence_issue("weekly", sparse_weekly_points) or "")
+
+    def test_stale_tolerance_defaults_match_dashboard_fresh_flag(self) -> None:
+        self.assertEqual(stale_tolerance_days({"frequency": "daily"}), 4)
+        self.assertEqual(stale_tolerance_days({"frequency": "weekly"}), 10)
+        self.assertEqual(
+            stale_tolerance_days(
+                {"frequency": "weekly", "stale_tolerance_days": 21}
+            ),
+            21,
+        )
 
     def test_operating_rate_must_stay_between_zero_and_one_hundred(self) -> None:
         indicator = {

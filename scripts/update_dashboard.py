@@ -411,7 +411,9 @@ def build_indicator(
     direction_word = "上升" if change > 0 else "下降" if change < 0 else "持平"
     signal_word = {"bullish": "利多", "bearish": "利空", "neutral": "中性"}[signal]
     stale_days = (end_date - latest_day).days
-    stale_limit = 10 if definition["frequency"] == "weekly" else 4
+    stale_limit = int(definition.get("stale_tolerance_days") or 0)
+    if not stale_limit:
+        stale_limit = 10 if definition["frequency"] == "weekly" else 4
 
     return {
         "id": definition["id"],

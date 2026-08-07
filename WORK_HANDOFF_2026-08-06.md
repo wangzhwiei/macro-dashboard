@@ -488,3 +488,59 @@ git status --short
 ```
 
 涉及真实数据源、workflow 或发布行为的修改，还必须完成一次 `workflow_dispatch` 端到端运行并核对线上 `generatedAt`。涉及 workflow 的修改需要特别确认默认分支 `gh-pages` 上的定义是否同步。
+## 19. 2026-08-07 定时与频率审计
+
+### 08:30 未更新的直接原因
+
+北京时间 09:21 检查时，GitHub 没有创建任何 `event=schedule` 的 run；workflow 状态为 `active`，本机 `macro-dashboard-windows` runner 同时为 `online/idle`。因此不是 runner 离线或任务排队，而是 GitHub 的 schedule 事件没有入队。该 workflow 于 2026-08-06 20:42 才在默认分支激活，GitHub schedule 是 best-effort，首次运行和高负载时可能延迟或丢失。
+
+修复：保留 08:30 主 cron `30 0 * * *`，新增 09:10 兜底 cron `10 1 * * *`。同一天重复运行会命中本机增量缓存，iFinD 已有当天数据时不再重复请求完整历史。 `pages.yml` 同时忽略仅修改 `.github/**` 的 push，防止同步默认分支 workflow 时用旧 `gh-pages` 静态文件覆盖当前线上页面。
+
+### 当天补跑
+
+- 手工补跑：<https://github.com/wangzhwiei/macro-dashboard/actions/runs/31137940333>
+- runner、WSL skill、CJHX 下载和 iFinD 调用均实际执行。
+- 数据产物：`generatedAt=2026-08-07T01:36:52.673391+00:00`。
+- 旧版严格校验发现 `iron_ore_62`、`cement_east`、`cement_yangtze` 最新仍为 `2026-07-30`，滞后 8 天，因此阻止构建和发布。
+- 线上页面保持上一版是质量门禁的预期行为，不是部署遗漏。
+
+### 频率与新鲜度审计
+
+新增 `scripts/audit_freshness.py`，每次 pipeline 生成 `outputs/frequency-freshness-audit.csv`。报告逐项记录配置频率、页面频率、历史观测间隔中位数、最新日期、滞后天数、容忍天数和状态。
+
+2026-08-07 真实补跑数据审计：
+
+- 指标总数：111。
+- 日频：72；周频：39。
+- 频率节奏异常：0。所有日频旧数据的历史间隔中位数都是 1 天，说明“日频”标注正确，问题是上游停止供新记录。
+- 过期：24，全部为 CJHX；iFinD 过期 0。
+- CJHX 日频过期 17：`cement_east`、`cement_yangtze`、`iron_ore_62`、`brent`、`cement_national`、`dxy`、`eurusd`、`gold_spot`、`lme_zinc`、`silver_spot`、`usdjpy`、`wti`、`metro_composite`、`metro_guangzhou`、`metro_shanghai`、`newhome_30c`、`newhome_tier3`。
+- CJHX 周频过期 7：`car_retail_yoy`、`car_wholesale_yoy`、`land_4w`、`land_premium`、`land_tier1`、`land_tier2`、`land_tier3`。
+
+日频最新日期分布：
+
+- `2026-07-30`：3 项。
+- `2026-07-31`：9 项。
+- `2026-08-01`：5 项。
+- 其余日频已更新到 `2026-08-06` 或符合交易日/发布节奏。
+
+CJHX GitHub 上游核验：
+
+- `macro-data` 仓库在 2026-08-07 07:01 左右有新的 main push，最新提交 `d9cc84c62d35a0b0aefbb207e062f8589b27164f`。
+- 生产使用的 `macro_extract_70_results.csv` 是正确文件，最新 blob `d8a7b2eaa0406412138f82ea4ab0bd6e35b29b17`，含 70 个 `series_key`、52682 行。
+- 文件整体每天更新不等于每个序列每天都有新记录：该 blob 中 38 个序列已到 `2026-08-06`，其余序列仍分别停在 `2026-07-20`、`2026-07-26`、`2026-07-30`、`2026-07-31` 或 `2026-08-01`。
+- `macro_extract_71_results.csv` 更旧，多数序列只到 7 月 31，不可切换过去。
+- adapter 已给 Raw GitHub URL 添加 `cache_bust` 时间戳与 `Cache-Control: no-cache`，避免固定 URL 命中 CDN 旧内容。
+
+本机和 WSL 均未找到 `cjhx-cais-bis-skill` 或 CJHX API 凭据，只有仓库抓取脚本。项目会继续读取 GitHub `macro-data` 的每日 70 文件；如果文件内单个序列没有新行，只能按真实日期告警，禁止把上述 CJHX 指标临时改走 iFinD。
+
+### 质量门禁修复
+
+- 页面生成器与校验器统一默认新鲜度阈值：日频 4 天、周频 10 天。
+- 两处都尊重单指标 `stale_tolerance_days` 显式配置。
+- 新增日频过稀、周频过密和周频过稀的双向节奏检查。
+- 质量报告新增 `stale_indicators` 和 `cadence_issues` 计数。
+- `--strict` 会阻止过期数据以零 warning 发布。
+- Actions artifact 同时上传 JSON 质量报告和完整频率/新鲜度 CSV。
+
+验证结果：Python 单元测试 22 项全部通过；Python 语法检查通过；Vite 生产构建通过；`git diff --check` 通过。

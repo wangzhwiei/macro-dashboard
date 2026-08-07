@@ -15,6 +15,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HybridRoutingTests(unittest.TestCase):
+    def test_cjhx_url_cache_buster_preserves_existing_query(self):
+        self.assertEqual(
+            hybrid_adapter._cache_busted_url("https://example.test/data.csv", 123),
+            "https://example.test/data.csv?cache_bust=123",
+        )
+        self.assertEqual(
+            hybrid_adapter._cache_busted_url("https://example.test/data.csv?raw=1", 123),
+            "https://example.test/data.csv?raw=1&cache_bust=123",
+        )
+
     def test_routing_exactly_covers_required_semantic_codes(self):
         config = json.loads(
             (ROOT / "config" / "indicators.json").read_text(encoding="utf-8")
