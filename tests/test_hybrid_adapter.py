@@ -116,6 +116,38 @@ class HybridRoutingTests(unittest.TestCase):
             hybrid_adapter.CACHE_DIR = original_dir
             hybrid_adapter._ifind_call = original_call
 
+    def test_no_new_data_is_checked_once_and_cached_for_the_day(self):
+        original_dir = hybrid_adapter.CACHE_DIR
+        original_call = hybrid_adapter._ifind_call
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                hybrid_adapter.CACHE_DIR = Path(temp_dir)
+                hybrid_adapter._save_cache(
+                    "IFIND:BILL_DISCOUNT_6M",
+                    [{"date": "2026-08-06", "value": 1.23}],
+                )
+                calls = []
+
+                def no_data(*args):
+                    calls.append(args)
+                    raise RuntimeError("未返回可用数据")
+
+                hybrid_adapter._ifind_call = no_data
+                records = hybrid_adapter._fetch_ifind(
+                    "IFIND:BILL_DISCOUNT_6M",
+                    date(2026, 8, 1),
+                    date(2026, 8, 7),
+                )
+                self.assertEqual(records, [{"date": "2026-08-06", "value": 1.23}])
+                self.assertEqual(len(calls), 1)
+                _, checked = hybrid_adapter._load_cache(
+                    "IFIND:BILL_DISCOUNT_6M"
+                )
+                self.assertEqual(checked, "2026-08-07")
+        finally:
+            hybrid_adapter.CACHE_DIR = original_dir
+            hybrid_adapter._ifind_call = original_call
+
     def test_cache_only_mode_never_calls_ifind(self):
         original_dir = hybrid_adapter.CACHE_DIR
         original_env = os.environ.get("IFIND_CACHE_ONLY")

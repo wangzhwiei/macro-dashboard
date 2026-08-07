@@ -301,6 +301,17 @@ def _fetch_ifind(
             break
         except Exception as error:
             last_error = error
+            if cached and "未返回可用数据" in str(error):
+                logger.info(
+                    "iFinD增量区间无新观测，记录当天检查：%s",
+                    semantic_code,
+                )
+                _save_cache(semantic_code, cached, end_date.isoformat())
+                return [
+                    item
+                    for item in cached
+                    if start_date <= date.fromisoformat(item["date"]) <= end_date
+                ]
             if attempt == 2:
                 if cached:
                     logger.info(
@@ -308,12 +319,6 @@ def _fetch_ifind(
                         semantic_code,
                         error,
                     )
-                    if "未返回可用数据" in str(error):
-                        _save_cache(
-                            semantic_code,
-                            cached,
-                            end_date.isoformat(),
-                        )
                     return [
                         item
                         for item in cached
