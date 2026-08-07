@@ -1,6 +1,6 @@
 # 宏观网页面板工作交接与运维手册
 
-> 最后更新：2026-08-07。首次接手优先阅读第 11 至 18 节；第 1 至 10 节保留 2026-08-06 的实施历史和故障背景。
+> 最后更新：2026-08-07。首次接手优先阅读第 11 至 21 节；第 1 至 10 节保留 2026-08-06 的实施历史和故障背景。
 
 ## 1. 本次工作结果
 
@@ -238,7 +238,7 @@ Windows 服务安装需要管理员权限，且系统服务账户通常无法访
 - attempt 3 在 GitHub 托管队列等待 15 分钟后被平台取消；attempt 4 仅重跑 `deploy` 并成功，没有重复抓取数据
 - 最终 run 结论：`success`；线上 `generatedAt=2026-08-06T15:45:15.295921+00:00`
 
-运行时间较长的原因不是人工发布：流程已经自动化，但当前有 41 个 iFinD 序列按顺序执行增量 API 请求，每个请求还保留最多 3 次重试。 首次当天运行仍需逐序列确认供应商是否有新观测；此前缓存只保存 records，无法记住“今天已查过但无新增”，所以兜底 run 会重复查询。现已增加 `last_checked_date` 元数据：同日后续 run 直接复用缓存，跨日才查增量。 对供应商明确返回“未返回可用数据”的增量请求只调用一次并记录当天；只有网络、认证等真正异常才最多重试 3 次。`--days 1310` 是面板历史保留窗口；本机缓存存在时只请求最后缓存日期之后的数据，并非每天全量下载 1310 天。正常情况下数据抓取约 5 至 10 分钟，随后页面构建只需数秒，Pages 上线时间还受 GitHub 托管队列和约 10 分钟 CDN 缓存影响。
+运行时间较长的原因不是人工发布：流程已经自动化，但当前有 41 个 iFinD 序列按顺序执行增量 API 请求，每个请求还保留最多 3 次重试。 首次当天运行仍需逐序列确认供应商是否有新观测；此前缓存只保存 records，无法记住“今天已查过但无新增”，所以兜底 run 会重复查询。现已增加 `last_checked_date` 元数据：同日后续 run 直接复用缓存，跨日才查增量。 对供应商明确返回“未返回可用数据”的增量请求只调用一次并记录当天；只有网络、认证等真正异常才最多重试 3 次。`--days 1310` 是面板历史保留窗口；本机缓存存在时只请求最后缓存日期之后的数据，并非每天全量下载 1310 天。同日缓存命中时数据抓取约 38 至 50 秒；每天首次增量运行的耗时取决于供应商响应，通常更长，网络错误和重试仍可能延长。页面构建只需数秒，Pages 上线时间还受 GitHub 托管队列和约 10 分钟 CDN 缓存影响。
 
 ## 11. 当前生产状态
 
@@ -250,10 +250,10 @@ Windows 服务安装需要管理员权限，且系统服务账户通常无法访
 | 源码分支 | `main` |
 | GitHub 默认分支 | `gh-pages` |
 | 每日 workflow | `Update, validate and deploy macro dashboard`，ID `328604569` |
-| 自动时间 | 每天北京时间 08:30，cron `30 0 * * *` |
+| 自动时间 | 主任务北京时间 08:30（`30 0 * * *`），兜底北京时间 09:10（`10 1 * * *`） |
 | 本机 runner | `macro-dashboard-windows`，标签 `self-hosted, Windows, X64, cjhx-internal` |
-| 最近完整验证 | run `31116483522`，attempt 4 最终成功 |
-| 最近线上版本 | `generatedAt=2026-08-06T15:45:15.295921+00:00` |
+| 最近完整验证 | run `31145467996`，`update-and-build` 与 `deploy` 成功 |
+| 最近线上版本 | `generatedAt=2026-08-07T03:50:59.325506+00:00` |
 
 每日自动运行的前提：Windows 机器开机、网络正常、`wangzhiwei202307` 已登录。runner 通过当前用户启动目录的快捷方式启动，从而能访问该用户的 WSL Ubuntu 和 iFinD skill。机器重启后必须先登录 Windows；不需要手工打开终端。
 
@@ -266,7 +266,7 @@ Windows 服务安装需要管理员权限，且系统服务账户通常无法访
 3. workflow 安装 Node.js 22 和前端依赖，验证 WSL 中 iFinD skill 的 `call.py` 与 `mcp_config.json` 存在。
 4. WSL 执行 `scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only`。
 5. `run_pipeline.py` 依次导出序列目录、生成页面数据、严格校验、运行 Python 单元测试。任一步失败都会阻止发布。
-6. `hybrid_adapter.py` 按配置为每个语义代码选择 CJHX 或 iFinD。CJHX CSV 每次运行只下载一次；iFinD 使用本机持久缓存并按序列做增量请求。
+6. `hybrid_adapter.py` 按配置为每个语义代码选择 CJHX 或 iFinD。CJHX CSV 每次运行只下载一次；iFinD 使用本机持久缓存并按序列做增量请求；缓存对象同时记录 `last_checked_date`，同日无新增只调用一次，provider 漂移立即失败。
 7. `update_dashboard.py` 生成 `public/data/dashboard.json`；`validate_dashboard.py --strict` 生成 `outputs/data-quality-report.json` 并执行硬性质量门禁。
 8. `npm run build:github` 由 Vite 将 `static/`、`app/` 和 `public/` 构建到 `docs/`。
 9. workflow 将 `docs/` 打包为 `github-pages` artifact。GitHub 托管 Ubuntu runner 用 `actions/deploy-pages@v4` 发布。
@@ -413,7 +413,7 @@ C:\Users\wangzhiwei202307\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\
 
 - 07:00 左右等待 CJHX 上游更新。
 - 08:30 GitHub schedule 触发。
-- 本机 runner 完成数据和构建，正常约 5 至 15 分钟。
+- 本机 runner 完成数据和构建：同日缓存命中约 38 至 50 秒；首轮增量运行通常更久，异常重试会进一步延长。
 - GitHub Pages 部署通常再需 1 至数分钟；CDN 最多约 10 分钟。
 
 不要在前一轮尚未结束时反复点 `Run workflow`。workflow 的 concurrency 为 `macro-dashboard-production` 且 `cancel-in-progress: false`，重复运行会排队并延长总时间。
@@ -452,7 +452,7 @@ https://wangzhwiei.github.io/macro-dashboard/data/dashboard.json?verify=UNIX_TIM
 | --- | --- | --- |
 | `update-and-build` 一直 queued | 本机 runner offline 或用户未登录 | 登录 Windows；检查 `Runner.Listener`；必要时运行 `github-runner\run.cmd` |
 | `Verify WSL iFinD skill` 失败 | 服务账户/用户不对、WSL 未启动、skill 路径或配置缺失 | 确保由当前用户 runner 启动；验证 Ubuntu、`call.py`、`mcp_config.json` |
-| iFinD 步骤慢 | 41 个序列顺序请求、网络延迟、重试 | 先看具体 step；正常 5 至 10 分钟，不要并发触发第二轮 |
+| iFinD 步骤慢 | 41 个序列顺序请求、网络延迟、重试 | 先看具体 step；同日缓存命中通常不到 1 分钟，首轮增量受供应商响应影响，不要并发触发第二轮 |
 | iFinD provider 漂移 | 查询名模糊匹配到其他序列 | 修正 `query_name`，保留/核实 `provider_id`，添加回归测试；不能接受错误 ID |
 | CJHX 日期旧但 workflow success | 上游 CSV 本身旧，或下载失败后使用本地缓存 | 对比 `macro-data` CSV 尾部和缓存；不能改走 iFinD |
 | strict validation 失败 | 配置、日期、数值、映射或输出不满足门禁 | 修复根因后重跑全 pipeline；禁止跳过校验发布 |
@@ -508,12 +508,12 @@ git status --short
 
 新增 `scripts/audit_freshness.py`，每次 pipeline 生成 `outputs/frequency-freshness-audit.csv`。报告逐项记录配置频率、页面频率、历史观测间隔中位数、最新日期、滞后天数、容忍天数和状态。
 
-2026-08-07 真实补跑数据审计：
+2026-08-07 真实补跑数据审计（历史快照；随后 CJHX 上游已刷新，当前生产审计见第 20、21 节）：
 
 - 指标总数：111。
 - 日频：72；周频：39。
 - 频率节奏异常：0。所有日频旧数据的历史间隔中位数都是 1 天，说明“日频”标注正确，问题是上游停止供新记录。
-- 过期：24，全部为 CJHX；iFinD 过期 0。
+- 过期：24，全部为 CJHX；iFinD 过期 0（该 24 项是上游刷新前的历史快照，不代表当前线上状态）。
 - CJHX 日频过期 17：`cement_east`、`cement_yangtze`、`iron_ore_62`、`brent`、`cement_national`、`dxy`、`eurusd`、`gold_spot`、`lme_zinc`、`silver_spot`、`usdjpy`、`wti`、`metro_composite`、`metro_guangzhou`、`metro_shanghai`、`newhome_30c`、`newhome_tier3`。
 - CJHX 周频过期 7：`car_retail_yoy`、`car_wholesale_yoy`、`land_4w`、`land_premium`、`land_tier1`、`land_tier2`、`land_tier3`。
 
@@ -575,3 +575,78 @@ CJHX GitHub 上游核验：
 - 新缓存：187 个点，`2023-01-06` 至 `2026-07-31`，观测间隔中位数 7 天
 
 旧缓存已隔离为 `IFIND_SECONDHAND_BEIJING_UNITS.invalid-S003059022-monthly.bak`，未删除。主页面的“重点城市二手房成交指数”仍是多城市复合指标，页面频率保持日频；北京只是其中一个周频组件。
+
+## 21. 数据端专项交接：来源、频率与避坑
+
+本节是后续数据维护的权威入口。当前生产审计为：111 个最终指标、121 个组件行、70 个唯一语义代码走 CJHX、41 个走 iFinD，缺失路由 0、双重路由 0；页面指标中日频 72、周频 39。最新生产质量报告为 111/111，过期指标 0、节奏异常 0、provider 碰撞 0、error/warning 0。
+
+### 21.1 数据来源对照
+
+| 来源/类型 | 权威配置与上游 | 运行时规则 | 缓存与更新行为 |
+| --- | --- | --- | --- |
+| CJHX | `config/cjhx-series-map.json`；上游 `macro-data/main/macro_extract_70_results.csv` | 语义代码在 CJHX map 中即走 CJHX，优先级高于 iFinD；不得因日期较旧改源 | 每轮只下载一次，加入 cache-busting 和 no-cache 请求头；下载失败可回退本机 CSV，但必须核对真实 `updatedAt` |
+| iFinD | `config/ifind-series.csv`；WSL `ifind-finance-data` skill | 只有不在 CJHX map、且在 iFinD CSV 中的代码才走 iFinD；`provider_id` 是强身份断言 | 本机按序列保存 `records` 和 `last_checked_date`；跨日只查最后记录之后的增量，同日已检查直接命中缓存 |
+| 复合指标 | `config/indicators.json` 与 `config/auxiliary-indicators.csv` 中的 components | 每个组件独立按上述路由取数，再按配置变换、加权或合成 | 一个最终指标可同时包含不同来源或不同频率的组件；不得把最终指标的展示来源反推到每个组件 |
+
+CJHX 当前正确生产文件是 `macro_extract_70_results.csv`。不要切换到 `macro_extract_71_results.csv`，后者核验时更旧。GitHub 上游文件整体产生新 commit，只能证明文件发生变化，不能证明其中每个 `series_key` 都新增了观测。必须按序列检查最新日期。
+
+已知仍保持真实源日期的 CJHX 周频序列：`steel_long_index` 和 `steel_plate_index` 最新为 `2026-07-31`。它们在周频 14 天容忍范围内，当前不算过期；不得人为补成当天日期。
+
+iFinD 调用目录为：
+
+```text
+/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data
+```
+
+持久缓存位于 `github-runner\ifind-cache`，不得清空或提交。供应商明确返回“无新数据”时只调用一次并写入当天 `last_checked_date`；网络、认证等错误才最多重试 3 次。返回 provider 与配置不一致时立即失败，不能重试后接受错误序列，也不能静默返回旧缓存。
+
+### 21.2 三层频率必须分开理解
+
+| 层级 | 含义 | 核查位置 |
+| --- | --- | --- |
+| 供应商/原始观测频率 | CJHX 原始记录的实际日期节奏，或 iFinD `config/ifind-series.csv` 中的 `frequency` | 原始 CSV、iFinD 返回记录、provider ID 和长时间区间的日期间隔 |
+| 组件频率 | 参与某个复合指标的单条序列频率 | 指标的 components、`outputs/series-catalog.csv`、缓存记录 |
+| 最终页面指标频率 | 页面用于展示、评分和新鲜度判断的最终指标频率 | `config/indicators.json`、`config/auxiliary-indicators.csv`、生成后的 dashboard JSON |
+
+三个层级可以不同。典型例子是“重点城市二手房成交指数”：最终页面指标是日频多城市复合指标，但北京组件 `IFIND:SECONDHAND_BEIJING_UNITS` 是周频，正确 provider 为 `S004368947`，查询名为 `北京:二手房:销售套数:周`。其缓存有 187 个周频点，范围 `2023-01-06` 至 `2026-07-31`，中位间隔 7 天。旧 provider `S003059022` 实际是月频，已隔离为 `.invalid-S003059022-monthly.bak`，不得恢复使用。
+
+另一个例子是 `steel_inventory`：最终指标明确为 `CJHX+iFinD`，螺纹库存组件走 CJHX，热卷、冷轧和中板库存组件走 iFinD。这里的“混合”是配置明确的组件级合成，不是用一个来源补另一个来源的缺口。
+
+当前频率质量规则：
+
+- 日频默认新鲜度容忍 4 天；历史观测间隔中位数大于 3 天视为节奏异常。
+- 周频默认新鲜度容忍 14 天；中位间隔小于 4 天或大于 14 天视为节奏异常。
+- 单指标显式 `stale_tolerance_days` 优先于默认值。
+- 周末、节假日和供应商正常发布滞后应保留真实日期，由容忍阈值处理，不能补造日期。
+- 完整逐项结果看 `outputs/frequency-freshness-audit.csv`，不能只看页面的频率标签。
+
+### 21.3 数据端常见坑
+
+1. GitHub 文件 commit 日期不等于每个序列的最新日期。必须按 `series_key` 或最终指标检查尾部日期。
+2. Raw GitHub/CDN 可能返回旧缓存。生产已加随机 cache-bust 和 `Cache-Control: no-cache`，排查时也应绕过缓存。
+3. 语义代码前缀不等于实际来源。即使代码以 `IFIND:` 开头，只要存在于 CJHX map，运行时仍走 CJHX。
+4. iFinD 自然语言匹配会随查询名和日期区间漂移。新增或修改序列必须同时用长区间、短区间核对 provider ID 和频率。
+5. provider 改变时旧缓存不能直接复用。应先隔离/改名旧缓存，再以新 provider 重建，并保留旧文件用于追溯。
+6. “无新数据”不是网络失败。明确无数据只查一次；网络、认证、超时才重试。混淆两者会把 41 个序列的运行时间放大数倍。
+7. 日频不代表自然日每天都有值，周频也不保证固定星期发布。新鲜度应结合交易日、节假日和供应商发布节奏判断。
+8. 复合指标可以混合来源和频率。应逐组件审计，不能只看最终指标的 `source` 或 `frequency` 字段。
+9. 严格质量门禁出现 warning/error 时会停止部署，线上继续保留上一版。这是有意的保护行为，不应跳过校验强行发布。
+10. workflow 成功不等于线上已经更新。必须等待 `deploy` 成功，并用随机查询参数核对线上 JSON 的 `generatedAt`。
+11. 默认分支是 `gh-pages`，GitHub 从默认分支读取 schedule/workflow 定义；job 内明确 checkout `main` 获取业务代码。改 workflow 时两边的职责不能混淆。
+12. `--days 1310` 是页面历史窗口，不是每日全量下载范围。有本机缓存时 iFinD 只查增量；清空缓存会显著增加耗时和供应商压力。
+
+### 21.4 新增或修改数据序列的标准流程
+
+1. 先确定唯一权威来源：CJHX 或 iFinD。不得为了追求较新日期同时写入两张路由表。
+2. CJHX 序列只修改 `config/cjhx-series-map.json`；iFinD 序列只修改 `config/ifind-series.csv`，并核对 `provider_id`、查询名、频率、单位和缩放。
+3. 对 iFinD 使用长、短两个日期区间实际查询，确认 provider ID、观测数量、最新日期和日期间隔均一致合理。
+4. 对 CJHX 检查原始 `series_key` 的历史日期间隔和最新行，不能用文件 commit 时间代替序列核验。
+5. provider ID 或频率变化时，先隔离旧缓存，禁止让不兼容的历史 records 继续参与增量合并。
+6. 更新指标组件、展示来源和最终频率后，检查同一代码没有同时出现在 CJHX 与 iFinD 路由中。
+7. 运行 Python 单元测试、严格校验、静态构建，并检查 `outputs/frequency-freshness-audit.csv`、provider collision 报告和 `git diff --check`。
+8. 涉及真实数据源或 workflow 的修改必须触发一次完整 `workflow_dispatch`，确认 `update-and-build` 与 `deploy` 均成功。
+9. 最后用带随机参数的线上 JSON 验证 `generatedAt`、指标来源、最新日期和值，再更新本交接文档。
+
+### 21.5 当前自动化结论
+
+每天 08:30 主任务和 09:10 兜底任务已配置。runner 在线条件仍是：机器开机、网络可用、当前 Windows 用户已登录。同日缓存命中时最终生产 run 的 iFinD 数据步骤实测 38 秒；每天首轮增量取决于供应商响应，网络异常仍可能拉长。最近完整生产 run 为 `31145467996`，`update-and-build` 和 `deploy` 均成功，线上 `generatedAt=2026-08-07T03:50:59.325506+00:00`。
