@@ -5,9 +5,11 @@
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 187,
+    "history_weeks": 188,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
+    "stale_indicators": 0,
+    "cadence_issues": 0,
     "required_provider_codes": 111,
     "mapped_provider_codes": 111,
     "provider_code_collisions": 0

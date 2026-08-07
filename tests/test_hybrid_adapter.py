@@ -116,6 +116,34 @@ class HybridRoutingTests(unittest.TestCase):
             hybrid_adapter.CACHE_DIR = original_dir
             hybrid_adapter._ifind_call = original_call
 
+    def test_provider_drift_fails_once_even_with_cached_data(self):
+        original_dir = hybrid_adapter.CACHE_DIR
+        original_call = hybrid_adapter._ifind_call
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                hybrid_adapter.CACHE_DIR = Path(temp_dir)
+                hybrid_adapter._save_cache(
+                    "IFIND:BILL_DISCOUNT_6M",
+                    [{"date": "2026-08-06", "value": 1.23}],
+                )
+                calls = []
+
+                def drift(*args):
+                    calls.append(args)
+                    raise RuntimeError("iFinD模糊匹配漂移")
+
+                hybrid_adapter._ifind_call = drift
+                with self.assertRaisesRegex(RuntimeError, "模糊匹配漂移"):
+                    hybrid_adapter._fetch_ifind(
+                        "IFIND:BILL_DISCOUNT_6M",
+                        date(2026, 8, 1),
+                        date(2026, 8, 7),
+                    )
+                self.assertEqual(len(calls), 1)
+        finally:
+            hybrid_adapter.CACHE_DIR = original_dir
+            hybrid_adapter._ifind_call = original_call
+
     def test_no_new_data_is_checked_once_and_cached_for_the_day(self):
         original_dir = hybrid_adapter.CACHE_DIR
         original_call = hybrid_adapter._ifind_call

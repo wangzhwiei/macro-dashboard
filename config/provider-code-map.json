@@ -419,8 +419,8 @@
   },
   "IFIND:SECONDHAND_BEIJING_UNITS": {
     "provider": "iFinD",
-    "provider_code": "iFinD:S003059022",
-    "query_name": "北京:二手房:销售套数"
+    "provider_code": "iFinD:S004368947",
+    "query_name": "北京:二手房:销售套数:周"
   },
   "IFIND:SECONDHAND_CHENGDU_UNITS": {
     "provider": "iFinD",

@@ -301,6 +301,8 @@ def _fetch_ifind(
             break
         except Exception as error:
             last_error = error
+            if "模糊匹配漂移" in str(error):
+                raise
             if cached and "未返回可用数据" in str(error):
                 logger.info(
                     "iFinD增量区间无新观测，记录当天检查：%s",

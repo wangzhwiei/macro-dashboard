@@ -3,110 +3,110 @@ irs_1y,FR007 IRS 1Y,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 irs_5y,FR007 IRS 5Y,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 shibor_3m,SHIBOR 3M,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 bill_6m,票据转贴 6M,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-car_retail_yoy,乘用车厂家零售当周同比,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
-metro_composite,重点城市地铁客流指数,CJHX,daily,日频,2026-08-01,2026-08-07,6,4,1.0,ok,,stale
-boxoffice_7d,全国电影票房 7日合计,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-flights_7d,国内航班执行量 7日均值,iFinD,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
-land_4w,100城土地成交面积 4周均值,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
-newhome_30c,30城商品房成交 7日均值,CJHX,daily,日频,2026-08-01,2026-08-07,6,4,1.0,ok,,stale
+car_retail_yoy,乘用车厂家零售当周同比,CJHX,weekly,周频,2026-07-26,2026-08-07,12,14,7.0,ok,,fresh
+metro_composite,重点城市地铁客流指数,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
+boxoffice_7d,全国电影票房 7日合计,CJHX,daily,日频,2026-08-07,2026-08-07,0,4,1.0,ok,,fresh
+flights_7d,国内航班执行量 7日均值,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
+land_4w,100城土地成交面积 4周均值,CJHX,weekly,周频,2026-08-02,2026-08-07,5,14,7.0,ok,,fresh
+newhome_30c,30城商品房成交 7日均值,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 secondhand,重点城市二手房成交指数,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-listing_price,全国二手房挂牌价指数,CJHX,weekly,周频,2026-07-20,2026-08-07,18,21,7.0,ok,,fresh
+listing_price,全国二手房挂牌价指数,CJHX,weekly,周频,2026-07-27,2026-08-07,11,21,7.0,ok,,fresh
 construction_steel,建筑钢材成交,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-asphalt_rate,沥青装置开工率,iFinD,weekly,周频,2026-07-30,2026-08-07,8,10,7.0,ok,,fresh
+asphalt_rate,沥青装置开工率,iFinD,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
 power_coal,六大发电集团日均耗煤,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-blast_furnace,高炉开工率,iFinD,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-crude_steel,粗钢日均产量,CJHX,weekly,周频,2026-07-20,2026-08-07,18,21,10.0,ok,,fresh
-tire_composite,轮胎开工综合指数,CJHX,weekly,周频,2026-08-06,2026-08-07,1,10,7.0,ok,,fresh
+blast_furnace,高炉开工率,iFinD,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+crude_steel,粗钢日均产量,CJHX,weekly,周频,2026-07-31,2026-08-07,7,21,10.0,ok,,fresh
+tire_composite,轮胎开工综合指数,CJHX,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
 polyester_rate,聚酯综合开工率,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-steel_inventory,钢材社会库存综合指数,CJHX+iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
+steel_inventory,钢材社会库存综合指数,CJHX+iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
 copper_inventory,铜库存综合指数,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 power_inventory,六大发电集团煤炭库存,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 port_coal_inventory,秦皇岛港煤炭库存,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 agri_200,农产品批发价格200指数,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 pork_price,猪肉批发价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-brent,布伦特原油,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
+brent,布伦特原油,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 qhd_coal_price,秦皇岛港动力煤现货价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 copper_price,1#铜现货均价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 nanhua_industry,南华工业品指数,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-cement_national,全国水泥价格指数,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
+cement_national,全国水泥价格指数,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
 rebar_price,螺纹钢现货价格,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-iron_ore_62,铁矿石价格指数 62%Fe,CJHX,daily,日频,2026-07-30,2026-08-07,8,4,1.0,ok,,stale
+iron_ore_62,铁矿石价格指数 62%Fe,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
 glass_spot,玻璃现货价,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 bdi,BDI指数,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-scfi,SCFI,CJHX,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-port_container,港口完成集装箱吞吐量：当周值,iFinD,weekly,周频,2026-08-02,2026-08-07,5,10,7.0,ok,,fresh
-usdcny,USD/CNY,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-cfets,CFETS人民币汇率指数,iFinD,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-dxy,美元指数,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
+scfi,SCFI,CJHX,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+port_container,港口完成集装箱吞吐量：当周值,iFinD,weekly,周频,2026-08-02,2026-08-07,5,14,7.0,ok,,fresh
+usdcny,USD/CNY,CJHX,daily,日频,2026-08-07,2026-08-07,0,4,1.0,ok,,fresh
+cfets,CFETS人民币汇率指数,iFinD,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+dxy,美元指数,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 irs_3m,FR007 IRS 3M,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 irs_6m,FR007 IRS 6M,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-shibor_6m,SHIBOR 6M,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
+shibor_6m,SHIBOR 6M,iFinD,daily,日频,2026-08-07,2026-08-07,0,4,1.0,ok,,fresh
 shibor_1y,SHIBOR 1Y,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 bill_3m,票据转贴 3M,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-car_wholesale_yoy,乘用车厂家批发当周同比,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
-metro_shanghai,上海地铁客运量,CJHX,daily,日频,2026-08-01,2026-08-07,6,4,1.0,ok,,stale
-metro_guangzhou,广州地铁客运量,CJHX,daily,日频,2026-08-01,2026-08-07,6,4,1.0,ok,,stale
-movie_audience,全国当日观影人次,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-land_tier1,100城土地成交面积：一线,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
-land_tier2,100城土地成交面积：二线,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
-land_tier3,100城土地成交面积：三线,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
-land_premium,100城土地成交溢价率,CJHX,weekly,周频,2026-07-26,2026-08-07,12,10,7.0,ok,,stale
+car_wholesale_yoy,乘用车厂家批发当周同比,CJHX,weekly,周频,2026-07-26,2026-08-07,12,14,7.0,ok,,fresh
+metro_shanghai,上海地铁客运量,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
+metro_guangzhou,广州地铁客运量,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
+movie_audience,全国当日观影人次,CJHX,daily,日频,2026-08-07,2026-08-07,0,4,1.0,ok,,fresh
+land_tier1,100城土地成交面积：一线,CJHX,weekly,周频,2026-08-02,2026-08-07,5,14,7.0,ok,,fresh
+land_tier2,100城土地成交面积：二线,CJHX,weekly,周频,2026-08-02,2026-08-07,5,14,7.0,ok,,fresh
+land_tier3,100城土地成交面积：三线,CJHX,weekly,周频,2026-08-02,2026-08-07,5,14,7.0,ok,,fresh
+land_premium,100城土地成交溢价率,CJHX,weekly,周频,2026-08-02,2026-08-07,5,14,7.0,ok,,fresh
 newhome_tier1,30城商品房成交：一线,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 newhome_tier2,30城商品房成交：二线,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-newhome_tier3,30城商品房成交：三线,CJHX,daily,日频,2026-08-01,2026-08-07,6,4,1.0,ok,,stale
-listing_tier1,二手房挂牌价指数：一线,CJHX,weekly,周频,2026-07-20,2026-08-07,18,21,7.0,ok,,fresh
-listing_tier2,二手房挂牌价指数：二线,CJHX,weekly,周频,2026-07-20,2026-08-07,18,21,7.0,ok,,fresh
-pvc_rate,PVC开工率,iFinD,weekly,周频,2026-07-30,2026-08-07,8,10,7.0,ok,,fresh
-cold_rolled_rate,冷轧开工率,iFinD,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-glass_rate,玻璃开工率,iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
+newhome_tier3,30城商品房成交：三线,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
+listing_tier1,二手房挂牌价指数：一线,CJHX,weekly,周频,2026-07-27,2026-08-07,11,21,7.0,ok,,fresh
+listing_tier2,二手房挂牌价指数：二线,CJHX,weekly,周频,2026-07-27,2026-08-07,11,21,7.0,ok,,fresh
+pvc_rate,PVC开工率,iFinD,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
+cold_rolled_rate,冷轧开工率,iFinD,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+glass_rate,玻璃开工率,iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
 pta_rate,PTA开工率,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 px_rate,PX开工率,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-full_tire_rate,全钢胎开工率,CJHX,weekly,周频,2026-08-06,2026-08-07,1,10,7.0,ok,,fresh
-semi_tire_rate,半钢胎开工率,CJHX,weekly,周频,2026-08-06,2026-08-07,1,10,7.0,ok,,fresh
+full_tire_rate,全钢胎开工率,CJHX,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
+semi_tire_rate,半钢胎开工率,CJHX,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
 daqin_volume,大秦线煤炭运量,iFinD,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
-filament_rate,江浙涤纶长丝开工率,CJHX,weekly,周频,2026-08-06,2026-08-07,1,10,7.0,ok,,fresh
-staple_rate,涤纶短纤开工率,iFinD,weekly,周频,2026-07-30,2026-08-07,8,10,7.0,ok,,fresh
+filament_rate,江浙涤纶长丝开工率,CJHX,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
+staple_rate,涤纶短纤开工率,iFinD,weekly,周频,2026-08-06,2026-08-07,1,14,7.0,ok,,fresh
 coking_rate,焦化开工率,iFinD,weekly,周频,2026-07-31,2026-08-07,7,21,7.0,ok,,fresh
-methanol_rate,甲醇开工率,iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
-styrene_rate,苯乙烯开工率,iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
-eia_crude_inventory,EIA原油库存,iFinD,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
+methanol_rate,甲醇开工率,iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
+styrene_rate,苯乙烯开工率,iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
+eia_crude_inventory,EIA原油库存,iFinD,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
 lme_copper_inventory,LME铜库存,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-shfe_copper_inventory,上期所铜库存,iFinD,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-medium_plate_inventory,中厚板库存,iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
-cold_rolled_inventory,冷轧库存,iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
-rebar_inventory,螺纹钢库存,CJHX,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-hrc_inventory,热轧卷板库存,iFinD,weekly,周频,2026-08-07,2026-08-07,0,10,7.0,ok,,fresh
-wire_inventory,线材库存,iFinD,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
+shfe_copper_inventory,上期所铜库存,iFinD,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+medium_plate_inventory,中厚板库存,iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
+cold_rolled_inventory,冷轧库存,iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
+rebar_inventory,螺纹钢库存,CJHX,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+hrc_inventory,热轧卷板库存,iFinD,weekly,周频,2026-08-07,2026-08-07,0,14,7.0,ok,,fresh
+wire_inventory,线材库存,iFinD,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
 vegetable_price,28种重点监测蔬菜均价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 fruit_price,7种重点监测水果均价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 beef_price,牛肉批发价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 mutton_price,羊肉批发价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 egg_price,鸡蛋批发价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 chicken_price,白条鸡批发价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-lme_zinc,LME锌价,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
+lme_zinc,LME锌价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 aluminum_price,A00铝现货均价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 nickel_price,1#镍板现货均价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 nanhua_agri,南华农产品指数,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 nanhua_energy,南华能化指数,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 nanhua_metals,南华金属指数,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-wti,WTI原油期货,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
+wti,WTI原油期货,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 thermal_coal_futures,动力煤期货结算价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 coke_futures,焦炭期货结算价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 coking_coal_futures,焦煤期货结算价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 iron_ore_futures,铁矿石期货结算价,iFinD,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 hot_rolled_price,热轧板卷现货价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-steel_plate_index,钢材价格指数：板材,CJHX,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-steel_long_index,钢材价格指数：长材,CJHX,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
-cement_east,水泥价格指数：华东,CJHX,daily,日频,2026-07-30,2026-08-07,8,4,1.0,ok,,stale
-cement_yangtze,水泥价格指数：长江,CJHX,daily,日频,2026-07-30,2026-08-07,8,4,1.0,ok,,stale
+steel_plate_index,钢材价格指数：板材,CJHX,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+steel_long_index,钢材价格指数：长材,CJHX,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
+cement_east,水泥价格指数：华东,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
+cement_yangtze,水泥价格指数：长江,CJHX,daily,日频,2026-08-05,2026-08-07,2,4,1.0,ok,,fresh
 lithium_price,碳酸锂价格,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 rare_earth_index,稀土价格指数,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 titanium_price,钛白粉现货价,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-gold_spot,伦敦现货黄金,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
-silver_spot,伦敦现货白银,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
-gasoline_ex_factory_taxed,国内汽油出厂价（含税）,iFinD,weekly,周频,2026-08-01,2026-08-07,6,10,14.0,ok,,fresh
-ccfi,CCFI,CJHX,weekly,周频,2026-07-31,2026-08-07,7,10,7.0,ok,,fresh
+gold_spot,伦敦现货黄金,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
+silver_spot,伦敦现货白银,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
+gasoline_ex_factory_taxed,国内汽油出厂价（含税）,iFinD,weekly,周频,2026-08-01,2026-08-07,6,14,14.0,ok,,fresh
+ccfi,CCFI,CJHX,weekly,周频,2026-07-31,2026-08-07,7,14,7.0,ok,,fresh
 bci,好望角型运费指数 BCI,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
 bpi,巴拿马型运费指数 BPI,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
-eurusd,EUR/USD,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
-usdjpy,USD/JPY,CJHX,daily,日频,2026-07-31,2026-08-07,7,4,1.0,ok,,stale
+eurusd,EUR/USD,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
+usdjpy,USD/JPY,CJHX,daily,日频,2026-08-06,2026-08-07,1,4,1.0,ok,,fresh
