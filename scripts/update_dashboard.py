@@ -413,7 +413,7 @@ def build_indicator(
     stale_days = (end_date - latest_day).days
     stale_limit = int(definition.get("stale_tolerance_days") or 0)
     if not stale_limit:
-        stale_limit = 10 if definition["frequency"] == "weekly" else 4
+        stale_limit = 14 if definition["frequency"] == "weekly" else 4
 
     return {
         "id": definition["id"],

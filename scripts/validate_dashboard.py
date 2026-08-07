@@ -30,7 +30,7 @@ ALLOWED_AGGREGATES = {
     "rolling_4w_mean",
 }
 ALLOWED_PREPROCESS = {"", "rolling_7d_mean", "rolling_4w_mean"}
-DEFAULT_STALE_TOLERANCE_DAYS = {"daily": 4, "weekly": 10}
+DEFAULT_STALE_TOLERANCE_DAYS = {"daily": 4, "weekly": 14}
 
 
 def load_definitions(

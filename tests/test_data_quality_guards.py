@@ -67,7 +67,7 @@ class DataQualityGuardTests(unittest.TestCase):
 
     def test_stale_tolerance_defaults_match_dashboard_fresh_flag(self) -> None:
         self.assertEqual(stale_tolerance_days({"frequency": "daily"}), 4)
-        self.assertEqual(stale_tolerance_days({"frequency": "weekly"}), 10)
+        self.assertEqual(stale_tolerance_days({"frequency": "weekly"}), 14)
         self.assertEqual(
             stale_tolerance_days(
                 {"frequency": "weekly", "stale_tolerance_days": 21}
