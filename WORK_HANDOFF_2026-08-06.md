@@ -302,7 +302,7 @@ C:\Users\wangzhiwei202307\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\
 | 文件 | 职责 |
 | --- | --- |
 | `.github/workflows/update-and-deploy.yml` | 每日数据更新、质量校验、静态构建、artifact 上传和 Pages 部署的主 workflow |
-| `.github/workflows/pages.yml` | 仅在 `gh-pages` push、手工或 repository dispatch 时运行的第二条 Pages 链；正常每日流程不应触发它 |
+| `.github/workflows/pages.yml` | 仅存在于 `main` 的备用/防护模板；默认分支 `gh-pages` 未包含它，因此当前不会被 GitHub 注册或触发 |
 | `.github/workflows/quality-guard-ci.yml` | pull request 和指定质量分支的 CI，不负责生产定时更新 |
 | `.github/workflows.disabled/update-and-deploy.yml` | 历史禁用副本，仅供参考，不会运行 |
 | `vite.github.config.ts` | GitHub Pages 构建配置；入口 `static/`、基础路径 `./`、产物目录 `docs/` |
@@ -494,7 +494,7 @@ git status --short
 
 北京时间 09:21 检查时，GitHub 没有创建任何 `event=schedule` 的 run；workflow 状态为 `active`，本机 `macro-dashboard-windows` runner 同时为 `online/idle`。因此不是 runner 离线或任务排队，而是 GitHub 的 schedule 事件没有入队。该 workflow 于 2026-08-06 20:42 才在默认分支激活，GitHub schedule 是 best-effort，首次运行和高负载时可能延迟或丢失。
 
-修复：保留 08:30 主 cron `30 0 * * *`，新增 09:10 兜底 cron `10 1 * * *`。同一天重复运行会命中本机增量缓存，iFinD 已有当天数据时不再重复请求完整历史。 `pages.yml` 同时忽略仅修改 `.github/**` 的 push，防止同步默认分支 workflow 时用旧 `gh-pages` 静态文件覆盖当前线上页面。
+修复：保留 08:30 主 cron `30 0 * * *`，新增 09:10 兜底 cron `10 1 * * *`。 `main` 修复提交为 `39de2b0`，默认分支 workflow 同步提交为 `9bef837`。同一天重复运行会命中本机增量缓存，iFinD 已有当天数据时不再重复请求完整历史。 `main` 中的备用 `pages.yml` 已配置忽略仅修改 `.github/**` 的 push，但它没有同步到默认分支，因此当前生产不会注册第二条 Pages workflow。
 
 ### 当天补跑
 
