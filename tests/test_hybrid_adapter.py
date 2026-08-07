@@ -92,6 +92,30 @@ class HybridRoutingTests(unittest.TestCase):
                 date(2026, 8, 2),
             )
 
+    def test_same_day_checked_cache_skips_ifind_call(self):
+        original_dir = hybrid_adapter.CACHE_DIR
+        original_call = hybrid_adapter._ifind_call
+        try:
+            with tempfile.TemporaryDirectory() as temp_dir:
+                hybrid_adapter.CACHE_DIR = Path(temp_dir)
+                hybrid_adapter._save_cache(
+                    "IFIND:BILL_DISCOUNT_6M",
+                    [{"date": "2026-08-06", "value": 1.23}],
+                    "2026-08-07",
+                )
+                calls = []
+                hybrid_adapter._ifind_call = lambda *args: calls.append(args)
+                records = hybrid_adapter._fetch_ifind(
+                    "IFIND:BILL_DISCOUNT_6M",
+                    date(2026, 8, 1),
+                    date(2026, 8, 7),
+                )
+                self.assertEqual(records, [{"date": "2026-08-06", "value": 1.23}])
+                self.assertEqual(calls, [])
+        finally:
+            hybrid_adapter.CACHE_DIR = original_dir
+            hybrid_adapter._ifind_call = original_call
+
     def test_cache_only_mode_never_calls_ifind(self):
         original_dir = hybrid_adapter.CACHE_DIR
         original_env = os.environ.get("IFIND_CACHE_ONLY")

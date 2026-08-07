@@ -61,17 +61,26 @@ def _cache_path(semantic_code: str) -> Path:
     return CACHE_DIR / f"{safe}.json"
 
 
-def _load_cache(semantic_code: str) -> list[dict[str, Any]]:
+def _load_cache(semantic_code: str) -> tuple[list[dict[str, Any]], str | None]:
     path = _cache_path(semantic_code)
     if not path.exists():
-        return []
+        return [], None
     payload = json.loads(path.read_text(encoding="utf-8"))
-    return payload if isinstance(payload, list) else payload.get("records", [])
+    if isinstance(payload, list):
+        return payload, None
+    return payload.get("records", []), payload.get("last_checked_date")
 
 
-def _save_cache(semantic_code: str, records: list[dict[str, Any]]) -> None:
+def _save_cache(
+    semantic_code: str,
+    records: list[dict[str, Any]],
+    last_checked_date: str | None = None,
+) -> None:
+    payload: object = records
+    if last_checked_date is not None:
+        payload = {"records": records, "last_checked_date": last_checked_date}
     _cache_path(semantic_code).write_text(
-        json.dumps(records, ensure_ascii=False, separators=(",", ":")),
+        json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
 
@@ -247,7 +256,17 @@ def _fetch_ifind(
     semantic_code: str, start_date: date, end_date: date
 ) -> list[dict[str, Any]]:
     metadata = _load_ifind_map()[semantic_code]
-    cached = _load_cache(semantic_code)
+    cached, last_checked_date = _load_cache(semantic_code)
+    if (
+        cached
+        and last_checked_date
+        and last_checked_date >= end_date.isoformat()
+    ):
+        return [
+            item
+            for item in cached
+            if start_date <= date.fromisoformat(item["date"]) <= end_date
+        ]
     if cached and os.environ.get("IFIND_CACHE_ONLY", "").lower() in {"1", "true", "yes"}:
         return [
             item
@@ -289,6 +308,12 @@ def _fetch_ifind(
                         semantic_code,
                         error,
                     )
+                    if "未返回可用数据" in str(error):
+                        _save_cache(
+                            semantic_code,
+                            cached,
+                            end_date.isoformat(),
+                        )
                     return [
                         item
                         for item in cached
@@ -310,7 +335,7 @@ def _fetch_ifind(
         for item in fresh
     ]
     merged = _merge_records(cached, fresh)
-    _save_cache(semantic_code, merged)
+    _save_cache(semantic_code, merged, end_date.isoformat())
     return [
         item
         for item in merged
