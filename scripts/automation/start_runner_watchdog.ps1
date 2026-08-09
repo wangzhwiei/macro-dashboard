@@ -3,6 +3,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$createdNew = $false
 $mutex = [Threading.Mutex]::new($true, "Local\MacroDashboardRunnerWatchdog", [ref]$createdNew)
 if (-not $createdNew) { exit 0 }
 
