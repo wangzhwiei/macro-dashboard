@@ -16,7 +16,6 @@ import pandas as pd
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
 from forecast_realtime import build_daily_nowcasts
-from trade_forecast_model import augment_payload as augment_trade_payload
 
 warnings.filterwarnings("ignore")
 
