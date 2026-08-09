@@ -1,0 +1,71 @@
+import json
+import math
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+class ForecastIntegrityTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.data = json.loads(
+            (ROOT / "public" / "data" / "forecasts.json").read_text(encoding="utf-8")
+        )
+
+    def test_history_covers_2023_to_confirmed_july_nowcast(self) -> None:
+        for key in ("cpi", "ppi", "pmi"):
+            rows = self.data["history"][key]
+            self.assertEqual(rows[0]["date"], "2023-01-31")
+            self.assertEqual(rows[-1]["date"], "2026-07-31")
+            self.assertTrue(all(row["forecast"] is None for row in rows if row["date"] < "2023-01-01"))
+
+    def test_locked_july_values_match_final_review(self) -> None:
+        expected = {"cpi": 1.0477663882968669, "ppi": 3.981353718814007, "pmi": 48.98}
+        actuals = {"cpi": .5, "ppi": 3.5, "pmi": 49.2}
+        for key, value in expected.items():
+            row = self.data["history"][key][-1]
+            self.assertEqual(row["forecastKind"], "confirmed_nowcast")
+            self.assertTrue(math.isclose(row["forecast"], value, abs_tol=1e-6))
+            self.assertTrue(math.isclose(row["actual"], actuals[key], abs_tol=1e-6))
+
+    def test_locked_backtest_metrics_have_not_drifted(self) -> None:
+        expected = {"cpi": 0.223, "ppi": 0.291, "pmi": 0.604}
+        for key, value in expected.items():
+            metric = self.data["metrics"][key]
+            self.assertTrue(math.isclose(metric["rmse"], value, abs_tol=.006))
+            self.assertEqual(metric["sampleStart"], "2023-01")
+            self.assertEqual(metric["sampleEnd"], "2026-05")
+
+    def test_forecast_months_are_complete_and_never_use_future_actuals(self) -> None:
+        for key in ("cpi", "ppi", "pmi"):
+            rows = [row for row in self.data["history"][key] if "2023-01-01" <= row["date"] <= "2026-05-31"]
+            self.assertEqual(len(rows), 41)
+            self.assertTrue(all(row["forecastKind"] == "walk_forward" for row in rows))
+            self.assertTrue(all(row["forecast"] is not None and row["actual"] is not None for row in rows))
+
+    def test_all_historical_forecasts_have_official_rounding(self) -> None:
+        for key in ("cpi", "cpi_mom", "ppi", "ppi_mom", "pmi"):
+            for row in self.data["history"][key]:
+                if row["forecast"] is not None:
+                    self.assertEqual(row["officialRounding"], round(row["forecast"], 1), f"{key}/{row['date']}")
+
+    def test_history_table_is_not_hard_limited_to_twelve_rows(self) -> None:
+        component = (ROOT / "app" / "ForecastPanelV3.tsx").read_text(encoding="utf-8")
+        self.assertNotIn("rows.slice(-12)", component)
+        self.assertIn("<ComparisonTable rows={rows}", component)
+    def test_inputs_are_unique_and_consensus_is_strictly_sourced(self) -> None:
+        for group, rows in self.data["highFrequency"].items():
+            ids = [row["id"] for row in rows]
+            self.assertEqual(len(ids), len(set(ids)), group)
+            self.assertTrue(all(row["frequency"] and row["role"] and row["aggregation"] for row in rows))
+        expected = {"cpi": .8, "ppi": 3.8, "pmi": 50.0}
+        for key, value in expected.items():
+            row = next(row for row in self.data["history"][key] if row["date"] == "2026-07-31")
+            self.assertEqual(row["consensusSource"], "Trading Economics public calendar")
+            self.assertTrue(math.isclose(row["consensus"], value, abs_tol=1e-9))
+
+
+if __name__ == "__main__":
+    unittest.main()

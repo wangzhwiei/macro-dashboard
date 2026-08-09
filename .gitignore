@@ -4,3 +4,6 @@ data_cache/
 .env
 __pycache__/
 pnpm-lock.yaml
+outputs/public_consensus_*.html
+outputs/consensus_*_manifest.json
+outputs/consensus_*_result.json

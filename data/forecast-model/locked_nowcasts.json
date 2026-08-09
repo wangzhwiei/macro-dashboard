@@ -1,0 +1,20 @@
+{
+  "2026-07-31": {
+    "cutoff": "2026-07-31",
+    "source": "2026年7月最终模型复核（L0纯改 + 精确乘法同比；PMI五分项）",
+    "cpi": {
+      "forecast": 1.0477663882968669,
+      "officialRounding": 1.0,
+      "momForecast": 0.4474826275742958
+    },
+    "ppi": {
+      "forecast": 3.981353718814007,
+      "officialRounding": 4.0,
+      "momForecast": -0.31374542615142326
+    },
+    "pmi": {
+      "forecast": 48.98,
+      "officialRounding": 49.0
+    }
+  }
+}

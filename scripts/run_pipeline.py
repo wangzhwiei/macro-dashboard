@@ -7,6 +7,7 @@ import argparse
 import shutil
 import subprocess
 import sys
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -26,6 +27,7 @@ def main() -> int:
     )
     parser.add_argument("--days", type=int, default=600)
     parser.add_argument("--end-date")
+    parser.add_argument("--full-forecast", action="store_true", help="手动重跑完整历史无前视回测；每日计划任务默认快速刷新")
     parser.add_argument(
         "--data-only",
         action="store_true",
@@ -79,6 +81,25 @@ def main() -> int:
                 "--report",
                 str(args.report),
             ],
+        )
+        forecast_inputs = ROOT / "data" / "forecast-model" / "ifind_latest_inputs.json"
+        refresh_end = date.fromisoformat(args.end_date) if args.end_date else date.today()
+        refresh_start = (refresh_end - timedelta(days=95)).isoformat()
+        fetch_command = [
+            python, "scripts/fetch_forecast_inputs_ifind.py",
+            "--start", refresh_start, "--end", refresh_end.isoformat(),
+        ]
+        if forecast_inputs.exists():
+            fetch_command.append("--merge-existing")
+        run_step("增量刷新 CPI/PPI/PMI 固定 iFinD 输入", fetch_command)
+        run_step(
+            "抓取公开市场一致预期",
+            [python, "scripts/fetch_forecast_consensus.py"],
+        )
+        run_step(
+            "生成月频每日预测" if args.full_forecast else "快速刷新月频预测",
+            [python, "scripts/generate_forecasts.py"] if args.full_forecast
+            else [python, "scripts/refresh_forecasts_fast.py"],
         )
         run_step(
             "数据适配器单元测试",

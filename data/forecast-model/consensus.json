@@ -1,0 +1,92 @@
+{
+  "_meta": {
+    "source": "Trading Economics public calendar",
+    "retrievedAt": "2026-08-09T22:55:16.714498+08:00",
+    "usage": "personal research",
+    "field": "Consensus (survey); TEForecast is explicitly excluded"
+  },
+  "cpi": [
+    {
+      "date": "2026-06-30",
+      "value": 1.1,
+      "source": "Trading Economics public calendar",
+      "sourceUrl": "https://tradingeconomics.com/china/inflation-cpi",
+      "eventId": "400815",
+      "event": "Inflation Rate YoY",
+      "releaseDate": "2026-07-09",
+      "reference": "Jun",
+      "actualAtFetch": 1.0,
+      "previousAtFetch": 1.2,
+      "retrievedAt": "2026-08-09T22:55:16.714498+08:00"
+    },
+    {
+      "date": "2026-07-31",
+      "value": 0.8,
+      "source": "Trading Economics public calendar",
+      "sourceUrl": "https://tradingeconomics.com/china/inflation-cpi",
+      "eventId": "403203",
+      "event": "Inflation Rate YoY",
+      "releaseDate": "2026-08-09",
+      "reference": "Jul",
+      "actualAtFetch": 0.5,
+      "previousAtFetch": 1.0,
+      "retrievedAt": "2026-08-09T22:55:16.714498+08:00"
+    }
+  ],
+  "ppi": [
+    {
+      "date": "2026-06-30",
+      "value": 4.1,
+      "source": "Trading Economics public calendar",
+      "sourceUrl": "https://tradingeconomics.com/china/producer-prices-change",
+      "eventId": "403193",
+      "event": "PPI YoY",
+      "releaseDate": "2026-07-09",
+      "reference": "Jun",
+      "actualAtFetch": 4.1,
+      "previousAtFetch": 3.9,
+      "retrievedAt": "2026-08-09T22:55:16.714498+08:00"
+    },
+    {
+      "date": "2026-07-31",
+      "value": 3.8,
+      "source": "Trading Economics public calendar",
+      "sourceUrl": "https://tradingeconomics.com/china/producer-prices-change",
+      "eventId": "402367",
+      "event": "PPI YoY",
+      "releaseDate": "2026-08-09",
+      "reference": "Jul",
+      "actualAtFetch": 3.5,
+      "previousAtFetch": 4.1,
+      "retrievedAt": "2026-08-09T22:55:16.714498+08:00"
+    }
+  ],
+  "pmi": [
+    {
+      "date": "2026-06-30",
+      "value": 50.1,
+      "source": "Trading Economics public calendar",
+      "sourceUrl": "https://tradingeconomics.com/china/business-confidence",
+      "eventId": "400413",
+      "event": "NBS Manufacturing PMI",
+      "releaseDate": "2026-06-30",
+      "reference": "Jun",
+      "actualAtFetch": 50.3,
+      "previousAtFetch": 50.0,
+      "retrievedAt": "2026-08-09T22:55:16.714498+08:00"
+    },
+    {
+      "date": "2026-07-31",
+      "value": 50.0,
+      "source": "Trading Economics public calendar",
+      "sourceUrl": "https://tradingeconomics.com/china/business-confidence",
+      "eventId": "403001",
+      "event": "NBS Manufacturing PMI",
+      "releaseDate": "2026-07-31",
+      "reference": "Jul",
+      "actualAtFetch": 49.2,
+      "previousAtFetch": 50.3,
+      "retrievedAt": "2026-08-09T22:55:16.714498+08:00"
+    }
+  ]
+}

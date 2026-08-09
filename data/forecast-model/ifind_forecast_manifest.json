@@ -1,0 +1,239 @@
+{
+    "schemaVersion":  1,
+    "series":  [
+                   {
+                       "key":  "cpi_veg",
+                       "group":  "CPI",
+                       "queryName":  "28种重点监测蔬菜价格指数",
+                       "providerId":  "S002808944",
+                       "frequency":  "D",
+                       "unit":  "元/公斤"
+                   },
+                   {
+                       "key":  "cpi_pork",
+                       "lookbackDays":  70,
+                       "group":  "CPI",
+                       "queryName":  "平均批发价:猪肉",
+                       "providerId":  "S002808935",
+                       "frequency":  "D",
+                       "unit":  "元/公斤"
+                   },
+                   {
+                       "key":  "cpi_crb",
+                       "group":  "CPI",
+                       "queryName":  "RJ/CRB商品价格指数",
+                       "providerId":  "S004370158",
+                       "frequency":  "D",
+                       "unit":  "指数"
+                   },
+                   {
+                       "key":  "cpi_pmi",
+                       "group":  "CPI",
+                       "queryName":  "制造业PMI",
+                       "providerId":  "M002043802",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "ppi_nanhua",
+                       "group":  "PPI",
+                       "queryName":  "南华工业品指数",
+                       "providerId":  "S004094489",
+                       "frequency":  "W",
+                       "unit":  "指数"
+                   },
+                   {
+                       "key":  "ppi_brent",
+                       "group":  "PPI",
+                       "queryName":  "国际现货价:原油:布伦特Dtd(英国)",
+                       "providerId":  "S007894279",
+                       "frequency":  "D",
+                       "unit":  "美元/桶"
+                   },
+                   {
+                       "key":  "ppi_coal",
+                       "group":  "PPI",
+                       "queryName":  "煤炭价格:动力煤",
+                       "providerId":  "S009760051",
+                       "frequency":  "D",
+                       "unit":  "元/吨"
+                   },
+                   {
+                       "key":  "ppi_rebar",
+                       "group":  "PPI",
+                       "queryName":  "现货价:螺纹钢",
+                       "providerId":  "S002855256",
+                       "frequency":  "D",
+                       "unit":  "元/吨"
+                   },
+                   {
+                       "key":  "ppi_copper",
+                       "group":  "PPI",
+                       "queryName":  "现货结算价:LME铜",
+                       "providerId":  "S000025453",
+                       "frequency":  "D",
+                       "unit":  "美元/吨"
+                   },
+                   {
+                       "key":  "ppi_crb",
+                       "group":  "PPI",
+                       "queryName":  "RJ/CRB商品价格指数",
+                       "providerId":  "S004370158",
+                       "frequency":  "D",
+                       "unit":  "指数"
+                   },
+                   {
+                       "key":  "pmi_blast_furnace",
+                       "group":  "PMI",
+                       "queryName":  "高炉开工率:全国(样本数247家):当周值",
+                       "providerId":  "S005653695",
+                       "frequency":  "W",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_rebar_steel_rate",
+                       "group":  "PMI",
+                       "queryName":  "建材钢厂:螺纹钢:开工率:全国:当周值",
+                       "providerId":  "S005580571",
+                       "frequency":  "W",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_power_coal",
+                       "group":  "PMI",
+                       "queryName":  "煤炭:日均耗煤量:六大发电集团:总计",
+                       "providerId":  "S003839324",
+                       "frequency":  "D",
+                       "unit":  "万吨"
+                   },
+                   {
+                       "key":  "pmi_pta",
+                       "group":  "PMI",
+                       "queryName":  "开工率:PTA装置",
+                       "providerId":  "S019765727",
+                       "frequency":  "D",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_methanol",
+                       "group":  "PMI",
+                       "queryName":  "开工率:甲醇:全国:小计",
+                       "providerId":  "S005439668",
+                       "frequency":  "D",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_car_wholesale",
+                       "group":  "PMI",
+                       "queryName":  "乘用车:当月厂家日均批发销量",
+                       "providerId":  "S023782827",
+                       "frequency":  "W",
+                       "unit":  "辆"
+                   },
+                   {
+                       "key":  "pmi_car_retail",
+                       "group":  "PMI",
+                       "queryName":  "乘用车:当月厂家日均零售销量",
+                       "providerId":  "S023782829",
+                       "frequency":  "W",
+                       "unit":  "辆"
+                   },
+                   {
+                       "key":  "pmi_newhome_30",
+                       "group":  "PMI",
+                       "queryName":  "30大中城市:商品房成交面积",
+                       "providerId":  "S004110574",
+                       "frequency":  "D",
+                       "unit":  "平方米"
+                   },
+                   {
+                       "key":  "pmi_secondhand_shenzhen",
+                       "group":  "PMI",
+                       "queryName":  "深圳:二手房成交面积",
+                       "providerId":  "S000054121",
+                       "frequency":  "D",
+                       "unit":  "平方米"
+                   },
+                   {
+                       "key":  "pmi_rebar_consumption",
+                       "group":  "PMI",
+                       "queryName":  "表观消费量:螺纹钢:当周值",
+                       "providerId":  "S019731983",
+                       "frequency":  "W",
+                       "unit":  "吨"
+                   },
+                   {
+                       "key":  "pmi_production",
+                       "queryStart":  "2020-01-01",
+                       "group":  "PMI_SUB",
+                       "queryName":  "制造业PMI:生产",
+                       "providerId":  "M002043803",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_new_orders",
+                       "group":  "PMI_SUB",
+                       "queryName":  "制造业PMI:新订单",
+                       "providerId":  "M002043804",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_employment",
+                       "group":  "PMI_SUB",
+                       "queryName":  "制造业PMI:从业人员",
+                       "providerId":  "M002043812",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_delivery",
+                       "group":  "PMI_SUB",
+                       "queryName":  "制造业PMI:供应商配送时间指数",
+                       "providerId":  "M002043813",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "pmi_inventory",
+                       "group":  "PMI_SUB",
+                       "queryName":  "制造业PMI:原材料库存",
+                       "providerId":  "M002043811",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "actual_cpi_yoy",
+                       "group":  "TARGET",
+                       "queryName":  "CPI:当月同比",
+                       "providerId":  "M002826730",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "actual_cpi_mom",
+                       "group":  "TARGET",
+                       "queryName":  "CPI:当月环比",
+                       "providerId":  "M002826785",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "actual_ppi_yoy",
+                       "group":  "TARGET",
+                       "queryName":  "PPI:当月同比",
+                       "providerId":  "M002826865",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   },
+                   {
+                       "key":  "actual_ppi_mom",
+                       "group":  "TARGET",
+                       "queryName":  "PPI:全部工业品:环比",
+                       "providerId":  "M002842661",
+                       "frequency":  "M",
+                       "unit":  "%"
+                   }
+               ]
+}

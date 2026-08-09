@@ -13,6 +13,7 @@ import type {
   Indicator,
   Signal,
 } from "./types";
+import ForecastPanel from "./ForecastPanelV3";
 import SignalDrilldownModal, {
   type SignalDrilldownSelection,
 } from "./SignalDrilldownModal";
@@ -783,6 +784,7 @@ export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [activeView, setActiveView] = useState<"macro" | "forecast">("macro");
   const [search, setSearch] = useState("");
   const [showAuxiliary, setShowAuxiliary] = useState(false);
   const [sortBy, setSortBy] = useState("category");
@@ -1027,11 +1029,19 @@ export default function Dashboard() {
             <small>宏观数据研究</small>
           </span>
         </a>
-        <nav aria-label="页面导航">
-          <a href="#overview">今日观点</a>
-          <a href="#outlook-trend">观点走势</a>
-          <a href="#matrix">趋势矩阵</a>
-          <a href="#indicators">数据研究</a>
+        <nav aria-label="页面导航" className="page-navigation">
+          {[["overview", "今日观点"], ["outlook-trend", "观点走势"], ["matrix", "趋势矩阵"], ["indicators", "数据研究"]].map(([id, label]) => (
+            <button key={id} className={activeView === "macro" ? "active" : ""} onClick={() => {
+              setActiveView("macro");
+              window.requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }));
+            }}>{label}</button>
+          ))}
+          <button className={activeView === "forecast" ? "active" : ""} onClick={() => {
+            setHistoryIndicator(null);
+            setSignalDrilldown(null);
+            setActiveView("forecast");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}>月频预测</button>
         </nav>
         <div className="update-status">
           <span className="live-dot" />
@@ -1049,6 +1059,10 @@ export default function Dashboard() {
         </div>
       </header>
 
+      {activeView === "forecast" ? (
+        <ForecastPanel />
+      ) : (
+        <>
       <section className="hero shell" id="overview">
         <div className="hero-copy">
           <span className="eyebrow">今日债市观点</span>
@@ -1588,6 +1602,9 @@ export default function Dashboard() {
           )}
         </div>
       </section>
+
+        </>
+      )}
 
       <footer className="shell">
         <span>创金固收投资部 · 宏观数据研究</span>
