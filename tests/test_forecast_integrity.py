@@ -60,10 +60,10 @@ class ForecastIntegrityTests(unittest.TestCase):
             ids = [row["id"] for row in rows]
             self.assertEqual(len(ids), len(set(ids)), group)
             self.assertTrue(all(row["frequency"] and row["role"] and row["aggregation"] for row in rows))
-        expected = {"cpi": .8, "ppi": 3.8, "pmi": 50.0}
+        expected = {"cpi": .74, "ppi": 3.463636, "pmi": 49.9}
         for key, value in expected.items():
             row = next(row for row in self.data["history"][key] if row["date"] == "2026-07-31")
-            self.assertEqual(row["consensusSource"], "Trading Economics public calendar")
+            self.assertEqual(row["consensusSource"], "iFinD EDB")
             self.assertTrue(math.isclose(row["consensus"], value, abs_tol=1e-9))
 
 
