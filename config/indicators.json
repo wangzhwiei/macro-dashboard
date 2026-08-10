@@ -136,7 +136,8 @@
       "transform": "pp_change",
       "bond_direction": -1,
       "core": true,
-      "weight": 1.2
+      "weight": 1.2,
+      "stale_tolerance_days": 21
     },
     {
       "id": "metro_composite",

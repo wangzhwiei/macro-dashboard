@@ -4,7 +4,7 @@ irs_6m,liquidity,利率预期,FR007 IRS 6M,daily,%,CJHX,CJHX:FR007_IRS_6M,pp_cha
 shibor_6m,liquidity,银行负债,SHIBOR 6M,daily,%,iFinD,IFIND:SHIBOR_6M,pp_change,-1,0.5,
 shibor_1y,liquidity,银行负债,SHIBOR 1Y,daily,%,CJHX,IFIND:SHIBOR_1Y,pp_change,-1,0.5,
 bill_3m,liquidity,信用需求,票据转贴 3M,daily,%,iFinD,IFIND:BILL_DISCOUNT_3M,pp_change,-1,0.5,
-car_wholesale_yoy,consumption,汽车消费,乘用车厂家批发当周同比,weekly,%,CJHX,CJHX:CAR_WHOLESALE_WEEKLY_YOY,pp_change,-1,0.5,
+car_wholesale_yoy,consumption,汽车消费,乘用车厂家批发当周同比,weekly,%,CJHX,CJHX:CAR_WHOLESALE_WEEKLY_YOY,pp_change,-1,0.5,21
 metro_shanghai,consumption,市内出行,上海地铁客运量,daily,万人次,CJHX,CJHX:METRO_SHANGHAI,pct_change,-1,0.5,
 metro_guangzhou,consumption,市内出行,广州地铁客运量,daily,万人次,CJHX,CJHX:METRO_GUANGZHOU,pct_change,-1,0.5,
 movie_audience,consumption,服务消费,全国当日观影人次,daily,万人次,CJHX,CJHX:MOVIE_AUDIENCE_DAILY,pct_change,-1,0.5,
