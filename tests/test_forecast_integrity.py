@@ -18,14 +18,15 @@ class ForecastIntegrityTests(unittest.TestCase):
         for key in ("cpi", "ppi", "pmi"):
             rows = self.data["history"][key]
             self.assertEqual(rows[0]["date"], "2023-01-31")
-            self.assertEqual(rows[-1]["date"], "2026-07-31")
+            self.assertEqual(rows[-1]["date"], "2026-08-31")
+            self.assertEqual(rows[-1]["forecastKind"], "live_nowcast")
             self.assertTrue(all(row["forecast"] is None for row in rows if row["date"] < "2023-01-01"))
 
     def test_locked_july_values_match_final_review(self) -> None:
         expected = {"cpi": 1.0477663882968669, "ppi": 3.981353718814007, "pmi": 48.98}
         actuals = {"cpi": .5, "ppi": 3.5, "pmi": 49.2}
         for key, value in expected.items():
-            row = self.data["history"][key][-1]
+            row = next(row for row in self.data["history"][key] if row["date"] == "2026-07-31")
             self.assertEqual(row["forecastKind"], "confirmed_nowcast")
             self.assertTrue(math.isclose(row["forecast"], value, abs_tol=1e-6))
             self.assertTrue(math.isclose(row["actual"], actuals[key], abs_tol=1e-6))

@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 import pandas as pd
-from forecast_realtime import build_daily_nowcasts
+from forecast_realtime import build_daily_nowcasts, build_pmi_daily_nowcasts
 from generate_forecasts_model import build_high_frequency, ifind_series, merge_official_pmi, read_json
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,7 +60,8 @@ def main() -> int:
             matched = by_month.get(row["date"])
             row["consensus"] = round(float(matched["value"]), 6) if matched else None
             row["consensusSource"] = matched.get("source") if matched else None
-    payload["highFrequency"] = build_high_frequency(ifind)
+    target_month = pd.Timestamp.now().normalize() + pd.offsets.MonthEnd(0)
+    payload["highFrequency"] = build_high_frequency(ifind, target_month)
     for history_key, ifind_key in OFFICIAL_KEYS.items():
         _, series = ifind_series(ifind, ifind_key)
         official = {
@@ -78,10 +79,34 @@ def main() -> int:
     (ROOT / "data" / "forecast-model" / "live_inputs.json").write_text(
         json.dumps(live, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    locked_payload = locked[locked_day.date().isoformat()]
-    daily = build_daily_nowcasts(source, live, locked_payload, locked_day)
-    daily["pmi"] = [{"date": locked_day.date().isoformat(), "value": round(float(locked_payload["pmi"]["forecast"]), 6)}]
-    payload["daily"], payload["dailyAsOf"] = daily, daily["cpi"][-1]["date"]
+    previous = target_month - pd.offsets.MonthEnd(1)
+    previous_actuals = {}
+    for history_key, ifind_key in OFFICIAL_KEYS.items():
+        _, values = ifind_series(ifind, ifind_key)
+        monthly_values = values.resample("ME").last().dropna()
+        if previous not in monthly_values.index:
+            raise RuntimeError(f"{history_key} 缺少 {previous:%Y-%m} 官方值，不能生成实时路径")
+        previous_actuals[history_key] = float(monthly_values.loc[previous])
+    daily = build_daily_nowcasts(source, live, None, target_month, previous_actuals)
+    daily["pmi"] = build_pmi_daily_nowcasts(source, ifind, target_month)
+    target_day = target_month.date().isoformat()
+    for key in ("cpi", "cpi_mom", "ppi", "ppi_mom", "pmi"):
+        payload["history"][key] = [row for row in payload["history"][key]
+                                   if row.get("forecastKind") != "live_nowcast" and row["date"] != target_day]
+        consensus_row = next((row for row in consensus.get(key, []) if row["date"] == target_day), None)
+        latest_value = float(daily[key][-1]["value"])
+        payload["history"][key].append({
+            "date": target_day, "forecast": round(latest_value, 6), "actual": None,
+            "consensus": round(float(consensus_row["value"]), 6) if consensus_row else None,
+            "consensusSource": consensus_row.get("source") if consensus_row else None,
+            "forecastKind": "live_nowcast", "officialRounding": round(latest_value, 1),
+        })
+    payload["daily"] = daily
+    payload["dailyAsOf"] = max(rows[-1]["date"] for rows in daily.values() if rows)
+    for section in ("daily", "history", "models", "metrics"):
+        for trade_key in ("imports", "exports"):
+            payload.get(section, {}).pop(trade_key, None)
+    payload.get("highFrequency", {}).pop("进出口", None)
     payload["generatedAt"] = datetime.now().astimezone().isoformat()
     args.output.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(f"快速刷新完成：{args.output}；历史回测未重跑")

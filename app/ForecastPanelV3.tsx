@@ -51,7 +51,7 @@ function HistoryChart({ rows, precision }: { rows: ForecastHistoryPoint[]; preci
   return <>
     <div className="forecast-v2-legend" aria-label="图例"><span><i className="actual" />真实公布值</span><span><i className="model" />月末无前视模型值</span><span><i className="locked" />当前确认点预测</span><span><i className="consensus" />市场一致预期（有数据时）</span></div>
     <div className="forecast-v2-chart-shell">
-      <div className="forecast-v2-reading"><span>{(hover ?? latest)?.date.slice(0, 7)}</span><strong>{(hover?.forecast ?? hover?.actual ?? latest?.forecast ?? latest?.actual)?.toFixed(precision) ?? "-"}</strong><small>{hover ? `模型 ${hover.forecast?.toFixed(precision) ?? "—"} / 实际 ${hover.actual?.toFixed(precision) ?? "—"}` : "最新月度读数"}</small></div>
+      <div className="forecast-v2-reading"><span>{(hover ?? latest)?.date.slice(0, 7)}</span><strong>{(hover ? hover.actual : (latest?.actual ?? latest?.forecast))?.toFixed(precision) ?? "—"}</strong><small>{hover ? `一致预期 ${hover.consensus?.toFixed(precision) ?? "—"} / 模型 ${hover.forecast?.toFixed(precision) ?? "—"}` : "最新月度读数"}</small></div>
       <svg viewBox={`0 0 ${width} ${height}`} className="forecast-v2-chart" onMouseLeave={() => setHover(null)} role="img" aria-label="2023年至今实际值与无前视预测对比图">
         {ticks.map((tick) => <g key={tick}><line x1={padding.left} x2={width-padding.right} y1={y(tick)} y2={y(tick)} className="grid"/><text x={padding.left-9} y={y(tick)+4} textAnchor="end">{tick.toFixed(precision)}</text></g>)}
         {backtestIndex >= 0 && <g><line x1={x(backtestIndex)} x2={x(backtestIndex)} y1={padding.top} y2={height-padding.bottom} className="backtest-start"/><text x={x(backtestIndex)+6} y={padding.top+13} className="backtest-label">无前视回测起点</text></g>}
@@ -130,6 +130,6 @@ export default function ForecastWorkspace() {
     {metric!=="pmi"&&<div className="forecast-mode-tabs"><button className={mode==="yoy"?"active":""} onClick={()=>setMode("yoy")}>同比预测</button><button className={mode==="mom"?"active":""} onClick={()=>setMode("mom")}>环比预测</button></div>}
     <div className="forecast-v2-method"><strong>模型口径</strong><span>{model.formula}</span><small>历史预测自 {data.backtestStart.slice(0,7)} 显示；月内实时值不使用当日之后的数据。一致预期来自 iFinD EDB“预测平均值”月频序列，按中文名称查询并锁定指标 ID；PMI 缺失月份沿用上月值。</small></div>
     <div className="forecast-kpis"><div><span>当前确认点预测</span><strong>{latest?.forecast?.toFixed(precision)??"-"}</strong><small>{latest?.date.slice(0,7)} · {latest?.officialRounding==null?model.name:`建议报数 ${latest.officialRounding.toFixed(1)}`}</small></div><div><span>回测误差</span><strong>{score.rmse.toFixed(3)}</strong><small>RMSE · {score.sampleStart} 至 {score.sampleEnd}</small></div><div><span>最近真实公布</span><strong>{latestActual?.actual?.toFixed(1)??"-"}</strong><small>{latestActual?.date.slice(0,7)} · 官方值</small></div></div>
-    <HistoryChart rows={rows} precision={precision}/>{metric!=="pmi"&&<RealtimeChart points={data.daily[key]??[]} label={model.name} unit={model.unit}/>}<ComparisonTable rows={rows} precision={precision} hasConsensus={mode==="yoy"}/>
+    <HistoryChart rows={rows} precision={precision}/>{(data.daily[key]?.length??0)>0&&<RealtimeChart points={data.daily[key]} label={model.name} unit={model.unit}/>}<ComparisonTable rows={rows} precision={precision} hasConsensus={mode==="yoy"}/>
   </section><ForecastInputs data={data}/></div>;
 }

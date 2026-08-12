@@ -272,13 +272,16 @@ def merge_points(primary: pd.Series, overlay: pd.Series) -> pd.Series:
     return output.sort_index()
 
 
-def build_high_frequency(ifind_latest: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
-    common_july = "2026年7月确认预测按完整7月月内观测计算；页面现展示iFinD最新可用值"
+def build_high_frequency(ifind_latest: dict[str, Any], target_month: pd.Timestamp | None = None) -> dict[str, list[dict[str, Any]]]:
+    target_month = target_month or (pd.Timestamp.now().normalize() + pd.offsets.MonthEnd(0))
+    previous = target_month - pd.offsets.MonthEnd(1)
+    target_label, previous_label = f"{target_month.year}年{target_month.month}月", f"{previous.year}年{previous.month}月"
+    common_target = f"{target_label}实时预测使用截至页面更新时间的当月观测；月均值随新增数据更新"
     cpi_specs = (
-        ("cpi_veg", "食品项 / 28种重点监测蔬菜均价", "cpi_veg", "食品环比外生变量 L0", "当月日均值后作一阶差分", "2026年7月确认预测使用截至2026-07-31的同口径日频数据"),
-        ("cpi_pork", "食品项 / 猪肉批发价", "cpi_pork", "食品环比外生变量 L0", "当月末值后作一阶差分", "2026年7月确认预测使用截至2026-07-31的同口径日频数据"),
-        ("cpi_crb", "非食品项 / RJ/CRB商品价格指数", "cpi_crb", "非食品环比外生变量 L0", "当月日均值后作一阶差分", "2026年7月确认预测直接使用iFinD截至2026-07-31的数据"),
-        ("cpi_pmi", "非食品项 / 制造业PMI", "cpi_pmi_l1", "非食品环比外生变量 L1", "采用上月已公布值", "2026年7月预测实际使用2026年6月PMI；7月公布值仅用于后续月份"),
+        ("cpi_veg", "食品项 / 28种重点监测蔬菜均价", "cpi_veg", "食品环比外生变量 L0", "当月日均值后作一阶差分", common_target),
+        ("cpi_pork", "食品项 / 猪肉批发价", "cpi_pork", "食品环比外生变量 L0", "当月末值后作一阶差分", common_target),
+        ("cpi_crb", "非食品项 / RJ/CRB商品价格指数", "cpi_crb", "非食品环比外生变量 L0", "当月日均值后作一阶差分", common_target),
+        ("cpi_pmi", "非食品项 / 制造业PMI", "cpi_pmi_l1", "非食品环比外生变量 L1", "采用上月已公布值", f"{target_label}预测使用{previous_label}制造业PMI"),
     )
     ppi_specs = (
         ("ppi_nanhua", "南华工业品指数", "ppi_nanhua", "PPI环比外生变量 L0 与 L1", "月均值环比；同一序列承担两种滞后用途"),
@@ -289,22 +292,19 @@ def build_high_frequency(ifind_latest: dict[str, Any]) -> dict[str, list[dict[st
         ("ppi_crb", "RJ/CRB商品价格指数", "ppi_crb", "PPI环比外生变量 L0", "月均值环比"),
     )
     pmi_production_keys = ("pmi_blast_furnace", "pmi_rebar_steel_rate", "pmi_power_coal", "pmi_pta", "pmi_methanol")
-    pmi_order_specs = (
-        ("pmi_car_wholesale", "原预测截至2026-07-26；iFinD周频现已补齐7月"),
-        ("pmi_car_retail", "原预测截至2026-07-26；iFinD周频现已补齐7月"),
-        ("pmi_newhome_30", "原预测7月缺失并按缺失代理剔除；本次已补齐"),
-        ("pmi_secondhand_shenzhen", "原预测仅截至2026-07-07；本次已补齐"),
-        ("pmi_rebar_consumption", "原预测仅截至2026-07-03；本次已补齐"),
-    )
+    pmi_order_specs = tuple((key, common_target) for key in (
+        "pmi_car_wholesale", "pmi_car_retail", "pmi_newhome_30",
+        "pmi_secondhand_shenzhen", "pmi_rebar_consumption",
+    ))
     high_frequency = {
         "CPI": [ifind_input_row(ifind_latest, *spec) for spec in cpi_specs],
-        "PPI": [ifind_input_row(ifind_latest, *spec, common_july) for spec in ppi_specs],
+        "PPI": [ifind_input_row(ifind_latest, *spec, common_target) for spec in ppi_specs],
         "PMI": [
-            *[ifind_input_row(ifind_latest, key, name, f"pmi_proxy_{i+1}", "生产分项动量代理", "月均值环比后扩展窗标准化", "2026年7月原预测按当时可得月内样本；本次iFinD已补齐完整7月复核") for i, (key, name) in enumerate(zip(pmi_production_keys, PMI_PROXIES["生产"]))],
+            *[ifind_input_row(ifind_latest, key, name, f"pmi_proxy_{i+1}", "生产分项动量代理", "月均值环比后扩展窗标准化", common_target) for i, (key, name) in enumerate(zip(pmi_production_keys, PMI_PROXIES["生产"]))],
             *[ifind_input_row(ifind_latest, key, name, f"pmi_proxy_{i+6}", "新订单分项动量代理", "月均值环比后扩展窗标准化", note) for i, ((key, note), name) in enumerate(zip(pmi_order_specs, PMI_PROXIES["新订单"]))],
-            ifind_input_row(ifind_latest, "pmi_employment", "制造业PMI / 从业人员", "pmi_sub_从业人员", "预测目标月采用上月从业人员值", "上月已公布值", "2026年7月预测实际使用2026年6月值；7月值不参与7月预测"),
-            ifind_input_row(ifind_latest, "pmi_delivery", "制造业PMI / 供应商配送时间", "pmi_sub_配送", "预测目标月采用上月供应商配送时间值", "上月已公布值（合成前取100-x）", "2026年7月预测实际使用2026年6月值；7月值不参与7月预测"),
-            ifind_input_row(ifind_latest, "pmi_inventory", "制造业PMI / 原材料库存", "pmi_sub_库存", "预测目标月采用上月原材料库存值", "上月已公布值", "2026年7月预测实际使用2026年6月值；7月值不参与7月预测"),
+            ifind_input_row(ifind_latest, "pmi_employment", "制造业PMI / 从业人员", "pmi_sub_从业人员", "预测目标月采用上月从业人员值", "上月已公布值", f"{target_label}预测使用{previous_label}值"),
+            ifind_input_row(ifind_latest, "pmi_delivery", "制造业PMI / 供应商配送时间", "pmi_sub_配送", "预测目标月采用上月供应商配送时间值", "上月已公布值（合成前取100-x）", f"{target_label}预测使用{previous_label}值"),
+            ifind_input_row(ifind_latest, "pmi_inventory", "制造业PMI / 原材料库存", "pmi_sub_库存", "预测目标月采用上月原材料库存值", "上月已公布值", f"{target_label}预测使用{previous_label}值"),
         ],
     }
     return high_frequency
