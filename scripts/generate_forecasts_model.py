@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sys
 import warnings
 from datetime import datetime
 from pathlib import Path
@@ -15,6 +16,7 @@ import numpy as np
 import pandas as pd
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from forecast_realtime import build_daily_nowcasts
 
 warnings.filterwarnings("ignore")

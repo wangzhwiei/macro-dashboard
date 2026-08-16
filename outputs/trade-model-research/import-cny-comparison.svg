@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img">
+<title>进口同比原模型与春节门控模型比较</title>
+<rect width="100%" height="100%" fill="#fff"/>
+<style>text{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#202124}.title{font-size:21px;font-weight:600}.sub{font-size:13px;fill:#5f6368}.axis{font-size:12px;fill:#5f6368}.grid{stroke:#e3e6ea;stroke-width:1}.actual{stroke:#202124;stroke-width:2.5;fill:none}.original{stroke:#7b61a8;stroke-width:2.1;stroke-dasharray:6 4;fill:none}.cny{stroke:#2474d2;stroke-width:2.6;fill:none}.consensus{stroke:#e68a00;stroke-width:2;stroke-dasharray:3 4;fill:none}</style>
+<text x="76" y="30" class="title">进口同比：原模型与春节门控模型</text>
+<text x="76" y="52" class="sub">单位：%；固定韩国出口因子，滚动估计系数；春节门控仅在1—3月调整。</text>
+<g transform="translate(610,28)"><line x1="0" y1="0" x2="25" y2="0" class="actual"/><text x="31" y="4" class="axis">实际</text><line x1="85" y1="0" x2="110" y2="0" class="original"/><text x="116" y="4" class="axis">原模型</text><line x1="190" y1="0" x2="215" y2="0" class="cny"/><text x="221" y="4" class="axis">春节门控</text><line x1="315" y1="0" x2="340" y2="0" class="consensus"/><text x="346" y="4" class="axis">一致预期</text></g>
+<line x1="76" y1="82.0" x2="1170" y2="82.0" class="grid"/>
+<text x="67" y="86.0" text-anchor="end" class="axis">46</text>
+<line x1="76" y1="139.0" x2="1170" y2="139.0" class="grid"/>
+<text x="67" y="143.0" text-anchor="end" class="axis">33</text>
+<line x1="76" y1="196.0" x2="1170" y2="196.0" class="grid"/>
+<text x="67" y="200.0" text-anchor="end" class="axis">19</text>
+<line x1="76" y1="253.0" x2="1170" y2="253.0" class="grid"/>
+<text x="67" y="257.0" text-anchor="end" class="axis">6</text>
+<line x1="76" y1="310.0" x2="1170" y2="310.0" class="grid"/>
+<text x="67" y="314.0" text-anchor="end" class="axis">-7</text>
+<line x1="76" y1="367.0" x2="1170" y2="367.0" class="grid"/>
+<text x="67" y="371.0" text-anchor="end" class="axis">-20</text>
+<text x="76.0" y="390" text-anchor="middle" class="axis">2024-07</text>
+<text x="258.3" y="390" text-anchor="middle" class="axis">2024-11</text>
+<text x="440.7" y="390" text-anchor="middle" class="axis">2025-03</text>
+<text x="623.0" y="390" text-anchor="middle" class="axis">2025-07</text>
+<text x="805.3" y="390" text-anchor="middle" class="axis">2025-11</text>
+<text x="987.7" y="390" text-anchor="middle" class="axis">2026-03</text>
+<text x="1170.0" y="390" text-anchor="middle" class="axis">2026-07</text>
+<path d="M 76.0 247.9 L 121.6 277.4 L 167.2 278.1 L 212.8 289.2 L 258.3 296.2 L 303.9 274.7 L 349.5 349.8 L 395.1 272.6 L 440.7 298.7 L 486.2 280.6 L 531.8 292.9 L 577.4 276.0 L 623.0 264.2 L 668.6 275.8 L 714.2 248.2 L 759.8 275.5 L 805.3 271.8 L 850.9 255.5 L 896.5 168.1 L 942.1 219.7 L 987.7 160.0 L 1033.2 171.4 L 1078.8 161.2 L 1124.4 123.4 L 1170.0 160.4" class="actual"/>
+<path d="M 76.0 264.3 L 121.6 259.7 L 167.2 292.3 L 212.8 288.4 L 258.3 302.0 L 303.9 278.7 L 349.5 334.8 L 395.1 313.0 L 440.7 264.0 L 486.2 297.4 L 531.8 298.8 L 577.4 272.2 L 623.0 271.6 L 668.6 282.0 L 714.2 233.1 L 759.8 282.2 L 805.3 259.9 L 850.9 253.1 L 896.5 190.9 L 942.1 185.5 L 987.7 155.2 L 1033.2 171.2 L 1078.8 154.0 L 1124.4 99.2 L 1170.0 151.8" class="original"/>
+<path d="M 76.0 264.3 L 121.6 259.7 L 167.2 292.3 L 212.8 288.4 L 258.3 302.0 L 303.9 278.7 L 349.5 320.9 L 395.1 309.5 L 440.7 278.7 L 486.2 297.4 L 531.8 298.8 L 577.4 272.2 L 623.0 271.6 L 668.6 282.0 L 714.2 233.1 L 759.8 282.2 L 805.3 259.9 L 850.9 253.1 L 896.5 200.4 L 942.1 204.2 L 987.7 159.1 L 1033.2 171.2 L 1078.8 154.0 L 1124.4 99.2 L 1170.0 151.8" class="cny"/>
+<path d="M 76.0 265.7 L 121.6 266.1 L 167.2 275.6 L 212.8 286.0 L 258.3 278.5 L 303.9 284.2 L 349.5 309.6 L 395.1 271.1 L 440.7 297.0 L 486.2 301.0 L 531.8 281.5 L 577.4 282.3 L 623.0 278.9 L 668.6 265.8 L 714.2 274.5 L 759.8 264.9 L 805.3 262.1 L 850.9 277.4 M 987.7 246.0 L 1033.2 216.6 L 1078.8 196.1 L 1124.4 179.7 L 1170.0 165.9" class="consensus"/>
+</svg>

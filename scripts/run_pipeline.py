@@ -101,6 +101,11 @@ def main() -> int:
             [python, "scripts/generate_forecasts.py"] if args.full_forecast
             else [python, "scripts/refresh_forecasts_fast.py"],
         )
+        run_step("刷新进出口真实值", [python, "scripts/fetch_trade_actuals.py"])
+        run_step("刷新进出口一致预期", [python, "scripts/fetch_baseline.py"])
+        run_step("刷新进出口固定因子", [python, "scripts/fetch_trade_fixed_factors.py"])
+        run_step("滚动估计进出口固定模型", [python, "scripts/research_trade_model_race.py"])
+        run_step("写入网页进出口预测", [python, "scripts/publish_fixed_trade_forecasts.py"])
         run_step(
             "数据适配器单元测试",
             [

@@ -26,7 +26,7 @@ class ForecastRealtimeTests(unittest.TestCase):
             self.assertTrue(all(row["date"].startswith("2026-08-") for row in rows))
             self.assertEqual(len({row["date"] for row in rows}), len(rows))
             self.assertTrue(all(math.isfinite(row["value"]) for row in rows))
-        self.assertEqual(self.data["dailyAsOf"], "2026-08-11")
+        self.assertGreaterEqual(self.data["dailyAsOf"], "2026-08-14")
 
     def test_current_month_nowcasts_are_appended_without_actuals(self) -> None:
         for key in ("cpi", "cpi_mom", "ppi", "ppi_mom", "pmi"):
@@ -36,11 +36,15 @@ class ForecastRealtimeTests(unittest.TestCase):
             self.assertIsNone(row["actual"])
             self.assertTrue(math.isclose(row["forecast"], self.data["daily"][key][-1]["value"], abs_tol=1e-6))
 
-    def test_unvalidated_trade_models_are_not_published(self) -> None:
+    def test_approved_fixed_trade_models_are_published(self) -> None:
         for section in ("daily", "history", "models", "metrics"):
-            self.assertNotIn("imports", self.data[section])
-            self.assertNotIn("exports", self.data[section])
-        self.assertNotIn("进出口", self.data["highFrequency"])
+            self.assertIn("imports", self.data[section])
+            self.assertIn("exports", self.data[section])
+        self.assertIn("进出口", self.data["highFrequency"])
+        self.assertEqual(self.data["tradeModel"]["version"], "trade-fixed-factors-cny-gated-v1")
+        for key in ("exports", "imports"):
+            self.assertEqual(self.data["models"][key]["status"], "WAITING_FOR_FIXED_FACTORS")
+            self.assertIsNone(self.data["history"][key][-1]["forecast"])
 
     def test_high_frequency_rows_are_not_monthly_aggregates(self) -> None:
         expected_frequency = {
@@ -64,9 +68,12 @@ class ForecastRealtimeTests(unittest.TestCase):
     def test_all_inputs_have_fixed_ifind_provider_and_latest_date(self) -> None:
         for group, inputs in self.data["highFrequency"].items():
             for row in inputs:
-                self.assertRegex(row["providerId"], r"^[SM]\d{9}$", f"{group}/{row['id']}")
+                self.assertRegex(row["providerId"], r"^[SMGW]\d{9}$", f"{group}/{row['id']}")
                 self.assertEqual(row["latestAvailableDate"], row["series"][-1]["date"])
-                self.assertGreaterEqual(row["latestAvailableDate"], "2026-07-31")
+                if group == "进出口" and row["id"] == "trade_thailand_imports_china":
+                    self.assertEqual(row["latestAvailableDate"], "2026-06-30")
+                else:
+                    self.assertGreaterEqual(row["latestAvailableDate"], "2026-07-31")
 
 
 if __name__ == "__main__":

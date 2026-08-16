@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "validatedAt": "2026-08-13",
+  "consensus": {
+    "exports": {
+      "providerId": "M005682256",
+      "name": "预测平均值:出口金额(美元计价):当月同比",
+      "frequency": "月",
+      "unit": "%",
+      "source": "同花顺金融",
+      "start": "2012-07-31",
+      "latestInScreenshot": "2026-07-31",
+      "updatedInScreenshot": "2026-08-10"
+    },
+    "imports": {
+      "providerId": "M005682257",
+      "name": "预测平均值:进口金额(美元计价):当月同比",
+      "frequency": "月",
+      "unit": "%",
+      "source": "同花顺金融",
+      "start": "2012-08-31",
+      "latestInScreenshot": "2026-07-31",
+      "updatedInScreenshot": "2026-08-06"
+    }
+  },
+  "actual": {
+    "exports": {
+      "providerId": "M002888330",
+      "name": "出口总额(美元计价):当月同比",
+      "frequency": "M",
+      "unit": "%",
+      "source": "海关总署",
+      "country": "中国",
+      "status": "validated from a short-range MCP field query"
+    },
+    "imports": {
+      "providerId": "M002888203",
+      "name": "进口总额(美元计价):当月同比",
+      "frequency": "M",
+      "unit": "%",
+      "source": "海关总署",
+      "country": "中国",
+      "status": "validated from no-date fuzzy MCP query"
+    }
+  },
+  "validationRule": "Reject every iFinD response unless providerId, exact name, frequency=M/month and unit=% all match this manifest.",
+  "mcpCapability": "The live EDB MCP schema exposes only get_edb_data(query). Under this fuzzy-search permission, query performs natural-language recall plus retrieval; provider IDs are for post-response validation, not direct lookup.",
+  "mcpStatus": "VALIDATED: omit time ranges from fuzzy queries; both consensus and both GACC actual series retrieved and metadata-validated."
+}

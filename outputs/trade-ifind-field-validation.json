@@ -1,0 +1,100 @@
+{
+  "queries": [
+    {
+      "query": "出口总值(美元计价):当月同比",
+      "requested": "actual_exports",
+      "candidates": [
+        {
+          "name": "(停)进出口总值(美元计价):季调:当月同比",
+          "providerId": "M002894203",
+          "frequency": "M",
+          "unit": "%",
+          "source": "海关总署",
+          "country": "中国",
+          "rows": 60,
+          "accepted": false
+        },
+        {
+          "name": "(停)出口总值(美元计价):季调:当月同比",
+          "providerId": "M002894204",
+          "frequency": "M",
+          "unit": "%",
+          "source": "海关总署",
+          "country": "中国",
+          "rows": 60,
+          "accepted": false
+        },
+        {
+          "name": "(停)进口总值(美元计价):季调:当月同比",
+          "providerId": "M002894205",
+          "frequency": "M",
+          "unit": "%",
+          "source": "海关总署",
+          "country": "中国",
+          "rows": 60,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "query": "进口总值(美元计价):当月同比",
+      "requested": "actual_imports",
+      "candidates": [
+        {
+          "name": "进口总值(美元计价):当月同比",
+          "providerId": "M002808933",
+          "frequency": "M",
+          "unit": "%",
+          "source": "海关总署",
+          "country": "中国",
+          "rows": 60,
+          "accepted": false
+        }
+      ]
+    },
+    {
+      "query": "出口总额(美元计价):当月同比",
+      "requested": "actual_exports",
+      "candidates": [
+        {
+          "name": "出口总额(美元计价):当月同比",
+          "providerId": "M002888330",
+          "frequency": "M",
+          "unit": "%",
+          "source": "海关总署",
+          "country": "中国",
+          "rows": 60,
+          "accepted": true
+        }
+      ]
+    },
+    {
+      "query": "进口总额(美元计价):当月同比",
+      "requested": "actual_imports",
+      "candidates": [
+        {
+          "name": "进口总额(美元计价):当月同比",
+          "providerId": "M002888203",
+          "frequency": "M",
+          "unit": "%",
+          "source": "海关总署",
+          "country": "中国",
+          "rows": 60,
+          "accepted": false
+        }
+      ]
+    }
+  ],
+  "accepted": {
+    "actual_exports": {
+      "name": "出口总额(美元计价):当月同比",
+      "providerId": "M002888330",
+      "frequency": "M",
+      "unit": "%",
+      "source": "海关总署",
+      "country": "中国",
+      "rows": 60,
+      "accepted": true
+    }
+  }
+}

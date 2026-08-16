@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img">
+<title>中国进出口同比：真实值、独立模型预测与一致预期</title>
+<desc>出口和进口固定因子滚动估计模型的时间序列回测图。</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<style>text{font-family:Arial,"Microsoft YaHei",sans-serif;fill:#202124}.title{font-size:22px;font-weight:600}.sub{font-size:13px;fill:#5f6368}.axis{font-size:12px;fill:#5f6368}.grid{stroke:#e3e6ea;stroke-width:1}.zero{stroke:#9aa0a6;stroke-width:1}.actual{stroke:#202124;stroke-width:2.6;fill:none}.forecast{stroke:#2474d2;stroke-width:2.4;fill:none}.consensus{stroke:#e68a00;stroke-width:2.2;stroke-dasharray:6 4;fill:none}.point{stroke:#fff;stroke-width:1.5}</style>
+<text x="78" y="34" class="title">中国进出口同比预测效果对比</text>
+<text x="78" y="56" class="sub">单位：%；固定因子与滞后、滚动估计系数；一致预期仅用于评价，不进入模型。</text>
+<g transform="translate(720,25)"><line x1="0" y1="0" x2="28" y2="0" class="actual"/><text x="36" y="4" class="axis">真实值</text><line x1="112" y1="0" x2="140" y2="0" class="forecast"/><text x="148" y="4" class="axis">模型预测</text><line x1="244" y1="0" x2="272" y2="0" class="consensus"/><text x="280" y="4" class="axis">一致预期</text></g>
+<text x="78" y="86" class="title">出口金额同比</text>
+<line x1="78" y1="100.0" x2="1172" y2="100.0" class="grid"/>
+<text x="68" y="104.0" text-anchor="end" class="axis">44</text>
+<line x1="78" y1="157.5" x2="1172" y2="157.5" class="grid"/>
+<text x="68" y="161.5" text-anchor="end" class="axis">31</text>
+<line x1="78" y1="215.0" x2="1172" y2="215.0" class="grid"/>
+<text x="68" y="219.0" text-anchor="end" class="axis">18</text>
+<line x1="78" y1="272.5" x2="1172" y2="272.5" class="grid"/>
+<text x="68" y="276.5" text-anchor="end" class="axis">5</text>
+<line x1="78" y1="330.0" x2="1172" y2="330.0" class="grid"/>
+<text x="68" y="334.0" text-anchor="end" class="axis">-8</text>
+<line x1="78" y1="295.1" x2="1172" y2="295.1" class="zero"/>
+<text x="78.0" y="352" text-anchor="middle" class="axis">2024-07</text>
+<text x="260.3" y="352" text-anchor="middle" class="axis">2024-11</text>
+<text x="442.7" y="352" text-anchor="middle" class="axis">2025-03</text>
+<text x="625.0" y="352" text-anchor="middle" class="axis">2025-07</text>
+<text x="807.3" y="352" text-anchor="middle" class="axis">2025-11</text>
+<text x="989.7" y="352" text-anchor="middle" class="axis">2026-03</text>
+<text x="1172.0" y="352" text-anchor="middle" class="axis">2026-07</text>
+<path d="M 78.0 265.8 L 123.6 258.3 L 169.2 288.4 L 214.8 240.4 L 260.3 264.4 L 305.9 248.8 L 351.5 270.8 L 397.1 305.3 L 442.7 241.4 L 488.2 260.2 L 533.8 275.1 L 579.4 270.3 L 625.0 264.1 L 670.6 276.4 L 716.2 259.2 L 761.8 300.4 L 807.3 269.7 L 852.9 266.2 L 898.5 251.9 L 944.1 122.3 L 989.7 285.1 L 1035.2 234.2 L 1080.8 210.8 L 1126.4 177.4 L 1172.0 191.3" class="actual"/>
+<path d="M 169.2 280.3 L 214.8 282.9 L 260.3 299.7 L 305.9 252.1 L 351.5 287.4 L 397.1 307.7 L 442.7 235.6 L 488.2 258.3 L 533.8 278.2 L 579.4 261.0 L 625.0 260.0 L 670.6 267.7 L 716.2 229.8 L 761.8 278.4 L 807.3 268.9 L 852.9 253.2 L 898.5 232.1 L 944.1 186.6 L 989.7 275.8 L 1035.2 210.4 L 1080.8 211.9 L 1126.4 178.4 L 1172.0 207.8" class="forecast"/>
+<path d="M 78.0 253.7 L 123.6 265.2 L 169.2 270.8 L 214.8 273.8 L 260.3 258.2 L 305.9 263.1 L 351.5 288.5 L 397.1 269.0 L 442.7 278.5 L 488.2 282.3 L 533.8 275.7 L 579.4 278.1 L 625.0 268.9 L 670.6 269.9 L 716.2 270.2 L 761.8 278.3 L 807.3 274.9 L 852.9 280.8 M 989.7 273.8 L 1035.2 263.7 L 1080.8 239.3 L 1126.4 217.6 L 1172.0 201.4" class="consensus"/>
+<circle cx="1172.0" cy="207.8" r="4.5" fill="#2474d2" class="point"/>
+<text x="1166.0" y="198.8" text-anchor="end" class="axis">19.89</text>
+<text x="78" y="386" class="title">进口金额同比</text>
+<line x1="78" y1="400.0" x2="1172" y2="400.0" class="grid"/>
+<text x="68" y="404.0" text-anchor="end" class="axis">49</text>
+<line x1="78" y1="457.5" x2="1172" y2="457.5" class="grid"/>
+<text x="68" y="461.5" text-anchor="end" class="axis">31</text>
+<line x1="78" y1="515.0" x2="1172" y2="515.0" class="grid"/>
+<text x="68" y="519.0" text-anchor="end" class="axis">13</text>
+<line x1="78" y1="572.5" x2="1172" y2="572.5" class="grid"/>
+<text x="68" y="576.5" text-anchor="end" class="axis">-5</text>
+<line x1="78" y1="630.0" x2="1172" y2="630.0" class="grid"/>
+<text x="68" y="634.0" text-anchor="end" class="axis">-23</text>
+<line x1="78" y1="555.7" x2="1172" y2="555.7" class="zero"/>
+<text x="78.0" y="652" text-anchor="middle" class="axis">2024-07</text>
+<text x="260.3" y="652" text-anchor="middle" class="axis">2024-11</text>
+<text x="442.7" y="652" text-anchor="middle" class="axis">2025-03</text>
+<text x="625.0" y="652" text-anchor="middle" class="axis">2025-07</text>
+<text x="807.3" y="652" text-anchor="middle" class="axis">2025-11</text>
+<text x="989.7" y="652" text-anchor="middle" class="axis">2026-03</text>
+<text x="1172.0" y="652" text-anchor="middle" class="axis">2026-07</text>
+<path d="M 78.0 532.3 L 123.6 554.2 L 169.2 554.7 L 214.8 562.9 L 260.3 568.0 L 305.9 552.2 L 351.5 607.7 L 397.1 550.6 L 442.7 569.9 L 488.2 556.5 L 533.8 565.6 L 579.4 553.1 L 625.0 544.4 L 670.6 553.0 L 716.2 532.5 L 761.8 552.8 L 807.3 550.0 L 852.9 537.9 L 898.5 473.3 L 944.1 511.5 L 989.7 467.2 L 1035.2 475.7 L 1080.8 468.1 L 1126.4 440.2 L 1172.0 467.6" class="actual"/>
+<path d="M 78.0 544.5 L 123.6 541.0 L 169.2 565.2 L 214.8 562.3 L 260.3 572.4 L 305.9 555.1 L 351.5 586.3 L 397.1 577.9 L 442.7 555.1 L 488.2 568.9 L 533.8 570.0 L 579.4 550.3 L 625.0 549.9 L 670.6 557.6 L 716.2 521.4 L 761.8 557.8 L 807.3 541.2 L 852.9 536.2 L 898.5 497.1 L 944.1 499.9 L 989.7 466.6 L 1035.2 475.5 L 1080.8 462.8 L 1126.4 422.3 L 1172.0 461.2" class="forecast"/>
+<path d="M 78.0 545.5 L 123.6 545.8 L 169.2 552.8 L 214.8 560.5 L 260.3 555.0 L 305.9 559.2 L 351.5 578.0 L 397.1 549.5 L 442.7 568.6 L 488.2 571.6 L 533.8 557.2 L 579.4 557.8 L 625.0 555.2 L 670.6 545.6 L 716.2 552.0 L 761.8 544.9 L 807.3 542.9 L 852.9 554.1 M 989.7 530.9 L 1035.2 509.2 L 1080.8 493.9 L 1126.4 481.8 L 1172.0 471.6" class="consensus"/>
+<circle cx="1172.0" cy="461.2" r="4.5" fill="#2474d2" class="point"/>
+<text x="1166.0" y="452.2" text-anchor="end" class="axis">29.65</text>
+</svg>

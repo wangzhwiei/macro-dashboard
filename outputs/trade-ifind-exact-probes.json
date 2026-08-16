@@ -1,0 +1,34 @@
+{
+  "指标ID M005682257，指标名称预测平均值:进口金额(美元计价):当月同比，取2012-08至2026-07月度数据": {
+    "ok": true,
+    "status_code": 200,
+    "data": {
+      "result": {
+        "content": [
+          {
+            "text": "{\"code\":1,\"msg\":\"success\",\"subCode\":null,\"subMsg\":null,\"data\":{\"answer\":\"\",\"datas\":[]}}",
+            "type": "text"
+          }
+        ]
+      },
+      "jsonrpc": "2.0",
+      "id": 2
+    }
+  },
+  "指标ID M005682256，指标名称预测平均值:出口金额(美元计价):当月同比，取2012-07至2026-07月度数据": {
+    "ok": true,
+    "status_code": 200,
+    "data": {
+      "result": {
+        "content": [
+          {
+            "text": "{\"code\":1,\"msg\":\"success\",\"subCode\":null,\"subMsg\":null,\"data\":{\"answer\":\"\",\"datas\":[]}}",
+            "type": "text"
+          }
+        ]
+      },
+      "jsonrpc": "2.0",
+      "id": 3
+    }
+  }
+}

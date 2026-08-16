@@ -1,0 +1,228 @@
+{
+  "status": "RESEARCH_NOT_FOR_PUBLICATION",
+  "method": "expanding-window marginal test; consensus excluded",
+  "common_sample_months": [
+    "2024-07",
+    "2024-08",
+    "2024-09",
+    "2024-10",
+    "2024-11",
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07"
+  ],
+  "metrics": {
+    "baseline": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_plus_us_lag1": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_plus_us_lag2": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_plus_japan_lag1": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_plus_japan_lag2": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_plus_us1_japan1": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_plus_us2_japan2": {
+      "n": 25,
+      "rmse": 6.644,
+      "mae": 4.2216,
+      "bias": -0.5141,
+      "rmse_change_vs_baseline": 0.0,
+      "rmse_improvement_pct": 0.0,
+      "release_safe": true
+    },
+    "baseline_eu_lag1_diagnostic": {
+      "n": 25,
+      "rmse": 6.4454,
+      "mae": 4.1293,
+      "bias": -0.3878,
+      "rmse_change_vs_baseline": -0.1986,
+      "rmse_improvement_pct": 2.99,
+      "release_safe": false
+    }
+  },
+  "forced_increment_metrics": {
+    "forced_us_lag1": {
+      "n": 3,
+      "sample_start": "2026-02",
+      "sample_end": "2026-04",
+      "paired_baseline_rmse": 15.8619,
+      "augmented_rmse": 15.6716,
+      "rmse_change_vs_paired_baseline": -0.1903,
+      "rmse_improvement_pct": 1.2,
+      "release_safe": true
+    },
+    "forced_us_lag2": {
+      "n": 3,
+      "sample_start": "2026-03",
+      "sample_end": "2026-05",
+      "paired_baseline_rmse": 9.3205,
+      "augmented_rmse": 8.0398,
+      "rmse_change_vs_paired_baseline": -1.2807,
+      "rmse_improvement_pct": 13.74,
+      "release_safe": true
+    },
+    "forced_japan_lag1": {
+      "n": 24,
+      "sample_start": "2024-08",
+      "sample_end": "2026-07",
+      "paired_baseline_rmse": 6.7471,
+      "augmented_rmse": 7.4188,
+      "rmse_change_vs_paired_baseline": 0.6717,
+      "rmse_improvement_pct": -9.96,
+      "release_safe": true
+    },
+    "forced_japan_lag2": {
+      "n": 23,
+      "sample_start": "2024-09",
+      "sample_end": "2026-07",
+      "paired_baseline_rmse": 6.7883,
+      "augmented_rmse": 7.8876,
+      "rmse_change_vs_paired_baseline": 1.0992,
+      "rmse_improvement_pct": -16.19,
+      "release_safe": true
+    },
+    "forced_eu_lag1_diagnostic": {
+      "n": 24,
+      "sample_start": "2024-07",
+      "sample_end": "2026-06",
+      "paired_baseline_rmse": 6.7376,
+      "augmented_rmse": 7.5133,
+      "rmse_change_vs_paired_baseline": 0.7758,
+      "rmse_improvement_pct": -11.51,
+      "release_safe": false
+    },
+    "forced_eu_lag2": {
+      "n": 25,
+      "sample_start": "2024-07",
+      "sample_end": "2026-07",
+      "paired_baseline_rmse": 6.644,
+      "augmented_rmse": 7.4516,
+      "rmse_change_vs_paired_baseline": 0.8076,
+      "rmse_improvement_pct": -12.16,
+      "release_safe": true
+    }
+  },
+  "factor_correlations": [
+    {
+      "family": "us_imports_from_china_yoy",
+      "lag_months": 1,
+      "release_safe": true,
+      "train_n": 5,
+      "train_corr": -0.790933061430965,
+      "evaluation_n": 22,
+      "evaluation_corr": -0.20736340670843667
+    },
+    {
+      "family": "us_imports_from_china_yoy",
+      "lag_months": 2,
+      "release_safe": true,
+      "train_n": 4,
+      "train_corr": 0.2195435829223046,
+      "evaluation_n": 23,
+      "evaluation_corr": -0.2027511277290981
+    },
+    {
+      "family": "japan_imports_from_china_yoy",
+      "lag_months": 1,
+      "release_safe": true,
+      "train_n": 23,
+      "train_corr": 0.20470539703999802,
+      "evaluation_n": 25,
+      "evaluation_corr": 0.03709973935835267
+    },
+    {
+      "family": "japan_imports_from_china_yoy",
+      "lag_months": 2,
+      "release_safe": true,
+      "train_n": 22,
+      "train_corr": 0.005984766154559384,
+      "evaluation_n": 25,
+      "evaluation_corr": 0.3212461584400316
+    },
+    {
+      "family": "eu27_imports_from_china_yoy",
+      "lag_months": 1,
+      "release_safe": false,
+      "train_n": 35,
+      "train_corr": 0.5809282971384335,
+      "evaluation_n": 24,
+      "evaluation_corr": -0.1918496285553586
+    },
+    {
+      "family": "eu27_imports_from_china_yoy",
+      "lag_months": 2,
+      "release_safe": true,
+      "train_n": 35,
+      "train_corr": 0.45172760030919973,
+      "evaluation_n": 25,
+      "evaluation_corr": 0.12507548489415102
+    }
+  ],
+  "limitations": [
+    "US bilateral series returned by fuzzy MCP begins in 2023, leaving too little pre-backtest YoY history.",
+    "EU lag 1 is not consistently published before the China customs cutoff and is diagnostic only.",
+    "Current provider snapshots are final/revised values rather than archived first-release vintages."
+  ]
+}

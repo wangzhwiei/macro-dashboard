@@ -114,8 +114,10 @@ def main() -> int:
     manifest = read_json(args.manifest)
     selected = [entry for entry in manifest["series"] if not args.only or entry["key"] in args.only]
     output = read_json(args.output) if args.merge_existing and args.output.exists() else {
-        "schemaVersion": 1, "start": args.start, "end": args.end, "series": {}, "errors": {}
+        "schemaVersion": 1, "start": args.start, "end": args.end,
+        "series": {}, "errors": {}, "warnings": {},
     }
+    output.setdefault("warnings", {})
     if not args.merge_existing:
         output["start"], output["end"] = args.start, args.end
     else:
@@ -125,6 +127,7 @@ def main() -> int:
     for index, entry in enumerate(selected, 1):
         previous = output["series"].get(entry["key"])
         output["errors"].pop(entry["key"], None)
+        output["warnings"].pop(entry["key"], None)
         # EDB search is name-driven; providerId is a strict response validator, not a query alias.
         query = entry["queryName"]
         entry_start = args.start
@@ -152,7 +155,20 @@ def main() -> int:
             candidate = merge_records(previous if args.merge_existing else None, candidate)
             output["series"][entry["key"]] = {**entry, **candidate}
         except Exception as error:
-            output["errors"][entry["key"]] = str(error)
+            previous_is_valid = (
+                args.merge_existing and previous
+                and previous.get("providerId") == entry.get("providerId")
+                and previous.get("frequency") == entry.get("frequency")
+                and previous.get("unit") == entry.get("unit")
+                and bool(previous.get("records"))
+            )
+            if previous_is_valid:
+                latest = str(previous["records"][-1][0])[:10]
+                output["warnings"][entry["key"]] = (
+                    f"本次模糊召回失败，保留已通过固定ID校验的历史快照（最新{latest}）：{error}"
+                )
+            else:
+                output["errors"][entry["key"]] = str(error)
         if index < len(selected):
             time.sleep(.35)
 

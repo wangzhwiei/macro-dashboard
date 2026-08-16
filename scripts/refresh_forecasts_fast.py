@@ -4,10 +4,12 @@
 from __future__ import annotations
 import argparse
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 import pandas as pd
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from forecast_realtime import build_daily_nowcasts, build_pmi_daily_nowcasts
 from generate_forecasts_model import build_high_frequency, ifind_series, merge_official_pmi, read_json
 

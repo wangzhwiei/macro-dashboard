@@ -1,0 +1,417 @@
+{
+  "status": "RESEARCH_NOT_FOR_PUBLICATION",
+  "original_model_preserved": true,
+  "method": "Q1-only deterministic CNY augmentation of previous-actual import anchor",
+  "results": {
+    "original_import_model": {
+      "development": {
+        "n": 11,
+        "rmse": 6.0542,
+        "mae": 4.9514,
+        "bias": -0.6085
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 10.0134,
+        "mae": 9.5081,
+        "bias": -0.2087
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.9301,
+        "mae": 3.0403,
+        "bias": 0.3159
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 6.5449,
+        "mae": 5.8736,
+        "bias": 0.9839
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a1_cap15": {
+      "development": {
+        "n": 11,
+        "rmse": 4.3527,
+        "mae": 3.7028,
+        "bias": -0.2461
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 5.9446,
+        "mae": 4.93,
+        "bias": 1.1202
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.7754,
+        "mae": 2.9728,
+        "bias": 0.0971
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 6.1538,
+        "mae": 5.5924,
+        "bias": 0.0721
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a1_cap30": {
+      "development": {
+        "n": 11,
+        "rmse": 3.8005,
+        "mae": 3.3987,
+        "bias": -0.5502
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 4.3394,
+        "mae": 3.8151,
+        "bias": 0.0052
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.8521,
+        "mae": 3.0875,
+        "bias": 0.2118
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 6.3489,
+        "mae": 6.0704,
+        "bias": 0.5501
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a5_cap15": {
+      "development": {
+        "n": 11,
+        "rmse": 4.4551,
+        "mae": 3.8565,
+        "bias": -0.3998
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 6.2166,
+        "mae": 5.4934,
+        "bias": 0.5568
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.6989,
+        "mae": 2.9309,
+        "bias": 0.0918
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 5.9571,
+        "mae": 5.4177,
+        "bias": 0.0498
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a5_cap30": {
+      "development": {
+        "n": 11,
+        "rmse": 4.146,
+        "mae": 3.694,
+        "bias": -0.5622
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 5.3756,
+        "mae": 4.8977,
+        "bias": -0.039
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.7128,
+        "mae": 2.9645,
+        "bias": 0.1253
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 5.9931,
+        "mae": 5.5577,
+        "bias": 0.1897
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a10_cap15": {
+      "development": {
+        "n": 11,
+        "rmse": 4.5626,
+        "mae": 4.0041,
+        "bias": -0.5474
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 6.4961,
+        "mae": 6.0347,
+        "bias": 0.0155
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.6793,
+        "mae": 2.8802,
+        "bias": 0.0441
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 5.9062,
+        "mae": 5.2067,
+        "bias": -0.1488
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a10_cap30": {
+      "development": {
+        "n": 11,
+        "rmse": 4.5152,
+        "mae": 3.98,
+        "bias": -0.5714
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 6.3737,
+        "mae": 5.9465,
+        "bias": -0.0726
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.6793,
+        "mae": 2.8802,
+        "bias": 0.0441
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 5.9062,
+        "mae": 5.2067,
+        "bias": -0.1488
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a30_cap15": {
+      "development": {
+        "n": 11,
+        "rmse": 5.6317,
+        "mae": 4.7001,
+        "bias": -0.5893
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 9.0643,
+        "mae": 8.5868,
+        "bias": -0.1384
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.9693,
+        "mae": 3.1032,
+        "bias": -0.1484
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 6.6428,
+        "mae": 6.1356,
+        "bias": -0.9507
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a30_cap30": {
+      "development": {
+        "n": 11,
+        "rmse": 5.6317,
+        "mae": 4.7001,
+        "bias": -0.5893
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 9.0643,
+        "mae": 8.5868,
+        "bias": -0.1384
+      },
+      "all": {
+        "n": 25,
+        "rmse": 3.9693,
+        "mae": 3.1032,
+        "bias": -0.1484
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 6.6428,
+        "mae": 6.1356,
+        "bias": -0.9507
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a100_cap15": {
+      "development": {
+        "n": 11,
+        "rmse": 7.385,
+        "mae": 5.6363,
+        "bias": -0.5986
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 12.8779,
+        "mae": 12.0196,
+        "bias": -0.1724
+      },
+      "all": {
+        "n": 25,
+        "rmse": 5.1051,
+        "mae": 3.7246,
+        "bias": -0.3971
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 9.3311,
+        "mae": 8.7249,
+        "bias": -1.9871
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    },
+    "import_cny_a100_cap30": {
+      "development": {
+        "n": 11,
+        "rmse": 7.385,
+        "mae": 5.6363,
+        "bias": -0.5986
+      },
+      "development_jan_mar": {
+        "n": 3,
+        "rmse": 12.8779,
+        "mae": 12.0196,
+        "bias": -0.1724
+      },
+      "all": {
+        "n": 25,
+        "rmse": 5.1051,
+        "mae": 3.7246,
+        "bias": -0.3971
+      },
+      "jan_mar": {
+        "n": 6,
+        "rmse": 9.3311,
+        "mae": 8.7249,
+        "bias": -1.9871
+      },
+      "other_months": {
+        "n": 19,
+        "rmse": 2.6069,
+        "mae": 2.1456,
+        "bias": 0.105
+      }
+    }
+  },
+  "ranked_by_pre_backtest_rmse": [
+    "import_cny_a1_cap30",
+    "import_cny_a5_cap30",
+    "import_cny_a1_cap15",
+    "import_cny_a5_cap15",
+    "import_cny_a10_cap30",
+    "import_cny_a10_cap15",
+    "import_cny_a30_cap15",
+    "import_cny_a30_cap30",
+    "import_cny_a100_cap15",
+    "import_cny_a100_cap30"
+  ],
+  "ranked_by_evaluation_rmse": [
+    "import_cny_a10_cap15",
+    "import_cny_a10_cap30",
+    "import_cny_a5_cap15",
+    "import_cny_a5_cap30",
+    "import_cny_a1_cap15",
+    "import_cny_a1_cap30",
+    "import_cny_a30_cap15",
+    "import_cny_a30_cap30",
+    "import_cny_a100_cap15",
+    "import_cny_a100_cap30"
+  ],
+  "preselected_model": "import_cny_a1_cap30",
+  "preselected_model_evaluation": {
+    "development": {
+      "n": 11,
+      "rmse": 3.8005,
+      "mae": 3.3987,
+      "bias": -0.5502
+    },
+    "development_jan_mar": {
+      "n": 3,
+      "rmse": 4.3394,
+      "mae": 3.8151,
+      "bias": 0.0052
+    },
+    "all": {
+      "n": 25,
+      "rmse": 3.8521,
+      "mae": 3.0875,
+      "bias": 0.2118
+    },
+    "jan_mar": {
+      "n": 6,
+      "rmse": 6.3489,
+      "mae": 6.0704,
+      "bias": 0.5501
+    },
+    "other_months": {
+      "n": 19,
+      "rmse": 2.6069,
+      "mae": 2.1456,
+      "bias": 0.105
+    }
+  },
+  "note": "Consensus is excluded from fitting and selection."
+}

@@ -1,0 +1,43 @@
+{
+  "source": "iFinD EDB / 海关总署",
+  "series": {
+    "exports": {
+      "query": "出口总额(美元计价):当月同比",
+      "attrs": {
+        "node": "对外贸易",
+        "start_time": "19990131",
+        "country": "中国",
+        "unit": "%",
+        "end_time": "20260731",
+        "freq": "M",
+        "dtype": "double",
+        "index_id": "M002888330",
+        "data_source": "海关总署"
+      },
+      "rows": 60,
+      "latest": [
+        "2026-07-31",
+        23.639395843
+      ]
+    },
+    "imports": {
+      "query": "进口总额(美元计价):当月同比",
+      "attrs": {
+        "node": "对外贸易",
+        "start_time": "19990131",
+        "country": "中国",
+        "unit": "%",
+        "end_time": "20260731",
+        "freq": "M",
+        "dtype": "double",
+        "index_id": "M002888203",
+        "data_source": "海关总署"
+      },
+      "rows": 60,
+      "latest": [
+        "2026-07-31",
+        27.65232125
+      ]
+    }
+  }
+}

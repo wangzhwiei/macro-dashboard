@@ -1,0 +1,53 @@
+{
+  "预测平均值 进口金额 美元计价 当月同比": {
+    "ok": false,
+    "status_code": 403,
+    "error": {
+      "message": "Tool not allowed: search_edb",
+      "code": -32002
+    },
+    "raw": {
+      "error": {
+        "message": "Tool not allowed: search_edb",
+        "code": -32002
+      },
+      "jsonrpc": "2.0",
+      "id": 2
+    }
+  },
+  "预测平均值 出口金额 美元计价 当月同比": {
+    "ok": false,
+    "status_code": 403,
+    "error": {
+      "message": "Tool not allowed: search_edb",
+      "code": -32002
+    },
+    "raw": {
+      "jsonrpc": "2.0",
+      "error": {
+        "message": "Tool not allowed: search_edb",
+        "code": -32002
+      },
+      "id": 3
+    }
+  },
+  "中国进口金额 美元计价 当月同比 海关总署": {
+    "error": "SSLError(MaxRetryError(\"HTTPSConnectionPool(host='api-mcp.51ifind.com', port=8643): Max retries exceeded with url: /ds-mcp-servers/hexin-ifind-ds-edb-mcp (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)')))\"))"
+  },
+  "中国出口金额 美元计价 当月同比 海关总署": {
+    "ok": false,
+    "status_code": 403,
+    "error": {
+      "message": "Tool not allowed: search_edb",
+      "code": -32002
+    },
+    "raw": {
+      "jsonrpc": "2.0",
+      "error": {
+        "message": "Tool not allowed: search_edb",
+        "code": -32002
+      },
+      "id": 5
+    }
+  }
+}

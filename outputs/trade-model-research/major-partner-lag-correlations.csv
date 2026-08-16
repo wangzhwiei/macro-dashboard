@@ -1,0 +1,7 @@
+﻿family,lag_months,release_safe,train_n,train_corr,evaluation_n,evaluation_corr
+us_imports_from_china_yoy,1,True,5,-0.790933061430965,22,-0.20736340670843667
+us_imports_from_china_yoy,2,True,4,0.2195435829223046,23,-0.2027511277290981
+japan_imports_from_china_yoy,1,True,23,0.20470539703999802,25,0.03709973935835267
+japan_imports_from_china_yoy,2,True,22,0.005984766154559384,25,0.3212461584400316
+eu27_imports_from_china_yoy,1,False,35,0.5809282971384335,24,-0.1918496285553586
+eu27_imports_from_china_yoy,2,True,35,0.45172760030919973,25,0.12507548489415102
