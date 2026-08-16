@@ -40,7 +40,9 @@ class ForecastRealtimeTests(unittest.TestCase):
         for section in ("daily", "history", "models", "metrics"):
             self.assertIn("imports", self.data[section])
             self.assertIn("exports", self.data[section])
-        self.assertIn("进出口", self.data["highFrequency"])
+        self.assertIn("出口", self.data["highFrequency"])
+        self.assertIn("进口", self.data["highFrequency"])
+        self.assertNotIn("进出口", self.data["highFrequency"])
         self.assertEqual(self.data["tradeModel"]["version"], "trade-fixed-factors-cny-gated-v1")
         for key in ("exports", "imports"):
             self.assertEqual(self.data["models"][key]["status"], "WAITING_FOR_FIXED_FACTORS")
@@ -70,7 +72,7 @@ class ForecastRealtimeTests(unittest.TestCase):
             for row in inputs:
                 self.assertRegex(row["providerId"], r"^[SMGW]\d{9}$", f"{group}/{row['id']}")
                 self.assertEqual(row["latestAvailableDate"], row["series"][-1]["date"])
-                if group == "进出口" and row["id"] == "trade_thailand_imports_china":
+                if group == "出口" and row["id"] == "trade_thailand_imports_china":
                     self.assertEqual(row["latestAvailableDate"], "2026-06-30")
                 else:
                     self.assertGreaterEqual(row["latestAvailableDate"], "2026-07-31")

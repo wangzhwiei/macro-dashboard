@@ -67,6 +67,36 @@ class ForecastIntegrityTests(unittest.TestCase):
             self.assertEqual(row["consensusSource"], "iFinD EDB")
             self.assertTrue(math.isclose(row["consensus"], value, abs_tol=1e-9))
 
+    def test_trade_inputs_are_split_by_model(self) -> None:
+        groups = self.data["highFrequency"]
+        self.assertNotIn("进出口", groups)
+        self.assertEqual(
+            {row["id"] for row in groups["出口"]},
+            {
+                "trade_korea_imports_china",
+                "trade_taiwan_imports_mainland",
+                "trade_thailand_imports_china",
+            },
+        )
+        self.assertEqual(
+            {row["id"] for row in groups["进口"]},
+            {"trade_korea_exports"},
+        )
+
+    def test_trade_consensus_gaps_are_filled_from_previous_month(self) -> None:
+        for key in ("exports", "imports"):
+            rows = self.data["history"][key]
+            by_date = {row["date"]: row for row in rows}
+            self.assertTrue(all(row["consensus"] is not None for row in rows))
+            for current, previous in (
+                ("2026-01-31", "2025-12-31"),
+                ("2026-02-28", "2026-01-31"),
+                ("2026-08-31", "2026-07-31"),
+            ):
+                self.assertEqual(by_date[current]["consensus"], by_date[previous]["consensus"])
+                self.assertTrue(by_date[current]["consensusCarriedForward"])
+                self.assertIn("沿用上期", by_date[current]["consensusSource"])
+
 
 if __name__ == "__main__":
     unittest.main()

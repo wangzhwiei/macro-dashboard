@@ -78,10 +78,10 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
     }
     partner, anchor = read_json(PARTNERS), read_json(ANCHORS)
     stores = {"partner": partner, "anchor": anchor}
-    factor_rows: dict[str, dict[str, Any]] = {}
+    factor_rows: dict[str, list[dict[str, Any]]] = {key: [] for key in CONFIG}
     for key, config in CONFIG.items():
         for store_name, factor_key, item_id, name, usage in config["factors"]:
-            factor_rows[item_id] = input_row(stores[store_name], factor_key, item_id, name, usage)
+            factor_rows[key].append(input_row(stores[store_name], factor_key, item_id, name, usage))
         selected = frame.loc[frame["target"].eq(key), ["date", config["field"]]].dropna()
         forecasts = dict(zip(selected["date"], selected[config["field"]]))
         current = race["targets"][key]["current_forecast"]
@@ -93,19 +93,34 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
             pd.Timestamp(max(actual_maps[key])),
         )
         history = []
+        prior_consensus = [
+            (day, value) for day, value in consensus_maps[key].items()
+            if day < start.date().isoformat()
+        ]
+        last_consensus = max(prior_consensus, default=("", None))[1]
         for day in pd.date_range(start, end, freq="ME"):
             date_key = day.date().isoformat()
             forecast = forecasts.get(date_key)
             if date_key == current_day:
                 forecast = current.get("forecast")
             actual = actual_maps[key].get(date_key)
-            consensus = consensus_maps[key].get(date_key)
+            raw_consensus = consensus_maps[key].get(date_key)
+            consensus_carried_forward = raw_consensus is None and last_consensus is not None
+            if raw_consensus is not None:
+                last_consensus = raw_consensus
+            consensus = last_consensus
             history.append({
                 "date": date_key,
                 "forecast": round(float(forecast), 6) if pd.notna(forecast) else None,
                 "actual": round(float(actual), 6) if pd.notna(actual) else None,
                 "consensus": round(float(consensus), 6) if consensus is not None else None,
-                "consensusSource": "iFinD EDB · 预测平均值" if consensus is not None else None,
+                "consensusSource": (
+                    "iFinD EDB · 预测平均值（沿用上期）"
+                    if consensus_carried_forward else
+                    "iFinD EDB · 预测平均值"
+                    if consensus is not None else None
+                ),
+                "consensusCarriedForward": consensus_carried_forward,
                 "forecastKind": "walk_forward" if pd.notna(forecast) and pd.notna(actual) else None,
                 "officialRounding": round(float(forecast), 1) if pd.notna(forecast) else None,
             })
@@ -126,7 +141,10 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
             "earliestForecastDate": current["earliest_factor_release_date"],
             "missingFactors": current["missing_factors"],
         }
-    payload.setdefault("highFrequency", {})["进出口"] = list(factor_rows.values())
+    high_frequency = payload.setdefault("highFrequency", {})
+    high_frequency.pop("进出口", None)
+    high_frequency["出口"] = factor_rows["exports"]
+    high_frequency["进口"] = factor_rows["imports"]
     payload["tradeModel"] = {
         "version": "trade-fixed-factors-cny-gated-v1",
         "factorPolicy": "fixed families and lags; rolling coefficients; no missing-factor fallback",

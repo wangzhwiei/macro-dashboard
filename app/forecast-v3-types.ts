@@ -6,6 +6,7 @@ export interface ForecastHistoryPoint {
   actual: number | null;
   consensus: number | null;
   consensusSource?: string | null;
+  consensusCarriedForward?: boolean;
   forecastKind?: "walk_forward" | "confirmed_nowcast" | "live_nowcast" | null;
   officialRounding?: number | null;
 }
