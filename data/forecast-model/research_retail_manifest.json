@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "series": [
+    {
+      "key": "actual_retail_yoy",
+      "group": "RETAIL_TARGET",
+      "queryName": "社会消费品零售总额:当月同比",
+      "providerId": "M001625520",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "consensus_retail_yoy",
+      "group": "RETAIL_CONSENSUS",
+      "queryName": "社会消费品零售总额:预测平均值:当月同比",
+      "providerId": "M005682254",
+      "frequency": "M",
+      "unit": "%",
+      "noDateSuffix": true
+    },
+    {
+      "key": "cpi_food_yoy",
+      "group": "RETAIL_CPI_DETAIL",
+      "queryName": "CPI:食品:当月同比",
+      "providerId": "M002826732",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "cpi_nonfood_yoy",
+      "group": "RETAIL_CPI_DETAIL",
+      "queryName": "CPI:非食品:当月同比",
+      "providerId": "M002826748",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "cpi_consumer_goods_yoy",
+      "group": "RETAIL_CPI_DETAIL",
+      "queryName": "CPI:消费品:当月同比",
+      "providerId": "M002840897",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "cpi_services_yoy",
+      "group": "RETAIL_CPI_DETAIL",
+      "queryName": "CPI:服务项目:当月同比",
+      "providerId": "M002840898",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "pmi_nonmanufacturing_business",
+      "group": "RETAIL_SERVICE_PMI",
+      "queryName": "非制造业PMI:商务活动",
+      "providerId": "M002811179",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "pmi_nonmanufacturing_new_orders",
+      "group": "RETAIL_SERVICE_PMI",
+      "queryName": "非制造业PMI:新订单",
+      "providerId": "M002811180",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "pmi_services_business",
+      "group": "RETAIL_SERVICE_PMI",
+      "queryName": "非制造业PMI:服务业",
+      "providerId": "M004369936",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "pmi_services_new_orders",
+      "group": "RETAIL_SERVICE_PMI",
+      "queryName": "非制造业PMI:服务业:新订单",
+      "providerId": "M005933612",
+      "frequency": "M",
+      "unit": "%"
+    },
+    {
+      "key": "pmi_services_expectations",
+      "group": "RETAIL_SERVICE_PMI",
+      "queryName": "非制造业PMI:服务业:业务活动预期",
+      "providerId": "M005933616",
+      "frequency": "M",
+      "unit": "%"
+    }
+  ]
+}

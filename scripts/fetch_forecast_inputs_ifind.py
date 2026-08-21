@@ -137,7 +137,9 @@ def main() -> int:
             minimum_start = (date.fromisoformat(args.end) - timedelta(days=int(entry["lookbackDays"]))).isoformat()
             entry_start = max(entry_start, minimum_start)
         request_start = entry_start.replace("-", "")
-        request = f"{query}（{request_start}-{end}）"
+        # A few iFinD forecast-consensus aliases only resolve without a date
+        # suffix. Date filtering is applied locally after strict ID matching.
+        request = query if entry.get("noDateSuffix") else f"{query}（{request_start}-{end}）"
         print(f"[{index}/{len(selected)}] {entry['key']} -> {query}", flush=True)
         try:
             response = None
@@ -152,6 +154,12 @@ def main() -> int:
             candidate = choose_candidate(entry, inner_payload(response))
             if entry.get("frequency") and candidate.get("frequency") != entry["frequency"]:
                 raise RuntimeError(f"频率不一致：期望 {entry['frequency']}，返回 {candidate.get('frequency')}")
+            if entry.get("unit") and candidate.get("unit") != entry["unit"]:
+                raise RuntimeError(f"单位不一致：期望 {entry['unit']}，返回 {candidate.get('unit')}")
+            candidate["records"] = [
+                row for row in candidate["records"]
+                if args.start <= str(row[0])[:10] <= args.end
+            ]
             candidate = merge_records(previous if args.merge_existing else None, candidate)
             output["series"][entry["key"]] = {**entry, **candidate}
         except Exception as error:

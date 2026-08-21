@@ -6,14 +6,14 @@ import type { ForecastData, ForecastHistoryPoint, ForecastInput, ForecastPoint }
 import "./forecast-v2.css";
 import "./forecast-v3.css";
 
-type ModelKey = "cpi" | "ppi" | "pmi" | "exports" | "imports";
+type ModelKey = "cpi" | "ppi" | "pmi" | "retail" | "exports" | "imports";
 type ViewMode = "yoy" | "mom";
 
 function seriesKey(metric: ModelKey, mode: ViewMode) {
-  return metric === "pmi" || metric === "exports" || metric === "imports" || mode === "yoy" ? metric : `${metric}_mom`;
+  return metric === "pmi" || metric === "retail" || metric === "exports" || metric === "imports" || mode === "yoy" ? metric : `${metric}_mom`;
 }
 
-const MODEL_LABELS: Record<ModelKey,string> = {cpi:"CPI",ppi:"PPI",pmi:"制造业PMI",exports:"出口同比",imports:"进口同比"};
+const MODEL_LABELS: Record<ModelKey,string> = {cpi:"CPI",ppi:"PPI",pmi:"制造业PMI",retail:"社零同比",exports:"出口同比",imports:"进口同比"};
 
 function niceStep(raw: number) {
   const power = 10 ** Math.floor(Math.log10(Math.max(raw, .0001)));
@@ -116,7 +116,7 @@ function InputHistoryModal({item,onClose}:{item:ForecastInput;onClose:()=>void})
 }
 function ForecastInputs({data}:{data:ForecastData}) {
   const [group,setGroup]=useState("CPI"),[selected,setSelected]=useState<ForecastInput|null>(null),items=data.highFrequency[group]??[];
-  const groups=["CPI","PPI","PMI","出口","进口"];
+  const groups=["CPI","PPI","PMI","社零","出口","进口"];
   return <section className="panel forecast-v2-inputs"><div className="section-heading"><div><span className="eyebrow">模型输入 · 原始更新频率</span><h2>真实入模指标</h2><p>点击后查看日频、周频或月频原值；出口与进口模型的固定因子分别列示。</p></div></div><div className="forecast-group-tabs">{groups.map((value)=><button key={value} className={group===value?"active":""} onClick={()=>setGroup(value)}>{value} 入模指标</button>)}</div><div className="forecast-v2-input-list">{items.map((item)=>{const latest=item.series.at(-1),change=inputChange(item);return <button className="forecast-v2-input-row forecast-v3-input-row" key={item.id} onClick={()=>setSelected(item)}><div><strong>{item.name}</strong><small>{item.id}</small></div><div><span>最新值</span><strong>{latest?.value.toFixed(2)??"-"} {item.unit}</strong><small>{latest?.date}</small></div><div><span>月内变化</span><strong>{change.label}</strong><small>{item.frequency} · {item.source}</small></div><div><span>入模方式</span><strong>{item.role}</strong><small>{item.aggregation}</small></div><b>查看原频率历史 ›</b></button>})}</div>{selected&&<InputHistoryModal item={selected} onClose={()=>setSelected(null)}/>}</section>;
 }
 
@@ -128,14 +128,14 @@ export default function ForecastWorkspace() {
   if(error)return <div className="forecast-workspace shell"><section className="panel"><h2>预测数据暂不可用</h2><p>{error}</p></section></div>;
   if(!data)return <div className="forecast-workspace shell"><section className="panel"><h2>正在加载月频预测</h2></section></div>;
   const model=data.models[key],score=data.metrics[key],latest=[...rows].reverse().find((row)=>row.forecast!==null),latestActual=[...rows].reverse().find((row)=>row.actual!==null),precision=metric==="pmi"?2:3;
-  const tradePending=(metric==="exports"||metric==="imports")&&model.status==="WAITING_FOR_FIXED_FACTORS";
+  const modelPending=model.status==="WAITING_FOR_FIXED_FACTORS"||model.status==="WAITING_FOR_MONTHLY_FACTORS";
   const latestLabel=latest?.officialRounding==null?model.name:`建议报数 ${latest.officialRounding.toFixed(1)}`;
-  const currentNote=tradePending?`${model.forecastMonth} · 最早 ${model.earliestForecastDate}`:`${latest?.date.slice(0,7)} · ${latestLabel}`;
-  return <div className="forecast-workspace shell"><section className="panel forecast-v2-panel"><div className="section-heading forecast-heading"><div><span className="eyebrow">月频预测 · 无前视回测与当月数据更新</span><h1>CPI / PPI / PMI / 进出口预测</h1><p>{model.description}</p></div><div className="forecast-source">模型数据更新：{new Date(data.generatedAt).toLocaleString("zh-CN")}</div></div>
-    <div className="forecast-toolbar"><div className="forecast-tabs">{(["cpi","ppi","pmi","exports","imports"] as ModelKey[]).map((value)=><button key={value} className={metric===value?"active":""} onClick={()=>{setMetric(value);if(value!=="cpi"&&value!=="ppi")setMode("yoy")}}>{MODEL_LABELS[value]}</button>)}</div><div className="forecast-range-tabs">{[["all","2023年至今"],["3y","近3年"],["1y","近1年"]].map(([value,label])=><button key={value} className={range===value?"active":""} onClick={()=>setRange(value)}>{label}</button>)}</div></div>
+  const currentNote=modelPending?`${model.forecastMonth} · 最早 ${model.earliestForecastDate}`:`${latest?.date.slice(0,7)} · ${latestLabel}`;
+  return <div className="forecast-workspace shell"><section className="panel forecast-v2-panel"><div className="section-heading forecast-heading"><div><span className="eyebrow">月频预测 · 无前视回测与当月数据更新</span><h1>CPI / PPI / PMI / 社零 / 进出口预测</h1><p>{model.description}</p></div><div className="forecast-source">模型数据更新：{new Date(data.generatedAt).toLocaleString("zh-CN")}</div></div>
+    <div className="forecast-toolbar"><div className="forecast-tabs">{(["cpi","ppi","pmi","retail","exports","imports"] as ModelKey[]).map((value)=><button key={value} className={metric===value?"active":""} onClick={()=>{setMetric(value);if(value!=="cpi"&&value!=="ppi")setMode("yoy")}}>{MODEL_LABELS[value]}</button>)}</div><div className="forecast-range-tabs">{[["all","2023年至今"],["3y","近3年"],["1y","近1年"]].map(([value,label])=><button key={value} className={range===value?"active":""} onClick={()=>setRange(value)}>{label}</button>)}</div></div>
     {(metric==="cpi"||metric==="ppi")&&<div className="forecast-mode-tabs"><button className={mode==="yoy"?"active":""} onClick={()=>setMode("yoy")}>同比预测</button><button className={mode==="mom"?"active":""} onClick={()=>setMode("mom")}>环比预测</button></div>}
     <div className="forecast-v2-method"><strong>模型口径</strong><span>{model.formula}</span><small>历史预测自 {data.backtestStart.slice(0,7)} 显示；月内实时值不使用当日之后的数据。一致预期来自 iFinD EDB“预测平均值”月频序列，按中文名称查询并锁定指标 ID；PMI 缺失月份沿用上月值。</small></div>
-    <div className="forecast-kpis"><div><span>当前确认点预测</span><strong>{tradePending?"待因子公布":latest?.forecast?.toFixed(precision)??"-"}</strong><small>{currentNote}</small></div><div><span>回测误差</span><strong>{score.rmse.toFixed(3)}</strong><small>RMSE · {score.sampleStart} 至 {score.sampleEnd}</small></div><div><span>最近真实公布</span><strong>{latestActual?.actual?.toFixed(1)??"-"}</strong><small>{latestActual?.date.slice(0,7)} · 官方值</small></div></div>
+    <div className="forecast-kpis"><div><span>当前确认点预测</span><strong>{modelPending?"待因子公布":latest?.forecast?.toFixed(precision)??"-"}</strong><small>{currentNote}</small></div><div><span>回测误差</span><strong>{score.rmse.toFixed(3)}</strong><small>RMSE · {score.sampleStart} 至 {score.sampleEnd}</small></div><div><span>最近真实公布</span><strong>{latestActual?.actual?.toFixed(1)??"-"}</strong><small>{latestActual?.date.slice(0,7)} · 官方值</small></div></div>
     <HistoryChart rows={rows} precision={precision}/>{(data.daily[key]?.length??0)>0&&<RealtimeChart points={data.daily[key]} label={model.name} unit={model.unit}/>}<ComparisonTable rows={rows} precision={precision} hasConsensus={mode==="yoy"}/>
   </section><ForecastInputs data={data}/></div>;
 }
