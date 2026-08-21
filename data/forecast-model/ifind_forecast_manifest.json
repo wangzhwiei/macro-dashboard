@@ -104,7 +104,7 @@
                        "queryName":  "煤炭:日均耗煤量:六大发电集团:总计",
                        "providerId":  "S003839324",
                        "frequency":  "D",
-                       "unit":  "万吨"
+                       "unit":  "吨"
                    },
                    {
                        "key":  "pmi_pta",

@@ -51,6 +51,9 @@ def input_rows(factors: pd.DataFrame, metadata: dict[str, dict[str, Any]], keys:
             "aggregation": item["transform"],
             "providerId": item.get("providerId"),
             "latestAvailableDate": values.index.max().date().isoformat() if len(values) else None,
+            "sourceAsOf": item.get("sourceAsOf"),
+            "latestCompleteMonth": item.get("latestCompleteMonth"),
+            "currentMonthStatus": item.get("currentMonthStatus"),
             "modelUsageNote": "V7正式模型使用当月可获得值；一致预期不参与训练或选参。",
             "series": [
                 {"date": day.date().isoformat(), "value": round(float(value), 6)}

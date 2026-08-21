@@ -3,6 +3,10 @@ import math
 import unittest
 from pathlib import Path
 
+import pandas as pd
+
+from scripts import research_retail_forecast as model
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -17,6 +21,13 @@ class RetailModelResearchTests(unittest.TestCase):
         cls.result = json.loads(
             (ROOT / "data" / "forecast-model" / "retail_model_research.json").read_text(encoding="utf-8")
         )
+
+    def test_monthly_yoy_does_not_publish_a_trailing_partial_month(self):
+        index = pd.to_datetime(["2025-07-31", "2025-08-31", "2026-07-31", "2026-08-09"])
+        raw = pd.Series([100.0, 100.0, 110.0, 60.0], index=index)
+        result = model.monthly_yoy(raw, "last")
+        self.assertAlmostEqual(result.loc[pd.Timestamp("2026-07-31")], 10.0)
+        self.assertTrue(pd.isna(result.loc[pd.Timestamp("2026-08-31")]))
 
     def test_fixed_ifind_series_are_exact(self):
         expected = {

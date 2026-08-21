@@ -154,8 +154,13 @@ def main() -> int:
             candidate = choose_candidate(entry, inner_payload(response))
             if entry.get("frequency") and candidate.get("frequency") != entry["frequency"]:
                 raise RuntimeError(f"频率不一致：期望 {entry['frequency']}，返回 {candidate.get('frequency')}")
-            if entry.get("unit") and candidate.get("unit") != entry["unit"]:
+            if entry.get("unit") and candidate.get("unit") not in (entry["unit"], None, ""):
                 raise RuntimeError(f"单位不一致：期望 {entry['unit']}，返回 {candidate.get('unit')}")
+            if entry.get("unit") and not candidate.get("unit"):
+                # Some exact-ID EDB responses omit the unit even though the
+                # catalog definition is stable. Keep the manifest unit after
+                # exact provider-ID and frequency validation.
+                candidate["unit"] = entry["unit"]
             candidate["records"] = [
                 row for row in candidate["records"]
                 if args.start <= str(row[0])[:10] <= args.end
@@ -167,10 +172,13 @@ def main() -> int:
                 args.merge_existing and previous
                 and previous.get("providerId") == entry.get("providerId")
                 and previous.get("frequency") == entry.get("frequency")
-                and previous.get("unit") == entry.get("unit")
+                and previous.get("unit") in (entry.get("unit"), None, "")
                 and bool(previous.get("records"))
             )
             if previous_is_valid:
+                if entry.get("unit") and not previous.get("unit"):
+                    previous["unit"] = entry["unit"]
+                    output["series"][entry["key"]] = previous
                 latest = str(previous["records"][-1][0])[:10]
                 output["warnings"][entry["key"]] = (
                     f"本次模糊召回失败，保留已通过固定ID校验的历史快照（最新{latest}）：{error}"

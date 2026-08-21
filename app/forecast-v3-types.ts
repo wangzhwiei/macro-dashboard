@@ -21,6 +21,9 @@ export interface ForecastInput {
   aggregation: string;
   providerId?: string | null;
   latestAvailableDate?: string | null;
+  sourceAsOf?: string | null;
+  latestCompleteMonth?: string | null;
+  currentMonthStatus?: "partial" | "complete" | null;
   modelUsageNote?: string | null;
   series: ForecastPoint[];
 }

@@ -82,6 +82,14 @@ def dashboard_series(payload: dict[str, Any], key: str) -> pd.Series:
 
 def monthly_yoy(series: pd.Series, aggregation: str) -> pd.Series:
     monthly = series.resample("ME").agg(aggregation)
+    # Month-end resampling labels a partial current month as if the month had
+    # already finished. Keep the trailing month unavailable until its source
+    # series contains an actual month-end observation.
+    if not series.empty:
+        latest_observation = pd.Timestamp(series.index.max()).normalize()
+        latest_month_end = latest_observation + pd.offsets.MonthEnd(0)
+        if latest_observation < latest_month_end:
+            monthly.loc[latest_month_end] = float("nan")
     return monthly.pct_change(12, fill_method=None) * 100
 
 
@@ -102,10 +110,19 @@ def build_factors(
         item = source.get(source_key)
         if not isinstance(item, dict):
             continue
-        factors[factor_key] = monthly_yoy(records_series(item), aggregation)
+        raw = records_series(item)
+        factors[factor_key] = monthly_yoy(raw, aggregation)
+        latest_observation = pd.Timestamp(raw.index.max()).normalize() if not raw.empty else None
+        latest_month_end = latest_observation + pd.offsets.MonthEnd(0) if latest_observation is not None else None
+        complete_values = factors[factor_key].dropna()
         meta[factor_key] = {
             "name": name, "sourceKey": source_key, "providerId": item.get("providerId"),
             "source": "iFinD", "transform": transform,
+            "sourceAsOf": latest_observation.date().isoformat() if latest_observation is not None else None,
+            "latestCompleteMonth": complete_values.index.max().date().isoformat() if len(complete_values) else None,
+            "currentMonthStatus": (
+                "partial" if latest_observation is not None and latest_observation < latest_month_end else "complete"
+            ),
         }
 
     monthly_specs = (

@@ -54,6 +54,13 @@ class RetailV7PublishTests(unittest.TestCase):
             ],
         )
 
+    def test_car_factor_uses_last_complete_month_and_keeps_raw_as_of_date(self) -> None:
+        car = next(item for item in self.page["highFrequency"]["社零"] if item["id"] == "car_retail_level_yoy")
+        self.assertEqual(car["series"][-1]["date"], "2026-07-31")
+        self.assertTrue(car["sourceAsOf"].startswith("2026-08-"))
+        self.assertEqual(car["latestCompleteMonth"], "2026-07-31")
+        self.assertEqual(car["currentMonthStatus"], "partial")
+
 
 if __name__ == "__main__":
     unittest.main()

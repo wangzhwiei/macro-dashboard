@@ -1,19 +1,40 @@
 {
-  "ok": true,
+  "ok": false,
   "strict": true,
   "summary": {
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 189,
+    "history_weeks": 190,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
-    "stale_indicators": 0,
+    "stale_indicators": 20,
     "cadence_issues": 0,
     "required_provider_codes": 111,
     "mapped_provider_codes": 111,
     "provider_code_collisions": 0
   },
   "errors": [],
-  "warnings": []
+  "warnings": [
+    "bill_6m 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "flights_7d 最新数据为2026-08-15，已滞后6天（daily容忍4天）",
+    "secondhand 最新数据为2026-08-16，已滞后5天（daily容忍4天）",
+    "construction_steel 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "power_coal 最新数据为2026-08-13，已滞后8天（daily容忍4天）",
+    "polyester_rate 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "copper_inventory 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "power_inventory 最新数据为2026-08-13，已滞后8天（daily容忍4天）",
+    "port_coal_inventory 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "glass_spot 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "shibor_6m 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "bill_3m 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "pta_rate 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "px_rate 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "daqin_volume 最新数据为2026-08-13，已滞后8天（daily容忍4天）",
+    "lme_copper_inventory 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "nanhua_agri 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "nanhua_energy 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "nanhua_metals 最新数据为2026-08-14，已滞后7天（daily容忍4天）",
+    "iron_ore_futures 最新数据为2026-08-14，已滞后7天（daily容忍4天）"
+  ]
 }
