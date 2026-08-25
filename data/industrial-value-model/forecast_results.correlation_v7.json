@@ -1,0 +1,1251 @@
+{
+  "schemaVersion": 7,
+  "target": "规模以上工业增加值同比；2月使用1-2月累计同比，1月不单列",
+  "method": "strict walk-forward ridge model using only contemporaneous high-frequency factors selected by prior-sample correlation",
+  "consensusPolicy": "一致预期仅在模型预测完成后合并用于对比，不参与因子、筛选、拟合或参数选择",
+  "asOf": "2026-08-21",
+  "latest": {
+    "date": "2026-08-31",
+    "model": 5.321282,
+    "selectedFactors": [
+      "steel_inventory",
+      "polyester_rate",
+      "asphalt_rate",
+      "port_coal_inventory"
+    ],
+    "consensus": null,
+    "actual": null,
+    "kind": "live_nowcast"
+  },
+  "latestCorrelatedFactors": [
+    {
+      "name": "steel_inventory",
+      "family": "black",
+      "score": 0.610405,
+      "fullCorrelation": -0.570661,
+      "recentCorrelation": -0.666504,
+      "stableAbsCorrelation": 0.584729,
+      "observations": 28,
+      "latestSignal": 8.508806
+    },
+    {
+      "name": "polyester_rate",
+      "family": "chemical",
+      "score": 0.483284,
+      "fullCorrelation": 0.505318,
+      "recentCorrelation": 0.481663,
+      "stableAbsCorrelation": 0.3796,
+      "observations": 28,
+      "latestSignal": -7.774793
+    },
+    {
+      "name": "asphalt_rate",
+      "family": "demand",
+      "score": 0.478622,
+      "fullCorrelation": 0.420461,
+      "recentCorrelation": 0.551006,
+      "stableAbsCorrelation": 0.479888,
+      "observations": 28,
+      "latestSignal": -10.25
+    },
+    {
+      "name": "port_coal_inventory",
+      "family": "energy",
+      "score": 0.376719,
+      "fullCorrelation": 0.294576,
+      "recentCorrelation": 0.499149,
+      "stableAbsCorrelation": 0.297715,
+      "observations": 28,
+      "latestSignal": 14.961863
+    }
+  ],
+  "modelSpecification": {
+    "candidateCount": 35,
+    "candidateFamilies": [
+      "auto",
+      "black",
+      "chemical",
+      "demand",
+      "energy",
+      "mining"
+    ],
+    "signalConversion": {
+      "volume": "monthly mean year-on-year percent change",
+      "rate": "monthly mean year-on-year percentage-point change",
+      "alreadyYoY": "retain the published year-on-year rate"
+    },
+    "rankingScore": "50% absolute expanding-sample correlation + 40% absolute recent-24-month correlation + 10% stable half-sample absolute correlation",
+    "selectionTiming": "nested walk-forward; correlations and coefficients for month t use industrial-value targets strictly before t",
+    "minimumPriorObservations": 18,
+    "maximumFactors": 4,
+    "familyDiversityRule": "at most one selected factor per industry family",
+    "fitWindowMonths": 48,
+    "ridgeAlpha": 64.0,
+    "laggedIndustrialValueIncluded": false,
+    "persistenceAnchorWeight": 0.0,
+    "consensusIncluded": false
+  },
+  "backtest": {
+    "rmse": 0.979693,
+    "mae": 0.794083,
+    "bias": -0.015085,
+    "directionHitPct": 65.79,
+    "turningPointHitPct": 78.26,
+    "turningPoints": 23,
+    "actualCorrelation": 0.27185,
+    "lagCorrelation": 0.225652,
+    "lagCorrelationGap": -0.046199,
+    "observations": 38,
+    "sampleStart": "2023-03-31",
+    "sampleEnd": "2026-07-31"
+  },
+  "sharpChangeBacktest": {
+    "thresholdPctPoint": 1.0,
+    "observations": 15,
+    "rmse": 1.283076,
+    "mae": 1.051701,
+    "directionHitPct": 80.0,
+    "months": [
+      "2023-03-31",
+      "2023-04-30",
+      "2023-05-31",
+      "2023-11-30",
+      "2024-03-31",
+      "2024-04-30",
+      "2024-05-31",
+      "2025-03-31",
+      "2025-04-30",
+      "2025-06-30",
+      "2025-07-31",
+      "2025-09-30",
+      "2025-10-31",
+      "2026-02-28",
+      "2026-04-30"
+    ]
+  },
+  "comparisonOnCommonSample": {
+    "model": {
+      "rmse": 0.980617,
+      "mae": 0.790008,
+      "bias": 0.010045,
+      "directionHitPct": 62.16,
+      "turningPointHitPct": 73.91,
+      "turningPoints": 23,
+      "actualCorrelation": 0.275259,
+      "lagCorrelation": 0.225822,
+      "lagCorrelationGap": -0.049437,
+      "observations": 37,
+      "sampleStart": "2023-03-31",
+      "sampleEnd": "2026-07-31"
+    },
+    "consensus": {
+      "rmse": 1.119724,
+      "mae": 0.766561,
+      "bias": -0.11759,
+      "directionHitPct": 64.86,
+      "turningPointHitPct": 69.57,
+      "turningPoints": 23,
+      "actualCorrelation": 0.382444,
+      "lagCorrelation": 0.179578,
+      "lagCorrelationGap": -0.202866,
+      "observations": 37,
+      "sampleStart": "2023-03-31",
+      "sampleEnd": "2026-07-31"
+    },
+    "modelWinRatePct": 45.95,
+    "ties": 0
+  },
+  "history": [
+    {
+      "date": "2023-03-31",
+      "model": 5.251683,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.235714,
+      "actual": 3.9,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-04-30",
+      "model": 4.642136,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 9.936842,
+      "actual": 5.6,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-05-31",
+      "model": 4.18914,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.458824,
+      "actual": 3.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-06-30",
+      "model": 4.035935,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 3.066667,
+      "actual": 4.4,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-07-31",
+      "model": 4.253584,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.73125,
+      "actual": 3.7,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-08-31",
+      "model": 5.535108,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.174286,
+      "actual": 4.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-09-30",
+      "model": 5.173738,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.392,
+      "actual": 4.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-10-31",
+      "model": 5.251591,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.577778,
+      "actual": 4.6,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-11-30",
+      "model": 6.673362,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 6.014286,
+      "actual": 6.6,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-12-31",
+      "model": 5.826701,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 6.447368,
+      "actual": 6.8,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-01-31",
+      "model": 6.72517,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 5.7,
+      "actual": null,
+      "kind": "live_nowcast"
+    },
+    {
+      "date": "2024-02-29",
+      "model": 5.689549,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 4.5,
+      "actual": 7.0,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-03-31",
+      "model": 5.338586,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 5.40625,
+      "actual": 4.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-04-30",
+      "model": 5.475896,
+      "selectedFactors": [
+        "power_coal",
+        "methanol_rate",
+        "blast_furnace"
+      ],
+      "consensus": 5.314286,
+      "actual": 6.7,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-05-31",
+      "model": 5.792437,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace"
+      ],
+      "consensus": 5.738462,
+      "actual": 5.6,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-06-30",
+      "model": 5.656711,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace"
+      ],
+      "consensus": 4.653846,
+      "actual": 5.3,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-07-31",
+      "model": 5.495533,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace"
+      ],
+      "consensus": 5.15,
+      "actual": 5.1,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-08-31",
+      "model": 5.538259,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace"
+      ],
+      "consensus": 4.757333,
+      "actual": 4.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-09-30",
+      "model": 6.163026,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "car_retail_yoy",
+        "blast_furnace"
+      ],
+      "consensus": 4.555333,
+      "actual": 5.4,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-10-31",
+      "model": 5.514116,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "car_retail_yoy",
+        "blast_furnace"
+      ],
+      "consensus": 5.660909,
+      "actual": 5.3,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-11-30",
+      "model": 5.345955,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace",
+        "car_retail_yoy"
+      ],
+      "consensus": 5.333333,
+      "actual": 5.4,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-12-31",
+      "model": 5.274671,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace",
+        "car_retail_yoy"
+      ],
+      "consensus": 5.484615,
+      "actual": 6.2,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-01-31",
+      "model": 5.089755,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace",
+        "car_wholesale_yoy"
+      ],
+      "consensus": 5.69,
+      "actual": null,
+      "kind": "live_nowcast"
+    },
+    {
+      "date": "2025-02-28",
+      "model": 5.001707,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace",
+        "car_wholesale_yoy"
+      ],
+      "consensus": 5.226,
+      "actual": 5.9,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-03-31",
+      "model": 4.49099,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace",
+        "car_wholesale_yoy"
+      ],
+      "consensus": 5.74,
+      "actual": 7.7,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-04-30",
+      "model": 5.562187,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "blast_furnace",
+        "car_wholesale_yoy"
+      ],
+      "consensus": 5.363636,
+      "actual": 6.1,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-05-31",
+      "model": 5.965001,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "car_wholesale_yoy",
+        "blast_furnace"
+      ],
+      "consensus": 5.57,
+      "actual": 5.8,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-06-30",
+      "model": 5.24289,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "car_wholesale_yoy",
+        "blast_furnace"
+      ],
+      "consensus": 5.725,
+      "actual": 6.8,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-07-31",
+      "model": 5.315917,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "car_wholesale_yoy",
+        "blast_furnace"
+      ],
+      "consensus": 5.91,
+      "actual": 5.7,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-08-31",
+      "model": 4.507903,
+      "selectedFactors": [
+        "methanol_rate",
+        "power_coal",
+        "car_wholesale_yoy",
+        "blast_furnace"
+      ],
+      "consensus": 5.8,
+      "actual": 5.2,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-09-30",
+      "model": 5.417038,
+      "selectedFactors": [
+        "wire_inventory",
+        "polyester_rate",
+        "land_4w",
+        "port_coal_inventory"
+      ],
+      "consensus": 5.266667,
+      "actual": 6.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-10-31",
+      "model": 5.896924,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "polyester_rate",
+        "land_4w",
+        "semi_tire_rate"
+      ],
+      "consensus": 5.454545,
+      "actual": 4.9,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-11-30",
+      "model": 5.65543,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "polyester_rate",
+        "land_4w",
+        "port_coal_inventory"
+      ],
+      "consensus": 5.07,
+      "actual": 4.8,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-12-31",
+      "model": 5.622527,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "polyester_rate",
+        "land_4w",
+        "port_coal_inventory"
+      ],
+      "consensus": 5.17,
+      "actual": 5.2,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-01-31",
+      "model": 5.621468,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "polyester_rate",
+        "land_4w",
+        "port_coal_inventory"
+      ],
+      "consensus": null,
+      "actual": null,
+      "kind": "live_nowcast"
+    },
+    {
+      "date": "2026-02-28",
+      "model": 5.355131,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "polyester_rate",
+        "land_4w",
+        "port_coal_inventory"
+      ],
+      "consensus": null,
+      "actual": 6.3,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-03-31",
+      "model": 5.587669,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "land_4w",
+        "power_coal",
+        "polyester_rate"
+      ],
+      "consensus": 5.171429,
+      "actual": 5.7,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-04-30",
+      "model": 5.835564,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "land_4w",
+        "power_coal",
+        "styrene_rate"
+      ],
+      "consensus": 5.833333,
+      "actual": 4.1,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-05-31",
+      "model": 5.416165,
+      "selectedFactors": [
+        "cold_rolled_inventory",
+        "polyester_rate",
+        "asphalt_rate",
+        "port_coal_inventory"
+      ],
+      "consensus": 4.166667,
+      "actual": 4.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-06-30",
+      "model": 5.153532,
+      "selectedFactors": [
+        "wire_inventory",
+        "polyester_rate",
+        "port_coal_inventory",
+        "asphalt_rate"
+      ],
+      "consensus": 4.63,
+      "actual": 5.3,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-07-31",
+      "model": 5.38249,
+      "selectedFactors": [
+        "steel_inventory",
+        "polyester_rate",
+        "asphalt_rate",
+        "port_coal_inventory"
+      ],
+      "consensus": 4.7625,
+      "actual": 4.5,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-08-31",
+      "model": 5.321282,
+      "selectedFactors": [
+        "steel_inventory",
+        "polyester_rate",
+        "asphalt_rate",
+        "port_coal_inventory"
+      ],
+      "consensus": null,
+      "actual": null,
+      "kind": "live_nowcast"
+    }
+  ],
+  "correlationResearch": {
+    "note": "full-sample ranking is descriptive only; production selection is recomputed with prior targets in every forecast month",
+    "selectionFrequency": {
+      "power_coal": 32,
+      "blast_furnace": 30,
+      "methanol_rate": 30,
+      "polyester_rate": 11,
+      "port_coal_inventory": 9,
+      "car_wholesale_yoy": 8,
+      "cold_rolled_inventory": 8,
+      "land_4w": 8,
+      "asphalt_rate": 4,
+      "car_retail_yoy": 4,
+      "steel_inventory": 2,
+      "wire_inventory": 2,
+      "semi_tire_rate": 1,
+      "styrene_rate": 1
+    },
+    "descriptiveRanking": [
+      {
+        "name": "steel_inventory",
+        "family": "black",
+        "score": 0.610405,
+        "fullCorrelation": -0.570661,
+        "recentCorrelation": -0.666504,
+        "stableAbsCorrelation": 0.584729,
+        "observations": 28
+      },
+      {
+        "name": "wire_inventory",
+        "family": "black",
+        "score": 0.589515,
+        "fullCorrelation": -0.579138,
+        "recentCorrelation": -0.588991,
+        "stableAbsCorrelation": 0.643499,
+        "observations": 28
+      },
+      {
+        "name": "hrc_inventory",
+        "family": "black",
+        "score": 0.546028,
+        "fullCorrelation": -0.522486,
+        "recentCorrelation": -0.598191,
+        "stableAbsCorrelation": 0.455093,
+        "observations": 28
+      },
+      {
+        "name": "cold_rolled_inventory",
+        "family": "black",
+        "score": 0.490757,
+        "fullCorrelation": -0.479262,
+        "recentCorrelation": -0.543972,
+        "stableAbsCorrelation": 0.33537,
+        "observations": 28
+      },
+      {
+        "name": "polyester_rate",
+        "family": "chemical",
+        "score": 0.483284,
+        "fullCorrelation": 0.505318,
+        "recentCorrelation": 0.481663,
+        "stableAbsCorrelation": 0.3796,
+        "observations": 28
+      },
+      {
+        "name": "asphalt_rate",
+        "family": "demand",
+        "score": 0.478622,
+        "fullCorrelation": 0.420461,
+        "recentCorrelation": 0.551006,
+        "stableAbsCorrelation": 0.479888,
+        "observations": 28
+      },
+      {
+        "name": "medium_plate_inventory",
+        "family": "black",
+        "score": 0.472091,
+        "fullCorrelation": -0.393833,
+        "recentCorrelation": -0.570836,
+        "stableAbsCorrelation": 0.468396,
+        "observations": 28
+      },
+      {
+        "name": "rebar_inventory",
+        "family": "black",
+        "score": 0.452325,
+        "fullCorrelation": -0.459227,
+        "recentCorrelation": -0.47392,
+        "stableAbsCorrelation": 0.331434,
+        "observations": 28
+      },
+      {
+        "name": "crude_steel",
+        "family": "black",
+        "score": 0.447709,
+        "fullCorrelation": 0.443879,
+        "recentCorrelation": 0.485668,
+        "stableAbsCorrelation": 0.315019,
+        "observations": 28
+      },
+      {
+        "name": "filament_rate",
+        "family": "chemical",
+        "score": 0.432036,
+        "fullCorrelation": 0.448963,
+        "recentCorrelation": 0.433306,
+        "stableAbsCorrelation": 0.342323,
+        "observations": 28
+      },
+      {
+        "name": "styrene_rate",
+        "family": "chemical",
+        "score": 0.421142,
+        "fullCorrelation": 0.361879,
+        "recentCorrelation": 0.525245,
+        "stableAbsCorrelation": 0.301049,
+        "observations": 28
+      },
+      {
+        "name": "cold_rolled_rate",
+        "family": "black",
+        "score": 0.404025,
+        "fullCorrelation": -0.349572,
+        "recentCorrelation": -0.462931,
+        "stableAbsCorrelation": 0.440669,
+        "observations": 28
+      },
+      {
+        "name": "port_coal_inventory",
+        "family": "energy",
+        "score": 0.376719,
+        "fullCorrelation": 0.294576,
+        "recentCorrelation": 0.499149,
+        "stableAbsCorrelation": 0.297715,
+        "observations": 28
+      },
+      {
+        "name": "car_wholesale_yoy",
+        "family": "auto",
+        "score": 0.333521,
+        "fullCorrelation": 0.226037,
+        "recentCorrelation": 0.533122,
+        "stableAbsCorrelation": 0.072541,
+        "observations": 39
+      },
+      {
+        "name": "car_retail_yoy",
+        "family": "auto",
+        "score": 0.323567,
+        "fullCorrelation": 0.170942,
+        "recentCorrelation": 0.59524,
+        "stableAbsCorrelation": 0.0,
+        "observations": 39
+      },
+      {
+        "name": "pta_rate",
+        "family": "chemical",
+        "score": 0.308929,
+        "fullCorrelation": 0.197457,
+        "recentCorrelation": 0.469653,
+        "stableAbsCorrelation": 0.223389,
+        "observations": 61
+      },
+      {
+        "name": "methanol_rate",
+        "family": "chemical",
+        "score": 0.294029,
+        "fullCorrelation": 0.435399,
+        "recentCorrelation": 0.123874,
+        "stableAbsCorrelation": 0.267797,
+        "observations": 61
+      },
+      {
+        "name": "staple_rate",
+        "family": "chemical",
+        "score": 0.290724,
+        "fullCorrelation": 0.265158,
+        "recentCorrelation": 0.298721,
+        "stableAbsCorrelation": 0.386563,
+        "observations": 28
+      },
+      {
+        "name": "pvc_rate",
+        "family": "chemical",
+        "score": 0.263548,
+        "fullCorrelation": 0.313276,
+        "recentCorrelation": 0.267274,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "port_container",
+        "family": "demand",
+        "score": 0.254936,
+        "fullCorrelation": 0.245955,
+        "recentCorrelation": 0.329898,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "power_coal",
+        "family": "energy",
+        "score": 0.248452,
+        "fullCorrelation": 0.43214,
+        "recentCorrelation": -0.080954,
+        "stableAbsCorrelation": 0.0,
+        "observations": 61
+      },
+      {
+        "name": "glass_rate",
+        "family": "demand",
+        "score": 0.235301,
+        "fullCorrelation": -0.105785,
+        "recentCorrelation": -0.40387,
+        "stableAbsCorrelation": 0.208606,
+        "observations": 28
+      },
+      {
+        "name": "power_inventory",
+        "family": "energy",
+        "score": 0.232483,
+        "fullCorrelation": 0.216326,
+        "recentCorrelation": 0.309261,
+        "stableAbsCorrelation": 0.00615,
+        "observations": 28
+      },
+      {
+        "name": "flights_7d",
+        "family": "demand",
+        "score": 0.183543,
+        "fullCorrelation": 0.217515,
+        "recentCorrelation": 0.181168,
+        "stableAbsCorrelation": 0.023183,
+        "observations": 28
+      },
+      {
+        "name": "blast_furnace",
+        "family": "black",
+        "score": 0.155602,
+        "fullCorrelation": 0.145863,
+        "recentCorrelation": -0.206676,
+        "stableAbsCorrelation": 0.0,
+        "observations": 61
+      },
+      {
+        "name": "coking_rate",
+        "family": "black",
+        "score": 0.154458,
+        "fullCorrelation": 0.064133,
+        "recentCorrelation": 0.301635,
+        "stableAbsCorrelation": 0.017375,
+        "observations": 28
+      },
+      {
+        "name": "metro_composite",
+        "family": "demand",
+        "score": 0.151808,
+        "fullCorrelation": -0.255537,
+        "recentCorrelation": -0.006215,
+        "stableAbsCorrelation": 0.215536,
+        "observations": 28
+      },
+      {
+        "name": "land_4w",
+        "family": "demand",
+        "score": 0.147217,
+        "fullCorrelation": -0.216184,
+        "recentCorrelation": -0.097812,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "newhome_30c",
+        "family": "demand",
+        "score": 0.114102,
+        "fullCorrelation": 0.026547,
+        "recentCorrelation": 0.252073,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "full_tire_rate",
+        "family": "auto",
+        "score": 0.105465,
+        "fullCorrelation": -0.172596,
+        "recentCorrelation": 0.025837,
+        "stableAbsCorrelation": 0.088325,
+        "observations": 28
+      },
+      {
+        "name": "px_rate",
+        "family": "chemical",
+        "score": 0.094711,
+        "fullCorrelation": 0.11816,
+        "recentCorrelation": 0.089077,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "tire_composite",
+        "family": "auto",
+        "score": 0.085185,
+        "fullCorrelation": -0.09138,
+        "recentCorrelation": 0.060592,
+        "stableAbsCorrelation": 0.152581,
+        "observations": 28
+      },
+      {
+        "name": "construction_steel",
+        "family": "black",
+        "score": 0.054891,
+        "fullCorrelation": -0.093964,
+        "recentCorrelation": -0.019773,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "daqin_volume",
+        "family": "mining",
+        "score": 0.054677,
+        "fullCorrelation": -0.04301,
+        "recentCorrelation": 0.082931,
+        "stableAbsCorrelation": 0.0,
+        "observations": 28
+      },
+      {
+        "name": "semi_tire_rate",
+        "family": "auto",
+        "score": 0.048068,
+        "fullCorrelation": 0.021431,
+        "recentCorrelation": 0.064234,
+        "stableAbsCorrelation": 0.116593,
+        "observations": 28
+      }
+    ]
+  },
+  "accountingReconstruction": {
+    "available": true,
+    "purpose": "post-release accounting reconstruction and real-time coherence check; contemporaneous sector actuals never enter forecasts",
+    "weights": {
+      "mining": 0.09874,
+      "manufacturing": 0.816111,
+      "utility": 0.085149
+    },
+    "residual": -0.046501,
+    "latestObservedMonth": "2026-07-31",
+    "latestObservedComponents": {
+      "mining": -4.2,
+      "manufacturing": 5.5,
+      "utility": 5.0
+    },
+    "latestReconstructedAnchor": 4.45315,
+    "backtest": {
+      "rmse": 0.088895,
+      "mae": 0.069896,
+      "bias": 0.036481,
+      "directionHitPct": 97.14,
+      "turningPointHitPct": 95.24,
+      "turningPoints": 21,
+      "actualCorrelation": 0.996494,
+      "lagCorrelation": 0.350531,
+      "lagCorrelationGap": -0.645963,
+      "observations": 35,
+      "sampleStart": "2023-03-31",
+      "sampleEnd": "2026-07-31"
+    },
+    "providerIds": {
+      "mining": "M004369927",
+      "manufacturing": "M004369928",
+      "utility": "M004369929"
+    }
+  },
+  "latestPhysicalOutputs": {
+    "output_cement_yoy": {
+      "date": "2026-07-31",
+      "value": -11.6,
+      "providerId": "M005382983"
+    },
+    "output_chemical_fiber_yoy": {
+      "date": "2026-07-31",
+      "value": -1.7,
+      "providerId": "S000014895"
+    },
+    "output_coal_yoy": {
+      "date": "2026-07-31",
+      "value": -10.1,
+      "providerId": "S000006804"
+    },
+    "output_crude_steel_yoy": {
+      "date": "2026-07-31",
+      "value": -3.6,
+      "providerId": "M001622691"
+    },
+    "output_ethylene_yoy": {
+      "date": "2026-07-31",
+      "value": 0.1,
+      "providerId": "S000014891"
+    },
+    "output_gas_yoy": {
+      "date": "2026-07-31",
+      "value": -0.9,
+      "providerId": "S000006820"
+    },
+    "output_ic_yoy": {
+      "date": "2026-07-31",
+      "value": 20.7,
+      "providerId": "M005383779"
+    },
+    "output_nonferrous_yoy": {
+      "date": "2026-07-31",
+      "value": 2.5,
+      "providerId": "M005383041"
+    },
+    "output_power_yoy": {
+      "date": "2026-07-31",
+      "value": -0.1,
+      "providerId": "M001622862"
+    },
+    "output_robot_yoy": {
+      "date": "2026-06-30",
+      "value": 46.666667,
+      "providerId": "S018402443"
+    },
+    "output_steel_yoy": {
+      "date": "2026-07-31",
+      "value": -4.1,
+      "providerId": "S000021534"
+    }
+  },
+  "featureProvenance": {
+    "blast_furnace": {
+      "family": "black",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": "S005653695",
+      "start": "2020-01-03",
+      "end": "2026-08-21",
+      "observations": 352
+    },
+    "rebar_rate": {
+      "family": "black",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": "S005580571",
+      "start": "2020-01-03",
+      "end": "2026-08-21",
+      "observations": 345
+    },
+    "crude_steel": {
+      "family": "black",
+      "kind": "volume",
+      "role": "diffusion",
+      "providerId": null,
+      "start": "2023-01-10",
+      "end": "2026-07-31",
+      "observations": 130
+    },
+    "construction_steel": {
+      "family": "black",
+      "kind": "volume",
+      "role": "diffusion",
+      "providerId": null,
+      "start": "2023-01-03",
+      "end": "2026-08-07",
+      "observations": 848
+    },
+    "power_coal": {
+      "family": "energy",
+      "kind": "volume",
+      "role": "diffusion",
+      "providerId": "S003839324",
+      "start": "2020-01-01",
+      "end": "2026-08-21",
+      "observations": 2005
+    },
+    "pta_rate": {
+      "family": "chemical",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": "S019765727",
+      "start": "2020-02-19",
+      "end": "2026-08-21",
+      "observations": 1564
+    },
+    "methanol_rate": {
+      "family": "chemical",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": "S005439668",
+      "start": "2020-01-03",
+      "end": "2026-08-21",
+      "observations": 340
+    },
+    "polyester_rate": {
+      "family": "chemical",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": null,
+      "start": "2023-01-01",
+      "end": "2026-08-07",
+      "observations": 1315
+    },
+    "car_wholesale": {
+      "family": "auto",
+      "kind": "volume",
+      "role": "diffusion",
+      "providerId": "S023782827",
+      "start": "2020-01-12",
+      "end": "2026-08-16",
+      "observations": 343
+    },
+    "car_retail": {
+      "family": "auto",
+      "kind": "volume",
+      "role": "diffusion",
+      "providerId": "S023782829",
+      "start": "2020-01-12",
+      "end": "2026-08-16",
+      "observations": 344
+    },
+    "broad_car_output_yoy": {
+      "family": "auto",
+      "kind": "yoy",
+      "role": "amplitude",
+      "providerId": "S002811623",
+      "start": "2020-01-31",
+      "end": "2026-07-31",
+      "observations": 79
+    },
+    "excavator_sales_yoy": {
+      "family": "demand",
+      "kind": "yoy",
+      "role": "amplitude",
+      "providerId": "S002850744",
+      "start": "2020-01-31",
+      "end": "2026-07-31",
+      "observations": 79
+    },
+    "full_tire": {
+      "family": "auto",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": null,
+      "start": "2023-01-05",
+      "end": "2026-08-06",
+      "observations": 189
+    },
+    "semi_tire": {
+      "family": "auto",
+      "kind": "rate",
+      "role": "diffusion",
+      "providerId": null,
+      "start": "2023-01-05",
+      "end": "2026-08-06",
+      "observations": 189
+    }
+  },
+  "providerIds": {
+    "actualMonthly": "M001622302",
+    "actualYtd": "M001622303",
+    "actualMomSa": "M002822189",
+    "consensus": "M005682255"
+  }
+}
