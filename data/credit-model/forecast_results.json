@@ -1,0 +1,1858 @@
+{
+  "schemaVersion": 5,
+  "modelVersion": "credit-v1.0.0",
+  "modelFrozen": true,
+  "modelFrozenAt": "2026-08-25",
+  "forecastMonth": "2026-08",
+  "dataRetrievedAt": "2026-08-24T01:55:58.580876+08:00",
+  "method": "target-specific no-leakage models: M2 balance-change bridge converted back to YoY; seasonal-drift, bill-rate overlay and online residual correction for loans; structural and official-component TSF challengers with robust same-month shrinkage and online residual correction",
+  "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
+  "current": {
+    "m2_yoy": {
+      "model": 7.54,
+      "consensus": null,
+      "unit": "%",
+      "gapVsConsensus": null,
+      "consensusStatus": "not_yet_published",
+      "approx68PctRange": [
+        7.09,
+        7.99
+      ]
+    },
+    "new_rmb_loans": {
+      "model": 0.26,
+      "consensus": null,
+      "unit": "万亿元",
+      "gapVsConsensus": null,
+      "consensusStatus": "not_yet_published",
+      "approx68PctRange": [
+        -0.09,
+        0.61
+      ]
+    },
+    "social_financing": {
+      "model": 2.99,
+      "consensus": null,
+      "unit": "万亿元",
+      "gapVsConsensus": null,
+      "consensusStatus": "not_yet_published",
+      "approx68PctRange": [
+        2.36,
+        3.62
+      ]
+    }
+  },
+  "monthlyModelInputs": {
+    "cpi": 0.579954,
+    "ppi": 3.601707,
+    "pmi": 50.003284,
+    "industrial_value": 4.648312
+  },
+  "informationSet": {
+    "historicalBacktest": {
+      "timing": "immediately_before_each_credit_release",
+      "sameMonthActual": [
+        "cpi",
+        "ppi",
+        "pmi"
+      ],
+      "priorMonthActual": [
+        "industrial_value"
+      ]
+    },
+    "liveMonth": {
+      "asOf": "2026-08-24T01:55:58.580876+08:00",
+      "policy": "use released actual when available; otherwise use the project's generated no-consensus forecast"
+    }
+  },
+  "diagnostics": {
+    "m2_yoy": {
+      "final": {
+        "rmse": 0.445564,
+        "mae": 0.341757,
+        "bias": -0.012354,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "legacyPersistence": {
+        "rmse": 0.471725,
+        "mae": 0.368932,
+        "bias": 0.003883,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "candidateMetrics": {
+        "seasonal_sparse_a20_w84": {
+          "rmse": 0.447814,
+          "mae": 0.342801,
+          "bias": -0.01458,
+          "observations": 101,
+          "sampleStart": "2018-01",
+          "sampleEnd": "2026-07"
+        },
+        "credit_sparse_a20_w60": {
+          "rmse": 0.427653,
+          "mae": 0.33009,
+          "bias": 0.063685,
+          "observations": 71,
+          "sampleStart": "2020-07",
+          "sampleEnd": "2026-07"
+        },
+        "credit_sparse_a50_w84": {
+          "rmse": 0.444565,
+          "mae": 0.335853,
+          "bias": 0.034912,
+          "observations": 71,
+          "sampleStart": "2020-07",
+          "sampleEnd": "2026-07"
+        },
+        "bill_sparse_a50_w60": {
+          "rmse": 0.447335,
+          "mae": 0.342122,
+          "bias": 0.025228,
+          "observations": 71,
+          "sampleStart": "2020-07",
+          "sampleEnd": "2026-07"
+        }
+      },
+      "candidateSelectionCounts": {
+        "seasonal_sparse_a20_w84": 50,
+        "credit_sparse_a20_w60": 51,
+        "credit_sparse_a50_w84": 1,
+        "bill_sparse_a50_w60": 0
+      },
+      "candidateSpecifications": {
+        "seasonal_sparse_a20_w84": {
+          "features": [
+            "change_l12",
+            "change_l24",
+            "change_l36"
+          ],
+          "alpha": 20.0,
+          "window": 84
+        },
+        "credit_sparse_a20_w60": {
+          "features": [
+            "change_l12",
+            "change_l24",
+            "change_l36",
+            "change_mean3_l1",
+            "loan_model"
+          ],
+          "alpha": 20.0,
+          "window": 60
+        },
+        "credit_sparse_a50_w84": {
+          "features": [
+            "change_l12",
+            "change_l24",
+            "change_l36",
+            "change_mean3_l1",
+            "loan_model"
+          ],
+          "alpha": 50.0,
+          "window": 84
+        },
+        "bill_sparse_a50_w60": {
+          "features": [
+            "change_l12",
+            "change_l24",
+            "change_l36",
+            "change_mean3_l1",
+            "loan_model",
+            "bill_yoy"
+          ],
+          "alpha": 50.0,
+          "window": 60
+        }
+      },
+      "seasonalBalanceFallback": {
+        "rmse": 0.432456,
+        "mae": 0.324219,
+        "bias": -0.081963,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "turningPointHitRatePct": 48.04,
+      "legacyTurningPointHitRatePct": 38.24,
+      "latestForecastBalanceTrillion": 357.021,
+      "previousMonthBalanceTrillion": 355.508
+    },
+    "new_rmb_loans": {
+      "final": {
+        "rmse": 0.347371,
+        "mae": 0.256035,
+        "bias": -0.01914,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "preResidualAdjustment": {
+        "rmse": 0.356257,
+        "mae": 0.261673,
+        "bias": -0.034691,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "preBillStructural": {
+        "rmse": 0.370775,
+        "mae": 0.276964,
+        "bias": 0.004373,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "dynamicSeasonalChallenger": {
+        "rmse": 0.365543,
+        "mae": 0.270733,
+        "bias": -0.000659,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "candidateSelectionCounts": {
+        "seasonal_drift_0": 0,
+        "seasonal_drift_0.25": 26,
+        "seasonal_drift_0.5": 64,
+        "seasonal_drift_0.75": 14,
+        "seasonal_drift_1": 0
+      },
+      "billOverlay": {
+        "providerId": "M021397977",
+        "firstAppliedMonth": "2024-03",
+        "latestAdjustment": -0.237143
+      },
+      "plainSeasonal": {
+        "rmse": 0.384742,
+        "mae": 0.294402,
+        "bias": -0.002492,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      }
+    },
+    "social_financing": {
+      "final": {
+        "rmse": 0.628838,
+        "mae": 0.491621,
+        "bias": -0.002417,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "preResidualAdjustment": {
+        "rmse": 0.644106,
+        "mae": 0.500254,
+        "bias": -0.01378,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "preRobustShrink": {
+        "rmse": 0.653827,
+        "mae": 0.503305,
+        "bias": 0.060655,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "structural": {
+        "rmse": 0.678953,
+        "mae": 0.515962,
+        "bias": 0.129704,
+        "observations": 103,
+        "sampleStart": "2018-01",
+        "sampleEnd": "2026-07"
+      },
+      "monthlyMacroAugmented": {
+        "rmse": 0.68214,
+        "mae": 0.53768,
+        "bias": 0.066821,
+        "observations": 71,
+        "sampleStart": "2020-07",
+        "sampleEnd": "2026-05"
+      },
+      "componentBridge": {
+        "rmse": 0.758543,
+        "mae": 0.583402,
+        "bias": -0.210973,
+        "observations": 79,
+        "sampleStart": "2020-01",
+        "sampleEnd": "2026-07"
+      },
+      "candidateSet": [
+        "structural",
+        "release_information_macro",
+        "component_bridge"
+      ],
+      "latestCandidateWeights": {
+        "structural": 0.3486,
+        "release_information_macro": 0.3193,
+        "component_bridge": 0.3322
+      }
+    }
+  },
+  "comparisonOnCommonSample": {
+    "m2_yoy": {
+      "commonObservations": 79,
+      "model": {
+        "rmse": 0.467915,
+        "mae": 0.353016,
+        "bias": -0.015349,
+        "observations": 79,
+        "sampleStart": "2020-01",
+        "sampleEnd": "2026-07"
+      },
+      "consensus": {
+        "rmse": 0.602611,
+        "mae": 0.452859,
+        "bias": -0.072994,
+        "observations": 79,
+        "sampleStart": "2020-01",
+        "sampleEnd": "2026-07"
+      },
+      "modelWinRatePct": 55.7
+    },
+    "new_rmb_loans": {
+      "commonObservations": 76,
+      "model": {
+        "rmse": 0.34486,
+        "mae": 0.26308,
+        "bias": 0.015662,
+        "observations": 76,
+        "sampleStart": "2020-04",
+        "sampleEnd": "2026-07"
+      },
+      "consensus": {
+        "rmse": 0.33289,
+        "mae": 0.253758,
+        "bias": -0.014457,
+        "observations": 76,
+        "sampleStart": "2020-04",
+        "sampleEnd": "2026-07"
+      },
+      "modelWinRatePct": 47.37
+    },
+    "social_financing": {
+      "commonObservations": 79,
+      "model": {
+        "rmse": 0.669733,
+        "mae": 0.521894,
+        "bias": -0.020966,
+        "observations": 79,
+        "sampleStart": "2020-01",
+        "sampleEnd": "2026-07"
+      },
+      "consensus": {
+        "rmse": 0.590745,
+        "mae": 0.483484,
+        "bias": -0.122491,
+        "observations": 79,
+        "sampleStart": "2020-01",
+        "sampleEnd": "2026-07"
+      },
+      "modelWinRatePct": 51.9
+    }
+  },
+  "performanceGateVsConsensus": {
+    "new_rmb_loans": {
+      "passed": false,
+      "modelRmse": 0.34486,
+      "consensusRmse": 0.33289,
+      "remainingGap": 0.01197
+    },
+    "social_financing": {
+      "passed": false,
+      "modelRmse": 0.669733,
+      "consensusRmse": 0.590745,
+      "remainingGap": 0.078988
+    }
+  },
+  "history": {
+    "m2_yoy": [
+      {
+        "date": "2020-01",
+        "model": 8.192435,
+        "consensus": 8.575,
+        "actual": 8.4
+      },
+      {
+        "date": "2020-02",
+        "model": 8.638098,
+        "consensus": 8.49375,
+        "actual": 8.8
+      },
+      {
+        "date": "2020-03",
+        "model": 8.445139,
+        "consensus": 8.713043,
+        "actual": 10.1
+      },
+      {
+        "date": "2020-04",
+        "model": 10.374106,
+        "consensus": 10.066667,
+        "actual": 11.1
+      },
+      {
+        "date": "2020-05",
+        "model": 11.135015,
+        "consensus": 11.2,
+        "actual": 11.1
+      },
+      {
+        "date": "2020-06",
+        "model": 10.714263,
+        "consensus": 10.510714,
+        "actual": 11.1
+      },
+      {
+        "date": "2020-07",
+        "model": 11.350646,
+        "consensus": 11.18,
+        "actual": 10.7
+      },
+      {
+        "date": "2020-08",
+        "model": 10.645225,
+        "consensus": 10.747619,
+        "actual": 10.4
+      },
+      {
+        "date": "2020-09",
+        "model": 10.223787,
+        "consensus": 10.382,
+        "actual": 10.9
+      },
+      {
+        "date": "2020-10",
+        "model": 11.16936,
+        "consensus": 10.805,
+        "actual": 10.5
+      },
+      {
+        "date": "2020-11",
+        "model": 10.455142,
+        "consensus": 10.576522,
+        "actual": 10.7
+      },
+      {
+        "date": "2020-12",
+        "model": 10.304743,
+        "consensus": 10.467778,
+        "actual": 10.1
+      },
+      {
+        "date": "2021-01",
+        "model": 9.723447,
+        "consensus": 10.0875,
+        "actual": 9.4
+      },
+      {
+        "date": "2021-02",
+        "model": 9.267029,
+        "consensus": 9.552632,
+        "actual": 10.1
+      },
+      {
+        "date": "2021-03",
+        "model": 8.946799,
+        "consensus": 9.534828,
+        "actual": 9.4
+      },
+      {
+        "date": "2021-04",
+        "model": 9.113829,
+        "consensus": 9.266667,
+        "actual": 8.1
+      },
+      {
+        "date": "2021-05",
+        "model": 8.084246,
+        "consensus": 8.089474,
+        "actual": 8.3
+      },
+      {
+        "date": "2021-06",
+        "model": 7.987888,
+        "consensus": 8.614815,
+        "actual": 8.6
+      },
+      {
+        "date": "2021-07",
+        "model": 9.003059,
+        "consensus": 8.689474,
+        "actual": 8.3
+      },
+      {
+        "date": "2021-08",
+        "model": 8.363544,
+        "consensus": 8.38125,
+        "actual": 8.2
+      },
+      {
+        "date": "2021-09",
+        "model": 7.826998,
+        "consensus": 8.559583,
+        "actual": 8.3
+      },
+      {
+        "date": "2021-10",
+        "model": 8.662712,
+        "consensus": 8.384286,
+        "actual": 8.7
+      },
+      {
+        "date": "2021-11",
+        "model": 8.479349,
+        "consensus": 8.704,
+        "actual": 8.5
+      },
+      {
+        "date": "2021-12",
+        "model": 8.521218,
+        "consensus": 8.93,
+        "actual": 9.0
+      },
+      {
+        "date": "2022-01",
+        "model": 9.079358,
+        "consensus": 9.285714,
+        "actual": 9.8
+      },
+      {
+        "date": "2022-02",
+        "model": 9.395924,
+        "consensus": 9.453529,
+        "actual": 9.2
+      },
+      {
+        "date": "2022-03",
+        "model": 8.883445,
+        "consensus": 8.8725,
+        "actual": 9.7
+      },
+      {
+        "date": "2022-04",
+        "model": 10.627096,
+        "consensus": 9.817647,
+        "actual": 10.5
+      },
+      {
+        "date": "2022-05",
+        "model": 10.403087,
+        "consensus": 10.478571,
+        "actual": 11.1
+      },
+      {
+        "date": "2022-06",
+        "model": 10.889165,
+        "consensus": 9.974074,
+        "actual": 11.4
+      },
+      {
+        "date": "2022-07",
+        "model": 11.934202,
+        "consensus": 11.3875,
+        "actual": 12.0
+      },
+      {
+        "date": "2022-08",
+        "model": 12.240363,
+        "consensus": 12.025,
+        "actual": 12.2
+      },
+      {
+        "date": "2022-09",
+        "model": 12.061531,
+        "consensus": 10.594118,
+        "actual": 12.1
+      },
+      {
+        "date": "2022-10",
+        "model": 12.068079,
+        "consensus": 12.0,
+        "actual": 11.8
+      },
+      {
+        "date": "2022-11",
+        "model": 11.780495,
+        "consensus": 11.761538,
+        "actual": 12.4
+      },
+      {
+        "date": "2022-12",
+        "model": 12.137572,
+        "consensus": 10.07377,
+        "actual": 11.8
+      },
+      {
+        "date": "2023-01",
+        "model": 11.566318,
+        "consensus": 11.472,
+        "actual": 12.6
+      },
+      {
+        "date": "2023-02",
+        "model": 13.034053,
+        "consensus": 12.315333,
+        "actual": 12.9
+      },
+      {
+        "date": "2023-03",
+        "model": 12.956305,
+        "consensus": 11.887368,
+        "actual": 12.7
+      },
+      {
+        "date": "2023-04",
+        "model": 12.862798,
+        "consensus": 12.437222,
+        "actual": 12.4
+      },
+      {
+        "date": "2023-05",
+        "model": 12.04386,
+        "consensus": 11.98,
+        "actual": 11.6
+      },
+      {
+        "date": "2023-06",
+        "model": 11.363227,
+        "consensus": 10.946522,
+        "actual": 11.3
+      },
+      {
+        "date": "2023-07",
+        "model": 11.093263,
+        "consensus": 11.057692,
+        "actual": 10.7
+      },
+      {
+        "date": "2023-08",
+        "model": 10.568411,
+        "consensus": 10.637778,
+        "actual": 10.6
+      },
+      {
+        "date": "2023-09",
+        "model": 10.688759,
+        "consensus": 10.545,
+        "actual": 10.3
+      },
+      {
+        "date": "2023-10",
+        "model": 10.362152,
+        "consensus": 10.32375,
+        "actual": 10.3
+      },
+      {
+        "date": "2023-11",
+        "model": 9.904611,
+        "consensus": 10.096667,
+        "actual": 10.0
+      },
+      {
+        "date": "2023-12",
+        "model": 10.151594,
+        "consensus": 10.19973,
+        "actual": 9.7
+      },
+      {
+        "date": "2024-01",
+        "model": 9.118869,
+        "consensus": 9.425,
+        "actual": 8.7
+      },
+      {
+        "date": "2024-02",
+        "model": 8.855367,
+        "consensus": 8.969231,
+        "actual": 8.7
+      },
+      {
+        "date": "2024-03",
+        "model": 8.672806,
+        "consensus": 9.036364,
+        "actual": 8.3
+      },
+      {
+        "date": "2024-04",
+        "model": 8.343725,
+        "consensus": 8.316667,
+        "actual": 7.2
+      },
+      {
+        "date": "2024-05",
+        "model": 7.436545,
+        "consensus": 7.25,
+        "actual": 7.0
+      },
+      {
+        "date": "2024-06",
+        "model": 6.993117,
+        "consensus": 7.8375,
+        "actual": 6.2
+      },
+      {
+        "date": "2024-07",
+        "model": 6.350492,
+        "consensus": 6.49,
+        "actual": 6.3
+      },
+      {
+        "date": "2024-08",
+        "model": 6.21589,
+        "consensus": 6.235385,
+        "actual": 6.3
+      },
+      {
+        "date": "2024-09",
+        "model": 6.457575,
+        "consensus": 7.420833,
+        "actual": 6.8
+      },
+      {
+        "date": "2024-10",
+        "model": 7.004164,
+        "consensus": 6.941667,
+        "actual": 7.5
+      },
+      {
+        "date": "2024-11",
+        "model": 7.209991,
+        "consensus": 7.38,
+        "actual": 7.1
+      },
+      {
+        "date": "2024-12",
+        "model": 7.425143,
+        "consensus": 8.347619,
+        "actual": 7.3
+      },
+      {
+        "date": "2025-01",
+        "model": 7.617705,
+        "consensus": 7.43125,
+        "actual": 7.0
+      },
+      {
+        "date": "2025-02",
+        "model": 6.896243,
+        "consensus": 7.02,
+        "actual": 7.0
+      },
+      {
+        "date": "2025-03",
+        "model": 7.056495,
+        "consensus": 7.173684,
+        "actual": 7.0
+      },
+      {
+        "date": "2025-04",
+        "model": 7.886332,
+        "consensus": 7.481818,
+        "actual": 8.0
+      },
+      {
+        "date": "2025-05",
+        "model": 8.251759,
+        "consensus": 8.01,
+        "actual": 7.9
+      },
+      {
+        "date": "2025-06",
+        "model": 8.308018,
+        "consensus": 8.043478,
+        "actual": 8.3
+      },
+      {
+        "date": "2025-07",
+        "model": 8.503485,
+        "consensus": 8.319231,
+        "actual": 8.8
+      },
+      {
+        "date": "2025-08",
+        "model": 8.652062,
+        "consensus": 8.675,
+        "actual": 8.8
+      },
+      {
+        "date": "2025-09",
+        "model": 8.339111,
+        "consensus": 8.13913,
+        "actual": 8.4
+      },
+      {
+        "date": "2025-10",
+        "model": 8.063618,
+        "consensus": 8.12,
+        "actual": 8.2
+      },
+      {
+        "date": "2025-11",
+        "model": 8.235621,
+        "consensus": 8.16,
+        "actual": 8.0
+      },
+      {
+        "date": "2025-12",
+        "model": 7.973872,
+        "consensus": 7.974483,
+        "actual": 8.5
+      },
+      {
+        "date": "2026-01",
+        "model": 8.986846,
+        "consensus": 8.4,
+        "actual": 9.0
+      },
+      {
+        "date": "2026-02",
+        "model": 8.815914,
+        "consensus": 8.857143,
+        "actual": 9.0
+      },
+      {
+        "date": "2026-03",
+        "model": 8.872437,
+        "consensus": 8.188235,
+        "actual": 8.5
+      },
+      {
+        "date": "2026-04",
+        "model": 8.368201,
+        "consensus": 8.5,
+        "actual": 8.6
+      },
+      {
+        "date": "2026-05",
+        "model": 8.596423,
+        "consensus": 8.5625,
+        "actual": 8.6
+      },
+      {
+        "date": "2026-06",
+        "model": 8.37485,
+        "consensus": 8.116667,
+        "actual": 8.0
+      },
+      {
+        "date": "2026-07",
+        "model": 7.781015,
+        "consensus": 7.875,
+        "actual": 7.7
+      },
+      {
+        "date": "2026-08",
+        "model": 7.542046,
+        "consensus": null,
+        "actual": null
+      }
+    ],
+    "new_rmb_loans": [
+      {
+        "date": "2020-01",
+        "model": 3.381289,
+        "consensus": null,
+        "actual": 3.34
+      },
+      {
+        "date": "2020-02",
+        "model": 0.865251,
+        "consensus": null,
+        "actual": 0.9057
+      },
+      {
+        "date": "2020-03",
+        "model": 1.788249,
+        "consensus": null,
+        "actual": 2.85
+      },
+      {
+        "date": "2020-04",
+        "model": 1.035089,
+        "consensus": 1.215882,
+        "actual": 1.7
+      },
+      {
+        "date": "2020-05",
+        "model": 1.242674,
+        "consensus": 1.44375,
+        "actual": 1.48
+      },
+      {
+        "date": "2020-06",
+        "model": 1.753467,
+        "consensus": 1.767,
+        "actual": 1.81
+      },
+      {
+        "date": "2020-07",
+        "model": 1.17634,
+        "consensus": 1.192226,
+        "actual": 0.9927
+      },
+      {
+        "date": "2020-08",
+        "model": 1.320709,
+        "consensus": 1.237984,
+        "actual": 1.28
+      },
+      {
+        "date": "2020-09",
+        "model": 1.841407,
+        "consensus": 1.722632,
+        "actual": 1.9
+      },
+      {
+        "date": "2020-10",
+        "model": 0.743477,
+        "consensus": 0.7815,
+        "actual": 0.6898
+      },
+      {
+        "date": "2020-11",
+        "model": 1.490491,
+        "consensus": 1.384286,
+        "actual": 1.43
+      },
+      {
+        "date": "2020-12",
+        "model": 1.258864,
+        "consensus": 1.193077,
+        "actual": 1.26
+      },
+      {
+        "date": "2021-01",
+        "model": 3.466627,
+        "consensus": 3.52,
+        "actual": 3.58
+      },
+      {
+        "date": "2021-02",
+        "model": 0.97722,
+        "consensus": 0.926842,
+        "actual": 1.36
+      },
+      {
+        "date": "2021-03",
+        "model": 3.076638,
+        "consensus": 2.461429,
+        "actual": 2.73
+      },
+      {
+        "date": "2021-04",
+        "model": 1.759898,
+        "consensus": 1.58,
+        "actual": 1.47
+      },
+      {
+        "date": "2021-05",
+        "model": 1.512296,
+        "consensus": 1.416667,
+        "actual": 1.5
+      },
+      {
+        "date": "2021-06",
+        "model": 1.86281,
+        "consensus": 1.778667,
+        "actual": 2.12
+      },
+      {
+        "date": "2021-07",
+        "model": 1.007643,
+        "consensus": 1.086005,
+        "actual": 1.08
+      },
+      {
+        "date": "2021-08",
+        "model": 1.316267,
+        "consensus": 1.431014,
+        "actual": 1.22
+      },
+      {
+        "date": "2021-09",
+        "model": 1.949014,
+        "consensus": 1.88797,
+        "actual": 1.66
+      },
+      {
+        "date": "2021-10",
+        "model": 0.684585,
+        "consensus": 0.757197,
+        "actual": 0.8262
+      },
+      {
+        "date": "2021-11",
+        "model": 1.475984,
+        "consensus": 1.539217,
+        "actual": 1.27
+      },
+      {
+        "date": "2021-12",
+        "model": 1.284653,
+        "consensus": 1.233523,
+        "actual": 1.13
+      },
+      {
+        "date": "2022-01",
+        "model": 3.615031,
+        "consensus": 3.826,
+        "actual": 3.98
+      },
+      {
+        "date": "2022-02",
+        "model": 1.343038,
+        "consensus": 1.413618,
+        "actual": 1.23
+      },
+      {
+        "date": "2022-03",
+        "model": 2.765507,
+        "consensus": 2.683333,
+        "actual": 3.13
+      },
+      {
+        "date": "2022-04",
+        "model": 1.453949,
+        "consensus": 1.441765,
+        "actual": 0.6454
+      },
+      {
+        "date": "2022-05",
+        "model": 1.461253,
+        "consensus": 1.366667,
+        "actual": 1.89
+      },
+      {
+        "date": "2022-06",
+        "model": 2.203116,
+        "consensus": 2.458333,
+        "actual": 2.81
+      },
+      {
+        "date": "2022-07",
+        "model": 1.183453,
+        "consensus": 1.145,
+        "actual": 0.679
+      },
+      {
+        "date": "2022-08",
+        "model": 1.244121,
+        "consensus": 1.490909,
+        "actual": 1.25
+      },
+      {
+        "date": "2022-09",
+        "model": 1.743637,
+        "consensus": 1.83375,
+        "actual": 2.47
+      },
+      {
+        "date": "2022-10",
+        "model": 0.899896,
+        "consensus": 0.890385,
+        "actual": 0.6152
+      },
+      {
+        "date": "2022-11",
+        "model": 1.349696,
+        "consensus": 1.26375,
+        "actual": 1.21
+      },
+      {
+        "date": "2022-12",
+        "model": 1.156369,
+        "consensus": 1.173463,
+        "actual": 1.4
+      },
+      {
+        "date": "2023-01",
+        "model": 4.070956,
+        "consensus": 3.97775,
+        "actual": 4.9
+      },
+      {
+        "date": "2023-02",
+        "model": 1.304703,
+        "consensus": 1.518922,
+        "actual": 1.81
+      },
+      {
+        "date": "2023-03",
+        "model": 3.383471,
+        "consensus": 3.121593,
+        "actual": 3.89
+      },
+      {
+        "date": "2023-04",
+        "model": 0.750392,
+        "consensus": 1.144087,
+        "actual": 0.7188
+      },
+      {
+        "date": "2023-05",
+        "model": 2.071104,
+        "consensus": 1.48348,
+        "actual": 1.36
+      },
+      {
+        "date": "2023-06",
+        "model": 3.038678,
+        "consensus": 2.461886,
+        "actual": 3.05
+      },
+      {
+        "date": "2023-07",
+        "model": 0.791154,
+        "consensus": 0.855519,
+        "actual": 0.3459
+      },
+      {
+        "date": "2023-08",
+        "model": 1.330102,
+        "consensus": 1.163333,
+        "actual": 1.36
+      },
+      {
+        "date": "2023-09",
+        "model": 2.570784,
+        "consensus": 2.605418,
+        "actual": 2.31
+      },
+      {
+        "date": "2023-10",
+        "model": 0.616963,
+        "consensus": 0.657165,
+        "actual": 0.7384
+      },
+      {
+        "date": "2023-11",
+        "model": 1.226894,
+        "consensus": 1.26646,
+        "actual": 1.09
+      },
+      {
+        "date": "2023-12",
+        "model": 1.44282,
+        "consensus": 1.434159,
+        "actual": 1.17
+      },
+      {
+        "date": "2024-01",
+        "model": 4.966391,
+        "consensus": 4.148,
+        "actual": 4.92
+      },
+      {
+        "date": "2024-02",
+        "model": 1.801385,
+        "consensus": 1.49,
+        "actual": 1.45
+      },
+      {
+        "date": "2024-03",
+        "model": 3.737324,
+        "consensus": 3.148667,
+        "actual": 3.09
+      },
+      {
+        "date": "2024-04",
+        "model": 0.32697,
+        "consensus": 0.87647,
+        "actual": 0.73
+      },
+      {
+        "date": "2024-05",
+        "model": 1.060589,
+        "consensus": 1.128636,
+        "actual": 0.95
+      },
+      {
+        "date": "2024-06",
+        "model": 2.701253,
+        "consensus": 2.0275,
+        "actual": 2.13
+      },
+      {
+        "date": "2024-07",
+        "model": 0.184247,
+        "consensus": 0.454,
+        "actual": 0.26
+      },
+      {
+        "date": "2024-08",
+        "model": 1.249593,
+        "consensus": 0.9,
+        "actual": 0.9
+      },
+      {
+        "date": "2024-09",
+        "model": 2.044353,
+        "consensus": 1.77,
+        "actual": 1.59
+      },
+      {
+        "date": "2024-10",
+        "model": 0.442425,
+        "consensus": 0.5955,
+        "actual": 0.5
+      },
+      {
+        "date": "2024-11",
+        "model": 0.760549,
+        "consensus": 0.872222,
+        "actual": 0.58
+      },
+      {
+        "date": "2024-12",
+        "model": 0.988531,
+        "consensus": 0.904167,
+        "actual": 0.99
+      },
+      {
+        "date": "2025-01",
+        "model": 4.590272,
+        "consensus": 4.26625,
+        "actual": 5.13
+      },
+      {
+        "date": "2025-02",
+        "model": 1.06396,
+        "consensus": 1.227273,
+        "actual": 1.01
+      },
+      {
+        "date": "2025-03",
+        "model": 2.789999,
+        "consensus": 2.977778,
+        "actual": 3.64
+      },
+      {
+        "date": "2025-04",
+        "model": 0.401868,
+        "consensus": 0.640455,
+        "actual": 0.28
+      },
+      {
+        "date": "2025-05",
+        "model": 0.796784,
+        "consensus": 0.886778,
+        "actual": 0.62
+      },
+      {
+        "date": "2025-06",
+        "model": 2.015297,
+        "consensus": 2.037333,
+        "actual": 2.24
+      },
+      {
+        "date": "2025-07",
+        "model": 0.031027,
+        "consensus": 0.2357,
+        "actual": -0.05
+      },
+      {
+        "date": "2025-08",
+        "model": 0.672548,
+        "consensus": 0.7691,
+        "actual": 0.59
+      },
+      {
+        "date": "2025-09",
+        "model": 1.441731,
+        "consensus": 1.4375,
+        "actual": 1.29
+      },
+      {
+        "date": "2025-10",
+        "model": 0.390074,
+        "consensus": 0.3764,
+        "actual": 0.22
+      },
+      {
+        "date": "2025-11",
+        "model": 0.570939,
+        "consensus": 0.5033,
+        "actual": 0.39
+      },
+      {
+        "date": "2025-12",
+        "model": 1.013839,
+        "consensus": 0.853778,
+        "actual": 0.91
+      },
+      {
+        "date": "2026-01",
+        "model": 5.011904,
+        "consensus": 4.7255,
+        "actual": 4.71
+      },
+      {
+        "date": "2026-02",
+        "model": 0.802954,
+        "consensus": 0.889167,
+        "actual": 0.9
+      },
+      {
+        "date": "2026-03",
+        "model": 3.601954,
+        "consensus": 3.375,
+        "actual": 2.99
+      },
+      {
+        "date": "2026-04",
+        "model": 0.009171,
+        "consensus": 0.125,
+        "actual": -0.01
+      },
+      {
+        "date": "2026-05",
+        "model": 0.208377,
+        "consensus": 0.420857,
+        "actual": 0.52
+      },
+      {
+        "date": "2026-06",
+        "model": 1.992796,
+        "consensus": 1.918556,
+        "actual": 1.61
+      },
+      {
+        "date": "2026-07",
+        "model": -0.45067,
+        "consensus": -0.0318,
+        "actual": -0.34
+      },
+      {
+        "date": "2026-08",
+        "model": 0.261636,
+        "consensus": null,
+        "actual": null
+      }
+    ],
+    "social_financing": [
+      {
+        "date": "2020-01",
+        "model": 4.397624,
+        "consensus": 4.332222,
+        "actual": 5.0535
+      },
+      {
+        "date": "2020-02",
+        "model": 1.270079,
+        "consensus": 1.537143,
+        "actual": 0.8737
+      },
+      {
+        "date": "2020-03",
+        "model": 2.858949,
+        "consensus": 3.304444,
+        "actual": 5.1838
+      },
+      {
+        "date": "2020-04",
+        "model": 2.45426,
+        "consensus": 2.155294,
+        "actual": 3.1027
+      },
+      {
+        "date": "2020-05",
+        "model": 2.178209,
+        "consensus": 2.856429,
+        "actual": 3.1866
+      },
+      {
+        "date": "2020-06",
+        "model": 3.248009,
+        "consensus": 2.819444,
+        "actual": 3.4681
+      },
+      {
+        "date": "2020-07",
+        "model": 2.505036,
+        "consensus": 1.821718,
+        "actual": 1.6928
+      },
+      {
+        "date": "2020-08",
+        "model": 2.864672,
+        "consensus": 2.636835,
+        "actual": 3.5853
+      },
+      {
+        "date": "2020-09",
+        "model": 3.275835,
+        "consensus": 3.005294,
+        "actual": 3.4693
+      },
+      {
+        "date": "2020-10",
+        "model": 1.715361,
+        "consensus": 1.509444,
+        "actual": 1.3929
+      },
+      {
+        "date": "2020-11",
+        "model": 2.674435,
+        "consensus": 2.075453,
+        "actual": 2.1355
+      },
+      {
+        "date": "2020-12",
+        "model": 2.537378,
+        "consensus": 2.114286,
+        "actual": 1.6476
+      },
+      {
+        "date": "2021-01",
+        "model": 5.120122,
+        "consensus": 4.416,
+        "actual": 5.1884
+      },
+      {
+        "date": "2021-02",
+        "model": 1.503041,
+        "consensus": 1.017333,
+        "actual": 1.7243
+      },
+      {
+        "date": "2021-03",
+        "model": 3.998852,
+        "consensus": 3.62,
+        "actual": 3.3762
+      },
+      {
+        "date": "2021-04",
+        "model": 2.920536,
+        "consensus": 2.2,
+        "actual": 1.857
+      },
+      {
+        "date": "2021-05",
+        "model": 2.405532,
+        "consensus": 2.041176,
+        "actual": 1.9522
+      },
+      {
+        "date": "2021-06",
+        "model": 3.118595,
+        "consensus": 2.952143,
+        "actual": 3.7017
+      },
+      {
+        "date": "2021-07",
+        "model": 1.747486,
+        "consensus": 1.4858,
+        "actual": 1.0752
+      },
+      {
+        "date": "2021-08",
+        "model": 3.021571,
+        "consensus": 2.674863,
+        "actual": 2.9893
+      },
+      {
+        "date": "2021-09",
+        "model": 2.969779,
+        "consensus": 3.242678,
+        "actual": 2.9026
+      },
+      {
+        "date": "2021-10",
+        "model": 1.059277,
+        "consensus": 1.501807,
+        "actual": 1.6176
+      },
+      {
+        "date": "2021-11",
+        "model": 1.991447,
+        "consensus": 2.754962,
+        "actual": 2.5983
+      },
+      {
+        "date": "2021-12",
+        "model": 1.968179,
+        "consensus": 2.291382,
+        "actual": 2.358
+      },
+      {
+        "date": "2022-01",
+        "model": 5.393924,
+        "consensus": 5.4375,
+        "actual": 6.1759
+      },
+      {
+        "date": "2022-02",
+        "model": 1.376078,
+        "consensus": 2.049091,
+        "actual": 1.217
+      },
+      {
+        "date": "2022-03",
+        "model": 4.12239,
+        "consensus": 3.842692,
+        "actual": 4.6565
+      },
+      {
+        "date": "2022-04",
+        "model": 2.196393,
+        "consensus": 2.098333,
+        "actual": 0.9327
+      },
+      {
+        "date": "2022-05",
+        "model": 2.396096,
+        "consensus": 2.20875,
+        "actual": 2.8415
+      },
+      {
+        "date": "2022-06",
+        "model": 3.632111,
+        "consensus": 4.68375,
+        "actual": 5.1926
+      },
+      {
+        "date": "2022-07",
+        "model": 1.225705,
+        "consensus": 1.511667,
+        "actual": 0.7785
+      },
+      {
+        "date": "2022-08",
+        "model": 3.215366,
+        "consensus": 2.207778,
+        "actual": 2.4712
+      },
+      {
+        "date": "2022-09",
+        "model": 3.144867,
+        "consensus": 2.874592,
+        "actual": 3.5411
+      },
+      {
+        "date": "2022-10",
+        "model": 1.375222,
+        "consensus": 1.564167,
+        "actual": 0.9134
+      },
+      {
+        "date": "2022-11",
+        "model": 2.34269,
+        "consensus": 2.066857,
+        "actual": 1.9837
+      },
+      {
+        "date": "2022-12",
+        "model": 2.232862,
+        "consensus": 1.720014,
+        "actual": 1.3063
+      },
+      {
+        "date": "2023-01",
+        "model": 6.14946,
+        "consensus": 5.08205,
+        "actual": 5.9956
+      },
+      {
+        "date": "2023-02",
+        "model": 1.602222,
+        "consensus": 2.204285,
+        "actual": 3.161
+      },
+      {
+        "date": "2023-03",
+        "model": 4.92373,
+        "consensus": 4.397777,
+        "actual": 5.3867
+      },
+      {
+        "date": "2023-04",
+        "model": 1.862818,
+        "consensus": 1.950144,
+        "actual": 1.2249
+      },
+      {
+        "date": "2023-05",
+        "model": 2.958705,
+        "consensus": 2.1782,
+        "actual": 1.556
+      },
+      {
+        "date": "2023-06",
+        "model": 4.668564,
+        "consensus": 3.455171,
+        "actual": 4.2265
+      },
+      {
+        "date": "2023-07",
+        "model": 1.125286,
+        "consensus": 1.227819,
+        "actual": 0.5366
+      },
+      {
+        "date": "2023-08",
+        "model": 3.145214,
+        "consensus": 2.692389,
+        "actual": 3.1279
+      },
+      {
+        "date": "2023-09",
+        "model": 3.590664,
+        "consensus": 3.812014,
+        "actual": 4.1326
+      },
+      {
+        "date": "2023-10",
+        "model": 1.392323,
+        "consensus": 1.804126,
+        "actual": 1.8441
+      },
+      {
+        "date": "2023-11",
+        "model": 2.277463,
+        "consensus": 2.440637,
+        "actual": 2.4554
+      },
+      {
+        "date": "2023-12",
+        "model": 1.646448,
+        "consensus": 2.146078,
+        "actual": 1.9326
+      },
+      {
+        "date": "2024-01",
+        "model": 6.124842,
+        "consensus": 5.796667,
+        "actual": 6.4734
+      },
+      {
+        "date": "2024-02",
+        "model": 2.131821,
+        "consensus": 2.357857,
+        "actual": 1.4959
+      },
+      {
+        "date": "2024-03",
+        "model": 5.015916,
+        "consensus": 4.082933,
+        "actual": 4.8335
+      },
+      {
+        "date": "2024-04",
+        "model": 1.10572,
+        "consensus": 1.09,
+        "actual": -0.0658
+      },
+      {
+        "date": "2024-05",
+        "model": 2.011641,
+        "consensus": 2.133636,
+        "actual": 2.0623
+      },
+      {
+        "date": "2024-06",
+        "model": 4.706704,
+        "consensus": 3.165,
+        "actual": 3.2985
+      },
+      {
+        "date": "2024-07",
+        "model": 0.62072,
+        "consensus": 1.03,
+        "actual": 0.7707
+      },
+      {
+        "date": "2024-08",
+        "model": 2.903047,
+        "consensus": 2.73,
+        "actual": 3.0323
+      },
+      {
+        "date": "2024-09",
+        "model": 3.809332,
+        "consensus": 3.538182,
+        "actual": 3.7635
+      },
+      {
+        "date": "2024-10",
+        "model": 1.558849,
+        "consensus": 1.363091,
+        "actual": 1.412
+      },
+      {
+        "date": "2024-11",
+        "model": 2.43779,
+        "consensus": 2.904,
+        "actual": 2.3288
+      },
+      {
+        "date": "2024-12",
+        "model": 1.843021,
+        "consensus": 2.40987,
+        "actual": 2.8537
+      },
+      {
+        "date": "2025-01",
+        "model": 6.50759,
+        "consensus": 6.346875,
+        "actual": 7.0546
+      },
+      {
+        "date": "2025-02",
+        "model": 2.237483,
+        "consensus": 2.675833,
+        "actual": 2.2331
+      },
+      {
+        "date": "2025-03",
+        "model": 5.071117,
+        "consensus": 4.85548,
+        "actual": 5.8961
+      },
+      {
+        "date": "2025-04",
+        "model": 0.365432,
+        "consensus": 1.239583,
+        "actual": 1.1599
+      },
+      {
+        "date": "2025-05",
+        "model": 1.964311,
+        "consensus": 2.2994,
+        "actual": 2.29
+      },
+      {
+        "date": "2025-06",
+        "model": 4.134574,
+        "consensus": 3.8617,
+        "actual": 4.2251
+      },
+      {
+        "date": "2025-07",
+        "model": 0.567835,
+        "consensus": 1.557909,
+        "actual": 1.1307
+      },
+      {
+        "date": "2025-08",
+        "model": 2.958689,
+        "consensus": 2.528909,
+        "actual": 2.566
+      },
+      {
+        "date": "2025-09",
+        "model": 3.958057,
+        "consensus": 3.2426,
+        "actual": 3.5299
+      },
+      {
+        "date": "2025-10",
+        "model": 1.408204,
+        "consensus": 1.1369,
+        "actual": 0.8178
+      },
+      {
+        "date": "2025-11",
+        "model": 2.291125,
+        "consensus": 2.202364,
+        "actual": 2.4926
+      },
+      {
+        "date": "2025-12",
+        "model": 2.214919,
+        "consensus": 1.9353,
+        "actual": 2.2075
+      },
+      {
+        "date": "2026-01",
+        "model": 6.79842,
+        "consensus": 6.80325,
+        "actual": 7.2185
+      },
+      {
+        "date": "2026-02",
+        "model": 2.245708,
+        "consensus": 1.918,
+        "actual": 2.3837
+      },
+      {
+        "date": "2026-03",
+        "model": 5.63536,
+        "consensus": 5.658571,
+        "actual": 5.224
+      },
+      {
+        "date": "2026-04",
+        "model": 0.778151,
+        "consensus": 1.157363,
+        "actual": 0.6238
+      },
+      {
+        "date": "2026-05",
+        "model": 2.097838,
+        "consensus": 1.65075,
+        "actual": 2.0293
+      },
+      {
+        "date": "2026-06",
+        "model": 3.921587,
+        "consensus": 3.335556,
+        "actual": 3.3671
+      },
+      {
+        "date": "2026-07",
+        "model": 0.950079,
+        "consensus": 1.126725,
+        "actual": 1.4017
+      },
+      {
+        "date": "2026-08",
+        "model": 2.988586,
+        "consensus": null,
+        "actual": null
+      }
+    ]
+  },
+  "providerIds": {
+    "m2_yoy": "M001625222",
+    "new_rmb_loans": "M002859879",
+    "social_financing": "M004891015",
+    "m2_consensus": "M005682260",
+    "new_rmb_loans_consensus": "M005682262",
+    "social_financing_consensus": "M005682268",
+    "tsf_rmb_loans": "M002917567",
+    "tsf_foreign_currency_loans": "M036012505",
+    "tsf_entrusted_loans": "M002917569",
+    "tsf_trust_loans": "M002917570",
+    "tsf_bank_acceptance": "M002917571",
+    "tsf_corporate_bonds": "M004734600",
+    "tsf_equity_financing": "M002917573",
+    "tsf_government_bonds": "M004891011",
+    "tsf_asset_backed_securities": "M004734604",
+    "tsf_loan_writeoffs": "M004734605",
+    "bill_discount_3m": "M021397977",
+    "local_government_bond_gross_issuance": "M004394055",
+    "government_bond_gross_issuance": "S003660493",
+    "local_government_bond_principal_repayment": "M014885514",
+    "corporate_credit_bond_gross_issuance": "S003660499",
+    "m2_level": "M001625221"
+  },
+  "notes": [
+    "Consensus is merged only after every forecast and model weight has been fixed.",
+    "Every historical prediction is walk-forward: only observations dated before the predicted month enter training, candidate selection or challenger weights.",
+    "M2 is forecast in balance space: the prior-month balance is advanced with a predicted monthly stock change, then divided by the prior-year same-month balance to obtain YoY; lagged M2 YoY is diagnostic only.",
+    "M2 uses no TSF forecast and no lagged M2 YoY predictor: four predeclared sparse balance-change candidates contain at most six inputs, and the candidate for each month is selected only from the previous 48 months of out-of-sample errors.",
+    "Historical TSF diagnostics use same-month released CPI/PPI/PMI values because they are available before the credit release; industrial value added remains lagged. The live month uses generated forecasts only where the actual is not yet released.",
+    "The component bridge covers ten official PBOC categories plus an exact other/reconciliation residual; it is retained only when trailing OOS errors justify weight.",
+    "The loan bill-rate overlay uses contemporaneous market prices, never survey expectations; its coefficient uses only earlier forecast residuals and is capped at 0.5.",
+    "Loan and TSF calendar/global residual corrections use only errors observed before each forecast month; the release-information macro TSF challenger is weighted only when its prior out-of-sample errors justify it.",
+    "The performance gate is reported honestly: a lower RMSE than consensus is required for passed=true, and consensus never enters the forecast itself."
+  ]
+}
