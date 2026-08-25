@@ -29,7 +29,7 @@ export interface ForecastInput {
 }
 
 export interface ForecastModel { name: string; unit: string; description: string; formula: string; status?: "READY" | "WAITING_FOR_FIXED_FACTORS" | "WAITING_FOR_MONTHLY_FACTORS"; forecastMonth?: string; earliestForecastDate?: string; missingFactors?: string[] }
-export interface ForecastMetric { rmse: number; mae: number; sampleStart: string; sampleEnd: string; directionHit?: number; observations?: number }
+export interface ForecastMetric { rmse: number; mae: number; sampleStart: string; sampleEnd: string; directionHit?: number; benchmarkRmse?: number; observations?: number }
 
 export interface ForecastData {
   schemaVersion: number;
@@ -43,4 +43,5 @@ export interface ForecastData {
   models: Record<string, ForecastModel>;
   metrics: Record<string, ForecastMetric>;
   highFrequency: Record<string, ForecastInput[]>;
+  modelLocks?: Record<string, { version: string; frozenAt: string; targets: string[]; policy: string }>;
 }

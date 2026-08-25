@@ -2272,7 +2272,7 @@ footer p {
 .forecast-heading { align-items: flex-start; }
 .forecast-source, .forecast-input-note { color: var(--muted); font-size: 10px; max-width: 300px; text-align: right; }
 .forecast-toolbar { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; padding: 10px 12px; border: 1px solid var(--line); background: #f6f6f0; }
-.forecast-tabs, .forecast-range-tabs { display: flex; gap: 3px; }
+.forecast-tabs, .forecast-range-tabs { display: flex; gap: 3px; flex-wrap: wrap; }
 .forecast-tabs button, .forecast-range-tabs button { height: 30px; padding: 0 14px; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: pointer; font-size: 10px; font-weight: 750; }
 .forecast-tabs button.active, .forecast-tabs button:hover, .forecast-range-tabs button.active, .forecast-range-tabs button:hover { border-color: var(--navy); background: var(--navy); color: #fff; }
 .forecast-kpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; margin-bottom: 14px; background: var(--line); }

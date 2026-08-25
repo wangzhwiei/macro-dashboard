@@ -98,5 +98,27 @@ class ForecastIntegrityTests(unittest.TestCase):
                 self.assertIn("沿用上期", by_date[current]["consensusSource"])
 
 
+    def test_frozen_credit_models_are_available_in_forecast_module(self) -> None:
+        keys = ("m2_yoy", "new_rmb_loans", "social_financing")
+        self.assertEqual(self.data["modelLocks"]["credit"]["version"], "credit-v1.0.0")
+        self.assertEqual(self.data["modelLocks"]["credit"]["frozenAt"], "2026-08-25")
+        for key in keys:
+            self.assertIn(key, self.data["models"])
+            self.assertIn(key, self.data["metrics"])
+            self.assertGreaterEqual(len(self.data["history"][key]), 43)
+            self.assertEqual(self.data["history"][key][0]["date"], "2023-01-31")
+            self.assertEqual(self.data["history"][key][-1]["date"], "2026-08-31")
+            self.assertEqual(self.data["history"][key][-1]["forecastKind"], "live_nowcast")
+            self.assertIsNone(self.data["history"][key][-1]["actual"])
+        credit_inputs = self.data["highFrequency"]["信用"]
+        self.assertEqual(len(credit_inputs), 1)
+        self.assertEqual(credit_inputs[0]["providerId"], "M021397977")
+
+    def test_forecast_page_has_credit_tabs(self) -> None:
+        component = (ROOT / "app" / "ForecastPanelV3.tsx").read_text(encoding="utf-8")
+        for key in ("m2_yoy", "new_rmb_loans", "social_financing"):
+            self.assertIn(key, component)
+
+
 if __name__ == "__main__":
     unittest.main()
