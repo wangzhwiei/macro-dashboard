@@ -8,7 +8,15 @@ import json
 from pathlib import Path
 
 
-FROZEN_INDICATOR_FIELDS = ("signal", "score", "reason")
+FROZEN_INDICATOR_FIELDS = (
+    "signal",
+    "score",
+    "reason",
+    "scoreAsOf",
+    "scoreObservationAt",
+    "scoreChange",
+    "scoreScale",
+)
 
 
 def merge_weekly_history(
@@ -16,6 +24,7 @@ def merge_weekly_history(
     generated_values: list[object],
     published_dates: list[str],
     published_values: list[object],
+    freeze_dates: set[str] | None = None,
 ) -> list[object]:
     """Freeze published dates without truncating a longer generated history."""
     if len(generated_dates) != len(generated_values):
@@ -26,29 +35,58 @@ def merge_weekly_history(
     missing = [day for day in published_dates if day not in merged]
     if missing:
         raise RuntimeError(f"生成数据缺少已发布周五日期：{missing[:3]}")
-    merged.update(zip(published_dates, published_values))
+    frozen = freeze_dates if freeze_dates is not None else set(published_dates)
+    merged.update(
+        (day, value)
+        for day, value in zip(published_dates, published_values)
+        if day in frozen
+    )
     return [merged[day] for day in generated_dates]
 
 
+def trusted_latest_indicator(indicator: dict, snapshot_day: str) -> bool:
+    required = set(FROZEN_INDICATOR_FIELDS) | {"history"}
+    if not required.issubset(indicator):
+        return False
+    history = indicator.get("history", [])
+    if not history or indicator.get("scoreAsOf") != snapshot_day:
+        return False
+    return abs(float(indicator["score"]) - float(history[-1])) <= 0.11
+
+
 def freeze_snapshot(published: dict, generated: dict) -> dict:
-    if published["dates"][-1] != generated["dates"][-1]:
+    if published["dates"][-1] > generated["dates"][-1]:
         raise RuntimeError(
-            "周五快照日期已变化，不能冻结旧信号："
+            "生成数据的周五快照早于已发布快照："
             f"{published['dates'][-1]} -> {generated['dates'][-1]}"
         )
 
     published_dates = published["dates"]
     generated_dates = generated["dates"]
     published_indicators = {item["id"]: item for item in published["indicators"]}
+    same_snapshot = published_dates[-1] == generated_dates[-1]
+    freeze_latest = same_snapshot and all(
+        trusted_latest_indicator(item, published_dates[-1])
+        for item in published_indicators.values()
+    )
+    freeze_dates = set(published_dates)
+    if same_snapshot and not freeze_latest:
+        # Legacy or internally inconsistent payloads cannot be allowed to
+        # overwrite a correctly regenerated latest Friday. Older Friday
+        # snapshots remain frozen.
+        freeze_dates.discard(published_dates[-1])
+
     for indicator in generated["indicators"]:
         old = published_indicators[indicator["id"]]
-        for field in FROZEN_INDICATOR_FIELDS:
-            indicator[field] = old[field]
+        if freeze_latest:
+            for field in FROZEN_INDICATOR_FIELDS:
+                indicator[field] = old[field]
         indicator["history"] = merge_weekly_history(
             generated_dates,
             indicator["history"],
             published_dates,
             old["history"],
+            freeze_dates,
         )
 
     published_categories = {item["id"]: item for item in published["categories"]}
@@ -59,8 +97,10 @@ def freeze_snapshot(published: dict, generated: dict) -> dict:
             category["weeklyScores"],
             published_dates,
             old["weeklyScores"],
+            freeze_dates,
         )
-        category.update(old)
+        if freeze_latest:
+            category.update(old)
         category["weeklyScores"] = weekly_scores
 
     overall_weekly = merge_weekly_history(
@@ -68,8 +108,10 @@ def freeze_snapshot(published: dict, generated: dict) -> dict:
         generated["overall"]["weeklyScores"],
         published_dates,
         published["overall"]["weeklyScores"],
+        freeze_dates,
     )
-    generated["overall"].update(published["overall"])
+    if freeze_latest:
+        generated["overall"].update(published["overall"])
     generated["overall"]["weeklyScores"] = overall_weekly
     return generated
 

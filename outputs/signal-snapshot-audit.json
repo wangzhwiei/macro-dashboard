@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "strict": false,
+  "summary": {
+    "configured_indicators": 111,
+    "generated_indicators": 111,
+    "coverage": 1.0,
+    "history_weeks": 190,
+    "categories": 9,
+    "mode": "CJHX+iFinD生产数据",
+    "stale_indicators": 1,
+    "cadence_issues": 0,
+    "required_provider_codes": 111,
+    "mapped_provider_codes": 111,
+    "provider_code_collisions": 0
+  },
+  "errors": [],
+  "warnings": [
+    "iron_ore_futures 最新数据为2026-08-14，已滞后12天（daily容忍4天）"
+  ]
+}

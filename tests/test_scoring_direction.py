@@ -7,6 +7,23 @@ from scripts.update_dashboard import weekly_scores
 
 
 class EconomicDirectionTests(unittest.TestCase):
+    def test_future_observations_cannot_rescale_an_old_friday(self) -> None:
+        start = date(2026, 1, 2)
+        points = [
+            (start + timedelta(days=7 * index), 100 + index)
+            for index in range(10)
+        ]
+        snapshot = [points[5][0]]
+        original, _ = weekly_scores(points[:7], snapshot, "pct_change", -1)
+        revised, _ = weekly_scores(
+            points + [(start + timedelta(days=70), 1000)],
+            snapshot,
+            "pct_change",
+            -1,
+        )
+
+        self.assertEqual(original, revised)
+
     def test_falling_listing_price_cannot_become_bond_bearish(self) -> None:
         start = date(2026, 4, 3)
         values = [110 - index for index in range(10)] + [100.2]

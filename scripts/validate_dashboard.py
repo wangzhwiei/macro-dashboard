@@ -386,6 +386,36 @@ def validate_generated_data(
             errors.append(f"{prefix} latest与历史末值不一致")
         if len(indicator.get("history", [])) != len(dates):
             errors.append(f"{prefix} 信号历史长度与dates不一致")
+        elif dates and abs(
+            float(indicator.get("score", 0)) - float(indicator["history"][-1])
+        ) > 0.11:
+            errors.append(f"{prefix} 最新score与信号历史末值不一致")
+        if dates and indicator.get("scoreAsOf") != dates[-1]:
+            errors.append(f"{prefix} scoreAsOf与最新周五快照不一致")
+        score_observation_at = indicator.get("scoreObservationAt")
+        if not score_observation_at:
+            errors.append(f"{prefix} 缺少周五评分观测日期")
+        elif dates and score_observation_at > dates[-1]:
+            errors.append(f"{prefix} 周五评分使用了快照日之后的数据")
+        score_change = indicator.get("scoreChange")
+        score_scale = indicator.get("scoreScale")
+        if not finite_number(score_change):
+            errors.append(f"{prefix} 缺少有效的周五评分变化")
+        if not finite_number(score_scale) or float(score_scale or 0) <= 0:
+            errors.append(f"{prefix} 缺少有效的周五评分波动尺度")
+        if finite_number(score_change) and finite_number(score_scale) and float(score_scale) > 0:
+            raw_score = (
+                float(score_change) / float(score_scale) * 35
+                * float(definition.get("bond_direction", -1))
+            )
+            expected_score = max(-100, min(100, raw_score))
+            if abs(float(indicator.get("score", 0)) - expected_score) > 0.16:
+                errors.append(
+                    f"{prefix} 周五强度无法由评分变化和历史尺度复算："
+                    f"页面{indicator.get('score')}，复算{expected_score:.1f}"
+                )
+        if "周五快照" not in str(indicator.get("reason", "")):
+            errors.append(f"{prefix} 评分解释未标明周五快照口径")
         methodology = indicator.get("methodology", {})
         if not methodology.get("formula") or not methodology.get("steps"):
             errors.append(f"{prefix} 缺少页面计算方法说明")

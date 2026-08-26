@@ -25,6 +25,10 @@ DEFAULT_CONFIG = ROOT / "config" / "indicators.json"
 DEFAULT_AUXILIARY = ROOT / "config" / "auxiliary-indicators.csv"
 DEFAULT_OUTPUT = ROOT / "public" / "data" / "dashboard.json"
 Point = tuple[date, float]
+SNAPSHOT_CALIBRATION = (
+    "每个周五仅使用截至该周五可获得的历史周变化估计波动尺度；"
+    "发布后保存快照，后续数据不回写。"
+)
 
 
 def load_dotenv(path: Path) -> None:
@@ -159,7 +163,7 @@ def methodology_for(indicator: dict[str, Any]) -> dict[str, Any]:
         return {
             "title": configured["title"],
             "formula": configured["formula"],
-            "calibration": configured["calibration"],
+            "calibration": SNAPSHOT_CALIBRATION,
             "steps": configured["steps"],
             "components": components,
         }
@@ -219,7 +223,7 @@ def methodology_for(indicator: dict[str, Any]) -> dict[str, Any]:
     return {
         "title": title,
         "formula": formula,
-        "calibration": "信号标准化使用当前数据文件覆盖的历史区间，并在每日更新时重估。",
+        "calibration": SNAPSHOT_CALIBRATION,
         "steps": steps,
         "components": components,
     }
@@ -238,14 +242,8 @@ def transformed_change(
     return change, f"{change:+.2f}%"
 
 
-def weekly_scores(
-    points: list[Point],
-    evaluation_dates: list[date],
-    method: str,
-    bond_direction: float,
-) -> tuple[list[float], list[float]]:
-    historical_changes: list[float] = []
-    weekly_values: list[float] = []
+def dated_weekly_changes(points: list[Point], method: str) -> list[tuple[date, float]]:
+    changes: list[tuple[date, float]] = []
     all_week_ends = sorted(
         {
             day - timedelta(days=(day.weekday() - 4) % 7)
@@ -256,19 +254,30 @@ def weekly_scores(
         current = value_at(points, week_end)
         previous = value_at(points, week_end - timedelta(days=7))
         if current and previous:
-            historical_changes.append(
-                transformed_change(current[1], previous[1], method)[0]
+            changes.append(
+                (week_end, transformed_change(current[1], previous[1], method)[0])
             )
+    return changes
 
-    # Zero change is the economic direction anchor. Historical RMS only
-    # calibrates magnitude, so de-meaning can never reverse a raw decline/rise.
+
+def rms_scale(changes: list[tuple[date, float]], as_of: date) -> float:
+    available = [change for day, change in changes if day <= as_of]
     scale = (
-        math.sqrt(statistics.fmean(change**2 for change in historical_changes))
-        if historical_changes
+        math.sqrt(statistics.fmean(change**2 for change in available))
+        if available
         else 1
     )
-    if scale < 1e-8:
-        scale = 1
+    return scale if scale >= 1e-8 else 1
+
+
+def weekly_scores(
+    points: list[Point],
+    evaluation_dates: list[date],
+    method: str,
+    bond_direction: float,
+) -> tuple[list[float], list[float]]:
+    weekly_values: list[float] = []
+    dated_changes = dated_weekly_changes(points, method)
 
     latest_observation_day = points[-1][0]
     for week_end in evaluation_dates:
@@ -281,9 +290,12 @@ def weekly_scores(
             weekly_values.append(0)
             continue
         change = transformed_change(current[1], previous[1], method)[0]
+        # Each Friday uses only changes observable by that Friday. Later data
+        # must never rescale or rewrite a previously published snapshot.
+        scale = rms_scale(dated_changes, anchor_day)
         score = change / scale * 35 * bond_direction
         weekly_values.append(round(clamp(score), 1))
-    return weekly_values, historical_changes
+    return weekly_values, [change for _, change in dated_changes]
 
 
 def percentile(values: list[float], current: float) -> int:
@@ -408,7 +420,21 @@ def build_indicator(
     )
     score = scores[-1] if scores else 0
     signal = signal_from_score(score, threshold)
-    direction_word = "上升" if change > 0 else "下降" if change < 0 else "持平"
+    snapshot_day = evaluation_dates[-1]
+    snapshot_anchor_day = min(snapshot_day, latest_day)
+    snapshot_current = value_at(points, snapshot_anchor_day)
+    snapshot_previous = value_at(points, snapshot_anchor_day - timedelta(days=7))
+    if not snapshot_current or not snapshot_previous:
+        return None
+    snapshot_change = transformed_change(
+        snapshot_current[1], snapshot_previous[1], method
+    )[0]
+    score_scale = rms_scale(
+        dated_weekly_changes(points, method), snapshot_anchor_day
+    )
+    direction_word = (
+        "上升" if snapshot_change > 0 else "下降" if snapshot_change < 0 else "持平"
+    )
     signal_word = {"bullish": "利多", "bearish": "利空", "neutral": "中性"}[signal]
     stale_days = (end_date - latest_day).days
     stale_limit = int(definition.get("stale_tolerance_days") or 0)
@@ -428,6 +454,10 @@ def build_indicator(
         "changeLabel": f"近1周 {change_label}",
         "signal": signal,
         "score": round(score, 1),
+        "scoreAsOf": snapshot_day.isoformat(),
+        "scoreObservationAt": snapshot_current[0].isoformat(),
+        "scoreChange": round(snapshot_change, 8),
+        "scoreScale": round(score_scale, 8),
         "percentile": percentile([value for _, value in points], latest_value),
         "updatedAt": latest_day.isoformat(),
         "source": definition.get("source", ""),
@@ -435,7 +465,8 @@ def build_indicator(
         "weight": float(definition.get("weight", 1)),
         "fresh": stale_days <= stale_limit,
         "reason": (
-            f"近一周指标{direction_word}{abs(change):.2f}"
+            f"截至{snapshot_day.strftime('%m月%d日')}周五快照，指标"
+            f"{direction_word}{abs(snapshot_change):.2f}"
             f"{'个百分点' if method == 'pp_change' else '%'}；"
             f"以零变化为方向中轴并按历史波动校准后，当前对债市{signal_word}。"
         ),

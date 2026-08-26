@@ -59,6 +59,10 @@ export interface Indicator {
   changeLabel: string;
   signal: Signal;
   score: number;
+  scoreAsOf: string;
+  scoreObservationAt: string;
+  scoreChange: number;
+  scoreScale: number;
   percentile: number;
   updatedAt: string;
   source: string;
