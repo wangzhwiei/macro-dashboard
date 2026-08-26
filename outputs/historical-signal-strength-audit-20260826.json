@@ -1,0 +1,2337 @@
+{
+  "summary": {
+    "indicatorWeekCells": 21090,
+    "mismatchCells": 18641,
+    "mismatchRate": 0.883879,
+    "affectedIndicators": 111,
+    "affectedDates": 188,
+    "directionReversals": 1801,
+    "medianAbsoluteDifference": 3.4,
+    "categoryMismatchCells": 1616,
+    "overallMismatchWeeks": 174
+  },
+  "byIndicator": [
+    {
+      "id": "power_inventory",
+      "mismatchWeeks": 188,
+      "meanAbsoluteDifference": 13.0,
+      "maxAbsoluteDifference": 79.7
+    },
+    {
+      "id": "land_tier2",
+      "mismatchWeeks": 187,
+      "meanAbsoluteDifference": 13.8,
+      "maxAbsoluteDifference": 88.7
+    },
+    {
+      "id": "bci",
+      "mismatchWeeks": 186,
+      "meanAbsoluteDifference": 12.2,
+      "maxAbsoluteDifference": 102.6
+    },
+    {
+      "id": "silver_spot",
+      "mismatchWeeks": 186,
+      "meanAbsoluteDifference": 20.6,
+      "maxAbsoluteDifference": 101.6
+    },
+    {
+      "id": "bdi",
+      "mismatchWeeks": 185,
+      "meanAbsoluteDifference": 5.6,
+      "maxAbsoluteDifference": 54.2
+    },
+    {
+      "id": "flights_7d",
+      "mismatchWeeks": 185,
+      "meanAbsoluteDifference": 7.4,
+      "maxAbsoluteDifference": 78.5
+    },
+    {
+      "id": "gold_spot",
+      "mismatchWeeks": 184,
+      "meanAbsoluteDifference": 18.5,
+      "maxAbsoluteDifference": 107.3
+    },
+    {
+      "id": "lme_zinc",
+      "mismatchWeeks": 184,
+      "meanAbsoluteDifference": 7.1,
+      "maxAbsoluteDifference": 65.0
+    },
+    {
+      "id": "wti",
+      "mismatchWeeks": 184,
+      "meanAbsoluteDifference": 11.8,
+      "maxAbsoluteDifference": 96.6
+    },
+    {
+      "id": "bpi",
+      "mismatchWeeks": 183,
+      "meanAbsoluteDifference": 17.1,
+      "maxAbsoluteDifference": 126.5
+    },
+    {
+      "id": "land_tier3",
+      "mismatchWeeks": 183,
+      "meanAbsoluteDifference": 8.3,
+      "maxAbsoluteDifference": 45.8
+    },
+    {
+      "id": "copper_inventory",
+      "mismatchWeeks": 182,
+      "meanAbsoluteDifference": 11.3,
+      "maxAbsoluteDifference": 105.0
+    },
+    {
+      "id": "irs_6m",
+      "mismatchWeeks": 182,
+      "meanAbsoluteDifference": 4.1,
+      "maxAbsoluteDifference": 31.3
+    },
+    {
+      "id": "land_4w",
+      "mismatchWeeks": 182,
+      "meanAbsoluteDifference": 4.1,
+      "maxAbsoluteDifference": 53.7
+    },
+    {
+      "id": "styrene_rate",
+      "mismatchWeeks": 182,
+      "meanAbsoluteDifference": 16.3,
+      "maxAbsoluteDifference": 139.0
+    },
+    {
+      "id": "beef_price",
+      "mismatchWeeks": 181,
+      "meanAbsoluteDifference": 6.2,
+      "maxAbsoluteDifference": 45.8
+    },
+    {
+      "id": "cfets",
+      "mismatchWeeks": 181,
+      "meanAbsoluteDifference": 14.0,
+      "maxAbsoluteDifference": 94.7
+    },
+    {
+      "id": "land_tier1",
+      "mismatchWeeks": 181,
+      "meanAbsoluteDifference": 7.0,
+      "maxAbsoluteDifference": 60.1
+    },
+    {
+      "id": "nanhua_energy",
+      "mismatchWeeks": 181,
+      "meanAbsoluteDifference": 18.8,
+      "maxAbsoluteDifference": 132.5
+    },
+    {
+      "id": "pork_price",
+      "mismatchWeeks": 181,
+      "meanAbsoluteDifference": 4.3,
+      "maxAbsoluteDifference": 65.0
+    },
+    {
+      "id": "coking_coal_futures",
+      "mismatchWeeks": 180,
+      "meanAbsoluteDifference": 5.7,
+      "maxAbsoluteDifference": 22.7
+    },
+    {
+      "id": "cold_rolled_inventory",
+      "mismatchWeeks": 180,
+      "meanAbsoluteDifference": 4.8,
+      "maxAbsoluteDifference": 48.7
+    },
+    {
+      "id": "lme_copper_inventory",
+      "mismatchWeeks": 180,
+      "meanAbsoluteDifference": 11.7,
+      "maxAbsoluteDifference": 81.4
+    },
+    {
+      "id": "nanhua_industry",
+      "mismatchWeeks": 180,
+      "meanAbsoluteDifference": 14.0,
+      "maxAbsoluteDifference": 101.8
+    },
+    {
+      "id": "rebar_price",
+      "mismatchWeeks": 180,
+      "meanAbsoluteDifference": 10.3,
+      "maxAbsoluteDifference": 119.7
+    },
+    {
+      "id": "steel_long_index",
+      "mismatchWeeks": 180,
+      "meanAbsoluteDifference": 4.0,
+      "maxAbsoluteDifference": 19.0
+    },
+    {
+      "id": "brent",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 12.2,
+      "maxAbsoluteDifference": 107.7
+    },
+    {
+      "id": "cement_yangtze",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 4.0,
+      "maxAbsoluteDifference": 21.8
+    },
+    {
+      "id": "iron_ore_62",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 7.1,
+      "maxAbsoluteDifference": 53.4
+    },
+    {
+      "id": "irs_5y",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 5.0,
+      "maxAbsoluteDifference": 26.7
+    },
+    {
+      "id": "listing_price",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 13.5,
+      "maxAbsoluteDifference": 128.8
+    },
+    {
+      "id": "nanhua_agri",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 11.2,
+      "maxAbsoluteDifference": 65.4
+    },
+    {
+      "id": "newhome_30c",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 3.8,
+      "maxAbsoluteDifference": 44.4
+    },
+    {
+      "id": "nickel_price",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 3.1,
+      "maxAbsoluteDifference": 18.9
+    },
+    {
+      "id": "secondhand",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 10.1,
+      "maxAbsoluteDifference": 90.9
+    },
+    {
+      "id": "usdcny",
+      "mismatchWeeks": 179,
+      "meanAbsoluteDifference": 8.6,
+      "maxAbsoluteDifference": 65.4
+    },
+    {
+      "id": "ccfi",
+      "mismatchWeeks": 178,
+      "meanAbsoluteDifference": 4.5,
+      "maxAbsoluteDifference": 29.1
+    },
+    {
+      "id": "cement_east",
+      "mismatchWeeks": 178,
+      "meanAbsoluteDifference": 4.2,
+      "maxAbsoluteDifference": 15.5
+    },
+    {
+      "id": "eurusd",
+      "mismatchWeeks": 178,
+      "meanAbsoluteDifference": 14.0,
+      "maxAbsoluteDifference": 132.7
+    },
+    {
+      "id": "iron_ore_futures",
+      "mismatchWeeks": 178,
+      "meanAbsoluteDifference": 9.9,
+      "maxAbsoluteDifference": 64.5
+    },
+    {
+      "id": "irs_1y",
+      "mismatchWeeks": 178,
+      "meanAbsoluteDifference": 3.7,
+      "maxAbsoluteDifference": 22.5
+    },
+    {
+      "id": "qhd_coal_price",
+      "mismatchWeeks": 178,
+      "meanAbsoluteDifference": 16.6,
+      "maxAbsoluteDifference": 109.6
+    },
+    {
+      "id": "dxy",
+      "mismatchWeeks": 177,
+      "meanAbsoluteDifference": 12.7,
+      "maxAbsoluteDifference": 97.5
+    },
+    {
+      "id": "metro_composite",
+      "mismatchWeeks": 177,
+      "meanAbsoluteDifference": 3.4,
+      "maxAbsoluteDifference": 41.4
+    },
+    {
+      "id": "steel_inventory",
+      "mismatchWeeks": 177,
+      "meanAbsoluteDifference": 9.4,
+      "maxAbsoluteDifference": 114.1
+    },
+    {
+      "id": "steel_plate_index",
+      "mismatchWeeks": 177,
+      "meanAbsoluteDifference": 4.8,
+      "maxAbsoluteDifference": 23.7
+    },
+    {
+      "id": "eia_crude_inventory",
+      "mismatchWeeks": 176,
+      "meanAbsoluteDifference": 14.7,
+      "maxAbsoluteDifference": 103.6
+    },
+    {
+      "id": "agri_200",
+      "mismatchWeeks": 175,
+      "meanAbsoluteDifference": 3.4,
+      "maxAbsoluteDifference": 54.5
+    },
+    {
+      "id": "copper_price",
+      "mismatchWeeks": 175,
+      "meanAbsoluteDifference": 14.4,
+      "maxAbsoluteDifference": 100.9
+    },
+    {
+      "id": "hrc_inventory",
+      "mismatchWeeks": 175,
+      "meanAbsoluteDifference": 9.8,
+      "maxAbsoluteDifference": 102.1
+    },
+    {
+      "id": "irs_3m",
+      "mismatchWeeks": 175,
+      "meanAbsoluteDifference": 3.3,
+      "maxAbsoluteDifference": 16.6
+    },
+    {
+      "id": "listing_tier2",
+      "mismatchWeeks": 175,
+      "meanAbsoluteDifference": 15.8,
+      "maxAbsoluteDifference": 103.5
+    },
+    {
+      "id": "shibor_1y",
+      "mismatchWeeks": 175,
+      "meanAbsoluteDifference": 11.1,
+      "maxAbsoluteDifference": 200.0
+    },
+    {
+      "id": "chicken_price",
+      "mismatchWeeks": 174,
+      "meanAbsoluteDifference": 1.9,
+      "maxAbsoluteDifference": 20.6
+    },
+    {
+      "id": "coke_futures",
+      "mismatchWeeks": 174,
+      "meanAbsoluteDifference": 7.8,
+      "maxAbsoluteDifference": 69.6
+    },
+    {
+      "id": "land_premium",
+      "mismatchWeeks": 174,
+      "meanAbsoluteDifference": 7.6,
+      "maxAbsoluteDifference": 34.0
+    },
+    {
+      "id": "nanhua_metals",
+      "mismatchWeeks": 174,
+      "meanAbsoluteDifference": 12.3,
+      "maxAbsoluteDifference": 87.9
+    },
+    {
+      "id": "shfe_copper_inventory",
+      "mismatchWeeks": 174,
+      "meanAbsoluteDifference": 7.6,
+      "maxAbsoluteDifference": 98.0
+    },
+    {
+      "id": "wire_inventory",
+      "mismatchWeeks": 174,
+      "meanAbsoluteDifference": 11.6,
+      "maxAbsoluteDifference": 103.2
+    },
+    {
+      "id": "cement_national",
+      "mismatchWeeks": 173,
+      "meanAbsoluteDifference": 4.0,
+      "maxAbsoluteDifference": 16.1
+    },
+    {
+      "id": "metro_guangzhou",
+      "mismatchWeeks": 173,
+      "meanAbsoluteDifference": 3.6,
+      "maxAbsoluteDifference": 36.5
+    },
+    {
+      "id": "newhome_tier2",
+      "mismatchWeeks": 173,
+      "meanAbsoluteDifference": 4.5,
+      "maxAbsoluteDifference": 44.2
+    },
+    {
+      "id": "pvc_rate",
+      "mismatchWeeks": 173,
+      "meanAbsoluteDifference": 10.9,
+      "maxAbsoluteDifference": 101.9
+    },
+    {
+      "id": "bill_6m",
+      "mismatchWeeks": 172,
+      "meanAbsoluteDifference": 11.0,
+      "maxAbsoluteDifference": 101.6
+    },
+    {
+      "id": "polyester_rate",
+      "mismatchWeeks": 171,
+      "meanAbsoluteDifference": 18.9,
+      "maxAbsoluteDifference": 129.5
+    },
+    {
+      "id": "rebar_inventory",
+      "mismatchWeeks": 171,
+      "meanAbsoluteDifference": 11.8,
+      "maxAbsoluteDifference": 105.5
+    },
+    {
+      "id": "egg_price",
+      "mismatchWeeks": 170,
+      "meanAbsoluteDifference": 3.2,
+      "maxAbsoluteDifference": 21.1
+    },
+    {
+      "id": "hot_rolled_price",
+      "mismatchWeeks": 170,
+      "meanAbsoluteDifference": 7.2,
+      "maxAbsoluteDifference": 47.5
+    },
+    {
+      "id": "port_coal_inventory",
+      "mismatchWeeks": 170,
+      "meanAbsoluteDifference": 16.1,
+      "maxAbsoluteDifference": 190.5
+    },
+    {
+      "id": "shibor_3m",
+      "mismatchWeeks": 170,
+      "meanAbsoluteDifference": 8.8,
+      "maxAbsoluteDifference": 98.2
+    },
+    {
+      "id": "aluminum_price",
+      "mismatchWeeks": 169,
+      "meanAbsoluteDifference": 8.1,
+      "maxAbsoluteDifference": 64.8
+    },
+    {
+      "id": "bill_3m",
+      "mismatchWeeks": 169,
+      "meanAbsoluteDifference": 3.0,
+      "maxAbsoluteDifference": 25.5
+    },
+    {
+      "id": "glass_spot",
+      "mismatchWeeks": 169,
+      "meanAbsoluteDifference": 12.2,
+      "maxAbsoluteDifference": 117.2
+    },
+    {
+      "id": "scfi",
+      "mismatchWeeks": 169,
+      "meanAbsoluteDifference": 7.7,
+      "maxAbsoluteDifference": 52.7
+    },
+    {
+      "id": "newhome_tier1",
+      "mismatchWeeks": 168,
+      "meanAbsoluteDifference": 3.9,
+      "maxAbsoluteDifference": 45.0
+    },
+    {
+      "id": "usdjpy",
+      "mismatchWeeks": 168,
+      "meanAbsoluteDifference": 5.2,
+      "maxAbsoluteDifference": 50.1
+    },
+    {
+      "id": "coking_rate",
+      "mismatchWeeks": 167,
+      "meanAbsoluteDifference": 4.2,
+      "maxAbsoluteDifference": 33.1
+    },
+    {
+      "id": "lithium_price",
+      "mismatchWeeks": 167,
+      "meanAbsoluteDifference": 15.2,
+      "maxAbsoluteDifference": 100.7
+    },
+    {
+      "id": "boxoffice_7d",
+      "mismatchWeeks": 166,
+      "meanAbsoluteDifference": 4.2,
+      "maxAbsoluteDifference": 39.4
+    },
+    {
+      "id": "construction_steel",
+      "mismatchWeeks": 166,
+      "meanAbsoluteDifference": 3.0,
+      "maxAbsoluteDifference": 40.3
+    },
+    {
+      "id": "pta_rate",
+      "mismatchWeeks": 166,
+      "meanAbsoluteDifference": 2.5,
+      "maxAbsoluteDifference": 28.6
+    },
+    {
+      "id": "glass_rate",
+      "mismatchWeeks": 165,
+      "meanAbsoluteDifference": 17.7,
+      "maxAbsoluteDifference": 200.0
+    },
+    {
+      "id": "listing_tier1",
+      "mismatchWeeks": 165,
+      "meanAbsoluteDifference": 18.0,
+      "maxAbsoluteDifference": 108.2
+    },
+    {
+      "id": "vegetable_price",
+      "mismatchWeeks": 164,
+      "meanAbsoluteDifference": 3.3,
+      "maxAbsoluteDifference": 52.4
+    },
+    {
+      "id": "medium_plate_inventory",
+      "mismatchWeeks": 163,
+      "meanAbsoluteDifference": 9.8,
+      "maxAbsoluteDifference": 102.2
+    },
+    {
+      "id": "movie_audience",
+      "mismatchWeeks": 163,
+      "meanAbsoluteDifference": 5.0,
+      "maxAbsoluteDifference": 48.8
+    },
+    {
+      "id": "shibor_6m",
+      "mismatchWeeks": 163,
+      "meanAbsoluteDifference": 7.9,
+      "maxAbsoluteDifference": 100.0
+    },
+    {
+      "id": "fruit_price",
+      "mismatchWeeks": 162,
+      "meanAbsoluteDifference": 2.6,
+      "maxAbsoluteDifference": 51.0
+    },
+    {
+      "id": "car_retail_yoy",
+      "mismatchWeeks": 161,
+      "meanAbsoluteDifference": 4.8,
+      "maxAbsoluteDifference": 93.5
+    },
+    {
+      "id": "daqin_volume",
+      "mismatchWeeks": 161,
+      "meanAbsoluteDifference": 4.9,
+      "maxAbsoluteDifference": 49.9
+    },
+    {
+      "id": "filament_rate",
+      "mismatchWeeks": 161,
+      "meanAbsoluteDifference": 6.2,
+      "maxAbsoluteDifference": 54.0
+    },
+    {
+      "id": "full_tire_rate",
+      "mismatchWeeks": 158,
+      "meanAbsoluteDifference": 2.0,
+      "maxAbsoluteDifference": 33.7
+    },
+    {
+      "id": "power_coal",
+      "mismatchWeeks": 158,
+      "meanAbsoluteDifference": 3.0,
+      "maxAbsoluteDifference": 33.7
+    },
+    {
+      "id": "asphalt_rate",
+      "mismatchWeeks": 156,
+      "meanAbsoluteDifference": 11.2,
+      "maxAbsoluteDifference": 121.1
+    },
+    {
+      "id": "mutton_price",
+      "mismatchWeeks": 155,
+      "meanAbsoluteDifference": 1.8,
+      "maxAbsoluteDifference": 61.3
+    },
+    {
+      "id": "methanol_rate",
+      "mismatchWeeks": 151,
+      "meanAbsoluteDifference": 2.6,
+      "maxAbsoluteDifference": 32.9
+    },
+    {
+      "id": "port_container",
+      "mismatchWeeks": 150,
+      "meanAbsoluteDifference": 2.6,
+      "maxAbsoluteDifference": 56.4
+    },
+    {
+      "id": "rare_earth_index",
+      "mismatchWeeks": 150,
+      "meanAbsoluteDifference": 3.2,
+      "maxAbsoluteDifference": 44.8
+    },
+    {
+      "id": "car_wholesale_yoy",
+      "mismatchWeeks": 148,
+      "meanAbsoluteDifference": 4.3,
+      "maxAbsoluteDifference": 95.2
+    },
+    {
+      "id": "staple_rate",
+      "mismatchWeeks": 148,
+      "meanAbsoluteDifference": 14.8,
+      "maxAbsoluteDifference": 91.7
+    },
+    {
+      "id": "crude_steel",
+      "mismatchWeeks": 146,
+      "meanAbsoluteDifference": 7.3,
+      "maxAbsoluteDifference": 74.3
+    },
+    {
+      "id": "metro_shanghai",
+      "mismatchWeeks": 146,
+      "meanAbsoluteDifference": 3.4,
+      "maxAbsoluteDifference": 33.1
+    },
+    {
+      "id": "blast_furnace",
+      "mismatchWeeks": 141,
+      "meanAbsoluteDifference": 7.1,
+      "maxAbsoluteDifference": 116.0
+    },
+    {
+      "id": "semi_tire_rate",
+      "mismatchWeeks": 140,
+      "meanAbsoluteDifference": 2.1,
+      "maxAbsoluteDifference": 34.9
+    },
+    {
+      "id": "tire_composite",
+      "mismatchWeeks": 140,
+      "meanAbsoluteDifference": 3.0,
+      "maxAbsoluteDifference": 34.4
+    },
+    {
+      "id": "newhome_tier3",
+      "mismatchWeeks": 139,
+      "meanAbsoluteDifference": 4.9,
+      "maxAbsoluteDifference": 47.8
+    },
+    {
+      "id": "px_rate",
+      "mismatchWeeks": 138,
+      "meanAbsoluteDifference": 11.2,
+      "maxAbsoluteDifference": 68.1
+    },
+    {
+      "id": "gasoline_ex_factory_taxed",
+      "mismatchWeeks": 111,
+      "meanAbsoluteDifference": 28.1,
+      "maxAbsoluteDifference": 159.2
+    },
+    {
+      "id": "cold_rolled_rate",
+      "mismatchWeeks": 109,
+      "meanAbsoluteDifference": 6.5,
+      "maxAbsoluteDifference": 100.0
+    },
+    {
+      "id": "titanium_price",
+      "mismatchWeeks": 109,
+      "meanAbsoluteDifference": 21.2,
+      "maxAbsoluteDifference": 100.9
+    },
+    {
+      "id": "thermal_coal_futures",
+      "mismatchWeeks": 6,
+      "meanAbsoluteDifference": 20.1,
+      "maxAbsoluteDifference": 65.0
+    }
+  ],
+  "byDate": [
+    {
+      "date": "2025-03-14",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-03-21",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-04-04",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-09-12",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-09-19",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-10-24",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-12-12",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2026-01-23",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2026-04-17",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2026-06-05",
+      "mismatchIndicators": 110
+    },
+    {
+      "date": "2025-04-25",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-05-02",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-05-23",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-06-13",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-06-20",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-06-27",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-07-04",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-07-11",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-08-15",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-10-03",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-01-16",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-02-13",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-04-10",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-04-24",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-05-29",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-06-12",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-06-19",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-07-24",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2026-08-14",
+      "mismatchIndicators": 109
+    },
+    {
+      "date": "2025-03-07",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-03-28",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-04-18",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-05-09",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-05-16",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-05-30",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-07-18",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-08-08",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-08-22",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-08-29",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-09-05",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-10-10",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-10-17",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-12-05",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-01-09",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-02-06",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-03-13",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-03-27",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-04-03",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-05-08",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2026-05-22",
+      "mismatchIndicators": 108
+    },
+    {
+      "date": "2025-07-25",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-08-01",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-09-26",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-11-14",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-11-28",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-12-19",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-12-26",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-01-02",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-01-30",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-03-20",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-05-01",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-05-15",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-06-26",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-07-03",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-07-17",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-07-31",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2026-08-07",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-04-11",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2025-06-06",
+      "mismatchIndicators": 107
+    },
+    {
+      "date": "2023-02-03",
+      "mismatchIndicators": 106
+    },
+    {
+      "date": "2025-02-28",
+      "mismatchIndicators": 106
+    },
+    {
+      "date": "2026-07-10",
+      "mismatchIndicators": 106
+    },
+    {
+      "date": "2023-01-13",
+      "mismatchIndicators": 105
+    },
+    {
+      "date": "2025-11-07",
+      "mismatchIndicators": 105
+    },
+    {
+      "date": "2025-11-21",
+      "mismatchIndicators": 105
+    },
+    {
+      "date": "2025-10-31",
+      "mismatchIndicators": 104
+    },
+    {
+      "date": "2023-06-16",
+      "mismatchIndicators": 103
+    },
+    {
+      "date": "2023-10-20",
+      "mismatchIndicators": 103
+    },
+    {
+      "date": "2026-02-27",
+      "mismatchIndicators": 103
+    },
+    {
+      "date": "2023-03-03",
+      "mismatchIndicators": 102
+    },
+    {
+      "date": "2023-04-28",
+      "mismatchIndicators": 102
+    },
+    {
+      "date": "2023-06-30",
+      "mismatchIndicators": 102
+    },
+    {
+      "date": "2024-05-10",
+      "mismatchIndicators": 102
+    },
+    {
+      "date": "2023-01-20",
+      "mismatchIndicators": 101
+    },
+    {
+      "date": "2023-06-02",
+      "mismatchIndicators": 101
+    },
+    {
+      "date": "2023-02-10",
+      "mismatchIndicators": 101
+    },
+    {
+      "date": "2023-02-17",
+      "mismatchIndicators": 100
+    },
+    {
+      "date": "2023-02-24",
+      "mismatchIndicators": 100
+    },
+    {
+      "date": "2023-03-31",
+      "mismatchIndicators": 100
+    },
+    {
+      "date": "2023-05-12",
+      "mismatchIndicators": 100
+    },
+    {
+      "date": "2024-04-12",
+      "mismatchIndicators": 100
+    },
+    {
+      "date": "2026-02-20",
+      "mismatchIndicators": 100
+    },
+    {
+      "date": "2023-03-10",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2023-05-19",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2023-06-23",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2023-11-03",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2024-03-15",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2024-10-11",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2025-01-24",
+      "mismatchIndicators": 99
+    },
+    {
+      "date": "2023-04-14",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2023-05-26",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2023-09-29",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2024-02-02",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2024-03-22",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2024-10-18",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2025-01-17",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2025-02-21",
+      "mismatchIndicators": 98
+    },
+    {
+      "date": "2023-03-24",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-04-07",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-07-07",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-08-11",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-08-18",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-09-01",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-10-13",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-12-01",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2024-03-08",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2024-05-17",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2024-05-31",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2024-06-21",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2024-09-20",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2025-01-03",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2025-02-14",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2026-03-06",
+      "mismatchIndicators": 97
+    },
+    {
+      "date": "2023-06-09",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2023-07-28",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2023-09-08",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2023-10-27",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2023-11-10",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2024-06-28",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2024-09-27",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2024-11-08",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2024-11-15",
+      "mismatchIndicators": 96
+    },
+    {
+      "date": "2023-05-05",
+      "mismatchIndicators": 95
+    },
+    {
+      "date": "2023-09-22",
+      "mismatchIndicators": 95
+    },
+    {
+      "date": "2023-11-17",
+      "mismatchIndicators": 95
+    },
+    {
+      "date": "2024-07-12",
+      "mismatchIndicators": 95
+    },
+    {
+      "date": "2023-04-21",
+      "mismatchIndicators": 95
+    },
+    {
+      "date": "2023-03-17",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2023-07-14",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2023-08-25",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2024-03-01",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2024-04-19",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2024-06-14",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2024-07-05",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2024-09-13",
+      "mismatchIndicators": 94
+    },
+    {
+      "date": "2023-07-21",
+      "mismatchIndicators": 93
+    },
+    {
+      "date": "2023-08-04",
+      "mismatchIndicators": 93
+    },
+    {
+      "date": "2024-03-29",
+      "mismatchIndicators": 93
+    },
+    {
+      "date": "2024-07-26",
+      "mismatchIndicators": 93
+    },
+    {
+      "date": "2024-08-02",
+      "mismatchIndicators": 93
+    },
+    {
+      "date": "2023-09-15",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2024-01-19",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2024-05-24",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2024-06-07",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2024-09-06",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2024-11-01",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2024-04-05",
+      "mismatchIndicators": 92
+    },
+    {
+      "date": "2023-12-22",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2024-02-09",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2024-04-26",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2024-07-19",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2024-08-09",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2024-08-30",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2025-01-10",
+      "mismatchIndicators": 91
+    },
+    {
+      "date": "2024-01-12",
+      "mismatchIndicators": 90
+    },
+    {
+      "date": "2024-02-23",
+      "mismatchIndicators": 90
+    },
+    {
+      "date": "2024-11-29",
+      "mismatchIndicators": 90
+    },
+    {
+      "date": "2023-11-24",
+      "mismatchIndicators": 89
+    },
+    {
+      "date": "2023-12-15",
+      "mismatchIndicators": 89
+    },
+    {
+      "date": "2024-01-05",
+      "mismatchIndicators": 89
+    },
+    {
+      "date": "2024-05-03",
+      "mismatchIndicators": 89
+    },
+    {
+      "date": "2024-10-25",
+      "mismatchIndicators": 89
+    },
+    {
+      "date": "2024-01-26",
+      "mismatchIndicators": 88
+    },
+    {
+      "date": "2024-08-16",
+      "mismatchIndicators": 88
+    },
+    {
+      "date": "2024-08-23",
+      "mismatchIndicators": 88
+    },
+    {
+      "date": "2024-12-06",
+      "mismatchIndicators": 88
+    },
+    {
+      "date": "2024-11-22",
+      "mismatchIndicators": 87
+    },
+    {
+      "date": "2024-12-20",
+      "mismatchIndicators": 87
+    },
+    {
+      "date": "2023-12-29",
+      "mismatchIndicators": 86
+    },
+    {
+      "date": "2023-12-08",
+      "mismatchIndicators": 85
+    },
+    {
+      "date": "2025-02-07",
+      "mismatchIndicators": 83
+    },
+    {
+      "date": "2024-12-13",
+      "mismatchIndicators": 81
+    },
+    {
+      "date": "2024-10-04",
+      "mismatchIndicators": 79
+    },
+    {
+      "date": "2024-12-27",
+      "mismatchIndicators": 78
+    },
+    {
+      "date": "2025-01-31",
+      "mismatchIndicators": 69
+    },
+    {
+      "date": "2023-10-06",
+      "mismatchIndicators": 53
+    },
+    {
+      "date": "2023-01-27",
+      "mismatchIndicators": 47
+    },
+    {
+      "date": "2024-02-16",
+      "mismatchIndicators": 44
+    }
+  ],
+  "largestDifferences": [
+    {
+      "date": "2025-02-28",
+      "id": "shibor_1y",
+      "name": "SHIBOR 1Y",
+      "published": 100,
+      "recomputed": -100,
+      "absoluteDifference": 200.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-09",
+      "id": "glass_rate",
+      "name": "玻璃开工率",
+      "published": -100,
+      "recomputed": 100,
+      "absoluteDifference": 200.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-12-05",
+      "id": "port_coal_inventory",
+      "name": "秦皇岛港煤炭库存",
+      "published": -98.3,
+      "recomputed": 92.2,
+      "absoluteDifference": 190.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-03-07",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": -100,
+      "recomputed": 59.2,
+      "absoluteDifference": 159.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-05-02",
+      "id": "styrene_rate",
+      "name": "苯乙烯开工率",
+      "published": 100,
+      "recomputed": -39.0,
+      "absoluteDifference": 139.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-27",
+      "id": "glass_rate",
+      "name": "玻璃开工率",
+      "published": -100,
+      "recomputed": 35.2,
+      "absoluteDifference": 135.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "eurusd",
+      "name": "EUR/USD",
+      "published": -100,
+      "recomputed": 32.7,
+      "absoluteDifference": 132.7,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-05-02",
+      "id": "nanhua_energy",
+      "name": "南华能化指数",
+      "published": -96.5,
+      "recomputed": 36.0,
+      "absoluteDifference": 132.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-03",
+      "id": "nanhua_energy",
+      "name": "南华能化指数",
+      "published": -100,
+      "recomputed": 31.8,
+      "absoluteDifference": 131.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-03",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": 100,
+      "recomputed": -29.5,
+      "absoluteDifference": 129.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-31",
+      "id": "eurusd",
+      "name": "EUR/USD",
+      "published": -100,
+      "recomputed": 28.9,
+      "absoluteDifference": 128.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-08-07",
+      "id": "listing_price",
+      "name": "全国二手房挂牌价指数",
+      "published": -100,
+      "recomputed": 28.8,
+      "absoluteDifference": 128.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-27",
+      "id": "bpi",
+      "name": "巴拿马型运费指数 BPI",
+      "published": -100,
+      "recomputed": 26.5,
+      "absoluteDifference": 126.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-05-30",
+      "id": "asphalt_rate",
+      "name": "沥青装置开工率",
+      "published": 100,
+      "recomputed": -21.1,
+      "absoluteDifference": 121.1,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-07-03",
+      "id": "rebar_price",
+      "name": "螺纹钢现货价格",
+      "published": -100,
+      "recomputed": 19.7,
+      "absoluteDifference": 119.7,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-11-07",
+      "id": "shibor_1y",
+      "name": "SHIBOR 1Y",
+      "published": -100,
+      "recomputed": 19.0,
+      "absoluteDifference": 119.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-02",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": 100,
+      "recomputed": -18.3,
+      "absoluteDifference": 118.3,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-02",
+      "id": "glass_spot",
+      "name": "玻璃现货价",
+      "published": -100,
+      "recomputed": 17.2,
+      "absoluteDifference": 117.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-17",
+      "id": "blast_furnace",
+      "name": "高炉开工率",
+      "published": -59.6,
+      "recomputed": 56.4,
+      "absoluteDifference": 116.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": 100,
+      "recomputed": -14.7,
+      "absoluteDifference": 114.7,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-03-07",
+      "id": "steel_inventory",
+      "name": "钢材社会库存综合指数",
+      "published": 96.8,
+      "recomputed": -17.3,
+      "absoluteDifference": 114.1,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-06",
+      "id": "listing_price",
+      "name": "全国二手房挂牌价指数",
+      "published": -20.9,
+      "recomputed": 93.0,
+      "absoluteDifference": 113.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-04-17",
+      "id": "bpi",
+      "name": "巴拿马型运费指数 BPI",
+      "published": 91.3,
+      "recomputed": -22.2,
+      "absoluteDifference": 113.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-08-07",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": -100,
+      "recomputed": 12.5,
+      "absoluteDifference": 112.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-09",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": -100,
+      "recomputed": 12.4,
+      "absoluteDifference": 112.4,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-05-09",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": -100,
+      "recomputed": 11.0,
+      "absoluteDifference": 111.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "qhd_coal_price",
+      "name": "秦皇岛港动力煤现货价",
+      "published": -69.7,
+      "recomputed": 39.9,
+      "absoluteDifference": 109.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-11-07",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": -100,
+      "recomputed": 9.6,
+      "absoluteDifference": 109.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-09",
+      "id": "listing_tier1",
+      "name": "二手房挂牌价指数：一线",
+      "published": -8.2,
+      "recomputed": 100,
+      "absoluteDifference": 108.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-05-02",
+      "id": "qhd_coal_price",
+      "name": "秦皇岛港动力煤现货价",
+      "published": -100,
+      "recomputed": 7.8,
+      "absoluteDifference": 107.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-31",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": 100,
+      "recomputed": -7.8,
+      "absoluteDifference": 107.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-04-04",
+      "id": "brent",
+      "name": "布伦特原油",
+      "published": -13.0,
+      "recomputed": 94.7,
+      "absoluteDifference": 107.7,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-03-07",
+      "id": "eurusd",
+      "name": "EUR/USD",
+      "published": 7.5,
+      "recomputed": -100,
+      "absoluteDifference": 107.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-09",
+      "id": "port_coal_inventory",
+      "name": "秦皇岛港煤炭库存",
+      "published": 10.1,
+      "recomputed": -97.4,
+      "absoluteDifference": 107.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-31",
+      "id": "port_coal_inventory",
+      "name": "秦皇岛港煤炭库存",
+      "published": -100,
+      "recomputed": 7.3,
+      "absoluteDifference": 107.3,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-05-22",
+      "id": "gold_spot",
+      "name": "伦敦现货黄金",
+      "published": 100,
+      "recomputed": -7.3,
+      "absoluteDifference": 107.3,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-06",
+      "id": "listing_tier1",
+      "name": "二手房挂牌价指数：一线",
+      "published": -8.2,
+      "recomputed": 98.6,
+      "absoluteDifference": 106.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-04-11",
+      "id": "eurusd",
+      "name": "EUR/USD",
+      "published": 6.3,
+      "recomputed": -100,
+      "absoluteDifference": 106.3,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-13",
+      "id": "nanhua_energy",
+      "name": "南华能化指数",
+      "published": 6.1,
+      "recomputed": -100,
+      "absoluteDifference": 106.1,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-06",
+      "id": "nanhua_energy",
+      "name": "南华能化指数",
+      "published": 5.9,
+      "recomputed": -100,
+      "absoluteDifference": 105.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-08-07",
+      "id": "rebar_inventory",
+      "name": "螺纹钢库存",
+      "published": -100,
+      "recomputed": 5.5,
+      "absoluteDifference": 105.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "copper_inventory",
+      "name": "铜库存综合指数",
+      "published": -100,
+      "recomputed": 5.0,
+      "absoluteDifference": 105.0,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-04-04",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-06-20",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-20",
+      "id": "eia_crude_inventory",
+      "name": "EIA原油库存",
+      "published": -3.6,
+      "recomputed": 100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-13",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-27",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-04-10",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-05-15",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-07-24",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-08-07",
+      "id": "eia_crude_inventory",
+      "name": "EIA原油库存",
+      "published": -3.6,
+      "recomputed": 100,
+      "absoluteDifference": 103.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-08-14",
+      "id": "listing_tier2",
+      "name": "二手房挂牌价指数：二线",
+      "published": 3.5,
+      "recomputed": -100,
+      "absoluteDifference": 103.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-27",
+      "id": "wire_inventory",
+      "name": "线材库存",
+      "published": -3.2,
+      "recomputed": 100,
+      "absoluteDifference": 103.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-03",
+      "id": "qhd_coal_price",
+      "name": "秦皇岛港动力煤现货价",
+      "published": -100,
+      "recomputed": 3.1,
+      "absoluteDifference": 103.1,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-09",
+      "id": "blast_furnace",
+      "name": "高炉开工率",
+      "published": -75.0,
+      "recomputed": 27.8,
+      "absoluteDifference": 102.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "bci",
+      "name": "好望角型运费指数 BCI",
+      "published": 2.6,
+      "recomputed": -100,
+      "absoluteDifference": 102.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-20",
+      "id": "medium_plate_inventory",
+      "name": "中厚板库存",
+      "published": -2.2,
+      "recomputed": 100,
+      "absoluteDifference": 102.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-20",
+      "id": "hrc_inventory",
+      "name": "热轧卷板库存",
+      "published": -2.1,
+      "recomputed": 100,
+      "absoluteDifference": 102.1,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-07-31",
+      "id": "pvc_rate",
+      "name": "PVC开工率",
+      "published": -41.5,
+      "recomputed": 60.4,
+      "absoluteDifference": 101.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-13",
+      "id": "nanhua_industry",
+      "name": "南华工业品指数",
+      "published": 1.8,
+      "recomputed": -100,
+      "absoluteDifference": 101.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-10",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": -100,
+      "recomputed": 1.6,
+      "absoluteDifference": 101.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-10-31",
+      "id": "bill_6m",
+      "name": "票据转贴 6M",
+      "published": -1.8,
+      "recomputed": 99.8,
+      "absoluteDifference": 101.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-16",
+      "id": "silver_spot",
+      "name": "伦敦现货白银",
+      "published": -1.6,
+      "recomputed": 100,
+      "absoluteDifference": 101.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-03-06",
+      "id": "nanhua_industry",
+      "name": "南华工业品指数",
+      "published": 1.5,
+      "recomputed": -100,
+      "absoluteDifference": 101.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-12-26",
+      "id": "copper_price",
+      "name": "1#铜现货均价",
+      "published": 0.9,
+      "recomputed": -100,
+      "absoluteDifference": 100.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-07-24",
+      "id": "titanium_price",
+      "name": "钛白粉现货价",
+      "published": -0.9,
+      "recomputed": 100,
+      "absoluteDifference": 100.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-08-14",
+      "id": "titanium_price",
+      "name": "钛白粉现货价",
+      "published": -0.9,
+      "recomputed": 100,
+      "absoluteDifference": 100.9,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-07-04",
+      "id": "styrene_rate",
+      "name": "苯乙烯开工率",
+      "published": -100,
+      "recomputed": 0.8,
+      "absoluteDifference": 100.8,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-01-09",
+      "id": "lithium_price",
+      "name": "碳酸锂价格",
+      "published": 0.7,
+      "recomputed": -100,
+      "absoluteDifference": 100.7,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-27",
+      "id": "lithium_price",
+      "name": "碳酸锂价格",
+      "published": 0.5,
+      "recomputed": -100,
+      "absoluteDifference": 100.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "shibor_6m",
+      "name": "SHIBOR 6M",
+      "published": -0.0,
+      "recomputed": -100,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-04-11",
+      "id": "gold_spot",
+      "name": "伦敦现货黄金",
+      "published": -0.0,
+      "recomputed": 100,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-06-20",
+      "id": "cold_rolled_rate",
+      "name": "冷轧开工率",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-10-03",
+      "id": "blast_furnace",
+      "name": "高炉开工率",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-10-03",
+      "id": "glass_rate",
+      "name": "玻璃开工率",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-01-02",
+      "id": "blast_furnace",
+      "name": "高炉开工率",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-01-02",
+      "id": "glass_rate",
+      "name": "玻璃开工率",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-02-20",
+      "id": "glass_rate",
+      "name": "玻璃开工率",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-07-17",
+      "id": "titanium_price",
+      "name": "钛白粉现货价",
+      "published": 100,
+      "recomputed": -0.0,
+      "absoluteDifference": 100.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-07-03",
+      "id": "styrene_rate",
+      "name": "苯乙烯开工率",
+      "published": 77.7,
+      "recomputed": -21.8,
+      "absoluteDifference": 99.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-27",
+      "id": "listing_price",
+      "name": "全国二手房挂牌价指数",
+      "published": -3.4,
+      "recomputed": 95.7,
+      "absoluteDifference": 99.1,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-04-10",
+      "id": "titanium_price",
+      "name": "钛白粉现货价",
+      "published": -0.9,
+      "recomputed": -100,
+      "absoluteDifference": 99.1,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-09-26",
+      "id": "glass_spot",
+      "name": "玻璃现货价",
+      "published": -1.0,
+      "recomputed": -100,
+      "absoluteDifference": 99.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-01-02",
+      "id": "asphalt_rate",
+      "name": "沥青装置开工率",
+      "published": -98.3,
+      "recomputed": -0.0,
+      "absoluteDifference": 98.3,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-02-28",
+      "id": "shibor_3m",
+      "name": "SHIBOR 3M",
+      "published": -1.8,
+      "recomputed": -100,
+      "absoluteDifference": 98.2,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-07-25",
+      "id": "nanhua_energy",
+      "name": "南华能化指数",
+      "published": 6.2,
+      "recomputed": -92.0,
+      "absoluteDifference": 98.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-04-11",
+      "id": "shibor_1y",
+      "name": "SHIBOR 1Y",
+      "published": 0.7,
+      "recomputed": 98.8,
+      "absoluteDifference": 98.1,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-03-07",
+      "id": "shfe_copper_inventory",
+      "name": "上期所铜库存",
+      "published": 100,
+      "recomputed": 2.0,
+      "absoluteDifference": 98.0,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-07-25",
+      "id": "glass_spot",
+      "name": "玻璃现货价",
+      "published": -2.2,
+      "recomputed": -100,
+      "absoluteDifference": 97.8,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-03-07",
+      "id": "dxy",
+      "name": "美元指数",
+      "published": -2.5,
+      "recomputed": -100,
+      "absoluteDifference": 97.5,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-04-11",
+      "id": "dxy",
+      "name": "美元指数",
+      "published": -2.5,
+      "recomputed": -100,
+      "absoluteDifference": 97.5,
+      "directionReversed": false
+    },
+    {
+      "date": "2026-02-06",
+      "id": "gasoline_ex_factory_taxed",
+      "name": "国内汽油出厂价（含税）",
+      "published": 3.6,
+      "recomputed": -93.9,
+      "absoluteDifference": 97.5,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-06",
+      "id": "polyester_rate",
+      "name": "聚酯综合开工率",
+      "published": 2.6,
+      "recomputed": 100,
+      "absoluteDifference": 97.4,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-02-28",
+      "id": "steel_inventory",
+      "name": "钢材社会库存综合指数",
+      "published": -95.2,
+      "recomputed": 2.0,
+      "absoluteDifference": 97.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-08-15",
+      "id": "lithium_price",
+      "name": "碳酸锂价格",
+      "published": 1.0,
+      "recomputed": -96.2,
+      "absoluteDifference": 97.2,
+      "directionReversed": true
+    },
+    {
+      "date": "2025-02-28",
+      "id": "port_coal_inventory",
+      "name": "秦皇岛港煤炭库存",
+      "published": -100,
+      "recomputed": -3.1,
+      "absoluteDifference": 96.9,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-04-11",
+      "id": "nanhua_industry",
+      "name": "南华工业品指数",
+      "published": 3.2,
+      "recomputed": 100,
+      "absoluteDifference": 96.8,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-10-24",
+      "id": "silver_spot",
+      "name": "伦敦现货白银",
+      "published": -2.7,
+      "recomputed": -99.5,
+      "absoluteDifference": 96.8,
+      "directionReversed": false
+    },
+    {
+      "date": "2025-04-04",
+      "id": "wti",
+      "name": "WTI原油期货",
+      "published": -8.4,
+      "recomputed": 88.2,
+      "absoluteDifference": 96.6,
+      "directionReversed": true
+    },
+    {
+      "date": "2026-02-27",
+      "id": "listing_tier2",
+      "name": "二手房挂牌价指数：二线",
+      "published": 3.4,
+      "recomputed": 100,
+      "absoluteDifference": 96.6,
+      "directionReversed": false
+    }
+  ]
+}

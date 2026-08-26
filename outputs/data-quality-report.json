@@ -1,6 +1,6 @@
 {
-  "ok": false,
-  "strict": true,
+  "ok": true,
+  "strict": false,
   "summary": {
     "configured_indicators": 111,
     "generated_indicators": 111,
@@ -16,6 +16,6 @@
   },
   "errors": [],
   "warnings": [
-    "iron_ore_futures 最新数据为2026-08-14，已滞后11天（daily容忍4天）"
+    "iron_ore_futures 最新数据为2026-08-14，已滞后12天（daily容忍4天）"
   ]
 }

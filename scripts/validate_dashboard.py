@@ -392,6 +392,41 @@ def validate_generated_data(
             errors.append(f"{prefix} 最新score与信号历史末值不一致")
         if dates and indicator.get("scoreAsOf") != dates[-1]:
             errors.append(f"{prefix} scoreAsOf与最新周五快照不一致")
+        weekly_audit_fields = (
+            "scoreChanges",
+            "scoreScales",
+            "scoreObservationDates",
+        )
+        for field in weekly_audit_fields:
+            if len(indicator.get(field, [])) != len(dates):
+                errors.append(f"{prefix} {field}长度与dates不一致")
+        if all(len(indicator.get(field, [])) == len(dates) for field in weekly_audit_fields):
+            direction = float(definition.get("bond_direction", -1))
+            for index, snapshot_day in enumerate(dates):
+                historical_change = indicator["scoreChanges"][index]
+                historical_scale = indicator["scoreScales"][index]
+                historical_observation = indicator["scoreObservationDates"][index]
+                if not finite_number(historical_change):
+                    errors.append(f"{prefix} {snapshot_day}评分变化无效")
+                    continue
+                if not finite_number(historical_scale) or float(historical_scale or 0) <= 0:
+                    errors.append(f"{prefix} {snapshot_day}评分尺度无效")
+                    continue
+                if historical_observation and historical_observation > snapshot_day:
+                    errors.append(f"{prefix} {snapshot_day}使用了未来观测")
+                expected_historical_score = max(
+                    -100,
+                    min(
+                        100,
+                        float(historical_change) / float(historical_scale) * 35 * direction,
+                    ),
+                )
+                if abs(float(indicator["history"][index]) - expected_historical_score) > 0.16:
+                    errors.append(
+                        f"{prefix} {snapshot_day}历史强度不可复算："
+                        f"页面{indicator['history'][index]}，复算{expected_historical_score:.1f}"
+                    )
+                    break
         score_observation_at = indicator.get("scoreObservationAt")
         if not score_observation_at:
             errors.append(f"{prefix} 缺少周五评分观测日期")
@@ -414,6 +449,13 @@ def validate_generated_data(
                     f"{prefix} 周五强度无法由评分变化和历史尺度复算："
                     f"页面{indicator.get('score')}，复算{expected_score:.1f}"
                 )
+        if dates and all(indicator.get(field) for field in ("scoreChanges", "scoreScales")):
+            if abs(float(score_change) - float(indicator["scoreChanges"][-1])) > 1e-7:
+                errors.append(f"{prefix} 当前评分变化与历史末值不一致")
+            if abs(float(score_scale) - float(indicator["scoreScales"][-1])) > 1e-7:
+                errors.append(f"{prefix} 当前评分尺度与历史末值不一致")
+            if score_observation_at != indicator.get("scoreObservationDates", [None])[-1]:
+                errors.append(f"{prefix} 当前评分观测日与历史末值不一致")
         if "周五快照" not in str(indicator.get("reason", "")):
             errors.append(f"{prefix} 评分解释未标明周五快照口径")
         methodology = indicator.get("methodology", {})

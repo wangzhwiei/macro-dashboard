@@ -270,13 +270,16 @@ def rms_scale(changes: list[tuple[date, float]], as_of: date) -> float:
     return scale if scale >= 1e-8 else 1
 
 
-def weekly_scores(
+def weekly_score_details(
     points: list[Point],
     evaluation_dates: list[date],
     method: str,
     bond_direction: float,
-) -> tuple[list[float], list[float]]:
+) -> tuple[list[float], list[float], list[float], list[str | None]]:
     weekly_values: list[float] = []
+    score_changes: list[float] = []
+    score_scales: list[float] = []
+    observation_dates: list[str | None] = []
     dated_changes = dated_weekly_changes(points, method)
 
     latest_observation_day = points[-1][0]
@@ -288,6 +291,9 @@ def weekly_scores(
         previous = value_at(points, anchor_day - timedelta(days=7))
         if not current or not previous:
             weekly_values.append(0)
+            score_changes.append(0)
+            score_scales.append(round(rms_scale(dated_changes, anchor_day), 8))
+            observation_dates.append(None)
             continue
         change = transformed_change(current[1], previous[1], method)[0]
         # Each Friday uses only changes observable by that Friday. Later data
@@ -295,6 +301,22 @@ def weekly_scores(
         scale = rms_scale(dated_changes, anchor_day)
         score = change / scale * 35 * bond_direction
         weekly_values.append(round(clamp(score), 1))
+        score_changes.append(round(change, 8))
+        score_scales.append(round(scale, 8))
+        observation_dates.append(current[0].isoformat())
+    return weekly_values, score_changes, score_scales, observation_dates
+
+
+def weekly_scores(
+    points: list[Point],
+    evaluation_dates: list[date],
+    method: str,
+    bond_direction: float,
+) -> tuple[list[float], list[float]]:
+    weekly_values, _, _, _ = weekly_score_details(
+        points, evaluation_dates, method, bond_direction
+    )
+    dated_changes = dated_weekly_changes(points, method)
     return weekly_values, [change for _, change in dated_changes]
 
 
@@ -412,7 +434,7 @@ def build_indicator(
     previous_value = previous[1]
     method = definition.get("transform", "pct_change")
     change, change_label = transformed_change(latest_value, previous_value, method)
-    scores, _ = weekly_scores(
+    scores, score_changes, score_scales, score_observation_dates = weekly_score_details(
         points,
         evaluation_dates,
         method,
@@ -429,9 +451,6 @@ def build_indicator(
     snapshot_change = transformed_change(
         snapshot_current[1], snapshot_previous[1], method
     )[0]
-    score_scale = rms_scale(
-        dated_weekly_changes(points, method), snapshot_anchor_day
-    )
     direction_word = (
         "上升" if snapshot_change > 0 else "下降" if snapshot_change < 0 else "持平"
     )
@@ -455,9 +474,9 @@ def build_indicator(
         "signal": signal,
         "score": round(score, 1),
         "scoreAsOf": snapshot_day.isoformat(),
-        "scoreObservationAt": snapshot_current[0].isoformat(),
-        "scoreChange": round(snapshot_change, 8),
-        "scoreScale": round(score_scale, 8),
+        "scoreObservationAt": score_observation_dates[-1],
+        "scoreChange": score_changes[-1],
+        "scoreScale": score_scales[-1],
         "percentile": percentile([value for _, value in points], latest_value),
         "updatedAt": latest_day.isoformat(),
         "source": definition.get("source", ""),
@@ -471,6 +490,9 @@ def build_indicator(
             f"以零变化为方向中轴并按历史波动校准后，当前对债市{signal_word}。"
         ),
         "history": scores,
+        "scoreChanges": score_changes,
+        "scoreScales": score_scales,
+        "scoreObservationDates": score_observation_dates,
         "series": [
             {"date": day.isoformat(), "value": round(value, 4)}
             for day, value in points

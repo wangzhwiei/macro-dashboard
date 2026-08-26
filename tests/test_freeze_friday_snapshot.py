@@ -18,12 +18,21 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
             "scoreScale": 2.5,
         }
 
+    @staticmethod
+    def weekly_fields(length: int) -> dict:
+        return {
+            "scoreChanges": [0.2] * length,
+            "scoreScales": [2.5] * length,
+            "scoreObservationDates": ["2026-08-21"] * length,
+        }
+
     def test_published_overlap_is_frozen_without_truncating_older_history(self):
         published = {
             "dates": ["2026-08-14", "2026-08-21"],
             "indicators": [{
                 "id": "demo", "history": [1.0, 2.0],
                 **self.snapshot_fields(2.0),
+                **self.weekly_fields(2),
             }],
             "categories": [{
                 "id": "activity", "score": 3.0, "weeklyScores": [2.0, 3.0],
@@ -36,6 +45,7 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
                 "id": "demo", "signal": "bullish", "score": 9.0,
                 "reason": "recomputed", "history": [0.5, 8.0, 9.0],
                 "latest": 100.0,
+                **self.weekly_fields(3),
             }],
             "categories": [{
                 "id": "activity", "score": 9.0, "weeklyScores": [0.6, 8.0, 9.0],
@@ -71,6 +81,7 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
                 "reason": "recomputed", "history": [0.5, 8.0, 9.0],
                 "latest": 100.0,
                 **self.snapshot_fields(9.0),
+                **self.weekly_fields(3),
             }],
             "categories": [{
                 "id": "activity", "score": 9.0, "weeklyScores": [0.6, 8.0, 9.0],
@@ -91,6 +102,7 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
             "indicators": [{
                 "id": "demo", "history": [1.0, 2.0],
                 **self.snapshot_fields(2.0),
+                **self.weekly_fields(2),
             }],
             "categories": [{
                 "id": "activity", "score": 3.0, "weeklyScores": [2.0, 3.0],
@@ -104,6 +116,7 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
                 "reason": "new friday", "history": [8.0, 8.5, 9.0],
                 "latest": 101.0,
                 **self.snapshot_fields(9.0, "2026-08-28"),
+                **self.weekly_fields(3),
             }],
             "categories": [{
                 "id": "activity", "score": 9.0, "weeklyScores": [8.0, 8.5, 9.0],

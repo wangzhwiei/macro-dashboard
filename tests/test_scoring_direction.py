@@ -7,6 +7,25 @@ from scripts.update_dashboard import weekly_scores
 
 
 class EconomicDirectionTests(unittest.TestCase):
+    def test_equal_positive_and_negative_changes_have_symmetric_strength(self) -> None:
+        start = date(2026, 1, 2)
+        common = [
+            (start + timedelta(days=7 * index), 100.0)
+            for index in range(4)
+        ]
+        evaluation_dates = [start + timedelta(days=28)]
+        rising = common + [(evaluation_dates[0], 101.0)]
+        falling = common + [(evaluation_dates[0], 99.0)]
+
+        rising_scores, _ = weekly_scores(
+            rising, evaluation_dates, "level_change", bond_direction=1
+        )
+        falling_scores, _ = weekly_scores(
+            falling, evaluation_dates, "level_change", bond_direction=1
+        )
+
+        self.assertEqual(rising_scores[-1], -falling_scores[-1])
+
     def test_future_observations_cannot_rescale_an_old_friday(self) -> None:
         start = date(2026, 1, 2)
         points = [

@@ -69,6 +69,9 @@ export interface Indicator {
   core: boolean;
   reason: string;
   history: number[];
+  scoreChanges: number[];
+  scoreScales: number[];
+  scoreObservationDates: Array<string | null>;
   series: Array<{ date: string; value: number }>;
   methodology: IndicatorMethodology;
 }

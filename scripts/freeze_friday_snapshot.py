@@ -17,6 +17,12 @@ FROZEN_INDICATOR_FIELDS = (
     "scoreChange",
     "scoreScale",
 )
+FROZEN_WEEKLY_FIELDS = (
+    "history",
+    "scoreChanges",
+    "scoreScales",
+    "scoreObservationDates",
+)
 
 
 def merge_weekly_history(
@@ -45,13 +51,22 @@ def merge_weekly_history(
 
 
 def trusted_latest_indicator(indicator: dict, snapshot_day: str) -> bool:
-    required = set(FROZEN_INDICATOR_FIELDS) | {"history"}
+    required = set(FROZEN_INDICATOR_FIELDS) | set(FROZEN_WEEKLY_FIELDS)
     if not required.issubset(indicator):
         return False
     history = indicator.get("history", [])
-    if not history or indicator.get("scoreAsOf") != snapshot_day:
+    if (
+        not history
+        or indicator.get("scoreAsOf") != snapshot_day
+        or any(len(indicator[field]) != len(history) for field in FROZEN_WEEKLY_FIELDS)
+    ):
         return False
-    return abs(float(indicator["score"]) - float(history[-1])) <= 0.11
+    return (
+        abs(float(indicator["score"]) - float(history[-1])) <= 0.11
+        and abs(float(indicator["scoreChange"]) - float(indicator["scoreChanges"][-1])) <= 1e-7
+        and abs(float(indicator["scoreScale"]) - float(indicator["scoreScales"][-1])) <= 1e-7
+        and indicator["scoreObservationAt"] == indicator["scoreObservationDates"][-1]
+    )
 
 
 def freeze_snapshot(published: dict, generated: dict) -> dict:
@@ -81,13 +96,17 @@ def freeze_snapshot(published: dict, generated: dict) -> dict:
         if freeze_latest:
             for field in FROZEN_INDICATOR_FIELDS:
                 indicator[field] = old[field]
-        indicator["history"] = merge_weekly_history(
-            generated_dates,
-            indicator["history"],
-            published_dates,
-            old["history"],
-            freeze_dates,
-        )
+        for field in FROZEN_WEEKLY_FIELDS:
+            old_values = old.get(field)
+            if old_values is None:
+                continue
+            indicator[field] = merge_weekly_history(
+                generated_dates,
+                indicator[field],
+                published_dates,
+                old_values,
+                freeze_dates,
+            )
 
     published_categories = {item["id"]: item for item in published["categories"]}
     for category in generated["categories"]:

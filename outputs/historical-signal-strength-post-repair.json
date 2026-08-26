@@ -1,0 +1,16 @@
+{
+  "summary": {
+    "indicatorWeekCells": 21090,
+    "mismatchCells": 0,
+    "mismatchRate": 0.0,
+    "affectedIndicators": 0,
+    "affectedDates": 0,
+    "directionReversals": 0,
+    "medianAbsoluteDifference": 0,
+    "categoryMismatchCells": 0,
+    "overallMismatchWeeks": 0
+  },
+  "byIndicator": [],
+  "byDate": [],
+  "largestDifferences": []
+}
