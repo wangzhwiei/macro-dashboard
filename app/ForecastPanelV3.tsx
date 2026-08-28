@@ -6,14 +6,14 @@ import type { ForecastData, ForecastHistoryPoint, ForecastInput, ForecastPoint }
 import "./forecast-v2.css";
 import "./forecast-v3.css";
 
-type ModelKey = "cpi" | "ppi" | "pmi" | "retail" | "exports" | "imports" | "m2_yoy" | "new_rmb_loans" | "social_financing";
+type ModelKey = "cpi" | "ppi" | "pmi" | "retail" | "fixed_asset_investment" | "exports" | "imports" | "m2_yoy" | "new_rmb_loans" | "social_financing";
 type ViewMode = "yoy" | "mom";
 
 function seriesKey(metric: ModelKey, mode: ViewMode) {
   return (metric === "cpi" || metric === "ppi") && mode === "mom" ? `${metric}_mom` : metric;
 }
 
-const MODEL_LABELS: Record<ModelKey,string> = {cpi:"CPI",ppi:"PPI",pmi:"制造业PMI",retail:"社零同比",exports:"出口同比",imports:"进口同比",m2_yoy:"M2同比",new_rmb_loans:"新增人民币贷款",social_financing:"社融增量"};
+const MODEL_LABELS: Record<ModelKey,string> = {cpi:"CPI",ppi:"PPI",pmi:"制造业PMI",retail:"社零同比",fixed_asset_investment:"固定资产投资",exports:"出口同比",imports:"进口同比",m2_yoy:"M2同比",new_rmb_loans:"新增人民币贷款",social_financing:"社融增量"};
 
 function niceStep(raw: number) {
   const power = 10 ** Math.floor(Math.log10(Math.max(raw, .0001)));
@@ -116,7 +116,7 @@ function InputHistoryModal({item,onClose}:{item:ForecastInput;onClose:()=>void})
 }
 function ForecastInputs({data}:{data:ForecastData}) {
   const [group,setGroup]=useState("CPI"),[selected,setSelected]=useState<ForecastInput|null>(null),items=data.highFrequency[group]??[];
-  const groups=["CPI","PPI","PMI","社零","出口","进口","信用"].filter((value)=>data.highFrequency[value]?.length);
+  const groups=["CPI","PPI","PMI","社零","投资","出口","进口","信用"].filter((value)=>data.highFrequency[value]?.length);
   return <section className="panel forecast-v2-inputs"><div className="section-heading"><div><span className="eyebrow">模型输入 · 原始更新频率</span><h2>真实入模指标</h2><p>点击后查看日频、周频或月频原值；出口与进口模型的固定因子分别列示。</p></div></div><div className="forecast-group-tabs">{groups.map((value)=><button key={value} className={group===value?"active":""} onClick={()=>setGroup(value)}>{value} 入模指标</button>)}</div><div className="forecast-v2-input-list">{items.map((item)=>{const latest=item.series.at(-1),change=inputChange(item),dateNote=item.sourceAsOf?`原始截至 ${item.sourceAsOf}${item.currentMonthStatus==="partial"?" · 当月未完结":""}`:latest?.date;return <button className="forecast-v2-input-row forecast-v3-input-row" key={item.id} onClick={()=>setSelected(item)}><div><strong>{item.name}</strong><small>{item.id}</small></div><div><span>最新完整月值</span><strong>{latest?.value.toFixed(2)??"-"} {item.unit}</strong><small>{dateNote}</small></div><div><span>月内变化</span><strong>{change.label}</strong><small>{item.frequency} · {item.source}</small></div><div><span>入模方式</span><strong>{item.role}</strong><small>{item.aggregation}</small></div><b>查看原频率历史 ›</b></button>})}</div>{selected&&<InputHistoryModal item={selected} onClose={()=>setSelected(null)}/>}</section>;
 }
 
@@ -127,12 +127,13 @@ export default function ForecastWorkspace() {
   const rows=useMemo(()=>{const all=data?.history[key]??[];if(range==="1y")return all.slice(-12);if(range==="3y")return all.slice(-36);return all},[data,key,range]);
   if(error)return <div className="forecast-workspace shell"><section className="panel"><h2>预测数据暂不可用</h2><p>{error}</p></section></div>;
   if(!data)return <div className="forecast-workspace shell"><section className="panel"><h2>正在加载月频预测</h2></section></div>;
-  const model=data.models[key],score=data.metrics[key],latest=[...rows].reverse().find((row)=>row.forecast!==null),latestActual=[...rows].reverse().find((row)=>row.actual!==null),precision=metric==="pmi"||metric==="m2_yoy"||metric==="new_rmb_loans"||metric==="social_financing"?2:3;
+  const model=data.models[key],score=data.metrics[key],latest=[...rows].reverse().find((row)=>row.forecast!==null),latestActual=[...rows].reverse().find((row)=>row.actual!==null),precision=metric==="pmi"||metric==="fixed_asset_investment"||metric==="m2_yoy"||metric==="new_rmb_loans"||metric==="social_financing"?2:3;
+  const activeLock=Object.values(data.modelLocks??{}).find((lock)=>lock.targets.includes(metric));
   const modelPending=model.status==="WAITING_FOR_FIXED_FACTORS"||model.status==="WAITING_FOR_MONTHLY_FACTORS";
   const latestLabel=latest?.officialRounding==null?model.name:`建议报数 ${latest.officialRounding.toFixed(precision)}`;
   const currentNote=modelPending?`${model.forecastMonth} · 最早 ${model.earliestForecastDate}`:`${latest?.date.slice(0,7)} · ${latestLabel}`;
-  return <div className="forecast-workspace shell"><section className="panel forecast-v2-panel"><div className="section-heading forecast-heading"><div><span className="eyebrow">月频预测 · 无前视回测与当月数据更新</span><h1>CPI / PPI / PMI / 社零 / 进出口 / 信用预测</h1><p>{model.description}</p></div><div className="forecast-source">模型数据更新：{new Date(data.generatedAt).toLocaleString("zh-CN")}{data.modelLocks?.credit?.targets.includes(metric)&&` · ${data.modelLocks.credit.version} 已冻结`}</div></div>
-    <div className="forecast-toolbar"><div className="forecast-tabs">{(["cpi","ppi","pmi","retail","exports","imports","m2_yoy","new_rmb_loans","social_financing"] as ModelKey[]).map((value)=><button key={value} className={metric===value?"active":""} onClick={()=>{setMetric(value);if(value!=="cpi"&&value!=="ppi")setMode("yoy")}}>{MODEL_LABELS[value]}</button>)}</div><div className="forecast-range-tabs">{[["all","2023年至今"],["3y","近3年"],["1y","近1年"]].map(([value,label])=><button key={value} className={range===value?"active":""} onClick={()=>setRange(value)}>{label}</button>)}</div></div>
+  return <div className="forecast-workspace shell"><section className="panel forecast-v2-panel"><div className="section-heading forecast-heading"><div><span className="eyebrow">月频预测 · 无前视回测与当月数据更新</span><h1>CPI / PPI / PMI / 社零 / 固定资产投资 / 进出口 / 信用预测</h1><p>{model.description}</p></div><div className="forecast-source">模型数据更新：{new Date(data.generatedAt).toLocaleString("zh-CN")}{activeLock&&` · ${activeLock.version} 已冻结`}</div></div>
+    <div className="forecast-toolbar"><div className="forecast-tabs">{(["cpi","ppi","pmi","retail","fixed_asset_investment","exports","imports","m2_yoy","new_rmb_loans","social_financing"] as ModelKey[]).map((value)=><button key={value} className={metric===value?"active":""} onClick={()=>{setMetric(value);if(value!=="cpi"&&value!=="ppi")setMode("yoy")}}>{MODEL_LABELS[value]}</button>)}</div><div className="forecast-range-tabs">{[["all","2023年至今"],["3y","近3年"],["1y","近1年"]].map(([value,label])=><button key={value} className={range===value?"active":""} onClick={()=>setRange(value)}>{label}</button>)}</div></div>
     {(metric==="cpi"||metric==="ppi")&&<div className="forecast-mode-tabs"><button className={mode==="yoy"?"active":""} onClick={()=>setMode("yoy")}>同比预测</button><button className={mode==="mom"?"active":""} onClick={()=>setMode("mom")}>环比预测</button></div>}
     <div className="forecast-v2-method"><strong>模型口径</strong><span>{model.formula}</span><small>每个月只使用当时已经公布或已经发生的数据；一致预期仅用于页面对比，不进入特征、训练、调参或模型选择。</small></div>
     <div className="forecast-kpis"><div><span>当前确认点预测</span><strong>{modelPending?"待因子公布":latest?.forecast?.toFixed(precision)??"-"}</strong><small>{currentNote}</small></div><div><span>回测误差</span><strong>{score.rmse.toFixed(3)}</strong><small>RMSE · {score.sampleStart} 至 {score.sampleEnd}{score.benchmarkRmse!=null?` · 一致预期 ${score.benchmarkRmse.toFixed(3)}`:""}</small></div><div><span>最近真实公布</span><strong>{latestActual?.actual?.toFixed(precision)??"-"}</strong><small>{latestActual?.date.slice(0,7)} · 官方值</small></div></div>

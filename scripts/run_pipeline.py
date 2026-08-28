@@ -115,6 +115,18 @@ def main() -> int:
             [python, "scripts/publish_credit_forecasts.py", "--base", "public/data/forecasts.json"],
         )
         run_step(
+            "刷新固定资产投资固定ID数据",
+            [python, "scripts/fetch_investment_forecast_data.py", "--resume"],
+        )
+        run_step(
+            "运行冻结版固定资产投资固定额模型",
+            [python, "scripts/investment_level_forecast_model.py"],
+        )
+        run_step(
+            "写入网页固定资产投资预测",
+            [python, "scripts/publish_investment_forecasts.py", "--base", "public/data/forecasts.json"],
+        )
+        run_step(
             "数据适配器单元测试",
             [
                 python,

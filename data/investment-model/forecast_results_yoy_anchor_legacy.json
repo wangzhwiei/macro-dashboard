@@ -1,0 +1,1705 @@
+{
+  "schemaVersion": 1,
+  "target": "固定资产投资(不含农户)完成额累计同比",
+  "forecastMonth": "2026-08",
+  "method": "sell-side intention-capability-observation bridge plus prior monthly-model forecasts; strict walk-forward online inverse-RMSE ensemble",
+  "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
+  "releasePolicy": "structural investment components are same-release data and may enter forecasts only with lag >= 1 month",
+  "current": {
+    "model": -6.310459,
+    "consensus": null,
+    "actual": null,
+    "unit": "%",
+    "approx68PctRange": [
+      -7.57,
+      -5.05
+    ],
+    "onlineWeights": {
+      "persistence": 0.207965,
+      "same_month_delta": 0.291005,
+      "trend_shrunk": 0.225522,
+      "structural_slow": 0.058502,
+      "structural_fast": 0.068678,
+      "seller_bridge": 0.148328
+    }
+  },
+  "backtest": {
+    "rmse": 4.534051,
+    "mae": 1.325226,
+    "bias": 0.174107,
+    "maxAbsoluteError": 37.0407,
+    "directionHitPct": 53.97,
+    "observations": 137,
+    "sampleStart": "2014-03",
+    "sampleEnd": "2026-07"
+  },
+  "candidateDiagnostics": {
+    "persistence": {
+      "rmse": 4.158941,
+      "mae": 1.344526,
+      "bias": 0.179562,
+      "maxAbsoluteError": 32.1,
+      "directionHitPct": 0.0,
+      "observations": 137,
+      "sampleStart": "2014-03",
+      "sampleEnd": "2026-07"
+    },
+    "same_month_delta": {
+      "rmse": 4.141669,
+      "mae": 1.280696,
+      "bias": 0.012518,
+      "maxAbsoluteError": 31.9,
+      "directionHitPct": 70.63,
+      "observations": 137,
+      "sampleStart": "2014-03",
+      "sampleEnd": "2026-07"
+    },
+    "trend_shrunk": {
+      "rmse": 4.13868,
+      "mae": 1.211533,
+      "bias": 0.100365,
+      "maxAbsoluteError": 31.995,
+      "directionHitPct": 72.22,
+      "observations": 137,
+      "sampleStart": "2014-03",
+      "sampleEnd": "2026-07"
+    },
+    "structural_slow": {
+      "rmse": 5.445911,
+      "mae": 2.032034,
+      "bias": 0.74807,
+      "maxAbsoluteError": 40.26551,
+      "directionHitPct": 46.85,
+      "observations": 121,
+      "sampleStart": "2015-08",
+      "sampleEnd": "2026-07"
+    },
+    "structural_fast": {
+      "rmse": 7.945795,
+      "mae": 2.535254,
+      "bias": 0.251407,
+      "maxAbsoluteError": 53.957351,
+      "directionHitPct": 44.83,
+      "observations": 127,
+      "sampleStart": "2015-02",
+      "sampleEnd": "2026-07"
+    },
+    "monthly_model_bridge": {
+      "rmse": 2.482846,
+      "mae": 2.124929,
+      "bias": 1.41243,
+      "maxAbsoluteError": 4.987498,
+      "directionHitPct": 14.29,
+      "observations": 14,
+      "sampleStart": "2025-05",
+      "sampleEnd": "2026-07"
+    },
+    "seller_bridge": {
+      "rmse": 4.763483,
+      "mae": 1.531437,
+      "bias": 0.31177,
+      "maxAbsoluteError": 38.323506,
+      "directionHitPct": 51.59,
+      "observations": 137,
+      "sampleStart": "2014-03",
+      "sampleEnd": "2026-07"
+    }
+  },
+  "comparisonOnCommonSample": {
+    "model": {
+      "rmse": 1.26302,
+      "mae": 0.749923,
+      "bias": 0.415546,
+      "maxAbsoluteError": 5.234894,
+      "directionHitPct": 52.94,
+      "observations": 38,
+      "sampleStart": "2023-03",
+      "sampleEnd": "2026-07"
+    },
+    "consensus": {
+      "rmse": 1.588744,
+      "mae": 0.968114,
+      "bias": 0.563817,
+      "maxAbsoluteError": 5.0,
+      "directionHitPct": 47.06,
+      "observations": 38,
+      "sampleStart": "2023-03",
+      "sampleEnd": "2026-07"
+    },
+    "modelWinRatePct": 57.89,
+    "ties": 0,
+    "rmseImprovementPct": 20.5,
+    "maeImprovementPct": 22.54
+  },
+  "annualComparison": {
+    "2023": {
+      "model": {
+        "rmse": 0.340084,
+        "mae": 0.315721,
+        "bias": 0.26543,
+        "maxAbsoluteError": 0.468408,
+        "directionHitPct": 37.5,
+        "observations": 10,
+        "sampleStart": "2023-03",
+        "sampleEnd": "2023-12"
+      },
+      "consensus": {
+        "rmse": 0.402448,
+        "mae": 0.313686,
+        "bias": 0.269115,
+        "maxAbsoluteError": 0.779245,
+        "directionHitPct": 62.5,
+        "observations": 10,
+        "sampleStart": "2023-03",
+        "sampleEnd": "2023-12"
+      },
+      "modelWinRatePct": 40.0,
+      "ties": 0,
+      "rmseImprovementPct": 15.5,
+      "maeImprovementPct": -0.65
+    },
+    "2024": {
+      "model": {
+        "rmse": 0.240982,
+        "mae": 0.201238,
+        "bias": 0.110034,
+        "maxAbsoluteError": 0.469789,
+        "directionHitPct": 37.5,
+        "observations": 11,
+        "sampleStart": "2024-02",
+        "sampleEnd": "2024-12"
+      },
+      "consensus": {
+        "rmse": 0.509063,
+        "mae": 0.417229,
+        "bias": 0.109481,
+        "maxAbsoluteError": 1.03125,
+        "directionHitPct": 12.5,
+        "observations": 11,
+        "sampleStart": "2024-02",
+        "sampleEnd": "2024-12"
+      },
+      "modelWinRatePct": 81.82,
+      "ties": 0,
+      "rmseImprovementPct": 52.66,
+      "maeImprovementPct": 51.77
+    },
+    "2025": {
+      "model": {
+        "rmse": 0.856954,
+        "mae": 0.737644,
+        "bias": 0.671247,
+        "maxAbsoluteError": 1.235423,
+        "directionHitPct": 80.0,
+        "observations": 11,
+        "sampleStart": "2025-02",
+        "sampleEnd": "2025-12"
+      },
+      "consensus": {
+        "rmse": 1.735008,
+        "mae": 1.206448,
+        "bias": 1.113607,
+        "maxAbsoluteError": 4.379167,
+        "directionHitPct": 40.0,
+        "observations": 11,
+        "sampleStart": "2025-02",
+        "sampleEnd": "2025-12"
+      },
+      "modelWinRatePct": 72.73,
+      "ties": 0,
+      "rmseImprovementPct": 50.61,
+      "maeImprovementPct": 38.86
+    },
+    "2026": {
+      "model": {
+        "rmse": 2.908175,
+        "mae": 2.502028,
+        "bias": 0.757063,
+        "maxAbsoluteError": 5.234894,
+        "directionHitPct": 20.0,
+        "observations": 6,
+        "sampleStart": "2026-02",
+        "sampleEnd": "2026-07"
+      },
+      "consensus": {
+        "rmse": 3.118041,
+        "mae": 2.631839,
+        "bias": 0.879987,
+        "maxAbsoluteError": 5.0,
+        "directionHitPct": 60.0,
+        "observations": 6,
+        "sampleStart": "2026-02",
+        "sampleEnd": "2026-07"
+      },
+      "modelWinRatePct": 16.67,
+      "ties": 0,
+      "rmseImprovementPct": 6.73,
+      "maeImprovementPct": 4.93
+    }
+  },
+  "performanceGateVsConsensus": {
+    "passed": true,
+    "modelRmse": 1.26302,
+    "consensusRmse": 1.588744,
+    "rmseImprovementPct": 20.5,
+    "modelMae": 0.749923,
+    "consensusMae": 0.968114
+  },
+  "subperiodRobustness": {
+    "2020_2022": {
+      "model": {
+        "rmse": 9.109332,
+        "mae": 3.956789,
+        "bias": -0.059149,
+        "maxAbsoluteError": 37.0407,
+        "directionHitPct": 68.75,
+        "observations": 33,
+        "sampleStart": "2020-02",
+        "sampleEnd": "2022-12"
+      },
+      "consensus": {
+        "rmse": 4.989812,
+        "mae": 1.674865,
+        "bias": 1.150364,
+        "maxAbsoluteError": 26.230769,
+        "directionHitPct": 84.38,
+        "observations": 33,
+        "sampleStart": "2020-02",
+        "sampleEnd": "2022-12"
+      },
+      "modelWinRatePct": 15.15,
+      "ties": 0,
+      "rmseImprovementPct": -82.56,
+      "maeImprovementPct": -136.25
+    },
+    "2023_present": {
+      "model": {
+        "rmse": 1.26302,
+        "mae": 0.749923,
+        "bias": 0.415546,
+        "maxAbsoluteError": 5.234894,
+        "directionHitPct": 52.94,
+        "observations": 38,
+        "sampleStart": "2023-03",
+        "sampleEnd": "2026-07"
+      },
+      "consensus": {
+        "rmse": 1.588744,
+        "mae": 0.968114,
+        "bias": 0.563817,
+        "maxAbsoluteError": 5.0,
+        "directionHitPct": 47.06,
+        "observations": 38,
+        "sampleStart": "2023-03",
+        "sampleEnd": "2026-07"
+      },
+      "modelWinRatePct": 57.89,
+      "ties": 0,
+      "rmseImprovementPct": 20.5,
+      "maeImprovementPct": 22.54
+    }
+  },
+  "featureGroups": {
+    "sellSideStructure": "基建、制造业、房地产、民间投资均仅使用滞后一期的累计增速及边际变化",
+    "monthlyForecastModels": "工业增加值、M2、新增人民币贷款、社融的无一致预期模型预测历史与当前预测",
+    "calendarAndPersistence": "累计口径上期值、历史同月变化、月份哑变量"
+  },
+  "history": [
+    {
+      "date": "2014-03",
+      "model": 17.9,
+      "consensus": null,
+      "actual": 17.6,
+      "persistence": 17.9,
+      "sellerBridge": 17.816667,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-04",
+      "model": 17.6,
+      "consensus": null,
+      "actual": 17.3,
+      "persistence": 17.6,
+      "sellerBridge": 17.5,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-05",
+      "model": 17.3,
+      "consensus": null,
+      "actual": 17.2,
+      "persistence": 17.3,
+      "sellerBridge": 17.25119,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-06",
+      "model": 17.2,
+      "consensus": null,
+      "actual": 17.3,
+      "persistence": 17.2,
+      "sellerBridge": 17.116667,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-07",
+      "model": 17.3,
+      "consensus": null,
+      "actual": 17.0,
+      "persistence": 17.3,
+      "sellerBridge": 17.266667,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-08",
+      "model": 17.0,
+      "consensus": null,
+      "actual": 16.5,
+      "persistence": 17.0,
+      "sellerBridge": 16.949682,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-09",
+      "model": 16.5,
+      "consensus": null,
+      "actual": 16.1,
+      "persistence": 16.5,
+      "sellerBridge": 16.466667,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-10",
+      "model": 16.1,
+      "consensus": null,
+      "actual": 15.9,
+      "persistence": 16.1,
+      "sellerBridge": 16.083333,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-11",
+      "model": 15.9,
+      "consensus": null,
+      "actual": 15.8,
+      "persistence": 15.9,
+      "sellerBridge": 15.864994,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2014-12",
+      "model": 15.8,
+      "consensus": null,
+      "actual": 15.7,
+      "persistence": 15.8,
+      "sellerBridge": 15.683333,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-02",
+      "model": 15.7,
+      "consensus": null,
+      "actual": 13.9,
+      "persistence": 15.7,
+      "sellerBridge": 15.62737,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-03",
+      "model": 13.9,
+      "consensus": null,
+      "actual": 13.5,
+      "persistence": 13.9,
+      "sellerBridge": 13.822361,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-04",
+      "model": 13.5,
+      "consensus": null,
+      "actual": 12.0,
+      "persistence": 13.5,
+      "sellerBridge": 13.504795,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-05",
+      "model": 12.0,
+      "consensus": null,
+      "actual": 11.4,
+      "persistence": 12.0,
+      "sellerBridge": 12.025725,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-06",
+      "model": 11.4,
+      "consensus": null,
+      "actual": 11.4,
+      "persistence": 11.4,
+      "sellerBridge": 11.481999,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-07",
+      "model": 11.4,
+      "consensus": null,
+      "actual": 11.2,
+      "persistence": 11.4,
+      "sellerBridge": 11.473026,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-08",
+      "model": 11.2,
+      "consensus": null,
+      "actual": 10.9,
+      "persistence": 11.2,
+      "sellerBridge": 11.559391,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-09",
+      "model": 10.9,
+      "consensus": null,
+      "actual": 10.3,
+      "persistence": 10.9,
+      "sellerBridge": 11.248859,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-10",
+      "model": 10.268476,
+      "consensus": null,
+      "actual": 10.2,
+      "persistence": 10.3,
+      "sellerBridge": 10.609454,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-11",
+      "model": 10.20726,
+      "consensus": null,
+      "actual": 10.2,
+      "persistence": 10.2,
+      "sellerBridge": 10.495534,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2015-12",
+      "model": 10.128755,
+      "consensus": null,
+      "actual": 10.0,
+      "persistence": 10.2,
+      "sellerBridge": 10.435051,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-02",
+      "model": 9.250896,
+      "consensus": null,
+      "actual": 10.2,
+      "persistence": 10.0,
+      "sellerBridge": 9.519214,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-03",
+      "model": 10.07533,
+      "consensus": null,
+      "actual": 10.7,
+      "persistence": 10.2,
+      "sellerBridge": 9.852916,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-04",
+      "model": 10.628476,
+      "consensus": null,
+      "actual": 10.5,
+      "persistence": 10.7,
+      "sellerBridge": 10.433032,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-05",
+      "model": 10.385137,
+      "consensus": null,
+      "actual": 9.6,
+      "persistence": 10.5,
+      "sellerBridge": 10.218849,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-06",
+      "model": 9.436232,
+      "consensus": null,
+      "actual": 9.0,
+      "persistence": 9.6,
+      "sellerBridge": 9.385392,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-07",
+      "model": 8.846839,
+      "consensus": null,
+      "actual": 8.1,
+      "persistence": 9.0,
+      "sellerBridge": 8.806269,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-08",
+      "model": 7.921443,
+      "consensus": null,
+      "actual": 8.1,
+      "persistence": 8.1,
+      "sellerBridge": 7.996043,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-09",
+      "model": 8.058829,
+      "consensus": null,
+      "actual": 8.2,
+      "persistence": 8.1,
+      "sellerBridge": 8.140109,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-10",
+      "model": 8.225972,
+      "consensus": null,
+      "actual": 8.3,
+      "persistence": 8.2,
+      "sellerBridge": 8.33872,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-11",
+      "model": 8.340238,
+      "consensus": null,
+      "actual": 8.3,
+      "persistence": 8.3,
+      "sellerBridge": 8.451676,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2016-12",
+      "model": 8.263515,
+      "consensus": null,
+      "actual": 8.1,
+      "persistence": 8.3,
+      "sellerBridge": 8.373014,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-02",
+      "model": 7.868631,
+      "consensus": null,
+      "actual": 8.9,
+      "persistence": 8.1,
+      "sellerBridge": 7.95764,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-03",
+      "model": 9.132468,
+      "consensus": null,
+      "actual": 9.2,
+      "persistence": 8.9,
+      "sellerBridge": 9.436553,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-04",
+      "model": 9.17088,
+      "consensus": null,
+      "actual": 8.9,
+      "persistence": 9.2,
+      "sellerBridge": 9.158497,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-05",
+      "model": 8.759738,
+      "consensus": null,
+      "actual": 8.6,
+      "persistence": 8.9,
+      "sellerBridge": 8.746964,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-06",
+      "model": 8.509979,
+      "consensus": null,
+      "actual": 8.6,
+      "persistence": 8.6,
+      "sellerBridge": 8.530309,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-07",
+      "model": 8.517299,
+      "consensus": null,
+      "actual": 8.3,
+      "persistence": 8.6,
+      "sellerBridge": 8.505181,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-08",
+      "model": 8.197575,
+      "consensus": null,
+      "actual": 7.8,
+      "persistence": 8.3,
+      "sellerBridge": 8.215464,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-09",
+      "model": 7.760082,
+      "consensus": null,
+      "actual": 7.5,
+      "persistence": 7.8,
+      "sellerBridge": 7.826157,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-10",
+      "model": 7.567903,
+      "consensus": null,
+      "actual": 7.3,
+      "persistence": 7.5,
+      "sellerBridge": 7.666814,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-11",
+      "model": 7.392453,
+      "consensus": null,
+      "actual": 7.2,
+      "persistence": 7.3,
+      "sellerBridge": 7.480209,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2017-12",
+      "model": 7.253979,
+      "consensus": null,
+      "actual": 7.2,
+      "persistence": 7.2,
+      "sellerBridge": 7.331735,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-02",
+      "model": 7.347056,
+      "consensus": null,
+      "actual": 7.9,
+      "persistence": 7.2,
+      "sellerBridge": 7.416551,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-03",
+      "model": 8.135087,
+      "consensus": null,
+      "actual": 7.5,
+      "persistence": 7.9,
+      "sellerBridge": 8.204464,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-04",
+      "model": 7.419087,
+      "consensus": null,
+      "actual": 7.0,
+      "persistence": 7.5,
+      "sellerBridge": 7.492603,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-05",
+      "model": 7.094291,
+      "consensus": null,
+      "actual": 6.1,
+      "persistence": 7.0,
+      "sellerBridge": 7.253784,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-06",
+      "model": 6.206465,
+      "consensus": null,
+      "actual": 6.0,
+      "persistence": 6.1,
+      "sellerBridge": 6.467511,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-07",
+      "model": 6.100093,
+      "consensus": null,
+      "actual": 5.5,
+      "persistence": 6.0,
+      "sellerBridge": 6.278962,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-08",
+      "model": 5.616187,
+      "consensus": null,
+      "actual": 5.3,
+      "persistence": 5.5,
+      "sellerBridge": 5.910476,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-09",
+      "model": 5.462084,
+      "consensus": null,
+      "actual": 5.4,
+      "persistence": 5.3,
+      "sellerBridge": 5.756094,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-10",
+      "model": 5.62997,
+      "consensus": null,
+      "actual": 5.7,
+      "persistence": 5.4,
+      "sellerBridge": 5.908701,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-11",
+      "model": 5.933437,
+      "consensus": null,
+      "actual": 5.9,
+      "persistence": 5.7,
+      "sellerBridge": 6.173013,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2018-12",
+      "model": 6.070549,
+      "consensus": null,
+      "actual": 5.9,
+      "persistence": 5.9,
+      "sellerBridge": 6.258506,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-02",
+      "model": 6.21278,
+      "consensus": null,
+      "actual": 6.1,
+      "persistence": 5.9,
+      "sellerBridge": 6.466276,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-03",
+      "model": 6.279313,
+      "consensus": null,
+      "actual": 6.3,
+      "persistence": 6.1,
+      "sellerBridge": 6.448685,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-04",
+      "model": 6.229689,
+      "consensus": null,
+      "actual": 6.1,
+      "persistence": 6.3,
+      "sellerBridge": 6.224249,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-05",
+      "model": 5.906425,
+      "consensus": null,
+      "actual": 5.6,
+      "persistence": 6.1,
+      "sellerBridge": 5.850985,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-06",
+      "model": 5.519194,
+      "consensus": null,
+      "actual": 5.8,
+      "persistence": 5.6,
+      "sellerBridge": 5.535503,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-07",
+      "model": 5.639674,
+      "consensus": null,
+      "actual": 5.7,
+      "persistence": 5.8,
+      "sellerBridge": 5.576619,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-08",
+      "model": 5.559909,
+      "consensus": null,
+      "actual": 5.5,
+      "persistence": 5.7,
+      "sellerBridge": 5.528996,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-09",
+      "model": 5.403422,
+      "consensus": null,
+      "actual": 5.4,
+      "persistence": 5.5,
+      "sellerBridge": 5.377606,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-10",
+      "model": 5.375015,
+      "consensus": null,
+      "actual": 5.2,
+      "persistence": 5.4,
+      "sellerBridge": 5.370116,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-11",
+      "model": 5.190601,
+      "consensus": null,
+      "actual": 5.2,
+      "persistence": 5.2,
+      "sellerBridge": 5.21571,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2019-12",
+      "model": 5.186364,
+      "consensus": null,
+      "actual": 5.4,
+      "persistence": 5.2,
+      "sellerBridge": 5.200072,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-02",
+      "model": 5.571841,
+      "consensus": 1.730769,
+      "actual": -24.5,
+      "persistence": 5.4,
+      "sellerBridge": 5.571413,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-03",
+      "model": -14.816357,
+      "consensus": -11.25,
+      "actual": -16.1,
+      "persistence": -24.5,
+      "sellerBridge": -13.947515,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-04",
+      "model": -14.54232,
+      "consensus": -10.094444,
+      "actual": -10.3,
+      "persistence": -16.1,
+      "sellerBridge": -14.433742,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-05",
+      "model": -8.609278,
+      "consensus": -6.153333,
+      "actual": -6.3,
+      "persistence": -10.3,
+      "sellerBridge": -8.460173,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-06",
+      "model": -4.941441,
+      "consensus": -2.560769,
+      "actual": -3.1,
+      "persistence": -6.3,
+      "sellerBridge": -4.918812,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-07",
+      "model": -2.425816,
+      "consensus": -1.305,
+      "actual": -1.6,
+      "persistence": -3.1,
+      "sellerBridge": -2.491199,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-08",
+      "model": -1.24362,
+      "consensus": -0.404762,
+      "actual": -0.3,
+      "persistence": -1.6,
+      "sellerBridge": -1.260159,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-09",
+      "model": 0.023043,
+      "consensus": 1.091071,
+      "actual": 0.8,
+      "persistence": -0.3,
+      "sellerBridge": 0.006244,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-10",
+      "model": 0.93532,
+      "consensus": 1.747727,
+      "actual": 1.8,
+      "persistence": 0.8,
+      "sellerBridge": 0.888227,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-11",
+      "model": 1.793943,
+      "consensus": 2.618261,
+      "actual": 2.6,
+      "persistence": 1.8,
+      "sellerBridge": 1.713569,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2020-12",
+      "model": 2.493604,
+      "consensus": 3.089839,
+      "actual": 2.9,
+      "persistence": 2.6,
+      "sellerBridge": 2.4115,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-02",
+      "model": -2.0407,
+      "consensus": 42.422222,
+      "actual": 35.0,
+      "persistence": 2.9,
+      "sellerBridge": -3.323506,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-03",
+      "model": 36.149035,
+      "consensus": 25.096923,
+      "actual": 25.6,
+      "persistence": 35.0,
+      "sellerBridge": 36.33672,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-04",
+      "model": 25.180657,
+      "consensus": 19.590909,
+      "actual": 19.9,
+      "persistence": 25.6,
+      "sellerBridge": 25.470235,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-05",
+      "model": 18.667448,
+      "consensus": 16.335,
+      "actual": 15.4,
+      "persistence": 19.9,
+      "sellerBridge": 18.578886,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-06",
+      "model": 14.514425,
+      "consensus": 12.577273,
+      "actual": 12.6,
+      "persistence": 15.4,
+      "sellerBridge": 14.516759,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-07",
+      "model": 11.884586,
+      "consensus": 11.095238,
+      "actual": 10.3,
+      "persistence": 12.6,
+      "sellerBridge": 11.880831,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-08",
+      "model": 9.795199,
+      "consensus": 9.55,
+      "actual": 8.9,
+      "persistence": 10.3,
+      "sellerBridge": 9.826494,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-09",
+      "model": 8.529812,
+      "consensus": 8.427826,
+      "actual": 7.3,
+      "persistence": 8.9,
+      "sellerBridge": 8.516504,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-10",
+      "model": 7.083952,
+      "consensus": 6.21,
+      "actual": 6.1,
+      "persistence": 7.3,
+      "sellerBridge": 7.155635,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-11",
+      "model": 6.069093,
+      "consensus": 5.32625,
+      "actual": 5.2,
+      "persistence": 6.1,
+      "sellerBridge": 6.167235,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2021-12",
+      "model": 5.304643,
+      "consensus": 6.140469,
+      "actual": 4.9,
+      "persistence": 5.2,
+      "sellerBridge": 5.441825,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-02",
+      "model": -3.965548,
+      "consensus": 5.233333,
+      "actual": 12.2,
+      "persistence": 4.9,
+      "sellerBridge": -8.127398,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-03",
+      "model": 11.289051,
+      "consensus": 9.110526,
+      "actual": 9.3,
+      "persistence": 12.2,
+      "sellerBridge": 10.223338,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-04",
+      "model": 8.647411,
+      "consensus": 6.711111,
+      "actual": 6.8,
+      "persistence": 9.3,
+      "sellerBridge": 8.642551,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-05",
+      "model": 6.355833,
+      "consensus": 6.135714,
+      "actual": 6.2,
+      "persistence": 6.8,
+      "sellerBridge": 6.48238,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-06",
+      "model": 6.207829,
+      "consensus": 6.083333,
+      "actual": 6.1,
+      "persistence": 6.2,
+      "sellerBridge": 6.271494,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-07",
+      "model": 6.084252,
+      "consensus": 6.150588,
+      "actual": 5.7,
+      "persistence": 6.1,
+      "sellerBridge": 6.131867,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-08",
+      "model": 5.759829,
+      "consensus": 5.463636,
+      "actual": 5.8,
+      "persistence": 5.7,
+      "sellerBridge": 5.87872,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-09",
+      "model": 5.9413,
+      "consensus": 5.935294,
+      "actual": 5.9,
+      "persistence": 5.8,
+      "sellerBridge": 6.041234,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-10",
+      "model": 6.078684,
+      "consensus": 5.9,
+      "actual": 5.8,
+      "persistence": 5.9,
+      "sellerBridge": 6.193251,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-11",
+      "model": 6.017676,
+      "consensus": 5.676471,
+      "actual": 5.3,
+      "persistence": 5.8,
+      "sellerBridge": 6.151258,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2022-12",
+      "model": 5.554688,
+      "consensus": 5.580519,
+      "actual": 5.1,
+      "persistence": 5.3,
+      "sellerBridge": 5.774872,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-02",
+      "model": 3.728793,
+      "consensus": 3.471538,
+      "actual": 5.5,
+      "persistence": 5.1,
+      "sellerBridge": 2.50184,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-03",
+      "model": 4.870551,
+      "consensus": 5.378571,
+      "actual": 5.1,
+      "persistence": 5.5,
+      "sellerBridge": 4.343488,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-04",
+      "model": 4.677996,
+      "consensus": 5.377778,
+      "actual": 4.7,
+      "persistence": 5.1,
+      "sellerBridge": 4.491508,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-05",
+      "model": 4.415932,
+      "consensus": 4.43125,
+      "actual": 4.0,
+      "persistence": 4.7,
+      "sellerBridge": 4.385827,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-06",
+      "model": 4.076935,
+      "consensus": 3.62,
+      "actual": 3.8,
+      "persistence": 4.0,
+      "sellerBridge": 4.251644,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-07",
+      "model": 3.868408,
+      "consensus": 3.826667,
+      "actual": 3.4,
+      "persistence": 3.8,
+      "sellerBridge": 4.066922,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-08",
+      "model": 3.544211,
+      "consensus": 3.255789,
+      "actual": 3.2,
+      "persistence": 3.4,
+      "sellerBridge": 3.812995,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-09",
+      "model": 3.447784,
+      "consensus": 3.057143,
+      "actual": 3.1,
+      "persistence": 3.2,
+      "sellerBridge": 3.726622,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-10",
+      "model": 3.366454,
+      "consensus": 3.164706,
+      "actual": 2.9,
+      "persistence": 3.1,
+      "sellerBridge": 3.686546,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-11",
+      "model": 3.245988,
+      "consensus": 2.9,
+      "actual": 2.9,
+      "persistence": 2.9,
+      "sellerBridge": 3.632343,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2023-12",
+      "model": 3.240041,
+      "consensus": 3.779245,
+      "actual": 3.0,
+      "persistence": 2.9,
+      "sellerBridge": 3.62579,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-02",
+      "model": 3.730211,
+      "consensus": 3.16875,
+      "actual": 4.2,
+      "persistence": 3.0,
+      "sellerBridge": 4.288591,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-03",
+      "model": 4.468167,
+      "consensus": 3.963636,
+      "actual": 4.5,
+      "persistence": 4.2,
+      "sellerBridge": 4.58213,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-04",
+      "model": 4.605214,
+      "consensus": 4.783333,
+      "actual": 4.2,
+      "persistence": 4.5,
+      "sellerBridge": 4.78816,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-05",
+      "model": 4.207625,
+      "consensus": 4.3,
+      "actual": 4.0,
+      "persistence": 4.2,
+      "sellerBridge": 4.499006,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-06",
+      "model": 4.103875,
+      "consensus": 3.775,
+      "actual": 3.9,
+      "persistence": 4.0,
+      "sellerBridge": 4.500798,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-07",
+      "model": 3.850476,
+      "consensus": 4.053846,
+      "actual": 3.6,
+      "persistence": 3.9,
+      "sellerBridge": 4.182912,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-08",
+      "model": 3.597827,
+      "consensus": 3.66,
+      "actual": 3.4,
+      "persistence": 3.6,
+      "sellerBridge": 4.059145,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-09",
+      "model": 3.460114,
+      "consensus": 3.712,
+      "actual": 3.4,
+      "persistence": 3.4,
+      "sellerBridge": 3.895986,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-10",
+      "model": 3.436567,
+      "consensus": 3.44,
+      "actual": 3.4,
+      "persistence": 3.4,
+      "sellerBridge": 3.930103,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-11",
+      "model": 3.478962,
+      "consensus": 3.433333,
+      "actual": 3.3,
+      "persistence": 3.4,
+      "sellerBridge": 3.923998,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2024-12",
+      "model": 3.371332,
+      "consensus": 4.014394,
+      "actual": 3.2,
+      "persistence": 3.3,
+      "sellerBridge": 3.846687,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-02",
+      "model": 3.734818,
+      "consensus": 3.750909,
+      "actual": 4.1,
+      "persistence": 3.2,
+      "sellerBridge": 5.789338,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-03",
+      "model": 4.237656,
+      "consensus": 4.038462,
+      "actual": 4.2,
+      "persistence": 4.1,
+      "sellerBridge": 4.802135,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-04",
+      "model": 4.164878,
+      "consensus": 4.183333,
+      "actual": 4.0,
+      "persistence": 4.2,
+      "sellerBridge": 4.754472,
+      "monthlyModelBridge": null,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-05",
+      "model": 3.851401,
+      "consensus": 4.0,
+      "actual": 3.7,
+      "persistence": 4.0,
+      "sellerBridge": 4.323483,
+      "monthlyModelBridge": 3.851188,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-06",
+      "model": 3.862482,
+      "consensus": 3.82,
+      "actual": 2.8,
+      "persistence": 3.7,
+      "sellerBridge": 4.193126,
+      "monthlyModelBridge": 3.774169,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-07",
+      "model": 2.67656,
+      "consensus": 2.73,
+      "actual": 1.6,
+      "persistence": 2.8,
+      "sellerBridge": 3.207786,
+      "monthlyModelBridge": 2.988154,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-08",
+      "model": 1.49556,
+      "consensus": 1.527273,
+      "actual": 0.5,
+      "persistence": 1.6,
+      "sellerBridge": 2.373985,
+      "monthlyModelBridge": 2.140489,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-09",
+      "model": 0.48659,
+      "consensus": 2.454167,
+      "actual": -0.5,
+      "persistence": 0.5,
+      "sellerBridge": 1.412468,
+      "monthlyModelBridge": 1.096086,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-10",
+      "model": -0.544569,
+      "consensus": -0.863636,
+      "actual": -1.7,
+      "persistence": -0.5,
+      "sellerBridge": 0.401139,
+      "monthlyModelBridge": -0.166226,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-11",
+      "model": -1.717083,
+      "consensus": -1.67,
+      "actual": -2.6,
+      "persistence": -1.7,
+      "sellerBridge": -0.737514,
+      "monthlyModelBridge": -1.59983,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2025-12",
+      "model": -2.564577,
+      "consensus": 0.579167,
+      "actual": -3.8,
+      "persistence": -2.6,
+      "sellerBridge": -1.554846,
+      "monthlyModelBridge": -2.26335,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-02",
+      "model": -3.434894,
+      "consensus": -3.2,
+      "actual": 1.8,
+      "persistence": -3.8,
+      "sellerBridge": -2.024148,
+      "monthlyModelBridge": -3.187498,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-03",
+      "model": 2.446365,
+      "consensus": 1.444444,
+      "actual": 1.7,
+      "persistence": 1.8,
+      "sellerBridge": 3.067056,
+      "monthlyModelBridge": 5.595413,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-04",
+      "model": 1.758276,
+      "consensus": 1.657143,
+      "actual": -1.6,
+      "persistence": 1.7,
+      "sellerBridge": 2.090906,
+      "monthlyModelBridge": 1.94107,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-05",
+      "model": -1.614585,
+      "consensus": -2.0,
+      "actual": -4.1,
+      "persistence": -1.6,
+      "sellerBridge": -0.733122,
+      "monthlyModelBridge": -0.931312,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-06",
+      "model": -3.753381,
+      "consensus": -1.555,
+      "actual": -5.7,
+      "persistence": -4.1,
+      "sellerBridge": -2.812976,
+      "monthlyModelBridge": -3.071967,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-07",
+      "model": -5.459402,
+      "consensus": -5.666667,
+      "actual": -6.7,
+      "persistence": -5.7,
+      "sellerBridge": -4.543321,
+      "monthlyModelBridge": -4.992368,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-08",
+      "model": -6.310459,
+      "consensus": null,
+      "actual": null,
+      "persistence": -6.7,
+      "sellerBridge": -5.328283,
+      "monthlyModelBridge": -5.874894,
+      "kind": "live_nowcast"
+    }
+  ],
+  "providerIds": {
+    "fixed_asset_investment_ytd_yoy": "M001620575",
+    "manufacturing_investment_ytd_yoy": "M003811042",
+    "infrastructure_investment_ytd_yoy": "M004385772",
+    "real_estate_investment_ytd_yoy": "S000047961",
+    "private_investment_ytd_yoy": "M002965395",
+    "fixed_asset_investment_consensus": "M005682259",
+    "fixed_asset_investment_ytd_amount": "M001620537",
+    "infrastructure_investment_ytd_amount": "M004385771",
+    "real_estate_investment_ytd_amount": "M001620723"
+  },
+  "notes": [
+    "一致预期在所有预测生成、拟合、调参、候选排序和组合权重完成后才合并评估。",
+    "同月发布的投资分项在预测月只使用滞后一期，禁止把当月分项实际值放入历史预测。",
+    "固定资产投资为月度发布的年内累计同比，不是单月同比；1月不单列，2月为1-2月累计口径。"
+  ]
+}
