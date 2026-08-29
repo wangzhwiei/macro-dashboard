@@ -139,8 +139,42 @@ FIXED_FACTOR_NAMES = (
     "asphalt_rate",
 )
 FIXED_FACTOR_MINIMUM_AVAILABLE = 2
-FIXED_FACTOR_FIT_WINDOW = 48
-FIXED_FACTOR_RIDGE_ALPHA = 64.0
+FIXED_FACTOR_FIT_WINDOW = 36
+FIXED_FACTOR_RIDGE_ALPHA = 32.0
+STATISTICAL_CARRY_NAME = "known_fixed_volume_carry"
+
+# Fixed GF-report proxy basket.  The factor identities never change by month.
+# The 19 series are grouped into five production/demand channels and each
+# channel contributes three distinct pieces of information: level, breadth of
+# YoY acceleration, and standardized acceleration.  Official product-output
+# series released with industrial value (including official generation YoY)
+# are intentionally excluded to prevent same-release leakage.
+REPORT_PROXY_EXTRA = {
+    "newhome": {"dashboard": "newhome_30c", "family": "demand", "kind": "volume"},
+    "rebar_consumption": {"dashboard": None, "family": "black", "kind": "volume"},
+    "asphalt_rate": {"dashboard": "asphalt_rate", "family": "demand", "kind": "rate"},
+    "steel_inventory": {"dashboard": "steel_inventory", "family": "black", "kind": "volume"},
+    "car_retail_yoy": {"dashboard": "car_retail_yoy", "family": "auto", "kind": "yoy"},
+}
+REPORT_FAMILIES = ("black", "chemical", "auto", "energy", "demand")
+REPORT_PROXY_FACTOR_NAMES = (*FEATURES.keys(), *REPORT_PROXY_EXTRA.keys())
+PRODUCTION_FACTOR_NAMES = tuple(dict.fromkeys((*FIXED_FACTOR_NAMES, *REPORT_PROXY_FACTOR_NAMES)))
+REPORT_HYBRID_FEATURES = tuple(
+    [f"{family}_breadth" for family in REPORT_FAMILIES]
+    + [f"{family}_level" for family in REPORT_FAMILIES]
+    + [f"{family}_acceleration" for family in REPORT_FAMILIES]
+)
+REPORT_HYBRID_TRAIN_WINDOW = 48
+REPORT_HYBRID_RIDGE_ALPHA = 32.0
+REPORT_HYBRID_MIN_TRAIN = 18
+REPORT_ONLINE_MIN_ERRORS = 6
+INDIVIDUAL_REPORT_TRAIN_WINDOW = 24
+INDIVIDUAL_REPORT_RIDGE_ALPHA = 512.0
+INDIVIDUAL_REPORT_MIN_TRAIN = 24
+INDIVIDUAL_REPORT_INITIAL_WEIGHT = 0.25
+CALIBRATION_OVERALL_WEIGHT = 0.75
+CALIBRATION_SAME_MONTH_WEIGHT = 0.25
+CALIBRATION_MIN_ERRORS = 6
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -251,6 +285,9 @@ def build_bottom_up_signals(raw: dict[str, pd.Series], dashboard: dict[str, Any]
         raw_name = config.get("raw")
         if raw_name in raw:
             values = merge_series(raw[raw_name], values)
+        if values.empty:
+            signals[name] = pd.Series(dtype=float)
+            continue
         monthly = values.resample("ME").mean()
         if config["kind"] == "yoy":
             signal = monthly
@@ -258,6 +295,29 @@ def build_bottom_up_signals(raw: dict[str, pd.Series], dashboard: dict[str, Any]
             signal = monthly.diff(12)
         else:
             signal = monthly.pct_change(12, fill_method=None) * 100.0
+        # The official February target is January-February cumulative growth,
+        # not a February-only monthly observation.  Match the factor window to
+        # that release by recomputing every February from the full two-month
+        # high-frequency sample and the comparable prior-year sample.
+        for year in range(values.index.min().year + 1, values.index.max().year + 1):
+            february_end = pd.Timestamp(year, 2, 1) + pd.offsets.MonthEnd(0)
+            current = values.loc[
+                (values.index >= pd.Timestamp(year, 1, 1))
+                & (values.index <= february_end)
+            ].mean()
+            prior = values.loc[
+                (values.index >= pd.Timestamp(year - 1, 1, 1))
+                & (values.index <= pd.Timestamp(year - 1, 2, 1) + pd.offsets.MonthEnd(0))
+            ].mean()
+            if pd.isna(current):
+                continue
+            if config["kind"] == "yoy":
+                combined = current
+            elif config["kind"] == "rate":
+                combined = current - prior if pd.notna(prior) else np.nan
+            else:
+                combined = (current / prior - 1.0) * 100.0 if pd.notna(prior) and prior != 0 else np.nan
+            signal.loc[february_end] = combined
         signals[name] = signal
     return pd.DataFrame(signals).replace([np.inf, -np.inf], np.nan).sort_index()
 
@@ -356,6 +416,392 @@ def fixed_factor_walk_forward(target: pd.Series, signals: pd.DataFrame) -> pd.Se
             factors,
         )
     return pd.Series(predictions, dtype=float).sort_index()
+
+
+def known_fixed_volume_carry(industrial_mom_sa: pd.Series) -> pd.Series:
+    """Known contribution of the preceding 11 months to current YoY growth.
+
+    For month t, the index ratio I[t-1] / I[t-12] contains only observations
+    released before t.  February is intentionally blank because its official
+    target is a January-February cumulative release and the January MoM value
+    is not independently available before that release.
+    """
+    level = (1.0 + industrial_mom_sa.sort_index() / 100.0).cumprod() * 100.0
+    calendar = pd.date_range(
+        level.index.min(),
+        level.index.max() + pd.offsets.MonthEnd(1),
+        freq="ME",
+    )
+    level = level.reindex(calendar)
+    carry = (level.shift(1) / level.shift(12) - 1.0) * 100.0
+    carry.loc[carry.index.month == 2] = np.nan
+    return carry.rename(STATISTICAL_CARRY_NAME)
+
+
+def statistical_bridge_walk_forward(
+    target: pd.Series,
+    signals: pd.DataFrame,
+    industrial_mom_sa: pd.Series,
+) -> tuple[pd.Series, pd.Series]:
+    """Fixed-factor bridge with an explicit, already-known base contribution.
+
+    Non-February forecasts combine the preceding 11-month fixed-volume carry
+    with the unchanged five current high-frequency production signals.
+    February falls back to the same fixed factors computed over January and
+    February together, avoiding same-release MoM leakage.
+    """
+    carry = known_fixed_volume_carry(industrial_mom_sa)
+    factors = list(FIXED_FACTOR_NAMES)
+    bridge_columns = [STATISTICAL_CARRY_NAME, *factors]
+    calendar = pd.date_range(
+        min(target.index.min(), signals.index.min(), carry.index.min()),
+        max(target.index.max(), signals.index.max(), carry.index.max()),
+        freq="ME",
+    )
+    frame = signals.reindex(calendar)
+    frame[STATISTICAL_CARRY_NAME] = carry.reindex(calendar)
+    frame["target"] = target.reindex(calendar)
+    predictions: dict[pd.Timestamp, float] = {}
+    for day in calendar[calendar >= BACKTEST_START]:
+        columns = factors if day.month == 2 else bridge_columns
+        if frame.loc[day, columns].notna().sum() < FIXED_FACTOR_MINIMUM_AVAILABLE:
+            continue
+        train = frame.loc[frame.index < day].dropna(subset=["target"])
+        train = train.loc[
+            train[columns].notna().sum(axis=1) >= FIXED_FACTOR_MINIMUM_AVAILABLE
+        ].iloc[-FIXED_FACTOR_FIT_WINDOW:]
+        if len(train) < CORRELATION_MIN_OBSERVATIONS:
+            continue
+        predictions[day] = ridge_fit_predict(
+            train,
+            frame.loc[day],
+            FIXED_FACTOR_RIDGE_ALPHA,
+            columns,
+        )
+    return pd.Series(predictions, dtype=float).sort_index(), carry
+
+
+def build_report_family_features(
+    raw: dict[str, pd.Series],
+    model_inputs: dict[str, Any],
+    dashboard: dict[str, Any],
+) -> pd.DataFrame:
+    """Build the fixed 19-series GF-style level/breadth/acceleration panel."""
+    legacy = model_inputs.get("raw", {})
+    report_raw = dict(raw)
+    report_raw.update({
+        "newhome": merge_series(
+            series_from_rows(legacy.get("30城商品房成交面积", {}).get("data", [])),
+            dashboard_series(dashboard, "newhome_30c"),
+        ),
+        "rebar_consumption": series_from_rows(
+            legacy.get("螺纹钢表观消费", {}).get("data", [])
+        ),
+        "asphalt_rate": dashboard_series(dashboard, "asphalt_rate"),
+        "steel_inventory": dashboard_series(dashboard, "steel_inventory"),
+        "car_retail_yoy": dashboard_series(dashboard, "car_retail_yoy"),
+    })
+    configurations = {
+        **{name: {"family": item["family"], "kind": item["kind"]} for name, item in FEATURES.items()},
+        **REPORT_PROXY_EXTRA,
+    }
+    signals: dict[str, pd.Series] = {}
+    for name in REPORT_PROXY_FACTOR_NAMES:
+        values = report_raw.get(name, pd.Series(dtype=float))
+        if values.empty:
+            signals[name] = pd.Series(dtype=float)
+            continue
+        monthly = values.resample("ME").mean()
+        kind = configurations[name]["kind"]
+        if kind == "yoy":
+            signals[name] = monthly
+        elif kind == "rate":
+            signals[name] = monthly.diff(12)
+        else:
+            signals[name] = monthly.pct_change(12, fill_method=None) * 100.0
+    signal_frame = pd.DataFrame(signals).replace([np.inf, -np.inf], np.nan).sort_index()
+    direction = signal_frame.diff().gt(0).where(signal_frame.diff().notna())
+    rolling_mean = signal_frame.rolling(
+        STANDARDIZATION_WINDOW,
+        min_periods=STANDARDIZATION_MIN_PERIODS,
+    ).mean()
+    rolling_std = signal_frame.rolling(
+        STANDARDIZATION_WINDOW,
+        min_periods=STANDARDIZATION_MIN_PERIODS,
+    ).std().replace(0, np.nan)
+    standardized = (signal_frame - rolling_mean) / rolling_std
+    result = pd.DataFrame(index=signal_frame.index)
+    for family in REPORT_FAMILIES:
+        columns = [
+            name for name in REPORT_PROXY_FACTOR_NAMES
+            if configurations[name]["family"] == family
+        ]
+        result[f"{family}_breadth"] = direction[columns].mean(axis=1, skipna=True) * 100.0
+        result[f"{family}_level"] = standardized[columns].mean(axis=1, skipna=True)
+        result[f"{family}_acceleration"] = standardized[columns].diff().mean(axis=1, skipna=True)
+    return result
+
+
+def build_individual_report_features(
+    raw: dict[str, pd.Series],
+    model_inputs: dict[str, Any],
+    dashboard: dict[str, Any],
+) -> pd.DataFrame:
+    """Keep the fixed report proxies separate so opposite sector moves survive.
+
+    Each series is converted to a year-on-year production signal and then
+    standardized against observations strictly before the current month.  The
+    factor identities are fixed; no monthly correlation ranking is performed.
+    """
+    legacy = model_inputs.get("raw", {})
+    report_raw = dict(raw)
+    report_raw.update({
+        "newhome": merge_series(
+            series_from_rows(legacy.get("30城商品房成交面积", {}).get("data", [])),
+            dashboard_series(dashboard, "newhome_30c"),
+        ),
+        "rebar_consumption": series_from_rows(
+            legacy.get("螺纹钢表观消费", {}).get("data", [])
+        ),
+        "asphalt_rate": dashboard_series(dashboard, "asphalt_rate"),
+        "steel_inventory": dashboard_series(dashboard, "steel_inventory"),
+        "car_retail_yoy": dashboard_series(dashboard, "car_retail_yoy"),
+    })
+    configurations = {
+        **{name: {"family": item["family"], "kind": item["kind"]} for name, item in FEATURES.items()},
+        **REPORT_PROXY_EXTRA,
+    }
+    transformed: dict[str, pd.Series] = {}
+    for name in REPORT_PROXY_FACTOR_NAMES:
+        values = report_raw.get(name, pd.Series(dtype=float))
+        if values.empty:
+            continue
+        monthly = values.resample("ME").mean()
+        kind = configurations[name]["kind"]
+        if kind == "yoy":
+            transformed[name] = monthly
+        elif kind == "rate":
+            transformed[name] = monthly.diff(12)
+        else:
+            transformed[name] = monthly.pct_change(12, fill_method=None) * 100.0
+    panel = pd.DataFrame(transformed).replace([np.inf, -np.inf], np.nan).sort_index()
+    result: dict[str, pd.Series] = {}
+    for name in panel.columns:
+        prior = panel[name].shift(1)
+        rolling_mean = prior.rolling(
+            STANDARDIZATION_WINDOW,
+            min_periods=STANDARDIZATION_MIN_PERIODS,
+        ).mean()
+        rolling_std = prior.rolling(
+            STANDARDIZATION_WINDOW,
+            min_periods=STANDARDIZATION_MIN_PERIODS,
+        ).std().replace(0, np.nan)
+        result[f"{name}_level"] = ((panel[name] - rolling_mean) / rolling_std).clip(-3.0, 3.0)
+    return pd.DataFrame(result).replace([np.inf, -np.inf], np.nan).sort_index()
+
+
+def individual_residual_walk_forward(
+    target: pd.Series,
+    carry: pd.Series,
+    individual_features: pd.DataFrame,
+    forecast_index: pd.Index,
+) -> pd.Series:
+    """Fit a high-shrinkage fixed-factor challenger using only prior targets."""
+    calendar = individual_features.index.union(target.index).union(carry.index).sort_values()
+    frame = individual_features.reindex(calendar)
+    frame["carry"] = carry.reindex(calendar)
+    frame["target_level"] = target.reindex(calendar)
+    columns = list(individual_features.columns)
+    minimum_available = max(4, len(columns) // 3)
+    predictions: dict[pd.Timestamp, float] = {}
+    for day in forecast_index:
+        if day not in frame.index or frame.loc[day, columns].notna().sum() < minimum_available:
+            continue
+        if day.month == 2:
+            train = frame.loc[frame.index < day].dropna(subset=["target_level"])
+            train = train.loc[
+                train[columns].notna().sum(axis=1) >= minimum_available
+            ].iloc[-INDIVIDUAL_REPORT_TRAIN_WINDOW:]
+            if len(train) < INDIVIDUAL_REPORT_MIN_TRAIN:
+                continue
+            fit = train.copy()
+            fit["target"] = fit["target_level"]
+            predictions[day] = ridge_fit_predict(
+                fit,
+                frame.loc[day],
+                INDIVIDUAL_REPORT_RIDGE_ALPHA,
+                columns,
+            )
+            continue
+        if pd.isna(frame.loc[day, "carry"]):
+            continue
+        train = frame.loc[
+            (frame.index < day) & (frame.index >= BRIDGE_TRAIN_START)
+        ].dropna(subset=["target_level", "carry"])
+        train = train.loc[
+            train[columns].notna().sum(axis=1) >= minimum_available
+        ].iloc[-INDIVIDUAL_REPORT_TRAIN_WINDOW:]
+        if len(train) < INDIVIDUAL_REPORT_MIN_TRAIN:
+            continue
+        fit = train.copy()
+        fit["target"] = fit["target_level"] - fit["carry"]
+        increment = ridge_fit_predict(
+            fit,
+            frame.loc[day],
+            INDIVIDUAL_REPORT_RIDGE_ALPHA,
+            columns,
+        )
+        predictions[day] = float(frame.loc[day, "carry"] + increment)
+    return pd.Series(predictions, dtype=float).sort_index()
+
+
+def challenger_online_blend(
+    base: pd.Series,
+    challenger: pd.Series,
+    target: pd.Series,
+) -> tuple[pd.Series, pd.Series]:
+    """Add a challenger only when its prior OOS errors justify the weight."""
+    blended = base.copy()
+    weights: dict[pd.Timestamp, float] = {}
+    common = base.index.intersection(challenger.index)
+    for day in common:
+        history_days = common[
+            (common < day) & target.reindex(common).notna().to_numpy()
+        ]
+        if len(history_days) < REPORT_ONLINE_MIN_ERRORS:
+            weight = INDIVIDUAL_REPORT_INITIAL_WEIGHT
+        else:
+            delta = challenger.reindex(history_days) - base.reindex(history_days)
+            realized_gap = target.reindex(history_days) - base.reindex(history_days)
+            valid = pd.concat(
+                [delta.rename("delta"), realized_gap.rename("gap")], axis=1
+            ).dropna()
+            denominator = float((valid["delta"] ** 2).sum())
+            weight = (
+                float((valid["delta"] * valid["gap"]).sum() / denominator)
+                if denominator else 0.0
+            )
+            weight = float(np.clip(weight, 0.0, 1.0))
+        weights[day] = weight
+        blended.loc[day] = float(
+            base.loc[day] + weight * (challenger.loc[day] - base.loc[day])
+        )
+    return blended.sort_index(), pd.Series(weights, dtype=float).sort_index()
+
+
+def report_residual_walk_forward(
+    target: pd.Series,
+    carry: pd.Series,
+    report_features: pd.DataFrame,
+    base_prediction: pd.Series,
+) -> tuple[pd.Series, pd.Series, pd.Series]:
+    """Estimate the current-month increment, then combine using past OOS errors.
+
+    The carry is an accounting offset and is never shrunk by the regression.
+    The online blend weight for month t is estimated only from forecast errors
+    whose targets were observable before t.
+    """
+    calendar = pd.date_range(
+        min(target.index.min(), carry.index.min(), report_features.index.min()),
+        max(target.index.max(), carry.index.max(), report_features.index.max()),
+        freq="ME",
+    )
+    frame = report_features.reindex(calendar)
+    frame["carry"] = carry.reindex(calendar)
+    frame["target"] = target.reindex(calendar)
+    columns = list(REPORT_HYBRID_FEATURES)
+    pure: dict[pd.Timestamp, float] = {}
+    for day in base_prediction.index:
+        if day.month == 2:
+            pure[day] = float(base_prediction.loc[day])
+            continue
+        if day not in frame.index or pd.isna(frame.loc[day, "carry"]):
+            continue
+        train = frame.loc[
+            (frame.index < day) & (frame.index >= BRIDGE_TRAIN_START)
+        ].dropna(subset=["target", "carry"])
+        minimum_available = max(2, len(columns) // 3)
+        train = train.loc[
+            train[columns].notna().sum(axis=1) >= minimum_available
+        ].iloc[-REPORT_HYBRID_TRAIN_WINDOW:]
+        if len(train) < REPORT_HYBRID_MIN_TRAIN:
+            continue
+        train = train.copy()
+        train["response"] = train["target"] - train["carry"]
+        current_increment = ridge_fit_predict(
+            train.rename(columns={"target": "target_level", "response": "target"}),
+            frame.loc[day],
+            REPORT_HYBRID_RIDGE_ALPHA,
+            columns,
+        )
+        pure[day] = float(frame.loc[day, "carry"] + current_increment)
+    pure_prediction = pd.Series(pure, dtype=float).sort_index()
+
+    blended: dict[pd.Timestamp, float] = {}
+    weights: dict[pd.Timestamp, float] = {}
+    for day in pure_prediction.index:
+        history_days = pure_prediction.index[
+            (pure_prediction.index < day)
+            & target.reindex(pure_prediction.index).notna().to_numpy()
+        ]
+        if len(history_days) < REPORT_ONLINE_MIN_ERRORS:
+            weight = 0.5
+        else:
+            base_history = base_prediction.reindex(history_days)
+            delta = pure_prediction.reindex(history_days) - base_history
+            realized_gap = target.reindex(history_days) - base_history
+            valid = pd.concat(
+                [delta.rename("delta"), realized_gap.rename("gap")], axis=1
+            ).dropna()
+            denominator = float((valid["delta"] ** 2).sum())
+            weight = (
+                float((valid["delta"] * valid["gap"]).sum() / denominator)
+                if denominator else 0.0
+            )
+            weight = float(np.clip(weight, 0.0, 1.0))
+        weights[day] = weight
+        blended[day] = float(
+            base_prediction.loc[day]
+            + weight * (pure_prediction.loc[day] - base_prediction.loc[day])
+        )
+    return (
+        pd.Series(blended, dtype=float).sort_index(),
+        pure_prediction,
+        pd.Series(weights, dtype=float).sort_index(),
+    )
+
+
+def historical_error_calibration(
+    prediction: pd.Series,
+    target: pd.Series,
+) -> tuple[pd.Series, pd.Series]:
+    """Correct systematic and calendar bias using prior OOS errors only."""
+    calibrated: dict[pd.Timestamp, float] = {}
+    corrections: dict[pd.Timestamp, float] = {}
+    for day, value in prediction.sort_index().items():
+        prior_days = prediction.index[prediction.index < day]
+        prior_errors = (
+            target.reindex(prior_days) - prediction.reindex(prior_days)
+        ).dropna()
+        overall = (
+            float(prior_errors.mean())
+            if len(prior_errors) >= CALIBRATION_MIN_ERRORS else 0.0
+        )
+        same_month_days = prior_days[prior_days.month == day.month]
+        same_month_errors = (
+            target.reindex(same_month_days) - prediction.reindex(same_month_days)
+        ).dropna()
+        same_month = float(same_month_errors.iloc[-1]) if len(same_month_errors) else 0.0
+        correction = (
+            CALIBRATION_OVERALL_WEIGHT * overall
+            + CALIBRATION_SAME_MONTH_WEIGHT * same_month
+        )
+        corrections[day] = correction
+        calibrated[day] = float(value + correction)
+    return (
+        pd.Series(calibrated, dtype=float).sort_index(),
+        pd.Series(corrections, dtype=float).sort_index(),
+    )
 
 
 def build_bottom_up_monthly_changes(raw: dict[str, pd.Series], dashboard: dict[str, Any]) -> pd.DataFrame:
@@ -638,6 +1084,31 @@ def sharp_change_metrics(prediction: pd.Series, actual: pd.Series, threshold: fl
     }
 
 
+def volatility_metrics(prediction: pd.Series, actual: pd.Series, threshold: float = 1.0) -> dict[str, Any]:
+    """Measure whether a model follows month-to-month movement and amplitude."""
+    joined = pd.concat(
+        [prediction.rename("prediction"), actual.rename("actual")],
+        axis=1,
+        sort=True,
+    ).dropna()
+    changes = joined.diff().dropna()
+    sharp = changes.loc[changes["actual"].abs() >= threshold]
+    level_ratio = joined["prediction"].std() / joined["actual"].std()
+    change_ratio = changes["prediction"].std() / changes["actual"].std()
+    change_correlation = changes["prediction"].corr(changes["actual"])
+    change_direction = np.sign(changes["prediction"]) == np.sign(changes["actual"])
+    amplitude = sharp["prediction"].abs() / sharp["actual"].abs()
+    return {
+        "levelStdRatio": round(float(level_ratio), 6) if pd.notna(level_ratio) else None,
+        "changeStdRatio": round(float(change_ratio), 6) if pd.notna(change_ratio) else None,
+        "changeCorrelation": round(float(change_correlation), 6) if pd.notna(change_correlation) else None,
+        "changeDirectionHitPct": round(float(change_direction.mean() * 100.0), 2) if len(changes) else None,
+        "sharpChangeThresholdPctPoint": threshold,
+        "sharpChangeObservations": int(len(sharp)),
+        "sharpMedianAmplitudeCapture": round(float(amplitude.median()), 6) if len(amplitude) else None,
+    }
+
+
 def project_simplex(values: np.ndarray) -> np.ndarray:
     """Project weights onto the non-negative unit simplex."""
     ordered = np.sort(values)[::-1]
@@ -908,14 +1379,38 @@ def build_legacy(source_path: Path, model_inputs_path: Path, dashboard_path: Pat
 
 
 def build(source_path: Path, model_inputs_path: Path, dashboard_path: Path, production_path: Path) -> dict[str, Any]:
-    """Build the production nowcast with an unchanged five-factor set."""
+    """Build the production nowcast from fixed-volume carry and fixed factors."""
     source, model_inputs, dashboard = map(read_json, (source_path, model_inputs_path, dashboard_path))
     production = read_json(production_path) if production_path.exists() else {}
     target = monthly_target(source)
     consensus = series_from_rows(source["series"]["consensus"]["observations"])
     raw, provenance = build_raw_features(model_inputs, dashboard, production)
     signals = build_bottom_up_signals(raw, dashboard)
-    prediction = fixed_factor_walk_forward(target, signals)
+    industrial_mom_sa = series_from_rows(source["series"]["actualMomSa"]["observations"])
+    base_prediction, carry = statistical_bridge_walk_forward(target, signals, industrial_mom_sa)
+    report_features = build_report_family_features(raw, model_inputs, dashboard)
+    family_prediction, report_pure, report_weights = report_residual_walk_forward(
+        target,
+        carry,
+        report_features,
+        base_prediction,
+    )
+    individual_features = build_individual_report_features(raw, model_inputs, dashboard)
+    individual_prediction = individual_residual_walk_forward(
+        target,
+        carry,
+        individual_features,
+        family_prediction.index,
+    )
+    uncalibrated_prediction, individual_weights = challenger_online_blend(
+        family_prediction,
+        individual_prediction,
+        target,
+    )
+    prediction, calibration_correction = historical_error_calibration(
+        uncalibrated_prediction,
+        target,
+    )
     _, accounting = accounting_reconstruction(target, production)
 
     comparable = pd.concat(
@@ -934,8 +1429,37 @@ def build(source_path: Path, model_inputs_path: Path, dashboard_path: Path, prod
         rows.append({
             "date": day.date().isoformat(),
             "model": round(float(prediction.loc[day]), 6),
-            "selectedFactors": list(FIXED_FACTOR_NAMES),
-            "availableFactors": [name for name in FIXED_FACTOR_NAMES if pd.notna(signals.loc[day, name])],
+            "selectedFactors": list(FIXED_FACTOR_NAMES)
+            if day.month == 2 else [
+                STATISTICAL_CARRY_NAME,
+                *PRODUCTION_FACTOR_NAMES,
+            ],
+            "availableFactors": [name for name in FIXED_FACTOR_NAMES if pd.notna(signals.loc[day, name])]
+            + ([STATISTICAL_CARRY_NAME] if day in carry.index and pd.notna(carry.loc[day]) else []),
+            "availableReportFeatureChannels": [
+                name for name in REPORT_HYBRID_FEATURES
+                if day in report_features.index and pd.notna(report_features.loc[day, name])
+            ],
+            "availableIndividualReportFactors": [
+                name for name in individual_features.columns
+                if day in individual_features.index and pd.notna(individual_features.loc[day, name])
+            ],
+            "knownFixedVolumeCarry": round(float(carry.loc[day]), 6)
+            if day in carry.index and pd.notna(carry.loc[day]) else None,
+            "baseModel": round(float(base_prediction.loc[day]), 6)
+            if day in base_prediction.index else None,
+            "uncalibratedModel": round(float(uncalibrated_prediction.loc[day]), 6)
+            if day in uncalibrated_prediction.index else None,
+            "historicalErrorCorrection": round(float(calibration_correction.loc[day]), 6)
+            if day in calibration_correction.index else None,
+            "reportResidualModel": round(float(report_pure.loc[day]), 6)
+            if day in report_pure.index else None,
+            "reportOnlineWeight": round(float(report_weights.loc[day]), 6)
+            if day in report_weights.index else None,
+            "individualResidualModel": round(float(individual_prediction.loc[day]), 6)
+            if day in individual_prediction.index else None,
+            "individualOnlineWeight": round(float(individual_weights.loc[day]), 6)
+            if day in individual_weights.index else None,
             "consensus": round(float(consensus.loc[day]), 6) if day in consensus.index else None,
             "actual": round(float(target.loc[day]), 6) if day in target.index else None,
             "kind": "walk_forward" if day in target.index else "live_nowcast",
@@ -971,9 +1495,9 @@ def build(source_path: Path, model_inputs_path: Path, dashboard_path: Path, prod
             if pd.notna(signals.loc[latest_day, name]) else None,
         })
     return {
-        "schemaVersion": 8,
+        "schemaVersion": 12,
         "target": "规模以上工业增加值同比；2月使用1-2月累计同比，1月不单列",
-        "method": "strict walk-forward ridge model using an unchanged five-factor high-frequency production set",
+        "method": "strict walk-forward fixed-volume carry plus fixed 19-series family and individual residual bridges, two prior-error-only online weights and historical calibration",
         "consensusPolicy": "一致预期仅在模型预测完成后合并用于对比，不参与因子、筛选、拟合或参数选择",
         "asOf": max((item["end"] for item in provenance.values() if item["end"]), default=None),
         "latest": latest,
@@ -981,6 +1505,11 @@ def build(source_path: Path, model_inputs_path: Path, dashboard_path: Path, prod
         "modelSpecification": {
             "candidateCount": len(BOTTOM_UP_CANDIDATES),
             "fixedFactors": list(FIXED_FACTOR_NAMES),
+            "reportProxyFactors": list(REPORT_PROXY_FACTOR_NAMES),
+            "reportFamilies": list(REPORT_FAMILIES),
+            "reportHybridFeatures": list(REPORT_HYBRID_FEATURES),
+            "individualReportFeatures": list(individual_features.columns),
+            "statisticalCarryFactor": STATISTICAL_CARRY_NAME,
             "fixedFactorFamilies": [BOTTOM_UP_CANDIDATES[name]["family"] for name in FIXED_FACTOR_NAMES],
             "signalConversion": {
                 "volume": "monthly mean year-on-year percent change",
@@ -989,17 +1518,37 @@ def build(source_path: Path, model_inputs_path: Path, dashboard_path: Path, prod
             },
             "factorSelection": "fixed before walk-forward evaluation from economic coverage: power, ferrous, chemical, auto and demand",
             "monthlyFactorReplacement": False,
+            "targetDecomposition": "for non-February month t, I[t-1] / I[t-12] - 1 is the already-known fixed-volume carry; current high-frequency factors estimate the remaining current-month production contribution",
+            "knownCarryConstruction": "cumulate official seasonally-adjusted industrial MoM into a fixed-volume index, then calculate I[t-1] / I[t-12] - 1; no current-month MoM is used",
+            "februaryTreatment": "the target and all fixed high-frequency signals are calculated over January-February together; the fixed-volume carry is excluded because January MoM is not independently available before the combined release",
+            "officialMomProviderId": source["series"]["actualMomSa"].get("providerId"),
             "coefficientTiming": "coefficients for month t use industrial-value targets strictly before t",
             "minimumPriorObservations": CORRELATION_MIN_OBSERVATIONS,
             "minimumAvailableFactors": FIXED_FACTOR_MINIMUM_AVAILABLE,
             "fitWindowMonths": FIXED_FACTOR_FIT_WINDOW,
             "ridgeAlpha": FIXED_FACTOR_RIDGE_ALPHA,
+            "reportResidualTrainWindowMonths": REPORT_HYBRID_TRAIN_WINDOW,
+            "reportResidualRidgeAlpha": REPORT_HYBRID_RIDGE_ALPHA,
+            "reportOnlineWeight": "estimated for month t from prior strict walk-forward forecast errors only and constrained to [0,1]",
+            "individualResidualTrainWindowMonths": INDIVIDUAL_REPORT_TRAIN_WINDOW,
+            "individualResidualRidgeAlpha": INDIVIDUAL_REPORT_RIDGE_ALPHA,
+            "individualInitialWeight": INDIVIDUAL_REPORT_INITIAL_WEIGHT,
+            "individualOnlineWeight": "the fixed individual-factor challenger is activated only after 24 prior training observations; its month-t weight uses prior OOS errors only and is constrained to [0,1]",
+            "historicalErrorCalibration": "75% expanding mean prior OOS error plus 25% most recent same-calendar-month OOS error; no previous-month target or error is used",
+            "calibrationOverallWeight": CALIBRATION_OVERALL_WEIGHT,
+            "calibrationSameMonthWeight": CALIBRATION_SAME_MONTH_WEIGHT,
+            "calibrationMinimumPriorErrors": CALIBRATION_MIN_ERRORS,
             "laggedIndustrialValueIncluded": False,
             "persistenceAnchorWeight": 0.0,
             "consensusIncluded": False,
         },
         "backtest": metrics(prediction, target),
+        "preCalibrationBacktest": metrics(uncalibrated_prediction, target),
+        "baseModelBacktest": metrics(base_prediction, target),
         "sharpChangeBacktest": sharp_change_metrics(prediction, target),
+        "volatilityBacktest": volatility_metrics(prediction, target),
+        "preCalibrationVolatilityBacktest": volatility_metrics(uncalibrated_prediction, target),
+        "baseModelVolatilityBacktest": volatility_metrics(base_prediction, target),
         "comparisonOnCommonSample": comparison,
         "history": rows,
         "fixedFactorResearch": {
