@@ -18,6 +18,12 @@ DEFAULT_MODEL_INPUTS = ROOT / "data" / "forecast-model" / "model_inputs.json"
 DEFAULT_DASHBOARD = ROOT / "public" / "data" / "dashboard.json"
 DEFAULT_PRODUCTION_INPUTS = ROOT / "data" / "industrial-value-model" / "production_inputs.json"
 DEFAULT_OUTPUT = ROOT / "data" / "industrial-value-model" / "forecast_results.json"
+MODEL_VERSION = "industrial-fixed-carry-hf-v1.0.0"
+MODEL_FROZEN_AT = "2026-08-29"
+MODEL_FREEZE_POLICY = (
+    "factor identities, transformations, training windows, shrinkage, online weights and "
+    "historical calibration are frozen; future updates may add only newly available observations"
+)
 BACKTEST_START = pd.Timestamp("2023-03-31")
 BRIDGE_TRAIN_START = pd.Timestamp("2020-01-31")
 BRIDGE_TRAIN_WINDOW = 48
@@ -1496,6 +1502,10 @@ def build(source_path: Path, model_inputs_path: Path, dashboard_path: Path, prod
         })
     return {
         "schemaVersion": 12,
+        "modelVersion": MODEL_VERSION,
+        "modelFrozen": True,
+        "modelFrozenAt": MODEL_FROZEN_AT,
+        "modelFreezePolicy": MODEL_FREEZE_POLICY,
         "target": "规模以上工业增加值同比；2月使用1-2月累计同比，1月不单列",
         "method": "strict walk-forward fixed-volume carry plus fixed 19-series family and individual residual bridges, two prior-error-only online weights and historical calibration",
         "consensusPolicy": "一致预期仅在模型预测完成后合并用于对比，不参与因子、筛选、拟合或参数选择",

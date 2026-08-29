@@ -119,6 +119,32 @@ class ForecastIntegrityTests(unittest.TestCase):
         for key in ("m2_yoy", "new_rmb_loans", "social_financing"):
             self.assertIn(key, component)
 
+    def test_frozen_industrial_value_model_is_published(self) -> None:
+        key = "industrial_value"
+        lock = self.data["modelLocks"]["industrialValue"]
+        self.assertEqual(lock["version"], "industrial-fixed-carry-hf-v1.0.0")
+        self.assertEqual(lock["frozenAt"], "2026-08-29")
+        self.assertEqual(lock["targets"], [key])
+        self.assertEqual(self.data["models"][key]["status"], "READY")
+        self.assertTrue(math.isclose(self.data["metrics"][key]["rmse"], 0.663432, abs_tol=1e-6))
+        self.assertTrue(math.isclose(self.data["metrics"][key]["directionHit"], 72.73, abs_tol=1e-6))
+        self.assertTrue(math.isclose(self.data["metrics"][key]["benchmarkRmse"], 1.119724, abs_tol=1e-6))
+        latest = self.data["history"][key][-1]
+        self.assertEqual(latest["date"], "2026-08-31")
+        self.assertEqual(latest["forecastKind"], "live_nowcast")
+        self.assertIsNone(latest["actual"])
+        self.assertTrue(math.isclose(latest["forecast"], 4.52756, abs_tol=1e-6))
+        inputs = self.data["highFrequency"]["工业"]
+        self.assertEqual(
+            {row["id"] for row in inputs},
+            {"power_coal", "blast_furnace", "rebar_rate", "pta_rate", "methanol_rate", "car_wholesale", "car_retail"},
+        )
+        self.assertFalse(self.data["industrialValueModel"]["laggedIndustrialValueIncluded"])
+        self.assertFalse(self.data["industrialValueModel"]["monthlyFactorReplacement"])
+        component = (ROOT / "app" / "ForecastPanelV3.tsx").read_text(encoding="utf-8")
+        self.assertIn("industrial_value", component)
+        self.assertIn("工业增加值", component)
+
 
 if __name__ == "__main__":
     unittest.main()
