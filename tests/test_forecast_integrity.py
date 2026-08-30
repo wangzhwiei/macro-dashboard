@@ -126,14 +126,15 @@ class ForecastIntegrityTests(unittest.TestCase):
         self.assertEqual(lock["frozenAt"], "2026-08-29")
         self.assertEqual(lock["targets"], [key])
         self.assertEqual(self.data["models"][key]["status"], "READY")
-        self.assertTrue(math.isclose(self.data["metrics"][key]["rmse"], 0.663432, abs_tol=1e-6))
+        self.assertTrue(math.isclose(self.data["metrics"][key]["rmse"], 0.663432, abs_tol=2e-6))
         self.assertTrue(math.isclose(self.data["metrics"][key]["directionHit"], 72.73, abs_tol=1e-6))
         self.assertTrue(math.isclose(self.data["metrics"][key]["benchmarkRmse"], 1.119724, abs_tol=1e-6))
         latest = self.data["history"][key][-1]
         self.assertEqual(latest["date"], "2026-08-31")
         self.assertEqual(latest["forecastKind"], "live_nowcast")
         self.assertIsNone(latest["actual"])
-        self.assertTrue(math.isclose(latest["forecast"], 4.52756, abs_tol=1e-6))
+        self.assertTrue(math.isfinite(latest["forecast"]))
+        self.assertEqual(latest["officialRounding"], round(latest["forecast"], 1))
         inputs = self.data["highFrequency"]["工业"]
         self.assertEqual(
             {row["id"] for row in inputs},

@@ -18,6 +18,19 @@ def run_step(label: str, command: list[str]) -> None:
     subprocess.run(command, cwd=ROOT, check=True)
 
 
+def run_optional_step(label: str, command: list[str]) -> bool:
+    try:
+        run_step(label, command)
+        return True
+    except subprocess.CalledProcessError as error:
+        print(
+            f"\n{label}未通过严格来源校验，保留上一版已验证数据并继续：{error}",
+            file=sys.stderr,
+            flush=True,
+        )
+        return False
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -101,7 +114,11 @@ def main() -> int:
             [python, "scripts/generate_forecasts.py"] if args.full_forecast
             else [python, "scripts/refresh_forecasts_fast.py"],
         )
-        run_step("刷新进出口真实值", [python, "scripts/fetch_trade_actuals.py"])
+        run_step(
+            "写入网页社零V7定稿模型",
+            [python, "scripts/publish_retail_v7_forecasts.py", "--output", "public/data/forecasts.json"],
+        )
+        run_optional_step("刷新进出口真实值", [python, "scripts/fetch_trade_actuals.py"])
         run_step("刷新进出口一致预期", [python, "scripts/fetch_baseline.py"])
         run_step("刷新进出口固定因子", [python, "scripts/fetch_trade_fixed_factors.py"])
         run_step("滚动估计进出口固定模型", [python, "scripts/research_trade_model_race.py"])

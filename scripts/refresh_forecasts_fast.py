@@ -56,14 +56,11 @@ def main() -> int:
     for key, rows in payload["history"].items():
         payload["history"][key] = [row for row in rows if row["date"] >= display_start]
     consensus = read_json(ROOT / "data" / "forecast-model" / "consensus.json")
-    for key in ("cpi", "ppi", "pmi"):
-        by_month = {row["date"]: row for row in consensus.get(key, [])}
-        for row in payload["history"][key]:
-            matched = by_month.get(row["date"])
-            row["consensus"] = round(float(matched["value"]), 6) if matched else None
-            row["consensusSource"] = matched.get("source") if matched else None
     target_month = pd.Timestamp.now().normalize() + pd.offsets.MonthEnd(0)
-    payload["highFrequency"] = build_high_frequency(ifind, target_month)
+    # A fast refresh may only update the current-month CPI/PPI/PMI groups.
+    # Preserve locked historical consensus values and model-specific groups
+    # already published in the page.
+    payload.setdefault("highFrequency", {}).update(build_high_frequency(ifind, target_month))
     for history_key, ifind_key in OFFICIAL_KEYS.items():
         _, series = ifind_series(ifind, ifind_key)
         official = {
