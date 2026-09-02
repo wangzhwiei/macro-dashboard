@@ -8,6 +8,7 @@ training target, residual target, model-selection signal, or forecast anchor.
 
 from __future__ import annotations
 
+import argparse
 import importlib.util
 import json
 import sys
@@ -769,6 +770,19 @@ def run_target(base, dashboard: dict, target: pd.Series, key: str):
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--target-month",
+        help="Optional forecast month in YYYY-MM format; defaults to the first month without an official target.",
+    )
+    args = parser.parse_args()
+    target_day = None
+    if args.target_month:
+        try:
+            target_day = pd.Timestamp(f"{args.target_month}-01") + pd.offsets.MonthEnd(0)
+        except ValueError as error:
+            raise SystemExit(f"invalid --target-month {args.target_month!r}; expected YYYY-MM") from error
+
     base = load_base()
     dashboard = json.loads(DASHBOARD_PATH.read_text(encoding="utf-8-sig"))
     targets = base.read_targets(TARGET_PATH)
@@ -789,7 +803,11 @@ def main() -> int:
     for key in ("exports", "imports"):
         frame, scores, common_scores, winner, missing_consensus, attribution = run_target(base, dashboard, targets[key], key)
         live_features = base.build_features(dashboard, key)
-        live_day = live_features.dropna(how="all").index.max()
+        # Forecast the first month without an official target.  Using the latest
+        # daily feature month can jump ahead before the pending trade release is
+        # published (for example, September 1 data while August is still due).
+        default_live_day = targets[key].dropna().index.max() + pd.offsets.MonthEnd(1)
+        live_day = target_day if target_day is not None else default_live_day
         live_backbone, live_residuals = seasonal_backbone(targets[key], live_day, key)
         live_correction, live_selected, live_contributions = high_frequency_residual_correction(
             live_residuals, live_features.loc[:live_day], live_day

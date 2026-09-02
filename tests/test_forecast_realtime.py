@@ -45,8 +45,9 @@ class ForecastRealtimeTests(unittest.TestCase):
         self.assertNotIn("进出口", self.data["highFrequency"])
         self.assertEqual(self.data["tradeModel"]["version"], "trade-fixed-factors-cny-gated-v1")
         for key in ("exports", "imports"):
-            self.assertEqual(self.data["models"][key]["status"], "WAITING_FOR_FIXED_FACTORS")
-            self.assertIsNone(self.data["history"][key][-1]["forecast"])
+            self.assertEqual(self.data["models"][key]["status"], "READY")
+            self.assertIsNotNone(self.data["history"][key][-1]["forecast"])
+            self.assertEqual(self.data["history"][key][-1]["date"], "2026-08-31")
 
     def test_high_frequency_rows_are_not_monthly_aggregates(self) -> None:
         expected_frequency = {
@@ -73,7 +74,7 @@ class ForecastRealtimeTests(unittest.TestCase):
                 self.assertRegex(row["providerId"], r"^[SMGW]\d{9}$", f"{group}/{row['id']}")
                 self.assertEqual(row["latestAvailableDate"], row["series"][-1]["date"])
                 if group == "出口" and row["id"] == "trade_thailand_imports_china":
-                    self.assertEqual(row["latestAvailableDate"], "2026-06-30")
+                    self.assertEqual(row["latestAvailableDate"], "2026-07-31")
                 else:
                     self.assertGreaterEqual(row["latestAvailableDate"], "2026-07-31")
 

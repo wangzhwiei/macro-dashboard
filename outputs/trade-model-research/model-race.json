@@ -1,5 +1,5 @@
 {
-  "status": "IFIND_BACKTEST_RESEARCH_NOT_FOR_PUBLICATION",
+  "status": "IFIND_FIXED_FACTOR_MODEL_APPROVED_FOR_PUBLICATION",
   "target_source": "iFinD EDB / GACC USD current-month YoY",
   "consensus_role": "evaluation_benchmark_only",
   "forecast_factor_policy": "fixed factor families and fixed lags; coefficients re-estimated on an expanding window using only prior target observations; any missing fixed factor means no forecast and no fallback; both targets use Q1 CNY calendar gates; consensus prohibited",
@@ -252,13 +252,13 @@
           "port_container_m1"
         ],
         "feature_contributions": {
-          "usdcny_m3": 3.3242190459022845,
-          "cfets_m3": 0.1425625091278683,
-          "ccfi_m1": 2.1489945065427927,
-          "dxy_m3": -0.5413949513568582,
-          "bdi_m1": -0.032059442904912555,
-          "scfi_m1": -0.14395312340991595,
-          "port_container_m1": -2.0101958092196512
+          "usdcny_m3": 3.324219045902287,
+          "cfets_m3": 0.1425625091278583,
+          "ccfi_m1": 2.1489945065427953,
+          "dxy_m3": -0.5413949513568499,
+          "bdi_m1": -0.03205944290491345,
+          "scfi_m1": -0.14395312340991573,
+          "port_container_m1": -2.0101958092196437
         },
         "hf_gate_enabled": false,
         "standalone_residual_features": [
@@ -267,9 +267,9 @@
           "bdi_m1"
         ],
         "standalone_residual_contributions": {
-          "usdcny_m3": 2.1361412056722755,
-          "cfets_m3": 0.3074852291946388,
-          "bdi_m1": 0.015413432940261802
+          "usdcny_m3": 2.136141205672276,
+          "cfets_m3": 0.307485229194638,
+          "bdi_m1": 0.015413432940261724
         },
         "standalone_residual_correction": 0.0,
         "anchor_factor_features": [
@@ -283,13 +283,13 @@
           "vietnam_export_yoy_l1_d1": 3.1770911503111496
         },
         "anchor_factor_predicted_change": 3.2063134466595185,
-        "corrected_export_seasonal_backbone": 10.915386262995717,
+        "corrected_export_seasonal_backbone": 10.915386262995721,
         "corrected_export_residual_features": [
           "vietnam_export_yoy_l1_level",
           "pmi_new_export_orders_level"
         ],
         "corrected_export_residual_contributions": {
-          "vietnam_export_yoy_l1_level": 6.0169548851281025,
+          "vietnam_export_yoy_l1_level": 6.016954885128102,
           "pmi_new_export_orders_level": 1.6183420229644945
         },
         "corrected_export_residual_correction": 5.0,
@@ -325,9 +325,9 @@
           "thailand_imports_from_china_yoy_lag3": 0.42290996717715956
         },
         "destination_import_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.10464772642382,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.766989195694256,
-          "thailand_imports_from_china_yoy_lag1": -0.5537669286680118
+          "korea_imports_from_china_yoy_lag0": 10.104647726423824,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.76698919569426,
+          "thailand_imports_from_china_yoy_lag1": -0.553766928668019
         },
         "cny_calendar_gate_active": false,
         "cny_calendar_features": [],
@@ -342,9 +342,9 @@
           "thailand_imports_from_china_yoy_lag1"
         ],
         "export_fixed_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.10464772642382,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.766989195694256,
-          "thailand_imports_from_china_yoy_lag1": -0.5537669286680118
+          "korea_imports_from_china_yoy_lag0": 10.104647726423824,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.76698919569426,
+          "thailand_imports_from_china_yoy_lag1": -0.553766928668019
         },
         "export_fixed_cny_gate_active": false,
         "export_fixed_cny_features": [
@@ -353,9 +353,9 @@
           "thailand_imports_from_china_yoy_lag1"
         ],
         "export_fixed_cny_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.10464772642382,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.766989195694256,
-          "thailand_imports_from_china_yoy_lag1": -0.5537669286680118
+          "korea_imports_from_china_yoy_lag0": 10.104647726423824,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.76698919569426,
+          "thailand_imports_from_china_yoy_lag1": -0.553766928668019
         },
         "import_fixed_features": [],
         "import_fixed_contributions": {},
@@ -365,17 +365,14 @@
       },
       "current_forecast": {
         "month": "2026-08",
-        "forecast": null,
-        "status": "WAITING_FOR_FIXED_FACTORS",
-        "missing_factors": [
-          "korea_imports_from_china_yoy_lag0",
-          "thailand_imports_from_china_yoy_lag1"
-        ],
+        "forecast": 20.83474,
+        "status": "READY",
+        "missing_factors": [],
         "earliest_factor_release_date": "2026-09-01",
         "method": "export_fixed_factors_cny_gated",
-        "model_version": "cny_gated_final_candidate",
-        "ungated_model_forecast": null,
-        "legacy_dynamic_model_forecast": 20.570981,
+        "model_version": "fixed_factors_cny_gated_v1",
+        "ungated_model_forecast": 20.83474,
+        "legacy_dynamic_model_forecast": 20.83474,
         "previous_actual_anchor": 23.639396,
         "predicted_change": 0.0,
         "selected_factors": [
@@ -409,7 +406,11 @@
           "thailand_imports_from_china_yoy_lag2": 0.4917638561967688,
           "thailand_imports_from_china_yoy_lag3": 0.4506391293154849
         },
-        "factor_contributions": {},
+        "factor_contributions": {
+          "korea_imports_from_china_yoy_lag0": 10.536657596690558,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.447424454517276,
+          "thailand_imports_from_china_yoy_lag1": -0.1438126888735833
+        },
         "seasonal_backbone": 11.948332,
         "hf_gate_enabled": false,
         "hf_correction": 0.0,
@@ -419,9 +420,9 @@
           "ccfi_m1"
         ],
         "hf_contributions": {
-          "usdcny_m3": 1.4189396206079599,
-          "cfets_m3": 0.3289779999841839,
-          "ccfi_m1": -0.23175109263334012
+          "usdcny_m3": 1.500716465351969,
+          "cfets_m3": 0.3025095956355326,
+          "ccfi_m1": -0.26383459821370653
         },
         "export_seasonal_backbone": 11.948332,
         "export_factor_correction": 0.0,
@@ -431,14 +432,14 @@
         ],
         "export_factor_contributions": {},
         "destination_import_features": [
-          "korea_imports_from_china_yoy_lag1",
+          "korea_imports_from_china_yoy_lag0",
           "taiwan_imports_from_mainland_yoy_lag1",
-          "thailand_imports_from_china_yoy_lag2"
+          "thailand_imports_from_china_yoy_lag1"
         ],
         "destination_import_contributions": {
-          "korea_imports_from_china_yoy_lag1": 8.177642314288983,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.737155341179853,
-          "thailand_imports_from_china_yoy_lag2": 1.6617133961037212
+          "korea_imports_from_china_yoy_lag0": 10.536657596690558,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.447424454517276,
+          "thailand_imports_from_china_yoy_lag1": -0.1438126888735833
         },
         "cny_calendar_gate_active": false,
         "cny_calendar_features": [
@@ -446,7 +447,11 @@
           "taiwan_imports_from_mainland_yoy_lag1",
           "thailand_imports_from_china_yoy_lag1"
         ],
-        "cny_calendar_contributions": {},
+        "cny_calendar_contributions": {
+          "korea_imports_from_china_yoy_lag0": 10.536657596690558,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.447424454517276,
+          "thailand_imports_from_china_yoy_lag1": -0.1438126888735833
+        },
         "parallel_import_cny_candidate": {
           "forecast": null,
           "gate_active": false,
@@ -455,7 +460,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-08-16T13:28:45.567962+00:00"
+        "data_as_of": "2026-09-02T03:33:45.168833+00:00"
       }
     },
     "imports": {
@@ -656,13 +661,13 @@
           "port_container_m1"
         ],
         "feature_contributions": {
-          "usdcny_m3": 2.9088588052188644,
-          "brent_m3": -2.0733908415978983,
-          "cfets_m3": -0.02167211335055581,
-          "copper_price_m3": 0.1051749884425468,
-          "bdi_m3": 0.053185744929116534,
-          "dxy_m1": 0.23161503003163922,
-          "port_container_m1": -1.481386550993649
+          "usdcny_m3": 2.9088588052188604,
+          "brent_m3": -2.0733908415979005,
+          "cfets_m3": -0.02167211335055606,
+          "copper_price_m3": 0.10517498844254611,
+          "bdi_m3": 0.053185744929115986,
+          "dxy_m1": 0.23161503003164008,
+          "port_container_m1": -1.4813865509936466
         },
         "hf_gate_enabled": true,
         "standalone_residual_features": [
@@ -671,11 +676,11 @@
           "copper_price_m3"
         ],
         "standalone_residual_contributions": {
-          "usdcny_m3": 0.7246766377823932,
-          "bdi_m3": 0.10193582954035638,
-          "copper_price_m3": 0.0712961966799287
+          "usdcny_m3": 0.7246766377823899,
+          "bdi_m3": 0.10193582954035667,
+          "copper_price_m3": 0.0712961966799285
         },
-        "standalone_residual_correction": 0.2570079412864201,
+        "standalone_residual_correction": 0.2570079412864133,
         "anchor_factor_features": [
           "korea_export_yoy_d1"
         ],
@@ -727,18 +732,16 @@
       },
       "current_forecast": {
         "month": "2026-08",
-        "forecast": null,
-        "status": "WAITING_FOR_FIXED_FACTORS",
-        "missing_factors": [
-          "korea_export_yoy_d1"
-        ],
+        "forecast": 31.900484,
+        "status": "READY",
+        "missing_factors": [],
         "earliest_factor_release_date": "2026-09-01",
         "method": "import_fixed_factors_cny_gated",
-        "model_version": "cny_gated_final_candidate",
-        "ungated_model_forecast": null,
-        "legacy_dynamic_model_forecast": 27.652321,
+        "model_version": "fixed_factors_cny_gated_v1",
+        "ungated_model_forecast": 31.900484,
+        "legacy_dynamic_model_forecast": 31.900484,
         "previous_actual_anchor": 27.652321,
-        "predicted_change": 0.0,
+        "predicted_change": 4.248163,
         "selected_factors": [
           "korea_export_yoy_d1"
         ],
@@ -747,19 +750,21 @@
           "pmi_new_export_orders_d1": 0.395874048798486,
           "pmi_imports_d1": 0.30703095745842757
         },
-        "factor_contributions": {},
+        "factor_contributions": {
+          "korea_export_yoy_d1": 4.352837539465335
+        },
         "seasonal_backbone": 32.145904,
         "hf_gate_enabled": true,
-        "hf_correction": -0.409441,
+        "hf_correction": -0.361636,
         "hf_features": [
           "usdcny_m3",
           "bdi_m3",
           "copper_price_m3"
         ],
         "hf_contributions": {
-          "usdcny_m3": 0.5119977975424839,
-          "bdi_m3": -0.2522430463411734,
-          "copper_price_m3": -0.03473777681571176
+          "usdcny_m3": 0.5415054409903182,
+          "bdi_m3": -0.2722897661048032,
+          "copper_price_m3": 0.0036059657162049496
         },
         "export_seasonal_backbone": 32.145904,
         "export_factor_correction": 0.0,
@@ -771,18 +776,22 @@
         "cny_calendar_features": [
           "korea_export_yoy_d1"
         ],
-        "cny_calendar_contributions": {},
+        "cny_calendar_contributions": {
+          "korea_export_yoy_d1": 4.352837539465335
+        },
         "parallel_import_cny_candidate": {
-          "forecast": 27.652321,
+          "forecast": 31.900484,
           "gate_active": false,
-          "predicted_change": null,
+          "predicted_change": 4.248163,
           "features": [
             "korea_export_yoy_d1"
           ],
-          "contributions": {},
+          "contributions": {
+            "korea_export_yoy_d1": 4.352837539465335
+          },
           "original_model_preserved": true
         },
-        "data_as_of": "2026-08-16T13:28:45.567962+00:00"
+        "data_as_of": "2026-09-02T03:33:45.168833+00:00"
       }
     }
   }

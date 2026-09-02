@@ -431,10 +431,14 @@
       "name": "韩国:进口金额:中国:当月同比",
       "frequency": "M",
       "unit": "%",
-      "source": "同花顺金融",
+      "source": "韩国产业通商部（2026年8月进出口动向；其余历史值为同花顺金融）",
       "availabilityLagMonths": 0,
       "transform": "identity",
       "data": [
+        [
+          "2026-08-31",
+          32.6
+        ],
         [
           "2026-07-31",
           31.358764099
@@ -1611,6 +1615,10 @@
       "availabilityLagMonths": 1,
       "transform": "yoy_from_monthly_value",
       "data": [
+        [
+          "2026-07-31",
+          430543163895
+        ],
         [
           "2026-06-30",
           441893573740.0

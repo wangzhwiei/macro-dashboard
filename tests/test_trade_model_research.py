@@ -72,15 +72,16 @@ class TradeResearchValidationTests(unittest.TestCase):
         import_scores = result["targets"]["imports"]["common_sample_scores"]
         self.assertLess(import_scores["seasonal_hf_gated"]["rmse"], import_scores["consensus"]["rmse"])
 
-    def test_current_forecast_waits_for_every_fixed_factor(self) -> None:
+    def test_current_forecast_is_ready_only_after_every_fixed_factor_arrives(self) -> None:
         result = json.loads(
             (ROOT / "outputs" / "trade-model-research" / "model-race.json").read_text(encoding="utf-8")
         )
         for key in ("exports", "imports"):
             current = result["targets"][key]["current_forecast"]
-            self.assertIsNone(current["forecast"])
-            self.assertEqual(current["status"], "WAITING_FOR_FIXED_FACTORS")
-            self.assertTrue(current["missing_factors"])
+            self.assertIsNotNone(current["forecast"])
+            self.assertEqual(current["status"], "READY")
+            self.assertEqual(current["month"], "2026-08")
+            self.assertEqual(current["missing_factors"], [])
             self.assertRegex(current["earliest_factor_release_date"], r"^\d{4}-\d{2}-\d{2}$")
             self.assertNotIn("consensus", current)
 
@@ -165,7 +166,7 @@ class TradeResearchValidationTests(unittest.TestCase):
         current = result["current_forecast"]
         self.assertEqual(current["method"], "import_fixed_factors_cny_gated")
         self.assertTrue(current["parallel_import_cny_candidate"]["original_model_preserved"])
-        self.assertIsNone(current["forecast"])
+        self.assertIsNotNone(current["forecast"])
         self.assertIn("ungated_model_forecast", current)
 
     def test_anchor_model_uses_validated_non_consensus_factors(self) -> None:
@@ -183,7 +184,7 @@ class TradeResearchValidationTests(unittest.TestCase):
         current = result["targets"]["imports"]["current_forecast"]
         self.assertEqual(current["method"], "import_fixed_factors_cny_gated")
         self.assertEqual(current["selected_factors"], ["korea_export_yoy_d1"])
-        self.assertEqual(current["missing_factors"], ["korea_export_yoy_d1"])
+        self.assertEqual(current["missing_factors"], [])
 
     def test_fixed_factor_sets_and_no_fallback_policy(self) -> None:
         source = (ROOT / "scripts" / "research_trade_model_race.py").read_text(encoding="utf-8")
@@ -196,6 +197,11 @@ class TradeResearchValidationTests(unittest.TestCase):
             (ROOT / "outputs" / "trade-model-research" / "model-race.json").read_text(encoding="utf-8")
         )
         self.assertIn("no fallback", result["forecast_factor_policy"])
+
+    def test_trade_target_month_follows_first_unreleased_actual(self) -> None:
+        source = (ROOT / "scripts" / "research_trade_model_race.py").read_text(encoding="utf-8")
+        self.assertIn('"--target-month"', source)
+        self.assertIn("targets[key].dropna().index.max() + pd.offsets.MonthEnd(1)", source)
 
 
 if __name__ == "__main__":

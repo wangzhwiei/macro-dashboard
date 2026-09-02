@@ -127,7 +127,10 @@ def main() -> int:
         run_optional_step("刷新进出口真实值", [python, "scripts/fetch_trade_actuals.py"])
         run_step("刷新进出口一致预期", [python, "scripts/fetch_baseline.py"])
         run_step("刷新进出口固定因子", [python, "scripts/fetch_trade_fixed_factors.py"])
-        run_step("滚动估计进出口固定模型", [python, "scripts/research_trade_model_race.py"])
+        trade_model_command = [python, "scripts/research_trade_model_race.py"]
+        if args.forecast_target_month:
+            trade_model_command.extend(["--target-month", args.forecast_target_month])
+        run_step("滚动估计进出口固定模型", trade_model_command)
         run_step("写入网页进出口预测", [python, "scripts/publish_fixed_trade_forecasts.py"])
         run_step("刷新工业增加值固定ID数据", [python, "scripts/fetch_industrial_value_data.py"])
         run_step("运行工业增加值月频模型", [python, "scripts/industrial_value_forecast_model.py"])

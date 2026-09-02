@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import csv
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 
@@ -157,6 +159,7 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
 def main() -> int:
     path = ROOT / "public" / "data" / "forecasts.json"
     payload = augment_payload(read_json(path))
+    payload["generatedAt"] = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat()
     path.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     print(path)
     return 0
