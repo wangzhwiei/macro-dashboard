@@ -72,6 +72,18 @@ def stale_tolerance_days(definition: dict[str, Any]) -> int:
     return configured or DEFAULT_STALE_TOLERANCE_DAYS[definition["frequency"]]
 
 
+def stale_age_days(definition: dict[str, Any], updated_day: date, generated_day: date) -> int:
+    """Measure daily-series freshness in business days and weekly series in calendar days."""
+    if generated_day <= updated_day:
+        return 0
+    if definition["frequency"] != "daily":
+        return (generated_day - updated_day).days
+    return sum(
+        (updated_day.fromordinal(ordinal).weekday() < 5)
+        for ordinal in range(updated_day.toordinal() + 1, generated_day.toordinal() + 1)
+    )
+
+
 def cadence_issue(frequency: str, series: list[dict[str, Any]]) -> str | None:
     gap = median_gap_days(series)
     if gap is None:
@@ -461,12 +473,15 @@ def validate_generated_data(
         methodology = indicator.get("methodology", {})
         if not methodology.get("formula") or not methodology.get("steps"):
             errors.append(f"{prefix} 缺少页面计算方法说明")
-        stale_days = (generated_day - date.fromisoformat(series_dates[-1])).days
+        stale_days = stale_age_days(
+            definition, date.fromisoformat(series_dates[-1]), generated_day
+        )
         stale_limit = stale_tolerance_days(definition)
         if stale_days > stale_limit:
             stale_indicators += 1
+            age_unit = "个工作日" if definition["frequency"] == "daily" else "天"
             warnings.append(
-                f"{prefix} 最新数据为{series_dates[-1]}，已滞后{stale_days}天"
+                f"{prefix} 最新数据为{series_dates[-1]}，已滞后{stale_days}{age_unit}"
                 f"（{definition['frequency']}容忍{stale_limit}天）"
             )
 

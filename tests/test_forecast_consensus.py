@@ -5,6 +5,7 @@ from scripts.fetch_forecast_consensus import (
     build_query,
     candidate_to_records,
     forward_fill_months,
+    merge_target_records,
     validate_candidate,
 )
 
@@ -54,6 +55,19 @@ class ForecastConsensusTest(unittest.TestCase):
         }
         with self.assertRaisesRegex(RuntimeError, "ID漂移"):
             validate_candidate(CONFIG["pmi"], candidate)
+
+    def test_only_active_month_can_replace_a_historical_consensus_vintage(self):
+        previous = [
+            {"date": "2026-07-31", "value": 3.4},
+            {"date": "2026-08-31", "value": 2.5},
+        ]
+        fresh = [
+            {"date": "2026-07-31", "value": 3.1},
+            {"date": "2026-08-31", "value": 2.3},
+        ]
+        merged = merge_target_records(previous, fresh, "2026-08-31")
+        self.assertEqual(merged[0]["value"], 3.4)
+        self.assertEqual(merged[1]["value"], 2.3)
 
 
 if __name__ == "__main__":

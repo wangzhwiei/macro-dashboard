@@ -9,7 +9,7 @@ import json
 import os
 import sys
 import time
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, Callable
 
@@ -20,6 +20,7 @@ from scripts.fetch_forecast_inputs_ifind import choose_candidate, inner_payload
 
 OUTPUT = ROOT / "data" / "forecast-model" / "consensus.json"
 SOURCE = "iFinD EDB"
+PRICE_ACTUAL_KEYS = ("actual_cpi_yoy", "actual_cpi_mom", "actual_ppi_yoy", "actual_ppi_mom")
 CONFIG: dict[str, dict[str, Any]] = {
     "cpi": {
         "key": "consensus_cpi_yoy",
@@ -54,6 +55,37 @@ def next_month(day: date) -> date:
     if day.month == 12:
         return date(day.year + 1, 1, 31)
     return month_end(date(day.year, day.month + 1, 1))
+
+
+def resolve_target_day(explicit: str | None = None) -> str:
+    if explicit:
+        return month_end(date.fromisoformat(explicit)).isoformat()
+    today = date.today()
+    calendar_target = month_end(today)
+    previous_target = month_end(today.replace(day=1) - timedelta(days=1))
+    input_path = ROOT / "data" / "forecast-model" / "ifind_latest_inputs.json"
+    if not input_path.exists():
+        return calendar_target.isoformat()
+    inputs = json.loads(input_path.read_text(encoding="utf-8-sig"))
+    for key in PRICE_ACTUAL_KEYS:
+        records = inputs.get("series", {}).get(key, {}).get("records", [])
+        latest = max((str(row[0])[:10] for row in records), default="")
+        if latest < previous_target.isoformat():
+            return previous_target.isoformat()
+    return calendar_target.isoformat()
+
+
+def merge_target_records(
+    previous_rows: list[dict[str, Any]],
+    fresh_rows: list[dict[str, Any]],
+    target_day: str,
+) -> list[dict[str, Any]]:
+    """Update only the active forecast month; keep historical consensus vintages frozen."""
+    by_date = {row["date"]: row for row in previous_rows}
+    for row in fresh_rows:
+        if row["date"] == target_day or row["date"] not in by_date:
+            by_date[row["date"]] = row
+    return [by_date[key] for key in sorted(by_date)]
 
 
 def build_query(config: dict[str, Any], start: str, end: str) -> str:
@@ -183,12 +215,19 @@ def main() -> int:
     parser.add_argument("--start", default="2023-01-01")
     parser.add_argument("--end", default=date.today().isoformat())
     parser.add_argument("--attempts", type=int, default=3)
+    parser.add_argument("--target-month", help="Active forecast month or month-end date")
     args = parser.parse_args()
     if args.skill_dir is None:
         raise RuntimeError("请设置 IFIND_SKILL_DIR 或传入 --skill-dir")
 
     retrieved_at = datetime.now().astimezone().isoformat()
+    target_day = resolve_target_day(args.target_month)
     ifind_call = load_ifind_call(args.skill_dir.resolve())
+    previous = (
+        json.loads(args.output.read_text(encoding="utf-8-sig"))
+        if args.output.exists()
+        else {}
+    )
     result: dict[str, Any] = {
         "_meta": {
             "source": SOURCE,
@@ -198,15 +237,34 @@ def main() -> int:
             "queryMode": "Chinese name discovery + fixed provider ID validation",
             "providerIds": {key: config["providerId"] for key, config in CONFIG.items()},
             "pmiMissingPolicy": "internal missing months use previous month value",
+            "warnings": {},
         }
     }
     for key, config in CONFIG.items():
-        candidate = fetch_candidate(ifind_call, config, args.start, args.end, args.attempts)
+        try:
+            candidate = fetch_candidate(ifind_call, config, args.start, args.end, args.attempts)
+        except Exception as error:
+            previous_rows = previous.get(key, [])
+            previous_is_valid = bool(previous_rows) and all(
+                row.get("providerId") == config["providerId"]
+                and row.get("frequency") == config["frequency"]
+                and row.get("unit") == config["unit"]
+                for row in previous_rows
+            )
+            if not previous_is_valid:
+                raise
+            result[key] = previous_rows
+            result["_meta"]["warnings"][key] = (
+                f"本次查询未通过固定ID校验，保留上一版已验证数据：{error}"
+            )
+            print(f"{key.upper()} 一致预期本次未更新，保留至 {previous_rows[-1]['date']}")
+            continue
         records = candidate_to_records(candidate, config, args.start, args.end, retrieved_at)
         if not records:
             raise RuntimeError(f"{key.upper()} 固定ID已命中，但没有可用数据")
         if config.get("forwardFillMissingMonths"):
             records = forward_fill_months(records)
+        records = merge_target_records(previous.get(key, []), records, target_day)
         result[key] = records
         filled = sum(bool(row.get("imputed")) for row in records)
         latest = records[-1]

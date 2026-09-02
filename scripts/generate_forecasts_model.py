@@ -258,8 +258,11 @@ def input_row(name: str, id_: str, series: pd.Series, unit: str, frequency: str,
 
 
 def ifind_input_row(ifind: dict[str, Any], key: str, name: str, id_: str, role: str,
-                    aggregation: str, model_usage_note: str) -> dict[str, Any]:
+                    aggregation: str, model_usage_note: str,
+                    max_date: pd.Timestamp | None = None) -> dict[str, Any]:
     meta, series = ifind_series(ifind, key)
+    if max_date is not None:
+        series = series.loc[:max_date]
     frequency = {"D": "日频", "W": "周频", "M": "月频"}.get(str(meta.get("frequency")), str(meta.get("frequency") or "未知"))
     unit = str(meta.get("unit") or "指数")
     provider_id = str(meta.get("providerId"))
@@ -299,14 +302,21 @@ def build_high_frequency(ifind_latest: dict[str, Any], target_month: pd.Timestam
         "pmi_secondhand_shenzhen", "pmi_rebar_consumption",
     ))
     high_frequency = {
-        "CPI": [ifind_input_row(ifind_latest, *spec) for spec in cpi_specs],
+        "CPI": [
+            ifind_input_row(
+                ifind_latest,
+                *spec,
+                max_date=previous if spec[0] == "cpi_pmi" else None,
+            )
+            for spec in cpi_specs
+        ],
         "PPI": [ifind_input_row(ifind_latest, *spec, common_target) for spec in ppi_specs],
         "PMI": [
             *[ifind_input_row(ifind_latest, key, name, f"pmi_proxy_{i+1}", "生产分项动量代理", "月均值环比后扩展窗标准化", common_target) for i, (key, name) in enumerate(zip(pmi_production_keys, PMI_PROXIES["生产"]))],
             *[ifind_input_row(ifind_latest, key, name, f"pmi_proxy_{i+6}", "新订单分项动量代理", "月均值环比后扩展窗标准化", note) for i, ((key, note), name) in enumerate(zip(pmi_order_specs, PMI_PROXIES["新订单"]))],
-            ifind_input_row(ifind_latest, "pmi_employment", "制造业PMI / 从业人员", "pmi_sub_从业人员", "预测目标月采用上月从业人员值", "上月已公布值", f"{target_label}预测使用{previous_label}值"),
-            ifind_input_row(ifind_latest, "pmi_delivery", "制造业PMI / 供应商配送时间", "pmi_sub_配送", "预测目标月采用上月供应商配送时间值", "上月已公布值（合成前取100-x）", f"{target_label}预测使用{previous_label}值"),
-            ifind_input_row(ifind_latest, "pmi_inventory", "制造业PMI / 原材料库存", "pmi_sub_库存", "预测目标月采用上月原材料库存值", "上月已公布值", f"{target_label}预测使用{previous_label}值"),
+            ifind_input_row(ifind_latest, "pmi_employment", "制造业PMI / 从业人员", "pmi_sub_从业人员", "预测目标月采用上月从业人员值", "上月已公布值", f"{target_label}预测使用{previous_label}值", max_date=previous),
+            ifind_input_row(ifind_latest, "pmi_delivery", "制造业PMI / 供应商配送时间", "pmi_sub_配送", "预测目标月采用上月供应商配送时间值", "上月已公布值（合成前取100-x）", f"{target_label}预测使用{previous_label}值", max_date=previous),
+            ifind_input_row(ifind_latest, "pmi_inventory", "制造业PMI / 原材料库存", "pmi_sub_库存", "预测目标月采用上月原材料库存值", "上月已公布值", f"{target_label}预测使用{previous_label}值", max_date=previous),
         ],
     }
     return high_frequency

@@ -17,6 +17,22 @@ ROOT = Path(__file__).resolve().parents[1]
 JUNE = pd.Timestamp("2026-06-30")
 DASHBOARD_IDS = {"vegetable_price", "pork_price", "nanhua_industry", "brent", "qhd_coal_price", "rebar_price", "copper_price"}
 OFFICIAL_KEYS = {"cpi": "actual_cpi_yoy", "cpi_mom": "actual_cpi_mom", "ppi": "actual_ppi_yoy", "ppi_mom": "actual_ppi_mom", "pmi": "cpi_pmi"}
+PRICE_OFFICIAL_KEYS = ("actual_cpi_yoy", "actual_cpi_mom", "actual_ppi_yoy", "actual_ppi_mom")
+
+
+def resolve_target_month(
+    ifind: dict[str, Any], explicit: str | None = None, as_of: str | pd.Timestamp | None = None
+) -> pd.Timestamp:
+    """Keep nowcasting the previous month until its CPI/PPI release arrives."""
+    if explicit:
+        return pd.Timestamp(explicit).normalize() + pd.offsets.MonthEnd(0)
+    calendar_target = pd.Timestamp(as_of or pd.Timestamp.now()).normalize() + pd.offsets.MonthEnd(0)
+    previous_target = calendar_target - pd.offsets.MonthEnd(1)
+    for ifind_key in PRICE_OFFICIAL_KEYS:
+        _, values = ifind_series(ifind, ifind_key)
+        if previous_target not in values.resample("ME").last().dropna().index:
+            return previous_target
+    return calendar_target
 
 
 def build_live_inputs(dashboard: dict[str, Any], ifind: dict[str, Any]) -> dict[str, Any]:
@@ -46,6 +62,10 @@ def build_live_inputs(dashboard: dict[str, Any], ifind: dict[str, Any]) -> dict[
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, default=ROOT / "public" / "data" / "forecasts.json")
+    parser.add_argument(
+        "--target-month",
+        help="Target month or month-end date. By default, retain the previous month until CPI/PPI actuals are released.",
+    )
     args = parser.parse_args()
     ifind = read_json(ROOT / "data" / "forecast-model" / "ifind_latest_inputs.json")
     if ifind.get("errors"):
@@ -56,17 +76,19 @@ def main() -> int:
     for key, rows in payload["history"].items():
         payload["history"][key] = [row for row in rows if row["date"] >= display_start]
     consensus = read_json(ROOT / "data" / "forecast-model" / "consensus.json")
-    target_month = pd.Timestamp.now().normalize() + pd.offsets.MonthEnd(0)
+    target_month = resolve_target_month(ifind, args.target_month)
     # A fast refresh may only update the current-month CPI/PPI/PMI groups.
     # Preserve locked historical consensus values and model-specific groups
     # already published in the page.
     payload.setdefault("highFrequency", {}).update(build_high_frequency(ifind, target_month))
+    official_by_key: dict[str, dict[str, float]] = {}
     for history_key, ifind_key in OFFICIAL_KEYS.items():
         _, series = ifind_series(ifind, ifind_key)
         official = {
             day.date().isoformat(): round(float(value), 6)
             for day, value in series.resample("ME").last().dropna().items() if day > JUNE
         }
+        official_by_key[history_key] = official
         for row in payload["history"][history_key]:
             if row["date"] in official:
                 row["actual"] = official[row["date"]]
@@ -94,11 +116,13 @@ def main() -> int:
                                    if row.get("forecastKind") != "live_nowcast" and row["date"] != target_day]
         consensus_row = next((row for row in consensus.get(key, []) if row["date"] == target_day), None)
         latest_value = float(daily[key][-1]["value"])
+        target_actual = official_by_key[key].get(target_day)
         payload["history"][key].append({
-            "date": target_day, "forecast": round(latest_value, 6), "actual": None,
+            "date": target_day, "forecast": round(latest_value, 6), "actual": target_actual,
             "consensus": round(float(consensus_row["value"]), 6) if consensus_row else None,
             "consensusSource": consensus_row.get("source") if consensus_row else None,
-            "forecastKind": "live_nowcast", "officialRounding": round(latest_value, 1),
+            "forecastKind": "confirmed_nowcast" if target_actual is not None else "live_nowcast",
+            "officialRounding": round(latest_value, 1),
         })
     payload["daily"] = daily
     payload["dailyAsOf"] = max(rows[-1]["date"] for rows in daily.values() if rows)

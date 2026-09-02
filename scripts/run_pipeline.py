@@ -40,6 +40,10 @@ def main() -> int:
     )
     parser.add_argument("--days", type=int, default=600)
     parser.add_argument("--end-date")
+    parser.add_argument(
+        "--forecast-target-month",
+        help="Optional month-end override passed to the fast CPI/PPI/PMI refresh.",
+    )
     parser.add_argument("--full-forecast", action="store_true", help="手动重跑完整历史无前视回测；每日计划任务默认快速刷新")
     parser.add_argument(
         "--data-only",
@@ -105,14 +109,16 @@ def main() -> int:
         if forecast_inputs.exists():
             fetch_command.append("--merge-existing")
         run_step("增量刷新 CPI/PPI/PMI 固定 iFinD 输入", fetch_command)
-        run_step(
-            "抓取公开市场一致预期",
-            [python, "scripts/fetch_forecast_consensus.py"],
-        )
+        consensus_command = [python, "scripts/fetch_forecast_consensus.py"]
+        if args.forecast_target_month:
+            consensus_command.extend(["--target-month", args.forecast_target_month])
+        run_step("抓取公开市场一致预期", consensus_command)
+        forecast_command = [python, "scripts/generate_forecasts.py"] if args.full_forecast else [python, "scripts/refresh_forecasts_fast.py"]
+        if args.forecast_target_month and not args.full_forecast:
+            forecast_command.extend(["--target-month", args.forecast_target_month])
         run_step(
             "生成月频每日预测" if args.full_forecast else "快速刷新月频预测",
-            [python, "scripts/generate_forecasts.py"] if args.full_forecast
-            else [python, "scripts/refresh_forecasts_fast.py"],
+            forecast_command,
         )
         run_step(
             "写入网页社零V7定稿模型",

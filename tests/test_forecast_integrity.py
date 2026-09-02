@@ -19,7 +19,8 @@ class ForecastIntegrityTests(unittest.TestCase):
             rows = self.data["history"][key]
             self.assertEqual(rows[0]["date"], "2023-01-31")
             self.assertEqual(rows[-1]["date"], "2026-08-31")
-            self.assertEqual(rows[-1]["forecastKind"], "live_nowcast")
+            expected_kind = "confirmed_nowcast" if rows[-1]["actual"] is not None else "live_nowcast"
+            self.assertEqual(rows[-1]["forecastKind"], expected_kind)
             self.assertTrue(all(row["forecast"] is None for row in rows if row["date"] < "2023-01-01"))
 
     def test_locked_july_values_match_final_review(self) -> None:

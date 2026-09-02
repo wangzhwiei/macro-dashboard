@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import date
 
 from scripts.validate_dashboard import (
     cadence_issue,
@@ -9,6 +10,7 @@ from scripts.validate_dashboard import (
     provider_code_collisions,
     rate_bound_violations,
     stale_tolerance_days,
+    stale_age_days,
 )
 
 
@@ -73,6 +75,20 @@ class DataQualityGuardTests(unittest.TestCase):
                 {"frequency": "weekly", "stale_tolerance_days": 21}
             ),
             21,
+        )
+
+    def test_daily_staleness_uses_business_days(self) -> None:
+        self.assertEqual(
+            stale_age_days(
+                {"frequency": "daily"}, date(2026, 8, 28), date(2026, 9, 2)
+            ),
+            3,
+        )
+        self.assertEqual(
+            stale_age_days(
+                {"frequency": "weekly"}, date(2026, 8, 28), date(2026, 9, 2)
+            ),
+            5,
         )
 
     def test_operating_rate_must_stay_between_zero_and_one_hundred(self) -> None:

@@ -28,12 +28,12 @@ class ForecastRealtimeTests(unittest.TestCase):
             self.assertTrue(all(math.isfinite(row["value"]) for row in rows))
         self.assertGreaterEqual(self.data["dailyAsOf"], "2026-08-14")
 
-    def test_current_month_nowcasts_are_appended_without_actuals(self) -> None:
+    def test_current_month_nowcasts_are_appended_and_confirmed_when_released(self) -> None:
         for key in ("cpi", "cpi_mom", "ppi", "ppi_mom", "pmi"):
             row = self.data["history"][key][-1]
             self.assertEqual(row["date"], "2026-08-31")
-            self.assertEqual(row["forecastKind"], "live_nowcast")
-            self.assertIsNone(row["actual"])
+            expected_kind = "confirmed_nowcast" if row["actual"] is not None else "live_nowcast"
+            self.assertEqual(row["forecastKind"], expected_kind)
             self.assertTrue(math.isclose(row["forecast"], self.data["daily"][key][-1]["value"], abs_tol=1e-6))
 
     def test_approved_fixed_trade_models_are_published(self) -> None:

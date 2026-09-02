@@ -16,6 +16,7 @@ from validate_dashboard import (
     cadence_issue,
     load_definitions,
     median_gap_days,
+    stale_age_days,
     stale_tolerance_days,
 )
 
@@ -43,7 +44,7 @@ def main() -> int:
         definition = by_id[indicator["id"]]
         series = indicator.get("series", [])
         updated_day = date.fromisoformat(indicator["updatedAt"])
-        stale_days = (generated_day - updated_day).days
+        stale_days = stale_age_days(definition, updated_day, generated_day)
         tolerance = stale_tolerance_days(definition)
         issue = cadence_issue(definition["frequency"], series)
         rows.append(

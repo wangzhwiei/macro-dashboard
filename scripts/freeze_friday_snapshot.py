@@ -80,6 +80,11 @@ def freeze_snapshot(published: dict, generated: dict) -> dict:
     generated_dates = generated["dates"]
     published_indicators = {item["id"]: item for item in published["indicators"]}
     same_snapshot = published_dates[-1] == generated_dates[-1]
+    if same_snapshot:
+        generated_ids = {item["id"] for item in generated["indicators"]}
+        generated["indicators"].extend(
+            item for item in published["indicators"] if item["id"] not in generated_ids
+        )
     freeze_latest = same_snapshot and all(
         trusted_latest_indicator(item, published_dates[-1])
         for item in published_indicators.values()
