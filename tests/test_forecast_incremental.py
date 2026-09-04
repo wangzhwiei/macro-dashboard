@@ -28,6 +28,8 @@ class ForecastIncrementalTests(unittest.TestCase):
     def test_daily_pipeline_uses_fast_path_by_default(self) -> None:
         source = (Path("scripts/run_pipeline.py")).read_text(encoding="utf-8-sig")
         self.assertIn("--full-forecast", source)
+        self.assertIn("--allow-stale", source)
+        self.assertIn('[] if args.allow_stale else ["--strict"]', source)
         self.assertIn("refresh_forecasts_fast.py", source)
         self.assertIn("timedelta(days=95)", source)
         manifest = json.loads(Path("data/forecast-model/ifind_forecast_manifest.json").read_text(encoding="utf-8-sig"))

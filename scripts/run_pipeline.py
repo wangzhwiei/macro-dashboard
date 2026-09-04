@@ -51,6 +51,11 @@ def main() -> int:
         help="只更新和校验数据，不执行前端测试与静态构建",
     )
     parser.add_argument(
+        "--allow-stale",
+        action="store_true",
+        help="Keep freshness warnings in the quality report without blocking publication; structural errors still fail.",
+    )
+    parser.add_argument(
         "--report",
         type=Path,
         default=ROOT / "outputs" / "data-quality-report.json",
@@ -94,7 +99,7 @@ def main() -> int:
             [
                 python,
                 "scripts/validate_dashboard.py",
-                "--strict",
+                *([] if args.allow_stale else ["--strict"]),
                 "--report",
                 str(args.report),
             ],

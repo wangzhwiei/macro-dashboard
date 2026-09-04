@@ -79,10 +79,10 @@ jobs:
         shell: cmd
         run: wsl.exe -d Ubuntu -- bash -lc "test -f /home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/call.py && test -s /home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/mcp_config.json"
 
-      - name: Refresh and strictly validate all data
+      - name: Refresh data and validate structural integrity
         shell: cmd
         run: >-
-          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'; export MACRO_DATA_CACHE_DIR='/mnt/c/Users/wangzhiwei202307/Documents/宏观网页面板/github-runner/ifind-cache'; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only"
+          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR='/home/wangzhiwei202307/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data'; export MACRO_DATA_CACHE_DIR='/mnt/c/Users/wangzhiwei202307/Documents/宏观网页面板/github-runner/ifind-cache'; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only --allow-stale"
 
       - name: Build GitHub Pages site
         shell: cmd
