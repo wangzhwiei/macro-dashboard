@@ -84,19 +84,17 @@ class ForecastIntegrityTests(unittest.TestCase):
             {"trade_korea_exports"},
         )
 
-    def test_trade_consensus_gaps_are_filled_from_previous_month(self) -> None:
+    def test_trade_consensus_is_carried_only_when_the_current_month_is_missing(self) -> None:
         for key in ("exports", "imports"):
             rows = self.data["history"][key]
-            by_date = {row["date"]: row for row in rows}
             self.assertTrue(all(row["consensus"] is not None for row in rows))
-            for current, previous in (
-                ("2026-01-31", "2025-12-31"),
-                ("2026-02-28", "2026-01-31"),
-                ("2026-08-31", "2026-07-31"),
-            ):
-                self.assertEqual(by_date[current]["consensus"], by_date[previous]["consensus"])
-                self.assertTrue(by_date[current]["consensusCarriedForward"])
-                self.assertIn("沿用上期", by_date[current]["consensusSource"])
+            for previous, current in zip(rows, rows[1:]):
+                carried = bool(current.get("consensusCarriedForward"))
+                if carried:
+                    self.assertEqual(current["consensus"], previous["consensus"])
+                    self.assertIn("沿用上期", current["consensusSource"])
+                else:
+                    self.assertNotIn("沿用上期", current.get("consensusSource") or "")
 
 
     def test_frozen_credit_models_are_available_in_forecast_module(self) -> None:

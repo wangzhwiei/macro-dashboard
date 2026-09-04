@@ -124,7 +124,7 @@ class InvestmentForecastModelTest(unittest.TestCase):
         self.assertEqual(published["history"][key][0]["date"], "2023-01-31")
         self.assertEqual(published["history"][key][0]["forecastKind"], "structural_gap")
         self.assertIsNone(latest["actual"])
-        self.assertIsNone(latest["consensus"])
+        self.assertEqual(latest["consensus"], self.result["current"]["consensus"])
         self.assertEqual(lock["version"], self.result["modelVersion"])
         self.assertEqual(lock["frozenAt"], self.result["modelFrozenAt"])
         self.assertEqual(lock["targets"], [key])
