@@ -131,7 +131,7 @@ def main() -> int:
         )
         run_optional_step("刷新进出口真实值", [python, "scripts/fetch_trade_actuals.py"])
         run_step("刷新进出口一致预期", [python, "scripts/fetch_baseline.py"])
-        run_step("刷新进出口固定因子", [python, "scripts/fetch_trade_fixed_factors.py"])
+        run_optional_step("刷新进出口固定因子", [python, "scripts/fetch_trade_fixed_factors.py"])
         trade_model_command = [python, "scripts/research_trade_model_race.py"]
         if args.forecast_target_month:
             trade_model_command.extend(["--target-month", args.forecast_target_month])
