@@ -103,7 +103,12 @@ def load_ifind_call(path: Path):
     if spec is None or spec.loader is None:
         raise RuntimeError(f"无法加载 iFinD 调用模块：{path}")
     module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    previous = Path.cwd()
+    try:
+        os.chdir(path.parent)
+        spec.loader.exec_module(module)
+    finally:
+        os.chdir(previous)
     return module.call
 
 
