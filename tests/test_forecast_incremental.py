@@ -31,6 +31,7 @@ class ForecastIncrementalTests(unittest.TestCase):
         self.assertIn("--allow-stale", source)
         self.assertIn('[] if args.allow_stale else ["--strict"]', source)
         self.assertIn('run_optional_step("刷新进出口固定因子"', source)
+        self.assertIn('[python, "scripts/fetch_credit_forecast_data.py", "--resume"]', source)
         self.assertIn("refresh_forecasts_fast.py", source)
         self.assertIn("timedelta(days=95)", source)
         manifest = json.loads(Path("data/forecast-model/ifind_forecast_manifest.json").read_text(encoding="utf-8-sig"))

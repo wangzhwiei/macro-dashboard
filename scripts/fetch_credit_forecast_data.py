@@ -198,14 +198,13 @@ def fetch(checkpoint: Path | None = None, resume: bool = False) -> dict[str, Any
         "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
         "series": {},
     }
+    previous_series: dict[str, Any] = {}
     if resume and checkpoint and checkpoint.exists():
         previous = json.loads(checkpoint.read_text(encoding="utf-8-sig"))
         for key, value in previous.get("series", {}).items():
             if key in SERIES and value.get("providerId") == SERIES[key]["providerId"]:
-                result["series"][key] = value
+                previous_series[key] = value
     for key, config in SERIES.items():
-        if key in result["series"]:
-            continue
         errors = []
         for attempt in range(3):
             try:
@@ -213,13 +212,16 @@ def fetch(checkpoint: Path | None = None, resume: bool = False) -> dict[str, Any
                 parsed = parse(response, config["providerId"])
                 parsed["role"] = config["role"]
                 result["series"][key] = parsed
-                if checkpoint:
-                    checkpoint.parent.mkdir(parents=True, exist_ok=True)
-                    checkpoint.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
                 break
             except Exception as error:  # network retries are intentionally bounded
                 errors.append(str(error))
                 time.sleep(attempt + 1)
+        if key not in result["series"] and key in previous_series:
+            result["series"][key] = previous_series[key]
+            result.setdefault("warnings", []).append(
+                f"{key}/{config['providerId']} refresh failed; retained previously validated observations"
+            )
+            continue
         if key not in result["series"] and config.get("optional"):
             continue
         if key not in result["series"]:
@@ -230,7 +232,7 @@ def fetch(checkpoint: Path | None = None, resume: bool = False) -> dict[str, Any
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
-    parser.add_argument("--resume", action="store_true", help="reuse already validated fixed-ID series in the output file")
+    parser.add_argument("--resume", action="store_true", help="refresh each series and retain its previously validated value only when the live query fails")
     args = parser.parse_args()
     payload = fetch(args.output, args.resume)
     args.output.parent.mkdir(parents=True, exist_ok=True)

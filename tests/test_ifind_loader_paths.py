@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import Mock, patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,6 +43,38 @@ class IFindLoaderPathTests(unittest.TestCase):
                 loaded = getattr(module, loader_name)(skill / "call.py")
                 self.assertEqual(loaded(), {"ok": True})
                 self.assertEqual(Path.cwd(), original)
+
+    def test_resume_refreshes_live_and_uses_validated_series_only_as_fallback(self) -> None:
+        for script_name in ("fetch_credit_forecast_data", "fetch_investment_forecast_data"):
+            module = load_script(script_name)
+            config = {"target": {"providerId": "FIXED_ID", "query": "fixed query", "role": "target"}}
+            previous = {
+                "providerId": "FIXED_ID",
+                "role": "target",
+                "observations": [["2026-07-31", 1.0]],
+            }
+            with tempfile.TemporaryDirectory() as directory:
+                checkpoint = Path(directory) / "source.json"
+                checkpoint.write_text(
+                    json.dumps({"series": {"target": previous}}),
+                    encoding="utf-8",
+                )
+                live_call = Mock(return_value={})
+                patches = (
+                    patch.object(module, "SERIES", config),
+                    patch.object(module, "load_call", return_value=live_call),
+                    patch.object(module, "parse", side_effect=RuntimeError("temporary provider gap")),
+                    patch.object(module.time, "sleep", return_value=None),
+                )
+                with patches[0], patches[1], patches[2], patches[3]:
+                    if script_name == "fetch_credit_forecast_data":
+                        with patch.object(module, "find_call", return_value=Path("call.py")):
+                            result = module.fetch(checkpoint, resume=True)
+                    else:
+                        result = module.fetch(Path("call.py"), checkpoint, resume=True)
+                self.assertEqual(live_call.call_count, 3)
+                self.assertEqual(result["series"]["target"], previous)
+                self.assertEqual(len(result["warnings"]), 1)
 
 
 if __name__ == "__main__":

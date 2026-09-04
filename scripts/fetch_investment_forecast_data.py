@@ -134,27 +134,29 @@ def fetch(call_py: Path, checkpoint: Path | None = None, resume: bool = False) -
         "releasePolicy": "structural investment components are same-release data and may enter forecasts only with lag >= 1 month",
         "series": {},
     }
+    previous_series: dict[str, Any] = {}
     if resume and checkpoint and checkpoint.exists():
         previous = json.loads(checkpoint.read_text(encoding="utf-8-sig"))
         for key, value in previous.get("series", {}).items():
             if key in SERIES and value.get("providerId") == SERIES[key]["providerId"]:
-                result["series"][key] = value
+                previous_series[key] = value
     for key, config in SERIES.items():
-        if key in result["series"]:
-            continue
         errors = []
         for attempt in range(3):
             try:
                 parsed = parse(call("edb", "get_edb_data", {"query": config["query"]}), config["providerId"])
                 parsed["role"] = config["role"]
                 result["series"][key] = parsed
-                if checkpoint:
-                    checkpoint.parent.mkdir(parents=True, exist_ok=True)
-                    checkpoint.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
                 break
             except Exception as error:
                 errors.append(str(error))
                 time.sleep(attempt + 1)
+        if key not in result["series"] and key in previous_series:
+            result["series"][key] = previous_series[key]
+            result.setdefault("warnings", []).append(
+                f"{key}/{config['providerId']} refresh failed; retained previously validated observations"
+            )
+            continue
         if key not in result["series"]:
             raise RuntimeError(f"failed to fetch {key}/{config['providerId']}: {' | '.join(errors)}")
     return result
@@ -164,7 +166,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--call-py", type=Path)
-    parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--resume", action="store_true", help="refresh each series and use its validated checkpoint only as a per-series fallback")
     args = parser.parse_args()
     payload = fetch(find_call(args.call_py), args.output, args.resume)
     args.output.parent.mkdir(parents=True, exist_ok=True)
