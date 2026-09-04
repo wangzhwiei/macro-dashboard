@@ -19,7 +19,7 @@ class CreditForecastModelTest(unittest.TestCase):
     def setUpClass(cls):
         cls.payload = MODULE.build(
             ROOT / "data" / "credit-model" / "source_data.json",
-            ROOT.parent / "release-gh-pages-v7-20260821" / "data" / "forecasts.json",
+            ROOT / "public" / "data" / "forecasts.json",
             ROOT / "data" / "industrial-value-model" / "forecast_results.json",
         )
 
@@ -74,7 +74,7 @@ class CreditForecastModelTest(unittest.TestCase):
             altered.write_text(json.dumps(source, ensure_ascii=False), encoding="utf-8")
             rebuilt = MODULE.build(
                 altered,
-                ROOT.parent / "release-gh-pages-v7-20260821" / "data" / "forecasts.json",
+                ROOT / "public" / "data" / "forecasts.json",
                 ROOT / "data" / "industrial-value-model" / "forecast_results.json",
             )
         self.assertEqual(
@@ -107,7 +107,7 @@ class CreditForecastModelTest(unittest.TestCase):
 
     def test_macro_information_set_matches_release_timing(self):
         current = MODULE.current_macro_forecasts(
-            ROOT.parent / "release-gh-pages-v7-20260821" / "data" / "forecasts.json",
+            ROOT / "public" / "data" / "forecasts.json",
             ROOT / "data" / "industrial-value-model" / "forecast_results.json",
         )
         information = MODULE.macro_information_series(

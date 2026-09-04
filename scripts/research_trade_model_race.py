@@ -19,8 +19,7 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT.parent / "source-main"
-MODEL_PATH = SOURCE / "scripts" / "trade_forecast_model.py"
+MODEL_PATH = ROOT / "scripts" / "trade_forecast_model.py"
 TARGET_PATH = ROOT / "data" / "trade-model" / "trade_targets_ifind.csv"
 ANCHOR_FACTOR_PATH = ROOT / "data" / "trade-model" / "trade_anchor_factors.json"
 PARTNER_IMPORT_FACTOR_PATH = ROOT / "data" / "trade-model" / "trade_partner_import_factors.json"

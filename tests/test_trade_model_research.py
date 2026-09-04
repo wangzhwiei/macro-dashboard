@@ -203,6 +203,13 @@ class TradeResearchValidationTests(unittest.TestCase):
         self.assertIn('"--target-month"', source)
         self.assertIn("targets[key].dropna().index.max() + pd.offsets.MonthEnd(1)", source)
 
+    def test_trade_model_is_self_contained_in_checkout(self) -> None:
+        model_path = ROOT / "scripts" / "trade_forecast_model.py"
+        self.assertTrue(model_path.is_file())
+        source = (ROOT / "scripts" / "research_trade_model_race.py").read_text(encoding="utf-8")
+        self.assertIn('MODEL_PATH = ROOT / "scripts" / "trade_forecast_model.py"', source)
+        self.assertNotIn('ROOT.parent / "source-main"', source)
+
 
 if __name__ == "__main__":
     unittest.main()
