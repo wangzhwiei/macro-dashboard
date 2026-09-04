@@ -27,34 +27,7 @@ jobs:
       - name: Checkout main source (attempt 1)
         id: checkout_1
         continue-on-error: true
-        uses: actions/checkout@v6
-        with:
-          ref: main
-          clean: true
-
-      - name: Wait before checkout retry 2
-        if: steps.checkout_1.outcome == 'failure'
-        shell: powershell
-        run: Start-Sleep -Seconds 60
-
-      - name: Checkout main source (attempt 2)
-        id: checkout_2
-        if: steps.checkout_1.outcome == 'failure'
-        continue-on-error: true
-        uses: actions/checkout@v6
-        with:
-          ref: main
-          clean: true
-
-      - name: Wait before checkout retry 3
-        if: steps.checkout_1.outcome == 'failure' && steps.checkout_2.outcome == 'failure'
-        shell: powershell
-        run: Start-Sleep -Seconds 60
-
-      - name: Checkout main source (attempt 3)
-        id: checkout_3
-        if: steps.checkout_1.outcome == 'failure' && steps.checkout_2.outcome == 'failure'
-        continue-on-error: true
+        timeout-minutes: 3
         uses: actions/checkout@v6
         with:
           ref: main
@@ -62,7 +35,7 @@ jobs:
 
       - name: Restore main source through GitHub API
         id: checkout_archive
-        if: steps.checkout_1.outcome == 'failure' && steps.checkout_2.outcome == 'failure' && steps.checkout_3.outcome == 'failure'
+        if: steps.checkout_1.outcome == 'failure'
         shell: powershell
         env:
           GH_TOKEN: ${{ github.token }}
@@ -90,9 +63,9 @@ jobs:
           "SOURCE_FROM_ARCHIVE=true" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Require a successful source checkout
-        if: steps.checkout_1.outcome != 'success' && steps.checkout_2.outcome != 'success' && steps.checkout_3.outcome != 'success' && steps.checkout_archive.outcome != 'success'
+        if: steps.checkout_1.outcome != 'success' && steps.checkout_archive.outcome != 'success'
         shell: powershell
-        run: throw "Unable to obtain main source after Git and API retries."
+        run: throw "Unable to obtain main source through Git or the GitHub API."
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
