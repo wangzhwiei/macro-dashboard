@@ -11,8 +11,10 @@ $arguments = "-NoProfile -NonInteractive -WindowStyle Hidden -ExecutionPolicy By
 $action = New-ScheduledTaskAction -Execute "$env:SystemRoot\System32\WindowsPowerShell\v1.0\powershell.exe" -Argument $arguments
 $triggers = @(
     New-ScheduledTaskTrigger -AtLogOn -User $userId
-    New-ScheduledTaskTrigger -Daily -At "09:30"
 )
+foreach ($dispatchTime in @("09:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30")) {
+    $triggers += New-ScheduledTaskTrigger -Daily -At $dispatchTime
+}
 $principal = New-ScheduledTaskPrincipal -UserId $userId -LogonType Interactive -RunLevel Limited
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -RestartCount 2 -RestartInterval (New-TimeSpan -Minutes 5) -ExecutionTimeLimit (New-TimeSpan -Minutes 10) -MultipleInstances IgnoreNew
 Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $triggers -Principal $principal -Settings $settings -Description "Fallback: dispatch the daily macro-dashboard update only when GitHub scheduling has not produced a run." -Force | Out-Null
