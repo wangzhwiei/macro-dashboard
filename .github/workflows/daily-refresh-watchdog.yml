@@ -1,0 +1,85 @@
+name: Daily refresh watchdog
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 18:30 and 20:30 Asia/Shanghai, after all local retry windows.
+    - cron: "30 10 * * *"
+    - cron: "30 12 * * *"
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+
+jobs:
+  verify-daily-success:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check today's production deployment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const title = "[自动更新告警] 宏观面板当日未成功发布";
+            const dayFormatter = new Intl.DateTimeFormat("en-CA", {
+              timeZone: "Asia/Shanghai",
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            });
+            const today = dayFormatter.format(new Date());
+            const { data } = await github.rest.actions.listWorkflowRuns({
+              owner,
+              repo,
+              workflow_id: "update-and-deploy.yml",
+              per_page: 30,
+            });
+            const successful = data.workflow_runs.find((run) =>
+              run.conclusion === "success" &&
+              dayFormatter.format(new Date(run.created_at)) === today
+            );
+            const openIssues = await github.paginate(github.rest.issues.listForRepo, {
+              owner,
+              repo,
+              state: "open",
+              per_page: 100,
+            });
+            const existing = openIssues.find((issue) => issue.title === title);
+
+            if (successful) {
+              core.info(`Daily deployment succeeded: ${successful.html_url}`);
+              if (existing) {
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: existing.number,
+                  body: `已检测到 ${today} 的成功发布：${successful.html_url}`,
+                });
+                await github.rest.issues.update({
+                  owner,
+                  repo,
+                  issue_number: existing.number,
+                  state: "closed",
+                });
+              }
+              return;
+            }
+
+            const latest = data.workflow_runs[0];
+            const detail = latest
+              ? `最近一次运行：${latest.status}/${latest.conclusion || "pending"} ${latest.html_url}`
+              : "仓库中尚未找到自动更新运行记录。";
+            const body = `${today}（Asia/Shanghai）截至本次巡检仍无成功发布。\n\n${detail}\n\n请检查 self-hosted runner、WSL、iFinD 会话及网络。`;
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: existing.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body });
+            }
+            core.setFailed(`No successful macro-dashboard deployment found for ${today}.`);
