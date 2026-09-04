@@ -24,11 +24,46 @@ jobs:
       MACRO_DATA_ADAPTER: hybrid
       PYTHONUTF8: "1"
     steps:
-      - name: Checkout main source
+      - name: Checkout main source (attempt 1)
+        id: checkout_1
+        continue-on-error: true
         uses: actions/checkout@v6
         with:
           ref: main
           clean: true
+
+      - name: Wait before checkout retry 2
+        if: steps.checkout_1.outcome == 'failure'
+        shell: powershell
+        run: Start-Sleep -Seconds 60
+
+      - name: Checkout main source (attempt 2)
+        id: checkout_2
+        if: steps.checkout_1.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          clean: true
+
+      - name: Wait before checkout retry 3
+        if: steps.checkout_1.outcome == 'failure' && steps.checkout_2.outcome == 'failure'
+        shell: powershell
+        run: Start-Sleep -Seconds 180
+
+      - name: Checkout main source (attempt 3)
+        id: checkout_3
+        if: steps.checkout_1.outcome == 'failure' && steps.checkout_2.outcome == 'failure'
+        continue-on-error: true
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          clean: true
+
+      - name: Require a successful source checkout
+        if: steps.checkout_1.outcome != 'success' && steps.checkout_2.outcome != 'success' && steps.checkout_3.outcome != 'success'
+        shell: powershell
+        run: throw "Unable to check out main after three attempts."
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
