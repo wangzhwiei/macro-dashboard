@@ -84,7 +84,7 @@ jobs:
       - name: Refresh data and validate structural integrity
         shell: cmd
         run: >-
-          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR=~/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data; export MACRO_DATA_CACHE_DIR=~/.cache/macro-dashboard/ifind-cache; mkdir -p ~/.cache/macro-dashboard/ifind-cache; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --data-only --allow-stale"
+          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR=~/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data; export MACRO_DATA_CACHE_DIR=~/.cache/macro-dashboard/ifind-cache; mkdir -p ~/.cache/macro-dashboard/ifind-cache; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --incremental --data-only --allow-stale"
 
       - name: Build GitHub Pages site
         shell: cmd

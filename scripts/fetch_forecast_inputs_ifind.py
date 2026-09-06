@@ -95,6 +95,11 @@ def main() -> int:
     parser.add_argument("--end", default=date.today().isoformat())
     parser.add_argument("--only", action="append", default=[])
     parser.add_argument("--merge-existing", action="store_true")
+    parser.add_argument(
+        "--skip-checked-through",
+        action="store_true",
+        help="Skip provider calls when a complete merged artifact was already checked through --end.",
+    )
     parser.add_argument("--attempts", type=int, default=3)
     args = parser.parse_args()
 
@@ -117,6 +122,15 @@ def main() -> int:
         "schemaVersion": 1, "start": args.start, "end": args.end,
         "series": {}, "errors": {}, "warnings": {},
     }
+    if (
+        args.skip_checked_through
+        and args.merge_existing
+        and not output.get("errors")
+        and str(output.get("end") or "") >= args.end
+        and all(entry["key"] in output.get("series", {}) for entry in selected)
+    ):
+        print(f"Already checked through {args.end}; retaining merged input artifact.")
+        return 0
     output.setdefault("warnings", {})
     if not args.merge_existing:
         output["start"], output["end"] = args.start, args.end

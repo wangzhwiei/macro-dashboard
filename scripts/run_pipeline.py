@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import shutil
 import subprocess
 import sys
@@ -31,6 +32,124 @@ def run_optional_step(label: str, command: list[str]) -> bool:
         return False
 
 
+def run_incremental(args: argparse.Namespace) -> int:
+    """Refresh only data that can change between daily runs.
+
+    Historical dashboard observations remain available through the adapter cache;
+    monthly model training inputs and walk-forward backtests are intentionally not
+    fetched again here.  Those remain part of the explicit full pipeline.
+    """
+    os.environ["MACRO_INCREMENTAL"] = "1"
+    python = sys.executable
+    refresh_end = date.fromisoformat(args.end_date) if args.end_date else date.today()
+    dashboard_path = ROOT / "public" / "data" / "dashboard.json"
+    published_snapshot = ROOT / "outputs" / ".dashboard-before-incremental.json"
+    if dashboard_path.exists():
+        published_snapshot.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(dashboard_path, published_snapshot)
+    update_command = [
+        python,
+        "scripts/update_dashboard.py",
+        "--adapter",
+        args.adapter,
+        "--days",
+        str(args.days),
+    ]
+    if args.end_date:
+        update_command.extend(["--end-date", args.end_date])
+
+    try:
+        run_step("extend cached high-frequency dashboard series", update_command)
+        if published_snapshot.exists():
+            run_step(
+                "freeze already published Friday signals",
+                [
+                    python,
+                    "scripts/freeze_friday_snapshot.py",
+                    "--published",
+                    str(published_snapshot),
+                    "--generated",
+                    str(dashboard_path),
+                    "--output",
+                    str(dashboard_path),
+                ],
+            )
+        run_step("audit freshness", [python, "scripts/audit_freshness.py"])
+        run_step(
+            "validate dashboard structure",
+            [
+                python,
+                "scripts/validate_dashboard.py",
+                *([] if args.allow_stale else ["--strict"]),
+                "--report",
+                str(args.report),
+            ],
+        )
+
+        forecast_inputs = ROOT / "data" / "forecast-model" / "ifind_latest_inputs.json"
+        fetch_command = [
+            python,
+            "scripts/fetch_forecast_inputs_ifind.py",
+            "--start",
+            (refresh_end - timedelta(days=45)).isoformat(),
+            "--end",
+            refresh_end.isoformat(),
+        ]
+        if forecast_inputs.exists():
+            fetch_command.append("--merge-existing")
+            fetch_command.append("--skip-checked-through")
+        run_step("merge recent CPI/PPI/PMI inputs", fetch_command)
+
+        consensus_command = [python, "scripts/fetch_forecast_consensus.py"]
+        if args.forecast_target_month:
+            consensus_command.extend(["--target-month", args.forecast_target_month])
+        run_step("refresh current consensus", consensus_command)
+
+        forecast_command = [python, "scripts/refresh_forecasts_fast.py"]
+        if args.forecast_target_month:
+            forecast_command.extend(["--target-month", args.forecast_target_month])
+        run_step("refresh current CPI/PPI/PMI nowcasts", forecast_command)
+        run_step(
+            "publish retail forecast",
+            [
+                python,
+                "scripts/publish_retail_v7_forecasts.py",
+                "--output",
+                "public/data/forecasts.json",
+            ],
+        )
+
+        # Trade consensus is a small current-period request.  Reuse the already
+        # stored factor history and do not redownload it on every daily run.
+        run_step("refresh current trade consensus", [python, "scripts/fetch_baseline.py"])
+        trade_model_command = [python, "scripts/research_trade_model_race.py"]
+        if args.forecast_target_month:
+            trade_model_command.extend(["--target-month", args.forecast_target_month])
+        run_step("rerun trade estimate from stored factors", trade_model_command)
+        run_step(
+            "publish trade forecast", [python, "scripts/publish_fixed_trade_forecasts.py"]
+        )
+
+        run_step(
+            "check forecast artifact integrity",
+            [python, "-m", "unittest", "tests.test_forecast_integrity"],
+        )
+        if not args.data_only:
+            npm = shutil.which("npm")
+            if not npm:
+                raise RuntimeError("npm is required for the page build")
+            run_step("page tests", [npm, "test"])
+            run_step("GitHub Pages build", [npm, "run", "build:github"])
+    except (subprocess.CalledProcessError, RuntimeError) as error:
+        print(f"\nIncremental pipeline failed: {error}", file=sys.stderr)
+        return 1
+    finally:
+        published_snapshot.unlink(missing_ok=True)
+
+    print("\nIncremental pipeline completed; historical model inputs were not refetched.")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -45,6 +164,15 @@ def main() -> int:
         help="Optional month-end override passed to the fast CPI/PPI/PMI refresh.",
     )
     parser.add_argument("--full-forecast", action="store_true", help="手动重跑完整历史无前视回测；每日计划任务默认快速刷新")
+    parser.add_argument(
+        "--incremental",
+        action="store_true",
+        help=(
+            "Daily lightweight refresh: extend cached high-frequency series, "
+            "refresh current consensus/nowcasts, and skip unchanged monthly "
+            "model histories plus the full test suite."
+        ),
+    )
     parser.add_argument(
         "--data-only",
         action="store_true",
@@ -66,6 +194,9 @@ def main() -> int:
         default=ROOT / "outputs" / "series-catalog.csv",
     )
     args = parser.parse_args()
+
+    if args.incremental:
+        return run_incremental(args)
 
     python = sys.executable
     update_command = [

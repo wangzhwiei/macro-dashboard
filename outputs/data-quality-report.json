@@ -1,19 +1,21 @@
 {
   "ok": true,
-  "strict": true,
+  "strict": false,
   "summary": {
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 191,
+    "history_weeks": 192,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
-    "stale_indicators": 0,
+    "stale_indicators": 1,
     "cadence_issues": 0,
     "required_provider_codes": 111,
     "mapped_provider_codes": 111,
     "provider_code_collisions": 0
   },
   "errors": [],
-  "warnings": []
+  "warnings": [
+    "bill_6m 最新数据为2026-08-28，已滞后5个工作日（daily容忍4天）"
+  ]
 }

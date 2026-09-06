@@ -107,6 +107,12 @@ def _cache_busted_url(url: str, nonce: int | None = None) -> str:
 def _download_cjhx_csv() -> Path:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     cached = CACHE_DIR / "macro_extract_70_results.csv"
+    if cached.exists() and os.environ.get("MACRO_INCREMENTAL", "").lower() in {
+        "1",
+        "true",
+        "yes",
+    }:
+        return cached
     request = urllib.request.Request(
         _cache_busted_url(CJHX_DATA_URL),
         headers={
@@ -302,6 +308,22 @@ def _fetch_ifind(
         except Exception as error:
             last_error = error
             if "模糊匹配漂移" in str(error):
+                if cached and os.environ.get("MACRO_INCREMENTAL", "").lower() in {
+                    "1",
+                    "true",
+                    "yes",
+                }:
+                    logger.warning(
+                        "iFinD provider ID drift; retaining validated cache: %s (%s)",
+                        semantic_code,
+                        error,
+                    )
+                    _save_cache(semantic_code, cached, end_date.isoformat())
+                    return [
+                        item
+                        for item in cached
+                        if start_date <= date.fromisoformat(item["date"]) <= end_date
+                    ]
                 raise
             if cached and "未返回可用数据" in str(error):
                 logger.info(
