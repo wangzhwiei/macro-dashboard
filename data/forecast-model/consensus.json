@@ -1,7 +1,7 @@
 {
   "_meta": {
     "source": "iFinD EDB",
-    "retrievedAt": "2026-09-06T17:50:01.055388+08:00",
+    "retrievedAt": "2026-09-06T17:59:51.442000+08:00",
     "usage": "personal research",
     "field": "iFinD 预测平均值",
     "queryMode": "Chinese name discovery + fixed provider ID validation",
@@ -761,7 +761,7 @@
       "providerId": "M005682252",
       "frequency": "M",
       "unit": "%",
-      "retrievedAt": "2026-09-06T17:50:01.055388+08:00",
+      "retrievedAt": "2026-09-06T17:59:51.442000+08:00",
       "imputed": false
     }
   ],
@@ -2279,7 +2279,7 @@
       "providerId": "M005779145",
       "frequency": "M",
       "unit": "%",
-      "retrievedAt": "2026-09-06T17:50:01.055388+08:00",
+      "retrievedAt": "2026-09-06T17:59:51.442000+08:00",
       "imputed": false
     }
   ]
