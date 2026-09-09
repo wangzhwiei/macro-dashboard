@@ -14,11 +14,13 @@ class ForecastIntegrityTests(unittest.TestCase):
             (ROOT / "public" / "data" / "forecasts.json").read_text(encoding="utf-8")
         )
 
-    def test_history_covers_2023_to_confirmed_july_nowcast(self) -> None:
+    def test_history_covers_2023_through_the_current_nowcast(self) -> None:
         for key in ("cpi", "ppi", "pmi"):
             rows = self.data["history"][key]
             self.assertEqual(rows[0]["date"], "2023-01-31")
-            self.assertEqual(rows[-1]["date"], "2026-08-31")
+            dates = [row["date"] for row in rows]
+            self.assertEqual(dates, sorted(set(dates)))
+            self.assertRegex(rows[-1]["date"], r"^\d{4}-\d{2}-(28|29|30|31)$")
             expected_kind = "confirmed_nowcast" if rows[-1]["actual"] is not None else "live_nowcast"
             self.assertEqual(rows[-1]["forecastKind"], expected_kind)
             self.assertTrue(all(row["forecast"] is None for row in rows if row["date"] < "2023-01-01"))
