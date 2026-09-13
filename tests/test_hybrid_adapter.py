@@ -92,6 +92,46 @@ class HybridRoutingTests(unittest.TestCase):
                 date(2026, 8, 2),
             )
 
+    def test_ifind_parser_uses_only_the_exact_provider_candidate(self):
+        data = {
+            "datas": [
+                {"data": {"data": [["2026-09-11", 84.78]], "attrs": {"exact": {"index_id": "EXPECTED", "unit": "%"}}}},
+                {"data": {"data": [["2026-09-11", 6.0]], "attrs": {"wrong": {"index_id": "WRONG", "unit": "%"}}}},
+            ]
+        }
+        records = hybrid_adapter._parse_ifind_records(
+            data, "EXPECTED", date(2026, 9, 1), date(2026, 9, 14), "%"
+        )
+        self.assertEqual(records, [{"date": "2026-09-11", "value": 84.78}])
+
+    def test_ifind_parser_converts_returned_unit_to_declared_unit(self):
+        data = {
+            "datas": [{
+                "data": {
+                    "data": [["2026-09-10", 813700.0]],
+                    "attrs": {"exact": {"index_id": "EXPECTED", "unit": "吨"}},
+                }
+            }]
+        }
+        records = hybrid_adapter._parse_ifind_records(
+            data, "EXPECTED", date(2026, 9, 1), date(2026, 9, 14), "万吨"
+        )
+        self.assertEqual(records, [{"date": "2026-09-10", "value": 81.37}])
+
+    def test_overlapping_fresh_data_repairs_legacy_cache_unit(self):
+        cached = [
+            {"date": "2026-09-01", "value": 947400.0},
+            {"date": "2026-09-02", "value": 910900.0},
+            {"date": "2026-09-03", "value": 878700.0},
+        ]
+        fresh = [
+            {"date": "2026-09-01", "value": 94.74},
+            {"date": "2026-09-02", "value": 91.09},
+            {"date": "2026-09-03", "value": 87.87},
+        ]
+        repaired = hybrid_adapter._harmonize_legacy_cache_units(cached, fresh)
+        self.assertAlmostEqual(repaired[0]["value"], 94.74)
+
     def test_same_day_checked_cache_skips_ifind_call(self):
         original_dir = hybrid_adapter.CACHE_DIR
         original_call = hybrid_adapter._ifind_call

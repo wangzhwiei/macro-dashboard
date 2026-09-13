@@ -79,16 +79,27 @@ def freeze_snapshot(published: dict, generated: dict) -> dict:
     published_dates = published["dates"]
     generated_dates = generated["dates"]
     published_indicators = {item["id"]: item for item in published["indicators"]}
+    generated_indicators = {item["id"]: item for item in generated["indicators"]}
     same_snapshot = published_dates[-1] == generated_dates[-1]
     if same_snapshot:
         generated_ids = {item["id"] for item in generated["indicators"]}
         generated["indicators"].extend(
             item for item in published["indicators"] if item["id"] not in generated_ids
         )
-    freeze_latest = same_snapshot and all(
+    trusted_published_latest = same_snapshot and all(
         trusted_latest_indicator(item, published_dates[-1])
         for item in published_indicators.values()
     )
+    # A weekly observation can arrive after the first Friday publication. If
+    # the regenerated information set changed, recompute the whole latest
+    # snapshot so raw values, scores, categories and narrative stay aligned.
+    latest_information_unchanged = trusted_published_latest and all(
+        item_id in generated_indicators
+        and generated_indicators[item_id].get("scoreObservationAt") == old.get("scoreObservationAt")
+        and abs(float(generated_indicators[item_id].get("scoreChange", 0)) - float(old.get("scoreChange", 0))) <= 1e-7
+        for item_id, old in published_indicators.items()
+    )
+    freeze_latest = trusted_published_latest and latest_information_unchanged
     freeze_dates = set(published_dates)
     if same_snapshot and not freeze_latest:
         # Legacy or internally inconsistent payloads cannot be allowed to

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-09-13T23:29:26.115463+08:00",
+  "retrievedAt": "2026-09-14T00:41:14.614793+08:00",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "releasePolicy": "structural investment components are same-release data and may enter forecasts only with lag >= 1 month",
   "series": {

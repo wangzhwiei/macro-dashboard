@@ -107,32 +107,40 @@ def _cache_busted_url(url: str, nonce: int | None = None) -> str:
 def _download_cjhx_csv() -> Path:
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     cached = CACHE_DIR / "macro_extract_70_results.csv"
-    if cached.exists() and os.environ.get("MACRO_INCREMENTAL", "").lower() in {
-        "1",
-        "true",
-        "yes",
-    }:
-        return cached
-    request = urllib.request.Request(
-        _cache_busted_url(CJHX_DATA_URL),
-        headers={
-            "User-Agent": "macro-dashboard-data-pipeline/1.0",
-            "Cache-Control": "no-cache",
-            "Pragma": "no-cache",
-        },
+    # The upstream file is already an incremental consolidated snapshot and is
+    # downloaded only once per process. Reusing it across daily runs silently
+    # froze all CJHX-backed indicators at the date of the first local cache.
+    last_error: Exception | None = None
+    for attempt in range(3):
+        request = urllib.request.Request(
+            _cache_busted_url(CJHX_DATA_URL, int(time.time()) + attempt),
+            headers={
+                "User-Agent": "macro-dashboard-data-pipeline/1.0",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=90) as response:
+                payload = response.read()
+            if len(payload) < 1000:
+                raise RuntimeError("CJHX CSV下载内容异常小")
+            temporary = cached.with_suffix(".csv.tmp")
+            temporary.write_bytes(payload)
+            temporary.replace(cached)
+            return cached
+        except Exception as error:
+            last_error = error
+            if attempt < 2:
+                logger.warning("CJHX远程CSV第%d次下载失败，将重试：%s", attempt + 1, error)
+                time.sleep(2 * (attempt + 1))
+    if not cached.exists():
+        raise RuntimeError(f"CJHX远程CSV下载失败：{last_error}") from last_error
+    logger.warning(
+        "CJHX远程CSV下载失败，使用本地缓存：%s (%s)",
+        cached,
+        last_error,
     )
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            payload = response.read()
-        if len(payload) < 1000:
-            raise RuntimeError("CJHX CSV下载内容异常小")
-        temporary = cached.with_suffix(".csv.tmp")
-        temporary.write_bytes(payload)
-        temporary.replace(cached)
-    except Exception:
-        if not cached.exists():
-            raise
-        logger.warning("CJHX远程CSV下载失败，使用本地缓存：%s", cached)
     return cached
 
 
@@ -222,40 +230,108 @@ def _extract_ifind_payload(result: dict[str, Any]) -> dict[str, Any]:
     return data
 
 
+UNIT_FACTORS: dict[str, tuple[str, float]] = {
+    "元": ("currency", 1.0),
+    "万元": ("currency", 1e4),
+    "亿元": ("currency", 1e8),
+    "万亿元": ("currency", 1e12),
+    "桶": ("barrel", 1.0),
+    "千桶": ("barrel", 1e3),
+    "万桶": ("barrel", 1e4),
+    "吨": ("tonne", 1.0),
+    "千吨": ("tonne", 1e3),
+    "万吨": ("tonne", 1e4),
+}
+
+
+def _convert_provider_unit(value: float, returned_unit: str, expected_unit: str) -> float:
+    if not returned_unit or not expected_unit or returned_unit == expected_unit:
+        return value
+    if expected_unit == "指数" and "=100" in returned_unit:
+        return value
+    returned = UNIT_FACTORS.get(returned_unit)
+    expected = UNIT_FACTORS.get(expected_unit)
+    if not returned or not expected or returned[0] != expected[0]:
+        raise RuntimeError(f"iFinD单位漂移：期望{expected_unit!r}，实际{returned_unit!r}")
+    return value * returned[1] / expected[1]
+
+
 def _parse_ifind_records(
-    data: dict[str, Any], expected_id: str, start_date: date, end_date: date
+    data: dict[str, Any],
+    expected_id: str,
+    start_date: date,
+    end_date: date,
+    expected_unit: str = "",
 ) -> list[dict[str, Any]]:
-    records: dict[str, float] = {}
     observed_ids: set[str] = set()
     extra = data.get("extra", {})
     if isinstance(extra, dict) and extra.get("index_id"):
         observed_ids.add(str(extra["index_id"]))
 
+    matches: list[tuple[dict[str, Any], dict[str, Any]]] = []
     for item in data.get("datas", []):
         container = item.get("data", {}) if isinstance(item, dict) else {}
         attrs = container.get("attrs", {}) if isinstance(container, dict) else {}
+        expected_metadata = []
         for metadata in attrs.values() if isinstance(attrs, dict) else []:
             if isinstance(metadata, dict) and metadata.get("index_id"):
-                observed_ids.add(str(metadata["index_id"]))
-        points = container.get("data", []) if isinstance(container, dict) else []
-        for point in points:
-            if not isinstance(point, list) or len(point) < 2 or point[1] is None:
-                continue
-            try:
-                day = _parse_day(point[0])
-                value = float(point[1])
-            except (TypeError, ValueError):
-                continue
-            if start_date <= day <= end_date and math.isfinite(value):
-                records[day.isoformat()] = value
+                provider_id = str(metadata["index_id"])
+                observed_ids.add(provider_id)
+                if provider_id == expected_id:
+                    expected_metadata.append(metadata)
+        if expected_metadata:
+            if len(expected_metadata) != 1:
+                raise RuntimeError(f"iFinD固定ID {expected_id} 在单个候选中重复")
+            matches.append((container, expected_metadata[0]))
 
-    if observed_ids and expected_id not in observed_ids:
+    if len(matches) != 1:
         raise RuntimeError(
-            f"iFinD模糊匹配漂移：期望{expected_id}，实际{sorted(observed_ids)}"
+            f"iFinD模糊匹配漂移：期望{expected_id}唯一命中，实际{sorted(observed_ids)}"
         )
+
+    container, metadata = matches[0]
+    returned_unit = str(metadata.get("unit") or "")
+    records: dict[str, float] = {}
+    points = container.get("data", []) if isinstance(container, dict) else []
+    for point in points:
+        if not isinstance(point, list) or len(point) < 2 or point[1] is None:
+            continue
+        try:
+            day = _parse_day(point[0])
+            value = _convert_provider_unit(float(point[1]), returned_unit, expected_unit)
+        except (TypeError, ValueError):
+            continue
+        if start_date <= day <= end_date and math.isfinite(value):
+            records[day.isoformat()] = value
     if not records:
         raise RuntimeError(f"iFinD {expected_id} 未返回可用数据")
     return [{"date": day, "value": value} for day, value in sorted(records.items())]
+
+
+def _harmonize_legacy_cache_units(
+    cached: list[dict[str, Any]], fresh: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    """Rescale legacy cache when an overlapping provider window proves a unit switch."""
+    old = {str(item["date"]): float(item["value"]) for item in cached}
+    ratios = [
+        old[str(item["date"])] / float(item["value"])
+        for item in fresh
+        if str(item["date"]) in old and abs(float(item["value"])) > 1e-12
+    ]
+    if len(ratios) < 3:
+        return cached
+    ratios.sort()
+    median_ratio = ratios[len(ratios) // 2]
+    if median_ratio <= 0:
+        return cached
+    factors = (1e-6, 1e-4, 1e-3, 1e-2, 1e-1, 10.0, 100.0, 1e3, 1e4, 1e6)
+    factor = min(factors, key=lambda value: abs(math.log10(median_ratio / value)))
+    if abs(median_ratio / factor - 1.0) > 0.05:
+        return cached
+    return [
+        {"date": str(item["date"]), "value": float(item["value"]) / factor}
+        for item in cached
+    ]
 
 
 def _fetch_ifind(
@@ -281,7 +357,9 @@ def _fetch_ifind(
         ]
     if cached:
         latest = date.fromisoformat(cached[-1]["date"])
-        fetch_start = latest + timedelta(days=1)
+        # Re-query an overlap so provider revisions, delayed observations and
+        # transient bad values can be corrected instead of becoming permanent.
+        fetch_start = max(start_date, latest - timedelta(days=35))
         if fetch_start > end_date:
             return [
                 item
@@ -302,7 +380,11 @@ def _fetch_ifind(
             result = _get_ifind_call()("edb", "get_edb_data", {"query": query})
             data = _extract_ifind_payload(result)
             fresh = _parse_ifind_records(
-                data, metadata["provider_id"], fetch_start, end_date
+                data,
+                metadata["provider_id"],
+                fetch_start,
+                end_date,
+                str(metadata.get("raw_unit") or ""),
             )
             break
         except Exception as error:
@@ -363,6 +445,7 @@ def _fetch_ifind(
         {"date": item["date"], "value": float(item["value"]) * scale}
         for item in fresh
     ]
+    cached = _harmonize_legacy_cache_units(cached, fresh)
     merged = _merge_records(cached, fresh)
     _save_cache(semantic_code, merged, end_date.isoformat())
     return [

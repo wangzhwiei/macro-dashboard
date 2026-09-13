@@ -45,6 +45,7 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
                 "id": "demo", "signal": "bullish", "score": 9.0,
                 "reason": "recomputed", "history": [0.5, 8.0, 9.0],
                 "latest": 100.0,
+                **self.snapshot_fields(9.0),
                 **self.weekly_fields(3),
             }],
             "categories": [{
@@ -129,6 +130,42 @@ class FreezeFridaySnapshotTests(unittest.TestCase):
         self.assertEqual(result["indicators"][0]["history"], [1.0, 2.0, 9.0])
         self.assertEqual(result["indicators"][0]["score"], 9.0)
         self.assertEqual(result["indicators"][0]["scoreAsOf"], "2026-08-28")
+
+    def test_late_weekly_observation_recomputes_latest_snapshot(self):
+        published = {
+            "dates": ["2026-09-04", "2026-09-11"],
+            "indicators": [{
+                "id": "pvc", "history": [1.0, 25.1],
+                **self.snapshot_fields(25.1, "2026-09-11"),
+                **self.weekly_fields(2),
+            }],
+            "categories": [{"id": "activity", "score": 25.1, "weeklyScores": [1.0, 25.1]}],
+            "overall": {"score": 25.1, "weeklyScores": [1.0, 25.1]},
+        }
+        published["indicators"][0].update({
+            "scoreObservationAt": "2026-09-03",
+            "scoreChange": -0.99,
+            "scoreChanges": [0.2, -0.99],
+            "scoreObservationDates": ["2026-08-28", "2026-09-03"],
+        })
+        generated = {
+            "dates": ["2026-09-04", "2026-09-11"],
+            "indicators": [{
+                "id": "pvc", "signal": "bearish", "score": -100.0,
+                "reason": "late observation", "history": [9.0, -100.0],
+                "scoreAsOf": "2026-09-11", "scoreObservationAt": "2026-09-10",
+                "scoreChange": 5.73, "scoreScale": 1.4,
+                "scoreChanges": [0.2, 5.73], "scoreScales": [2.5, 1.4],
+                "scoreObservationDates": ["2026-08-28", "2026-09-10"],
+            }],
+            "categories": [{"id": "activity", "score": -100.0, "weeklyScores": [9.0, -100.0]}],
+            "overall": {"score": -100.0, "weeklyScores": [9.0, -100.0]},
+        }
+        result = freeze_snapshot(published, generated)
+        self.assertEqual(result["indicators"][0]["score"], -100.0)
+        self.assertEqual(result["indicators"][0]["scoreObservationAt"], "2026-09-10")
+        self.assertEqual(result["categories"][0]["score"], -100.0)
+        self.assertEqual(result["overall"]["score"], -100.0)
 
 
 if __name__ == "__main__":
