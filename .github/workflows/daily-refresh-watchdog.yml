@@ -82,4 +82,6 @@ jobs:
             } else {
               await github.rest.issues.create({ owner, repo, title, body });
             }
-            core.setFailed(`No successful macro-dashboard deployment found for ${today}.`);
+            // The issue is the durable alert. Keep this workflow successful so an
+            // offline self-hosted runner does not also generate a daily failure email.
+            core.warning(`No successful macro-dashboard deployment found for ${today}.`);
