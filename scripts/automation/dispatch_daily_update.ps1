@@ -43,7 +43,7 @@ try {
         $_.status -in @("queued", "in_progress", "waiting", "requested", "pending") -or
         ($_.status -eq "completed" -and $_.conclusion -eq "success")
     })
-    if ($alreadyHandled.Count -gt 0) {
+    if (-not $Force -and $alreadyHandled.Count -gt 0) {
         $latest = $alreadyHandled | Sort-Object created_at -Descending | Select-Object -First 1
         Write-DispatchLog "skip because run $($latest.id) is $($latest.status)/$($latest.conclusion)"
         exit 0
