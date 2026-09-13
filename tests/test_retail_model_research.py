@@ -151,10 +151,13 @@ class RetailModelResearchTests(unittest.TestCase):
     def test_partial_current_month_is_not_published_as_forecast(self):
         latest = self.result["latestForecast"]
         self.assertIsNone(latest["model"])
-        self.assertEqual(
-            "waiting_for_complete_or_same_window_hf",
-            latest["stages"]["preliminary"]["status"],
+        preliminary = latest["stages"]["preliminary"]
+        self.assertIn(
+            preliminary["status"],
+            {"available", "waiting_for_complete_or_same_window_hf"},
         )
+        if preliminary["status"] == "available":
+            self.assertIsNotNone(preliminary["value"])
         self.assertEqual(
             "waiting_for_complete_current_month_inputs",
             latest["stages"]["preReleaseReview"]["status"],

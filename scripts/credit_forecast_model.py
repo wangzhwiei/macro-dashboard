@@ -577,12 +577,17 @@ def build(
     model_inputs_path: Path = DEFAULT_MODEL_INPUTS,
     industrial_source_path: Path = DEFAULT_INDUSTRIAL_SOURCE,
 ) -> dict[str, Any]:
+    global TARGET_MONTH
     source = read_json(source_path)
     data = source["series"]
     m2 = series(data["m2_yoy"]["observations"])
     m2_level = series(data["m2_level"]["observations"], 1e12)
     loans = series(data["new_rmb_loans"]["observations"], 1e12)
     tsf = series(data["social_financing"]["observations"], 1e12)
+    # Credit releases advance together.  Forecast the first still-unreleased
+    # month rather than keeping a calendar month hard-coded in production.
+    latest_common_actual = min(value.dropna().index.max() for value in (m2, loans, tsf))
+    TARGET_MONTH = latest_common_actual + pd.offsets.MonthEnd(1)
 
     macro_forecasts = current_macro_forecasts(forecasts_path, industrial_path)
     macro_series = macro_information_series(model_inputs_path, industrial_source_path, macro_forecasts)

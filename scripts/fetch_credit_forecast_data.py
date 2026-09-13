@@ -180,10 +180,24 @@ def parse(response: dict[str, Any], expected_id: str) -> dict[str, Any]:
     if len(matches) != 1:
         raise RuntimeError(f"expected {expected_id}, observed {sorted(set(observed))}")
     column, metadata, observations = matches[0]
+    # iFinD may return the same fixed-ID monetary series in 元, 万元, 亿元 or
+    # 万亿元 across sessions.  Downstream credit models use a stable yuan
+    # contract, so normalize at the provider boundary instead of silently
+    # changing model magnitudes when the display unit changes.
+    unit = metadata.get("unit")
+    monetary_scales = {"元": 1.0, "万元": 1e4, "亿元": 1e8, "万亿元": 1e12}
+    if unit in monetary_scales:
+        scale = monetary_scales[unit]
+        observations = [
+            [row[0], float(row[1]) * scale]
+            for row in observations
+            if isinstance(row, list) and len(row) >= 2 and row[1] is not None
+        ]
+        unit = "元"
     return {
         "providerId": expected_id,
         "name": column,
-        "unit": metadata.get("unit"),
+        "unit": unit,
         "frequency": metadata.get("freq"),
         "source": metadata.get("data_source"),
         "observations": observations,
@@ -206,9 +220,11 @@ def fetch(checkpoint: Path | None = None, resume: bool = False) -> dict[str, Any
                 previous_series[key] = value
     for key, config in SERIES.items():
         errors = []
+        now = datetime.now(ZoneInfo("Asia/Shanghai"))
+        query = config["query"].replace("20260831", now.strftime("%Y%m%d")).replace("202608", now.strftime("%Y%m"))
         for attempt in range(3):
             try:
-                response = call("edb", "get_edb_data", {"query": config["query"]})
+                response = call("edb", "get_edb_data", {"query": query})
                 parsed = parse(response, config["providerId"])
                 parsed["role"] = config["role"]
                 result["series"][key] = parsed

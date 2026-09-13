@@ -9,37 +9,37 @@
   "method": "forecast bias-corrected monthly fixed investment amount from high-frequency and existing monthly-model signals, accumulate to a fixed amount, then convert with a walk-forward comparable base",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "current": {
-    "model": -6.920316,
+    "model": -7.020266,
     "unit": "%",
     "approx68PctRange": [
-      -7.92,
-      -5.92
+      -8.03,
+      -6.01
     ],
-    "predictedMonthlyFlowTrillion": 5.871889,
-    "predictedComparableCumulativeTrillion": 48.896431,
+    "predictedMonthlyFlowTrillion": 5.819383,
+    "predictedComparableCumulativeTrillion": 48.843926,
     "comparableBaseTrillion": 52.531798,
-    "consensus": null,
+    "consensus": -7.02,
     "onlineFlowWeights": {
-      "same_month_amount": 0.145415,
-      "recent_flow_growth": 0.310625,
-      "high_frequency_bridge": 0.261871,
-      "monthly_model_bridge": 0.282089
+      "same_month_amount": 0.162603,
+      "recent_flow_growth": 0.347341,
+      "high_frequency_bridge": 0.23421,
+      "monthly_model_bridge": 0.255846
     }
   },
   "backtest": {
-    "rmse": 1.00275,
-    "mae": 0.702441,
-    "bias": -0.034282,
-    "directionHitPct": 88.57,
-    "changeCaptureRatio": 1.092946,
+    "rmse": 1.008068,
+    "mae": 0.707929,
+    "bias": -0.017588,
+    "directionHitPct": 82.86,
+    "changeCaptureRatio": 1.085038,
     "observations": 38,
     "sampleStart": "2023-03",
     "sampleEnd": "2026-07"
   },
   "lagDiagnostics": {
-    "actualCorrelation": 0.946476,
-    "previousActualCorrelation": 0.860642,
-    "previousMinusCurrentCorrelation": -0.085834
+    "actualCorrelation": 0.94616,
+    "previousActualCorrelation": 0.861147,
+    "previousMinusCurrentCorrelation": -0.085014
   },
   "legacyLagDiagnostics": {
     "actualCorrelation": 0.919334,
@@ -48,11 +48,11 @@
   },
   "comparisonOnCommonSample": {
     "model": {
-      "rmse": 1.00275,
-      "mae": 0.702441,
-      "bias": -0.034282,
-      "directionHitPct": 88.24,
-      "changeCaptureRatio": 1.092946,
+      "rmse": 1.008068,
+      "mae": 0.707929,
+      "bias": -0.017588,
+      "directionHitPct": 82.35,
+      "changeCaptureRatio": 1.085038,
       "observations": 38,
       "sampleStart": "2023-03",
       "sampleEnd": "2026-07"
@@ -68,16 +68,16 @@
       "sampleEnd": "2026-07"
     },
     "modelWinRatePct": 60.53,
-    "rmseImprovementPct": 36.88,
-    "maeImprovementPct": 27.44
+    "rmseImprovementPct": 36.55,
+    "maeImprovementPct": 26.88
   },
   "recentRegimeComparison": {
     "model": {
-      "rmse": 1.177608,
-      "mae": 0.926553,
-      "bias": 0.396048,
-      "directionHitPct": 87.5,
-      "changeCaptureRatio": 1.006075,
+      "rmse": 1.187713,
+      "mae": 0.93882,
+      "bias": 0.433363,
+      "directionHitPct": 75.0,
+      "changeCaptureRatio": 0.996781,
       "observations": 17,
       "sampleStart": "2025-02",
       "sampleEnd": "2026-07"
@@ -93,8 +93,8 @@
       "sampleEnd": "2026-07"
     },
     "modelWinRatePct": 64.71,
-    "rmseImprovementPct": 49.23,
-    "maeImprovementPct": 45.8
+    "rmseImprovementPct": 48.79,
+    "maeImprovementPct": 45.08
   },
   "legacyModelOnCommonSample": {
     "rmse": 1.26302,
@@ -108,9 +108,9 @@
   },
   "performanceGateVsConsensus": {
     "passed": true,
-    "modelRmse": 1.00275,
+    "modelRmse": 1.008068,
     "consensusRmse": 1.588744,
-    "rmseImprovementPct": 36.88
+    "rmseImprovementPct": 36.55
   },
   "flowCandidateDiagnostics": {
     "same_month_amount": {
@@ -134,21 +134,21 @@
       "sampleEnd": "2026-07"
     },
     "high_frequency_bridge": {
-      "rmse": 0.362702,
-      "mae": 0.251678,
-      "bias": 0.163818,
+      "rmse": 0.401838,
+      "mae": 0.263943,
+      "bias": 0.198518,
       "directionHitPct": 96.15,
-      "changeCaptureRatio": 1.008082,
+      "changeCaptureRatio": 1.002432,
       "observations": 26,
       "sampleStart": "2024-04",
       "sampleEnd": "2026-07"
     },
     "monthly_model_bridge": {
-      "rmse": 0.343225,
-      "mae": 0.242838,
-      "bias": 0.174473,
+      "rmse": 0.376154,
+      "mae": 0.253983,
+      "bias": 0.202577,
       "directionHitPct": 96.15,
-      "changeCaptureRatio": 1.027075,
+      "changeCaptureRatio": 1.022835,
       "observations": 26,
       "sampleStart": "2024-04",
       "sampleEnd": "2026-07"
@@ -189,15 +189,15 @@
     ]
   },
   "providerIds": {
+    "fixed_asset_investment_ytd_amount": "M001620537",
     "fixed_asset_investment_ytd_yoy": "M001620575",
     "manufacturing_investment_ytd_yoy": "M003811042",
     "infrastructure_investment_ytd_yoy": "M004385772",
-    "real_estate_investment_ytd_yoy": "S000047961",
-    "private_investment_ytd_yoy": "M002965395",
-    "fixed_asset_investment_consensus": "M005682259",
-    "fixed_asset_investment_ytd_amount": "M001620537",
     "infrastructure_investment_ytd_amount": "M004385771",
-    "real_estate_investment_ytd_amount": "M001620723"
+    "real_estate_investment_ytd_yoy": "S000047961",
+    "real_estate_investment_ytd_amount": "M001620723",
+    "private_investment_ytd_yoy": "M002965395",
+    "fixed_asset_investment_consensus": "M005682259"
   },
   "history": [
     {
@@ -444,111 +444,111 @@
     },
     {
       "date": "2025-03",
-      "model": 3.520071,
+      "model": 3.653562,
       "legacyModel": 4.237656,
       "consensus": 4.038462,
       "actual": 4.2,
-      "predictedMonthlyFlowTrillion": 7.365459,
-      "predictedComparableCumulativeTrillion": 13.14325,
+      "predictedMonthlyFlowTrillion": 7.382407,
+      "predictedComparableCumulativeTrillion": 13.160198,
       "comparableBaseTrillion": 12.69633,
       "kind": "walk_forward"
     },
     {
       "date": "2025-04",
-      "model": 3.726763,
+      "model": 3.749399,
       "legacyModel": 4.164878,
       "consensus": 4.183333,
       "actual": 4.0,
-      "predictedMonthlyFlowTrillion": 6.599785,
-      "predictedComparableCumulativeTrillion": 19.82936,
+      "predictedMonthlyFlowTrillion": 6.604112,
+      "predictedComparableCumulativeTrillion": 19.833688,
       "comparableBaseTrillion": 19.116918,
       "kind": "walk_forward"
     },
     {
       "date": "2025-05",
-      "model": 3.767891,
+      "model": 3.736624,
       "legacyModel": 3.851401,
       "consensus": 4.0,
       "actual": 3.7,
-      "predictedMonthlyFlowTrillion": 7.625892,
-      "predictedComparableCumulativeTrillion": 27.507487,
+      "predictedMonthlyFlowTrillion": 7.617604,
+      "predictedComparableCumulativeTrillion": 27.499198,
       "comparableBaseTrillion": 26.508669,
       "kind": "walk_forward"
     },
     {
       "date": "2025-06",
-      "model": 3.515597,
+      "model": 3.541807,
       "legacyModel": 3.862482,
       "consensus": 3.82,
       "actual": 2.8,
-      "predictedMonthlyFlowTrillion": 12.449009,
-      "predictedComparableCumulativeTrillion": 39.938499,
+      "predictedMonthlyFlowTrillion": 12.459122,
+      "predictedComparableCumulativeTrillion": 39.948612,
       "comparableBaseTrillion": 38.582108,
       "kind": "walk_forward"
     },
     {
       "date": "2025-07",
-      "model": 2.768545,
+      "model": 2.776531,
       "legacyModel": 2.67656,
       "consensus": 2.73,
       "actual": 1.6,
-      "predictedMonthlyFlowTrillion": 6.982166,
-      "predictedComparableCumulativeTrillion": 46.644573,
+      "predictedMonthlyFlowTrillion": 6.98579,
+      "predictedComparableCumulativeTrillion": 46.648197,
       "comparableBaseTrillion": 45.387985,
       "kind": "walk_forward"
     },
     {
       "date": "2025-08",
-      "model": 1.649079,
+      "model": 1.652145,
       "legacyModel": 1.49556,
       "consensus": 1.527273,
       "actual": 0.5,
-      "predictedMonthlyFlowTrillion": 7.018233,
-      "predictedComparableCumulativeTrillion": 53.132426,
+      "predictedMonthlyFlowTrillion": 7.019836,
+      "predictedComparableCumulativeTrillion": 53.134029,
       "comparableBaseTrillion": 52.270445,
       "kind": "walk_forward"
     },
     {
       "date": "2025-09",
-      "model": 0.498115,
+      "model": 0.545371,
       "legacyModel": 0.48659,
       "consensus": 2.454167,
       "actual": -0.5,
-      "predictedMonthlyFlowTrillion": 8.423079,
-      "predictedComparableCumulativeTrillion": 60.954876,
+      "predictedMonthlyFlowTrillion": 8.451741,
+      "predictedComparableCumulativeTrillion": 60.983539,
       "comparableBaseTrillion": 60.652756,
       "kind": "walk_forward"
     },
     {
       "date": "2025-10",
-      "model": -0.55242,
+      "model": -0.475596,
       "legacyModel": -0.544569,
       "consensus": -0.863636,
       "actual": -1.7,
-      "predictedMonthlyFlowTrillion": 7.442596,
-      "predictedComparableCumulativeTrillion": 67.792088,
+      "predictedMonthlyFlowTrillion": 7.494965,
+      "predictedComparableCumulativeTrillion": 67.844457,
       "comparableBaseTrillion": 68.168665,
       "kind": "walk_forward"
     },
     {
       "date": "2025-11",
-      "model": -1.858217,
+      "model": -1.769896,
       "legacyModel": -1.717083,
       "consensus": -1.67,
       "actual": -2.6,
-      "predictedMonthlyFlowTrillion": 7.305489,
-      "predictedComparableCumulativeTrillion": 74.315287,
+      "predictedMonthlyFlowTrillion": 7.372368,
+      "predictedComparableCumulativeTrillion": 74.382165,
       "comparableBaseTrillion": 75.722373,
       "kind": "walk_forward"
     },
     {
       "date": "2025-12",
-      "model": -2.768703,
+      "model": -2.694741,
       "legacyModel": -2.564577,
       "consensus": 0.579167,
       "actual": -3.8,
-      "predictedMonthlyFlowTrillion": 9.487176,
-      "predictedComparableCumulativeTrillion": 83.240767,
+      "predictedMonthlyFlowTrillion": 9.550496,
+      "predictedComparableCumulativeTrillion": 83.304087,
       "comparableBaseTrillion": 85.611084,
       "kind": "walk_forward"
     },
@@ -565,67 +565,67 @@
     },
     {
       "date": "2026-03",
-      "model": -1.736204,
+      "model": -1.679425,
       "legacyModel": 2.446365,
       "consensus": 1.444444,
       "actual": 1.7,
-      "predictedMonthlyFlowTrillion": 7.118092,
-      "predictedComparableCumulativeTrillion": 12.999883,
+      "predictedMonthlyFlowTrillion": 7.125604,
+      "predictedComparableCumulativeTrillion": 13.007395,
       "comparableBaseTrillion": 13.229576,
       "kind": "walk_forward"
     },
     {
       "date": "2026-04",
-      "model": -0.398116,
+      "model": -0.323092,
       "legacyModel": 1.758276,
       "consensus": 1.657143,
       "actual": -1.6,
-      "predictedMonthlyFlowTrillion": 6.347964,
-      "predictedComparableCumulativeTrillion": 19.802443,
+      "predictedMonthlyFlowTrillion": 6.36288,
+      "predictedComparableCumulativeTrillion": 19.817359,
       "comparableBaseTrillion": 19.881595,
       "kind": "walk_forward"
     },
     {
       "date": "2026-05",
-      "model": -2.904255,
+      "model": -2.824565,
       "legacyModel": -1.614585,
       "consensus": -2.0,
       "actual": -4.1,
-      "predictedMonthlyFlowTrillion": 7.127636,
-      "predictedComparableCumulativeTrillion": 26.691125,
+      "predictedMonthlyFlowTrillion": 7.149542,
+      "predictedComparableCumulativeTrillion": 26.713031,
       "comparableBaseTrillion": 27.48949,
       "kind": "walk_forward"
     },
     {
       "date": "2026-06",
-      "model": -4.888096,
+      "model": -4.97476,
       "legacyModel": -3.753381,
       "consensus": -1.555,
       "actual": -5.7,
-      "predictedMonthlyFlowTrillion": 11.36125,
-      "predictedComparableCumulativeTrillion": 37.72367,
+      "predictedMonthlyFlowTrillion": 11.326876,
+      "predictedComparableCumulativeTrillion": 37.689297,
       "comparableBaseTrillion": 39.662407,
       "kind": "walk_forward"
     },
     {
       "date": "2026-07",
-      "model": -6.051829,
+      "model": -5.990781,
       "legacyModel": -5.459402,
       "consensus": -5.666667,
       "actual": -6.7,
-      "predictedMonthlyFlowTrillion": 5.921792,
-      "predictedComparableCumulativeTrillion": 43.323441,
+      "predictedMonthlyFlowTrillion": 5.949943,
+      "predictedComparableCumulativeTrillion": 43.351593,
       "comparableBaseTrillion": 46.114193,
       "kind": "walk_forward"
     },
     {
       "date": "2026-08",
-      "model": -6.920316,
+      "model": -7.020266,
       "legacyModel": -6.310459,
-      "consensus": null,
+      "consensus": -7.02,
       "actual": null,
-      "predictedMonthlyFlowTrillion": 5.871889,
-      "predictedComparableCumulativeTrillion": 48.896431,
+      "predictedMonthlyFlowTrillion": 5.819383,
+      "predictedComparableCumulativeTrillion": 48.843926,
       "comparableBaseTrillion": 52.531798,
       "kind": "live_nowcast"
     }

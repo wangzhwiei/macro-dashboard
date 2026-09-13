@@ -4,16 +4,16 @@
   "modelFrozen": true,
   "modelFrozenAt": "2026-08-25",
   "forecastMonth": "2026-08",
-  "dataRetrievedAt": "2026-08-24T01:55:58.580876+08:00",
+  "dataRetrievedAt": "2026-09-13T23:25:22.894924+08:00",
   "method": "target-specific no-leakage models: M2 balance-change bridge converted back to YoY; seasonal-drift, bill-rate overlay and online residual correction for loans; structural and official-component TSF challengers with robust same-month shrinkage and online residual correction",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
   "current": {
     "m2_yoy": {
       "model": 7.54,
-      "consensus": null,
+      "consensus": 7.6,
       "unit": "%",
-      "gapVsConsensus": null,
-      "consensusStatus": "not_yet_published",
+      "gapVsConsensus": -0.06,
+      "consensusStatus": "available",
       "approx68PctRange": [
         7.09,
         7.99
@@ -21,32 +21,32 @@
     },
     "new_rmb_loans": {
       "model": 0.26,
-      "consensus": null,
+      "consensus": 0.290925,
       "unit": "万亿元",
-      "gapVsConsensus": null,
-      "consensusStatus": "not_yet_published",
+      "gapVsConsensus": -0.03,
+      "consensusStatus": "available",
       "approx68PctRange": [
         -0.09,
         0.61
       ]
     },
     "social_financing": {
-      "model": 2.99,
+      "model": 3.01,
       "consensus": null,
       "unit": "万亿元",
       "gapVsConsensus": null,
       "consensusStatus": "not_yet_published",
       "approx68PctRange": [
-        2.36,
-        3.62
+        2.38,
+        3.64
       ]
     }
   },
   "monthlyModelInputs": {
-    "cpi": 0.579954,
-    "ppi": 3.601707,
-    "pmi": 50.003284,
-    "industrial_value": 4.648312
+    "cpi": 0.794581,
+    "ppi": 4.648302,
+    "pmi": 50.505723,
+    "industrial_value": 4.52756
   },
   "informationSet": {
     "historicalBacktest": {
@@ -61,7 +61,7 @@
       ]
     },
     "liveMonth": {
-      "asOf": "2026-08-24T01:55:58.580876+08:00",
+      "asOf": "2026-09-13T23:25:22.894924+08:00",
       "policy": "use released actual when available; otherwise use the project's generated no-consensus forecast"
     }
   },
@@ -178,7 +178,7 @@
       },
       "turningPointHitRatePct": 48.04,
       "legacyTurningPointHitRatePct": 38.24,
-      "latestForecastBalanceTrillion": 357.021,
+      "latestForecastBalanceTrillion": 357.023,
       "previousMonthBalanceTrillion": 355.508
     },
     "new_rmb_loans": {
@@ -224,7 +224,7 @@
       "billOverlay": {
         "providerId": "M021397977",
         "firstAppliedMonth": "2024-03",
-        "latestAdjustment": -0.237143
+        "latestAdjustment": -0.234048
       },
       "plainSeasonal": {
         "rmse": 0.384742,
@@ -850,8 +850,8 @@
       },
       {
         "date": "2026-08",
-        "model": 7.542046,
-        "consensus": null,
+        "model": 7.542397,
+        "consensus": 7.6,
         "actual": null
       }
     ],
@@ -1332,8 +1332,8 @@
       },
       {
         "date": "2026-08",
-        "model": 0.261636,
-        "consensus": null,
+        "model": 0.264731,
+        "consensus": 0.290925,
         "actual": null
       }
     ],
@@ -1814,7 +1814,7 @@
       },
       {
         "date": "2026-08",
-        "model": 2.988586,
+        "model": 3.006476,
         "consensus": null,
         "actual": null
       }
@@ -1822,11 +1822,9 @@
   },
   "providerIds": {
     "m2_yoy": "M001625222",
+    "m2_level": "M001625221",
     "new_rmb_loans": "M002859879",
     "social_financing": "M004891015",
-    "m2_consensus": "M005682260",
-    "new_rmb_loans_consensus": "M005682262",
-    "social_financing_consensus": "M005682268",
     "tsf_rmb_loans": "M002917567",
     "tsf_foreign_currency_loans": "M036012505",
     "tsf_entrusted_loans": "M002917569",
@@ -1837,12 +1835,15 @@
     "tsf_government_bonds": "M004891011",
     "tsf_asset_backed_securities": "M004734604",
     "tsf_loan_writeoffs": "M004734605",
+    "bill_discount_6m": "M021397974",
     "bill_discount_3m": "M021397977",
     "local_government_bond_gross_issuance": "M004394055",
     "government_bond_gross_issuance": "S003660493",
     "local_government_bond_principal_repayment": "M014885514",
     "corporate_credit_bond_gross_issuance": "S003660499",
-    "m2_level": "M001625221"
+    "m2_consensus": "M005682260",
+    "new_rmb_loans_consensus": "M005682262",
+    "social_financing_consensus": "M005682268"
   },
   "notes": [
     "Consensus is merged only after every forecast and model weight has been fixed.",

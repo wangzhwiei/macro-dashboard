@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -12,6 +13,18 @@ from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def artifact_checked_today(path: Path, day: date) -> bool:
+    """Return true when a provider snapshot was already refreshed today."""
+    if not path.exists():
+        return False
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8-sig"))
+    except (OSError, ValueError):
+        return False
+    stamp = str(payload.get("retrievedAt") or payload.get("end") or "")
+    return stamp[:10] >= day.isoformat()
 
 
 def run_step(label: str, command: list[str]) -> None:
@@ -109,6 +122,28 @@ def run_incremental(args: argparse.Namespace) -> int:
         if args.forecast_target_month:
             forecast_command.extend(["--target-month", args.forecast_target_month])
         run_step("refresh current CPI/PPI/PMI nowcasts", forecast_command)
+
+        # Slow monthly histories are refreshed only around their release
+        # windows, at most once per day. Daily market/production inputs above
+        # remain incremental on every run.
+        if 9 <= refresh_end.day <= 20:
+            retail_source = ROOT / "data" / "forecast-model" / "research_retail_ifind.json"
+            retail_fetch = [
+                python,
+                "scripts/fetch_forecast_inputs_ifind.py",
+                "--manifest",
+                "data/forecast-model/research_retail_manifest.json",
+                "--output",
+                str(retail_source),
+                "--start",
+                (refresh_end - timedelta(days=420)).isoformat(),
+                "--end",
+                refresh_end.isoformat(),
+                "--merge-existing",
+                "--skip-checked-through",
+            ]
+            run_step("refresh retail release-window inputs", retail_fetch)
+            run_step("rerun frozen retail model", [python, "scripts/research_retail_forecast.py"])
         run_step(
             "publish retail forecast",
             [
@@ -118,6 +153,20 @@ def run_incremental(args: argparse.Namespace) -> int:
                 "public/data/forecasts.json",
             ],
         )
+
+        if 9 <= refresh_end.day <= 18:
+            credit_source = ROOT / "data" / "credit-model" / "source_data.json"
+            if not artifact_checked_today(credit_source, refresh_end):
+                run_step("refresh credit release-window inputs", [python, "scripts/fetch_credit_forecast_data.py", "--resume"])
+            run_step("rerun frozen credit models", [python, "scripts/credit_forecast_model.py"])
+            run_step("publish credit forecasts", [python, "scripts/publish_credit_forecasts.py", "--base", "public/data/forecasts.json"])
+
+        if 12 <= refresh_end.day <= 20:
+            investment_source = ROOT / "data" / "investment-model" / "source_data.json"
+            if not artifact_checked_today(investment_source, refresh_end):
+                run_step("refresh investment release-window inputs", [python, "scripts/fetch_investment_forecast_data.py", "--resume"])
+            run_step("rerun frozen investment model", [python, "scripts/investment_level_forecast_model.py"])
+            run_step("publish investment forecast", [python, "scripts/publish_investment_forecasts.py", "--base", "public/data/forecasts.json"])
 
         # Trade consensus is a small current-period request.  Reuse the already
         # stored factor history and do not redownload it on every daily run.

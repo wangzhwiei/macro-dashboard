@@ -28,9 +28,9 @@ class RetailV7PublishTests(unittest.TestCase):
         self.assertEqual(rows[-1]["date"], "2026-08-31")
         for row in rows:
             expected = source[row["date"]].get("seasonalGatedRankedTop5")
-            if expected is None:
+            if expected is None and row["date"] != "2026-08-31":
                 self.assertIsNone(row["forecast"])
-            else:
+            elif expected is not None:
                 self.assertTrue(math.isclose(row["forecast"], expected, abs_tol=1e-6))
 
     def test_consensus_is_comparison_only_and_august_is_not_fabricated(self) -> None:
@@ -38,8 +38,11 @@ class RetailV7PublishTests(unittest.TestCase):
         self.assertEqual(self.page["source"].count("社零V7正式模型"), 1)
         august = self.page["history"]["retail"][-1]
         self.assertEqual(august["date"], "2026-08-31")
-        self.assertIsNone(august["forecast"])
-        self.assertEqual(self.page["models"]["retail"]["status"], "WAITING_FOR_MONTHLY_FACTORS")
+        preliminary = self.model["latestForecast"]["stages"]["preliminary"]
+        self.assertEqual(preliminary["status"], "available")
+        self.assertTrue(math.isclose(august["forecast"], preliminary["value"], abs_tol=1e-6))
+        self.assertEqual(august["forecastKind"], "preliminary_nowcast")
+        self.assertEqual(self.page["models"]["retail"]["status"], "PRELIMINARY")
 
     def test_v7_metrics_and_factor_set_are_published(self) -> None:
         metric = self.page["metrics"]["retail"]

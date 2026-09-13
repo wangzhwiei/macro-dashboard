@@ -96,22 +96,29 @@ def main() -> int:
     ]:
         raise RuntimeError(f"V7因子集合漂移：{selected}")
 
+    latest = model["latestForecast"]
+    current_date = (pd.Timestamp(f"{latest['month']}-01") + pd.offsets.MonthEnd(0)).date().isoformat()
+    preliminary = latest.get("stages", {}).get("preliminary", {})
+    preliminary_value = preliminary.get("value") if preliminary.get("status") == "available" else None
     history = []
     for row in model["history"]:
         if row["date"] < "2023-01-01":
             continue
         forecast = row.get(MODEL_KEY)
+        forecast_kind = "walk_forward" if forecast is not None else None
+        if row["date"] == current_date and forecast is None and preliminary_value is not None:
+            forecast = preliminary_value
+            forecast_kind = "preliminary_nowcast"
         history.append({
             "date": row["date"],
             "forecast": round(float(forecast), 6) if forecast is not None else None,
             "actual": round(float(row["actual"]), 6) if row.get("actual") is not None else None,
             "consensus": round(float(row["consensus"]), 6) if row.get("consensus") is not None else None,
             "consensusSource": "iFinD EDB · M005682254" if row.get("consensus") is not None else None,
-            "forecastKind": "walk_forward" if forecast is not None else None,
+            "forecastKind": forecast_kind,
             "officialRounding": round(float(forecast), 1) if forecast is not None else None,
         })
 
-    latest = model["latestForecast"]
     current_month = pd.Timestamp(f"{latest['month']}-01") + pd.offsets.MonthEnd(0)
     missing = [metadata[key]["name"] for key in selected if pd.isna(factors[key].get(current_month))]
     holdout = model["rankedTopKRace"]["holdoutPeriod"][MODEL_KEY]
@@ -122,7 +129,13 @@ def main() -> int:
         "unit": "%",
         "description": "V7采用无前视扩展窗口模型；一致预期只用于网页比较，不参与训练、因子筛选或模型定稿。",
         "formula": "季节与春节/3月发布控制 + 上期社零锚定；五因子为服务CPI、服务业新订单PMI、乘用车零售同比、非食品CPI和CPI同比；2021与2023使用异常基数门控。",
-        "status": "WAITING_FOR_MONTHLY_FACTORS" if latest.get("model") is None else "READY",
+        "status": (
+            "READY" if latest.get("model") is not None else
+            "PRELIMINARY" if preliminary_value is not None else
+            "WAITING_FOR_MONTHLY_FACTORS"
+        ),
+        "activeStage": "preliminary" if latest.get("model") is None and preliminary_value is not None else "pre_release_review",
+        "preliminaryModelKey": preliminary.get("key"),
         "forecastMonth": latest["month"],
         "earliestForecastDate": "2026-09-09",
         "missingFactors": missing,

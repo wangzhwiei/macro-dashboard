@@ -113,10 +113,22 @@ def parse(response: dict[str, Any], expected_id: str) -> dict[str, Any]:
     if len(matches) != 1:
         raise RuntimeError(f"expected {expected_id}, observed {sorted(set(observed))}")
     column, metadata, observations = matches[0]
+    # Keep a stable yuan contract for amount series even when iFinD changes
+    # the display unit returned for the same fixed provider ID.
+    unit = metadata.get("unit")
+    monetary_scales = {"元": 1.0, "万元": 1e4, "亿元": 1e8, "万亿元": 1e12}
+    if unit in monetary_scales:
+        scale = monetary_scales[unit]
+        observations = [
+            [row[0], float(row[1]) * scale]
+            for row in observations
+            if isinstance(row, list) and len(row) >= 2 and row[1] is not None
+        ]
+        unit = "元"
     return {
         "providerId": expected_id,
         "name": column,
-        "unit": metadata.get("unit"),
+        "unit": unit,
         "frequency": metadata.get("freq"),
         "source": metadata.get("data_source"),
         "startTime": metadata.get("start_time"),
@@ -142,9 +154,11 @@ def fetch(call_py: Path, checkpoint: Path | None = None, resume: bool = False) -
                 previous_series[key] = value
     for key, config in SERIES.items():
         errors = []
+        now = datetime.now(ZoneInfo("Asia/Shanghai"))
+        query = config["query"].replace("202608", now.strftime("%Y%m"))
         for attempt in range(3):
             try:
-                parsed = parse(call("edb", "get_edb_data", {"query": config["query"]}), config["providerId"])
+                parsed = parse(call("edb", "get_edb_data", {"query": query}), config["providerId"])
                 parsed["role"] = config["role"]
                 result["series"][key] = parsed
                 break

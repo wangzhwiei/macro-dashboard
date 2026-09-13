@@ -421,7 +421,10 @@ def common_comparison(model: pd.Series, consensus: pd.Series, actual: pd.Series)
 
 
 def run(args: argparse.Namespace) -> dict[str, Any]:
+    global TARGET_MONTH
     source = read_json(args.source)
+    official = month_end_series(source["series"][YOY_KEY]["observations"]).dropna()
+    TARGET_MONTH = official.index.max() + pd.offsets.MonthEnd(1)
     frame, raw_amount, comparable_level, flow, actual, consensus = build_frame(
         source,
         read_json(args.production),
