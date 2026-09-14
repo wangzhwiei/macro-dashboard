@@ -22,7 +22,7 @@ public static class MacroDashboardPowerState {
 }
 "@
 
-$executionStateContinuous = [uint32]0x80000000
+$executionStateContinuous = [Convert]::ToUInt32("80000000", 16)
 $executionStateSystemRequired = [uint32]0x00000001
 
 if (-not (Test-Path -LiteralPath $runnerCommand)) {
