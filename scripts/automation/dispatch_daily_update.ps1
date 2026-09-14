@@ -3,7 +3,7 @@ param(
     [string]$Owner = "wangzhwiei",
     [string]$Repository = "macro-dashboard",
     [string]$Workflow = "update-and-deploy.yml",
-    [string]$Ref = "gh-pages"
+    [string]$Ref = "main"
 )
 
 $ErrorActionPreference = "Stop"
