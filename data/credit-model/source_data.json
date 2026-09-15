@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-09-14T00:39:20.901434+08:00",
+  "retrievedAt": "2026-09-15T15:51:18.655989+08:00",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
   "series": {
     "m2_yoy": {
@@ -10,6 +10,10 @@
       "frequency": "M",
       "source": "中国人民银行",
       "observations": [
+        [
+          "2026-08-31",
+          7.5
+        ],
         [
           "2026-07-31",
           7.7
@@ -817,6 +821,10 @@
       "source": "中国人民银行",
       "observations": [
         [
+          "2026-08-31",
+          356810000000000.0
+        ],
+        [
           "2026-07-31",
           355507724000000.0
         ],
@@ -1623,6 +1631,10 @@
       "source": "中国人民银行",
       "observations": [
         [
+          "2026-08-31",
+          60000000000.0
+        ],
+        [
           "2026-07-31",
           -340000000000.0
         ],
@@ -2428,6 +2440,10 @@
       "frequency": "M",
       "source": "中国人民银行",
       "observations": [
+        [
+          "2026-08-31",
+          1657700000000.0
+        ],
         [
           "2026-07-31",
           1401700000000.0
@@ -23099,6 +23115,41 @@
     }
   },
   "warnings": [
+    "m2_yoy/M001625222 refresh failed; retained previously validated observations",
+    "m2_level/M001625221 refresh failed; retained previously validated observations",
+    "new_rmb_loans/M002859879 refresh failed; retained previously validated observations",
+    "social_financing/M004891015 refresh failed; retained previously validated observations",
+    "tsf_rmb_loans/M002917567 refresh failed; retained previously validated observations",
+    "tsf_foreign_currency_loans/M036012505 refresh failed; retained previously validated observations",
+    "tsf_entrusted_loans/M002917569 refresh failed; retained previously validated observations",
+    "tsf_trust_loans/M002917570 refresh failed; retained previously validated observations",
+    "tsf_bank_acceptance/M002917571 refresh failed; retained previously validated observations",
+    "tsf_corporate_bonds/M004734600 refresh failed; retained previously validated observations",
+    "tsf_equity_financing/M002917573 refresh failed; retained previously validated observations",
+    "tsf_government_bonds/M004891011 refresh failed; retained previously validated observations",
+    "tsf_asset_backed_securities/M004734604 refresh failed; retained previously validated observations",
+    "tsf_loan_writeoffs/M004734605 refresh failed; retained previously validated observations",
+    "bill_discount_6m/M021397974 refresh failed; retained previously validated observations",
+    "bill_discount_3m/M021397977 refresh failed; retained previously validated observations",
+    "local_government_bond_gross_issuance/M004394055 refresh failed; retained previously validated observations",
+    "government_bond_gross_issuance/S003660493 refresh failed; retained previously validated observations",
+    "local_government_bond_principal_repayment/M014885514 refresh failed; retained previously validated observations",
+    "corporate_credit_bond_gross_issuance/S003660499 refresh failed; retained previously validated observations",
+    "m2_consensus/M005682260 refresh failed; retained previously validated observations",
+    "new_rmb_loans_consensus/M005682262 refresh failed; retained previously validated observations",
     "social_financing_consensus/M005682268 refresh failed; retained previously validated observations"
-  ]
+  ],
+  "officialSupplements": {
+    "2026-08-31": {
+      "source": "中国人民银行2026年8月金融统计与社会融资规模发布（2026-09-14）",
+      "keys": [
+        "m2_yoy",
+        "m2_level",
+        "new_rmb_loans",
+        "social_financing"
+      ],
+      "recordedAt": "2026-09-15T16:23:44.394415+08:00",
+      "reason": "iFinD quota exhausted before the official release was mirrored"
+    }
+  }
 }

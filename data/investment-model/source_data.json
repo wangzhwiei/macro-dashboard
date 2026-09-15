@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-09-14T00:41:14.614793+08:00",
+  "retrievedAt": "2026-09-15T15:53:50.577760+08:00",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "releasePolicy": "structural investment components are same-release data and may enter forecasts only with lag >= 1 month",
   "series": {
@@ -13,6 +13,10 @@
       "startTime": "19920229",
       "endTime": "20260731",
       "observations": [
+        [
+          "2026-08-31",
+          29309200000000.0
+        ],
         [
           "2026-07-31",
           26032800000000.0
@@ -754,6 +758,10 @@
       "endTime": "20260731",
       "observations": [
         [
+          "2026-08-31",
+          -7.2
+        ],
+        [
           "2026-07-31",
           -6.7
         ],
@@ -1494,6 +1502,10 @@
       "endTime": "20260731",
       "observations": [
         [
+          "2026-08-31",
+          -2.3
+        ],
+        [
           "2026-07-31",
           -1.7
         ],
@@ -2233,6 +2245,10 @@
       "startTime": "20040229",
       "endTime": "20260731",
       "observations": [
+        [
+          "2026-08-31",
+          -4.0
+        ],
         [
           "2026-07-31",
           -3.6
@@ -3714,6 +3730,10 @@
       "endTime": "20260731",
       "observations": [
         [
+          "2026-08-31",
+          -19.9
+        ],
+        [
           "2026-07-31",
           -19.2
         ],
@@ -5194,6 +5214,10 @@
       "endTime": "20260731",
       "observations": [
         [
+          "2026-08-31",
+          -10.1
+        ],
+        [
           "2026-07-31",
           -9.4
         ],
@@ -6146,8 +6170,29 @@
     }
   },
   "warnings": [
+    "fixed_asset_investment_ytd_amount/M001620537 refresh failed; retained previously validated observations",
+    "fixed_asset_investment_ytd_yoy/M001620575 refresh failed; retained previously validated observations",
     "manufacturing_investment_ytd_yoy/M003811042 refresh failed; retained previously validated observations",
+    "infrastructure_investment_ytd_yoy/M004385772 refresh failed; retained previously validated observations",
+    "infrastructure_investment_ytd_amount/M004385771 refresh failed; retained previously validated observations",
     "real_estate_investment_ytd_yoy/S000047961 refresh failed; retained previously validated observations",
-    "real_estate_investment_ytd_amount/M001620723 refresh failed; retained previously validated observations"
-  ]
+    "real_estate_investment_ytd_amount/M001620723 refresh failed; retained previously validated observations",
+    "private_investment_ytd_yoy/M002965395 refresh failed; retained previously validated observations",
+    "fixed_asset_investment_consensus/M005682259 refresh failed; retained previously validated observations"
+  ],
+  "officialSupplements": {
+    "2026-08-31": {
+      "source": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965307.html",
+      "keys": [
+        "fixed_asset_investment_ytd_amount",
+        "fixed_asset_investment_ytd_yoy",
+        "manufacturing_investment_ytd_yoy",
+        "infrastructure_investment_ytd_yoy",
+        "real_estate_investment_ytd_yoy",
+        "private_investment_ytd_yoy"
+      ],
+      "recordedAt": "2026-09-15T16:23:44.370369+08:00",
+      "reason": "iFinD quota exhausted before the official release was mirrored"
+    }
+  }
 }

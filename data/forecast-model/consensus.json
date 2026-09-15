@@ -1,7 +1,7 @@
 {
   "_meta": {
     "source": "iFinD EDB",
-    "retrievedAt": "2026-09-14T09:17:56.617951+08:00",
+    "retrievedAt": "2026-09-15T15:50:56.187929+08:00",
     "usage": "personal research",
     "field": "iFinD 预测平均值",
     "queryMode": "Chinese name discovery + fixed provider ID validation",
@@ -12,7 +12,9 @@
     },
     "pmiMissingPolicy": "internal missing months use previous month value",
     "warnings": {
-      "ppi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_ppi_yoy iFinD查询失败：consensus_ppi_yoy 固定 ID M005682253 未唯一命中；候选=['M002826865']"
+      "cpi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_cpi_yoy iFinD查询失败：consensus_cpi_yoy 固定 ID M005682252 未唯一命中；候选=[]",
+      "ppi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_ppi_yoy iFinD查询失败：consensus_ppi_yoy 固定 ID M005682253 未唯一命中；候选=[]",
+      "pmi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_pmi iFinD查询失败：consensus_pmi 固定 ID M005779145 未唯一命中；候选=[]"
     }
   },
   "cpi": [

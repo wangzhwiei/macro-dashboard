@@ -1,0 +1,46 @@
+{
+  "cpi": [
+    {
+      "date": "2026-08-31",
+      "forecast": 0.637009,
+      "actual": null,
+      "consensus": 0.885455,
+      "consensusSource": "iFinD EDB",
+      "forecastKind": "live_nowcast",
+      "officialRounding": 0.6
+    }
+  ],
+  "cpi_mom": [
+    {
+      "date": "2026-08-31",
+      "forecast": 0.136327,
+      "actual": null,
+      "consensus": null,
+      "consensusSource": null,
+      "forecastKind": "live_nowcast",
+      "officialRounding": 0.1
+    }
+  ],
+  "ppi": [
+    {
+      "date": "2026-08-31",
+      "forecast": 3.711702,
+      "actual": null,
+      "consensus": 2.333333,
+      "consensusSource": "iFinD EDB",
+      "forecastKind": "live_nowcast",
+      "officialRounding": 3.7
+    }
+  ],
+  "ppi_mom": [
+    {
+      "date": "2026-08-31",
+      "forecast": 0.204543,
+      "actual": null,
+      "consensus": null,
+      "consensusSource": null,
+      "forecastKind": "live_nowcast",
+      "officialRounding": 0.2
+    }
+  ]
+}

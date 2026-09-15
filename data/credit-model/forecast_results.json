@@ -3,42 +3,42 @@
   "modelVersion": "credit-v1.0.0",
   "modelFrozen": true,
   "modelFrozenAt": "2026-08-25",
-  "forecastMonth": "2026-08",
-  "dataRetrievedAt": "2026-09-14T00:39:20.901434+08:00",
+  "forecastMonth": "2026-09",
+  "dataRetrievedAt": "2026-09-15T15:51:18.655989+08:00",
   "method": "target-specific no-leakage models: M2 balance-change bridge converted back to YoY; seasonal-drift, bill-rate overlay and online residual correction for loans; structural and official-component TSF challengers with robust same-month shrinkage and online residual correction",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
   "current": {
     "m2_yoy": {
-      "model": 7.54,
-      "consensus": 7.6,
+      "model": 7.25,
+      "consensus": null,
       "unit": "%",
-      "gapVsConsensus": -0.06,
-      "consensusStatus": "available",
+      "gapVsConsensus": null,
+      "consensusStatus": "not_yet_published",
       "approx68PctRange": [
-        7.09,
-        7.99
+        6.81,
+        7.69
       ]
     },
     "new_rmb_loans": {
-      "model": 0.26,
-      "consensus": 0.290925,
-      "unit": "万亿元",
-      "gapVsConsensus": -0.03,
-      "consensusStatus": "available",
-      "approx68PctRange": [
-        -0.09,
-        0.61
-      ]
-    },
-    "social_financing": {
-      "model": 3.01,
+      "model": 0.78,
       "consensus": null,
       "unit": "万亿元",
       "gapVsConsensus": null,
       "consensusStatus": "not_yet_published",
       "approx68PctRange": [
-        2.38,
-        3.64
+        0.43,
+        1.13
+      ]
+    },
+    "social_financing": {
+      "model": 3.9,
+      "consensus": null,
+      "unit": "万亿元",
+      "gapVsConsensus": null,
+      "consensusStatus": "not_yet_published",
+      "approx68PctRange": [
+        3.26,
+        4.54
       ]
     }
   },
@@ -61,66 +61,66 @@
       ]
     },
     "liveMonth": {
-      "asOf": "2026-09-14T00:39:20.901434+08:00",
+      "asOf": "2026-09-15T15:51:18.655989+08:00",
       "policy": "use released actual when available; otherwise use the project's generated no-consensus forecast"
     }
   },
   "diagnostics": {
     "m2_yoy": {
       "final": {
-        "rmse": 0.445564,
-        "mae": 0.341757,
-        "bias": -0.012354,
-        "observations": 103,
+        "rmse": 0.443436,
+        "mae": 0.338878,
+        "bias": -0.011827,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "legacyPersistence": {
-        "rmse": 0.471725,
-        "mae": 0.368932,
-        "bias": 0.003883,
-        "observations": 103,
+        "rmse": 0.469861,
+        "mae": 0.367308,
+        "bias": 0.005769,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "candidateMetrics": {
         "seasonal_sparse_a20_w84": {
-          "rmse": 0.447814,
-          "mae": 0.342801,
-          "bias": -0.01458,
-          "observations": 101,
+          "rmse": 0.44603,
+          "mae": 0.34135,
+          "bias": -0.012527,
+          "observations": 102,
           "sampleStart": "2018-01",
-          "sampleEnd": "2026-07"
+          "sampleEnd": "2026-08"
         },
         "credit_sparse_a20_w60": {
-          "rmse": 0.427653,
-          "mae": 0.33009,
-          "bias": 0.063685,
-          "observations": 71,
+          "rmse": 0.424693,
+          "mae": 0.325996,
+          "bias": 0.063291,
+          "observations": 72,
           "sampleStart": "2020-07",
-          "sampleEnd": "2026-07"
+          "sampleEnd": "2026-08"
         },
         "credit_sparse_a50_w84": {
-          "rmse": 0.444565,
-          "mae": 0.335853,
-          "bias": 0.034912,
-          "observations": 71,
+          "rmse": 0.441495,
+          "mae": 0.331777,
+          "bias": 0.035016,
+          "observations": 72,
           "sampleStart": "2020-07",
-          "sampleEnd": "2026-07"
+          "sampleEnd": "2026-08"
         },
         "bill_sparse_a50_w60": {
-          "rmse": 0.447335,
-          "mae": 0.342122,
-          "bias": 0.025228,
-          "observations": 71,
+          "rmse": 0.444218,
+          "mae": 0.337418,
+          "bias": 0.02483,
+          "observations": 72,
           "sampleStart": "2020-07",
-          "sampleEnd": "2026-07"
+          "sampleEnd": "2026-08"
         }
       },
       "candidateSelectionCounts": {
         "seasonal_sparse_a20_w84": 50,
         "credit_sparse_a20_w60": 51,
-        "credit_sparse_a50_w84": 1,
+        "credit_sparse_a50_w84": 2,
         "bill_sparse_a50_w60": 0
       },
       "candidateSpecifications": {
@@ -169,104 +169,104 @@
         }
       },
       "seasonalBalanceFallback": {
-        "rmse": 0.432456,
-        "mae": 0.324219,
-        "bias": -0.081963,
-        "observations": 103,
+        "rmse": 0.430599,
+        "mae": 0.322475,
+        "bias": -0.079801,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
-      "turningPointHitRatePct": 48.04,
-      "legacyTurningPointHitRatePct": 38.24,
-      "latestForecastBalanceTrillion": 357.023,
-      "previousMonthBalanceTrillion": 355.508
+      "turningPointHitRatePct": 48.54,
+      "legacyTurningPointHitRatePct": 38.83,
+      "latestForecastBalanceTrillion": 359.685,
+      "previousMonthBalanceTrillion": 356.81
     },
     "new_rmb_loans": {
       "final": {
-        "rmse": 0.347371,
-        "mae": 0.256035,
-        "bias": -0.01914,
-        "observations": 103,
+        "rmse": 0.346279,
+        "mae": 0.255542,
+        "bias": -0.016988,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "preResidualAdjustment": {
-        "rmse": 0.356257,
-        "mae": 0.261673,
-        "bias": -0.034691,
-        "observations": 103,
+        "rmse": 0.355196,
+        "mae": 0.261272,
+        "bias": -0.032243,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "preBillStructural": {
-        "rmse": 0.370775,
-        "mae": 0.276964,
-        "bias": 0.004373,
-        "observations": 103,
+        "rmse": 0.371664,
+        "mae": 0.278666,
+        "bias": 0.008696,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "dynamicSeasonalChallenger": {
-        "rmse": 0.365543,
-        "mae": 0.270733,
-        "bias": -0.000659,
-        "observations": 103,
+        "rmse": 0.364984,
+        "mae": 0.271033,
+        "bias": 0.00225,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "candidateSelectionCounts": {
         "seasonal_drift_0": 0,
         "seasonal_drift_0.25": 26,
         "seasonal_drift_0.5": 64,
-        "seasonal_drift_0.75": 14,
+        "seasonal_drift_0.75": 15,
         "seasonal_drift_1": 0
       },
       "billOverlay": {
         "providerId": "M021397977",
         "firstAppliedMonth": "2024-03",
-        "latestAdjustment": -0.234048
+        "latestAdjustment": -0.377923
       },
       "plainSeasonal": {
-        "rmse": 0.384742,
-        "mae": 0.294402,
-        "bias": -0.002492,
-        "observations": 103,
+        "rmse": 0.386399,
+        "mae": 0.296667,
+        "bias": 0.002629,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       }
     },
     "social_financing": {
       "final": {
-        "rmse": 0.628838,
-        "mae": 0.491621,
-        "bias": -0.002417,
-        "observations": 103,
+        "rmse": 0.638413,
+        "mae": 0.499272,
+        "bias": 0.009985,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "preResidualAdjustment": {
-        "rmse": 0.644106,
-        "mae": 0.500254,
-        "bias": -0.01378,
-        "observations": 103,
+        "rmse": 0.653389,
+        "mae": 0.50786,
+        "bias": -0.001231,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "preRobustShrink": {
-        "rmse": 0.653827,
-        "mae": 0.503305,
-        "bias": 0.060655,
-        "observations": 103,
+        "rmse": 0.662367,
+        "mae": 0.510615,
+        "bias": 0.072222,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "structural": {
-        "rmse": 0.678953,
-        "mae": 0.515962,
-        "bias": 0.129704,
-        "observations": 103,
+        "rmse": 0.688806,
+        "mae": 0.524124,
+        "bias": 0.14158,
+        "observations": 104,
         "sampleStart": "2018-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "monthlyMacroAugmented": {
         "rmse": 0.68214,
@@ -277,12 +277,12 @@
         "sampleEnd": "2026-05"
       },
       "componentBridge": {
-        "rmse": 0.758543,
-        "mae": 0.583402,
-        "bias": -0.210973,
-        "observations": 79,
+        "rmse": 0.764813,
+        "mae": 0.590577,
+        "bias": -0.193868,
+        "observations": 80,
         "sampleStart": "2020-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "candidateSet": [
         "structural",
@@ -298,44 +298,44 @@
   },
   "comparisonOnCommonSample": {
     "m2_yoy": {
-      "commonObservations": 79,
+      "commonObservations": 80,
       "model": {
-        "rmse": 0.467915,
-        "mae": 0.353016,
-        "bias": -0.015349,
-        "observations": 79,
+        "rmse": 0.465005,
+        "mae": 0.349134,
+        "bias": -0.014627,
+        "observations": 80,
         "sampleStart": "2020-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "consensus": {
-        "rmse": 0.602611,
-        "mae": 0.452859,
-        "bias": -0.072994,
-        "observations": 79,
+        "rmse": 0.598937,
+        "mae": 0.448449,
+        "bias": -0.070831,
+        "observations": 80,
         "sampleStart": "2020-01",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
-      "modelWinRatePct": 55.7
+      "modelWinRatePct": 56.25
     },
     "new_rmb_loans": {
-      "commonObservations": 76,
+      "commonObservations": 77,
       "model": {
-        "rmse": 0.34486,
-        "mae": 0.26308,
-        "bias": 0.015662,
-        "observations": 76,
+        "rmse": 0.343406,
+        "mae": 0.262322,
+        "bias": 0.018117,
+        "observations": 77,
         "sampleStart": "2020-04",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
       "consensus": {
-        "rmse": 0.33289,
-        "mae": 0.253758,
-        "bias": -0.014457,
-        "observations": 76,
+        "rmse": 0.331767,
+        "mae": 0.253462,
+        "bias": -0.01127,
+        "observations": 77,
         "sampleStart": "2020-04",
-        "sampleEnd": "2026-07"
+        "sampleEnd": "2026-08"
       },
-      "modelWinRatePct": 47.37
+      "modelWinRatePct": 48.05
     },
     "social_financing": {
       "commonObservations": 79,
@@ -361,9 +361,9 @@
   "performanceGateVsConsensus": {
     "new_rmb_loans": {
       "passed": false,
-      "modelRmse": 0.34486,
-      "consensusRmse": 0.33289,
-      "remainingGap": 0.01197
+      "modelRmse": 0.343406,
+      "consensusRmse": 0.331767,
+      "remainingGap": 0.011639
     },
     "social_financing": {
       "passed": false,
@@ -852,6 +852,12 @@
         "date": "2026-08",
         "model": 7.542397,
         "consensus": 7.6,
+        "actual": 7.5
+      },
+      {
+        "date": "2026-09",
+        "model": 7.248001,
+        "consensus": null,
         "actual": null
       }
     ],
@@ -1334,6 +1340,12 @@
         "date": "2026-08",
         "model": 0.264731,
         "consensus": 0.290925,
+        "actual": 0.06
+      },
+      {
+        "date": "2026-09",
+        "model": 0.781855,
+        "consensus": null,
         "actual": null
       }
     ],
@@ -1814,7 +1826,13 @@
       },
       {
         "date": "2026-08",
-        "model": 3.006611,
+        "model": 2.945084,
+        "consensus": null,
+        "actual": 1.6577
+      },
+      {
+        "date": "2026-09",
+        "model": 3.895914,
         "consensus": null,
         "actual": null
       }

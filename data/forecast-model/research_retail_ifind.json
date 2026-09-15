@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-09-14",
+  "end": "2026-09-15",
   "series": {
     "actual_retail_yoy": {
       "key": "actual_retail_yoy",
@@ -690,6 +690,10 @@
         [
           "2026-07-31",
           0.624159627544657
+        ],
+        [
+          "2026-08-31",
+          0.4
         ]
       ]
     },
@@ -7717,7 +7721,26 @@
   },
   "errors": {},
   "warnings": {
-    "actual_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-07-31）：actual_retail_yoy 固定 ID M001625520 未唯一命中；候选=['M001657195']",
-    "cpi_consumer_goods_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-07-31）：cpi_consumer_goods_yoy 固定 ID M002840897 未唯一命中；候选=[]"
+    "actual_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-07-31）：actual_retail_yoy 固定 ID M001625520 未唯一命中；候选=[]",
+    "consensus_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：consensus_retail_yoy 固定 ID M005682254 未唯一命中；候选=[]",
+    "cpi_food_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_food_yoy 固定 ID M002826732 未唯一命中；候选=[]",
+    "cpi_nonfood_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_nonfood_yoy 固定 ID M002826748 未唯一命中；候选=[]",
+    "cpi_consumer_goods_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-07-31）：cpi_consumer_goods_yoy 固定 ID M002840897 未唯一命中；候选=[]",
+    "cpi_services_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_services_yoy 固定 ID M002840898 未唯一命中；候选=[]",
+    "pmi_nonmanufacturing_business": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_nonmanufacturing_business 固定 ID M002811179 未唯一命中；候选=[]",
+    "pmi_nonmanufacturing_new_orders": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_nonmanufacturing_new_orders 固定 ID M002811180 未唯一命中；候选=[]",
+    "pmi_services_business": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_services_business 固定 ID M004369936 未唯一命中；候选=[]",
+    "pmi_services_new_orders": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_services_new_orders 固定 ID M005933612 未唯一命中；候选=[]",
+    "pmi_services_expectations": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_services_expectations 固定 ID M005933616 未唯一命中；候选=[]"
+  },
+  "officialSupplements": {
+    "2026-08-31": {
+      "source": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965307.html",
+      "keys": [
+        "actual_retail_yoy"
+      ],
+      "recordedAt": "2026-09-15T16:23:44.333396+08:00",
+      "reason": "iFinD quota exhausted before the official release was mirrored"
+    }
   }
 }

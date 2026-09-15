@@ -5,153 +5,151 @@
   "modelFrozenAt": "2026-08-27",
   "modelFreezePolicy": "parameters, candidate sets, calibration windows and information cutoff are frozen; future updates may add only newly available observations",
   "target": "固定资产投资(不含农户)完成额累计同比",
-  "forecastMonth": "2026-08",
+  "forecastMonth": "2026-09",
   "method": "forecast bias-corrected monthly fixed investment amount from high-frequency and existing monthly-model signals, accumulate to a fixed amount, then convert with a walk-forward comparable base",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "current": {
-    "model": -7.020265,
+    "model": -7.182894,
     "unit": "%",
     "approx68PctRange": [
-      -8.03,
-      -6.01
+      -8.18,
+      -6.19
     ],
-    "predictedMonthlyFlowTrillion": 5.819384,
-    "predictedComparableCumulativeTrillion": 48.843926,
-    "comparableBaseTrillion": 52.531798,
-    "consensus": -7.02,
+    "predictedMonthlyFlowTrillion": 7.265144,
+    "predictedComparableCumulativeTrillion": 56.014652,
+    "comparableBaseTrillion": 60.349492,
+    "consensus": null,
     "onlineFlowWeights": {
-      "same_month_amount": 0.162603,
-      "recent_flow_growth": 0.347341,
-      "high_frequency_bridge": 0.23421,
-      "monthly_model_bridge": 0.255846
+      "same_month_amount": 0.291478,
+      "recent_flow_growth": 0.708522
     }
   },
   "backtest": {
-    "rmse": 1.008068,
-    "mae": 0.707929,
-    "bias": -0.017588,
-    "directionHitPct": 82.86,
-    "changeCaptureRatio": 1.085038,
-    "observations": 38,
+    "rmse": 0.995475,
+    "mae": 0.694377,
+    "bias": -0.012537,
+    "directionHitPct": 83.33,
+    "changeCaptureRatio": 1.089546,
+    "observations": 39,
     "sampleStart": "2023-03",
-    "sampleEnd": "2026-07"
+    "sampleEnd": "2026-08"
   },
   "lagDiagnostics": {
-    "actualCorrelation": 0.94616,
-    "previousActualCorrelation": 0.861147,
-    "previousMinusCurrentCorrelation": -0.085014
+    "actualCorrelation": 0.956308,
+    "previousActualCorrelation": 0.892527,
+    "previousMinusCurrentCorrelation": -0.063781
   },
   "legacyLagDiagnostics": {
-    "actualCorrelation": 0.919334,
-    "previousActualCorrelation": 0.995685,
-    "previousMinusCurrentCorrelation": 0.076351
+    "actualCorrelation": 0.935326,
+    "previousActualCorrelation": 0.996613,
+    "previousMinusCurrentCorrelation": 0.061287
   },
   "comparisonOnCommonSample": {
     "model": {
-      "rmse": 1.008068,
-      "mae": 0.707929,
-      "bias": -0.017588,
-      "directionHitPct": 82.35,
-      "changeCaptureRatio": 1.085038,
-      "observations": 38,
+      "rmse": 0.995475,
+      "mae": 0.694377,
+      "bias": -0.012537,
+      "directionHitPct": 82.86,
+      "changeCaptureRatio": 1.089546,
+      "observations": 39,
       "sampleStart": "2023-03",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
     "consensus": {
-      "rmse": 1.588744,
-      "mae": 0.968114,
-      "bias": 0.563817,
-      "directionHitPct": 47.06,
-      "changeCaptureRatio": 1.217354,
-      "observations": 38,
+      "rmse": 1.568508,
+      "mae": 0.947906,
+      "bias": 0.553975,
+      "directionHitPct": 48.57,
+      "changeCaptureRatio": 1.224401,
+      "observations": 39,
       "sampleStart": "2023-03",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
-    "modelWinRatePct": 60.53,
-    "rmseImprovementPct": 36.55,
-    "maeImprovementPct": 26.88
+    "modelWinRatePct": 61.54,
+    "rmseImprovementPct": 36.53,
+    "maeImprovementPct": 26.75
   },
   "recentRegimeComparison": {
     "model": {
-      "rmse": 1.187713,
-      "mae": 0.93882,
-      "bias": 0.433363,
-      "directionHitPct": 75.0,
-      "changeCaptureRatio": 0.996781,
-      "observations": 17,
+      "rmse": 1.155024,
+      "mae": 0.896631,
+      "bias": 0.419255,
+      "directionHitPct": 76.47,
+      "changeCaptureRatio": 0.99798,
+      "observations": 18,
       "sampleStart": "2025-02",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
     "consensus": {
-      "rmse": 2.319303,
-      "mae": 1.709527,
-      "bias": 1.031153,
-      "directionHitPct": 50.0,
-      "changeCaptureRatio": 1.237059,
-      "observations": 17,
+      "rmse": 2.254357,
+      "mae": 1.624554,
+      "bias": 0.983866,
+      "directionHitPct": 52.94,
+      "changeCaptureRatio": 1.240907,
+      "observations": 18,
       "sampleStart": "2025-02",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
-    "modelWinRatePct": 64.71,
-    "rmseImprovementPct": 48.79,
-    "maeImprovementPct": 45.08
+    "modelWinRatePct": 66.67,
+    "rmseImprovementPct": 48.76,
+    "maeImprovementPct": 44.81
   },
   "legacyModelOnCommonSample": {
-    "rmse": 1.26302,
-    "mae": 0.749923,
-    "bias": 0.415546,
-    "directionHitPct": 52.94,
-    "changeCaptureRatio": 1.00512,
-    "observations": 38,
+    "rmse": 1.254833,
+    "mae": 0.753503,
+    "bias": 0.4277,
+    "directionHitPct": 51.43,
+    "changeCaptureRatio": 1.007482,
+    "observations": 39,
     "sampleStart": "2023-03",
-    "sampleEnd": "2026-07"
+    "sampleEnd": "2026-08"
   },
   "performanceGateVsConsensus": {
     "passed": true,
-    "modelRmse": 1.008068,
-    "consensusRmse": 1.588744,
-    "rmseImprovementPct": 36.55
+    "modelRmse": 0.995475,
+    "consensusRmse": 1.568508,
+    "rmseImprovementPct": 36.53
   },
   "flowCandidateDiagnostics": {
     "same_month_amount": {
-      "rmse": 0.463618,
-      "mae": 0.361748,
-      "bias": 0.040783,
-      "directionHitPct": 86.84,
-      "changeCaptureRatio": 0.998843,
-      "observations": 38,
+      "rmse": 0.470884,
+      "mae": 0.370232,
+      "bias": 0.057497,
+      "directionHitPct": 87.18,
+      "changeCaptureRatio": 0.998813,
+      "observations": 39,
       "sampleStart": "2023-03",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
     "recent_flow_growth": {
-      "rmse": 0.304889,
-      "mae": 0.199521,
-      "bias": 0.069844,
-      "directionHitPct": 97.37,
-      "changeCaptureRatio": 0.995411,
-      "observations": 38,
+      "rmse": 0.301072,
+      "mae": 0.195749,
+      "bias": 0.069398,
+      "directionHitPct": 97.44,
+      "changeCaptureRatio": 0.995379,
+      "observations": 39,
       "sampleStart": "2023-03",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
     "high_frequency_bridge": {
-      "rmse": 0.401838,
-      "mae": 0.263943,
-      "bias": 0.198518,
-      "directionHitPct": 96.15,
-      "changeCaptureRatio": 1.002432,
-      "observations": 26,
+      "rmse": 0.394326,
+      "mae": 0.254241,
+      "bias": 0.191092,
+      "directionHitPct": 96.3,
+      "changeCaptureRatio": 1.002421,
+      "observations": 27,
       "sampleStart": "2024-04",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     },
     "monthly_model_bridge": {
-      "rmse": 0.376154,
-      "mae": 0.253983,
-      "bias": 0.202577,
-      "directionHitPct": 96.15,
-      "changeCaptureRatio": 1.022835,
-      "observations": 26,
+      "rmse": 0.370121,
+      "mae": 0.249806,
+      "bias": 0.189844,
+      "directionHitPct": 92.59,
+      "changeCaptureRatio": 1.022921,
+      "observations": 27,
       "sampleStart": "2024-04",
-      "sampleEnd": "2026-07"
+      "sampleEnd": "2026-08"
     }
   },
   "featureGroups": {
@@ -620,13 +618,24 @@
     },
     {
       "date": "2026-08",
-      "model": -7.020265,
+      "model": -7.020588,
       "legacyModel": -6.310459,
       "consensus": -7.02,
-      "actual": null,
-      "predictedMonthlyFlowTrillion": 5.819384,
-      "predictedComparableCumulativeTrillion": 48.843926,
+      "actual": -7.2,
+      "predictedMonthlyFlowTrillion": 5.819214,
+      "predictedComparableCumulativeTrillion": 48.843756,
       "comparableBaseTrillion": 52.531798,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-09",
+      "model": -7.182894,
+      "legacyModel": null,
+      "consensus": null,
+      "actual": null,
+      "predictedMonthlyFlowTrillion": 7.265144,
+      "predictedComparableCumulativeTrillion": 56.014652,
+      "comparableBaseTrillion": 60.349492,
       "kind": "live_nowcast"
     }
   ],

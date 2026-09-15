@@ -18,6 +18,39 @@ JUNE = pd.Timestamp("2026-06-30")
 DASHBOARD_IDS = {"vegetable_price", "pork_price", "nanhua_industry", "brent", "qhd_coal_price", "rebar_price", "copper_price"}
 OFFICIAL_KEYS = {"cpi": "actual_cpi_yoy", "cpi_mom": "actual_cpi_mom", "ppi": "actual_ppi_yoy", "ppi_mom": "actual_ppi_mom", "pmi": "cpi_pmi"}
 PRICE_OFFICIAL_KEYS = ("actual_cpi_yoy", "actual_cpi_mom", "actual_ppi_yoy", "actual_ppi_mom")
+RELEASED_NOWCAST_ARCHIVE = ROOT / "data" / "forecast-model" / "released_nowcast_archive.json"
+
+
+def restore_released_nowcasts(
+    history: dict[str, list[dict[str, Any]]],
+    official_by_key: dict[str, dict[str, float]],
+    archive: dict[str, list[dict[str, Any]]],
+) -> None:
+    """Restore forecasts that must remain visible after their actual is released.
+
+    The live row is the forecast users actually saw before release.  It must be
+    converted to a confirmed row, not discarded when the target month advances.
+    The small archive also repairs rows lost by older versions of this updater.
+    """
+    for key, rows in history.items():
+        official = official_by_key.get(key, {})
+        by_date = {row["date"]: row for row in rows}
+        for archived in archive.get(key, []):
+            day = archived["date"]
+            if day not in official:
+                continue
+            if day not in by_date:
+                recovered = dict(archived)
+                rows.append(recovered)
+                by_date[day] = recovered
+        for day, actual in official.items():
+            row = by_date.get(day)
+            if row is None:
+                continue
+            row["actual"] = actual
+            if row.get("forecastKind") == "live_nowcast":
+                row["forecastKind"] = "confirmed_nowcast"
+        rows.sort(key=lambda row: row["date"])
 
 
 def resolve_target_month(
@@ -92,6 +125,8 @@ def main() -> int:
         for row in payload["history"][history_key]:
             if row["date"] in official:
                 row["actual"] = official[row["date"]]
+    archive = read_json(RELEASED_NOWCAST_ARCHIVE) if RELEASED_NOWCAST_ARCHIVE.exists() else {}
+    restore_released_nowcasts(payload["history"], official_by_key, archive)
     source = read_json(ROOT / "data" / "forecast-model" / "model_inputs.json")
     merge_official_pmi(source, read_json(ROOT / "data" / "forecast-model" / "official_pmi_subindices.json"))
     locked = read_json(ROOT / "data" / "forecast-model" / "locked_nowcasts.json")
@@ -112,8 +147,7 @@ def main() -> int:
     daily["pmi"] = build_pmi_daily_nowcasts(source, ifind, target_month)
     target_day = target_month.date().isoformat()
     for key in ("cpi", "cpi_mom", "ppi", "ppi_mom", "pmi"):
-        payload["history"][key] = [row for row in payload["history"][key]
-                                   if row.get("forecastKind") != "live_nowcast" and row["date"] != target_day]
+        payload["history"][key] = [row for row in payload["history"][key] if row["date"] != target_day]
         consensus_row = next((row for row in consensus.get(key, []) if row["date"] == target_day), None)
         latest_value = float(daily[key][-1]["value"])
         target_actual = official_by_key[key].get(target_day)
