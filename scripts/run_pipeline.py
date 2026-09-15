@@ -170,7 +170,10 @@ def run_incremental(args: argparse.Namespace) -> int:
 
         # Trade consensus is a small current-period request.  Reuse the already
         # stored factor history and do not redownload it on every daily run.
-        run_step("refresh current trade consensus", [python, "scripts/fetch_baseline.py"])
+        # Consensus is comparison-only and must not block a daily deployment
+        # when the iFinD request quota is temporarily exhausted.  The locked
+        # model and previously verified consensus remain publishable.
+        run_optional_step("refresh current trade consensus", [python, "scripts/fetch_baseline.py"])
         trade_model_command = [python, "scripts/research_trade_model_race.py"]
         if args.forecast_target_month:
             trade_model_command.extend(["--target-month", args.forecast_target_month])
