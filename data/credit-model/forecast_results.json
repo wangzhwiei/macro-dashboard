@@ -31,22 +31,22 @@
       ]
     },
     "social_financing": {
-      "model": 3.9,
+      "model": 3.89,
       "consensus": null,
       "unit": "万亿元",
       "gapVsConsensus": null,
       "consensusStatus": "not_yet_published",
       "approx68PctRange": [
-        3.26,
-        4.54
+        3.25,
+        4.53
       ]
     }
   },
   "monthlyModelInputs": {
-    "cpi": 0.797658,
-    "ppi": 4.844976,
+    "cpi": 0.810606,
+    "ppi": 4.843054,
     "pmi": 50.505723,
-    "industrial_value": 4.52756
+    "industrial_value": 4.939478
   },
   "informationSet": {
     "historicalBacktest": {
@@ -1832,7 +1832,7 @@
       },
       {
         "date": "2026-09",
-        "model": 3.895914,
+        "model": 3.894814,
         "consensus": null,
         "actual": null
       }
