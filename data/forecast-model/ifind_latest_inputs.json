@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-09-15",
+  "end": "2026-09-16",
   "series": {
     "cpi_veg": {
       "key": "cpi_veg",

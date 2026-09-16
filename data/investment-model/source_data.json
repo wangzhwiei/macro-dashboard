@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-09-15T15:53:50.577760+08:00",
+  "retrievedAt": "2026-09-16T09:35:58.756109+08:00",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "releasePolicy": "structural investment components are same-release data and may enter forecasts only with lag >= 1 month",
   "series": {
@@ -6179,20 +6179,5 @@
     "real_estate_investment_ytd_amount/M001620723 refresh failed; retained previously validated observations",
     "private_investment_ytd_yoy/M002965395 refresh failed; retained previously validated observations",
     "fixed_asset_investment_consensus/M005682259 refresh failed; retained previously validated observations"
-  ],
-  "officialSupplements": {
-    "2026-08-31": {
-      "source": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965307.html",
-      "keys": [
-        "fixed_asset_investment_ytd_amount",
-        "fixed_asset_investment_ytd_yoy",
-        "manufacturing_investment_ytd_yoy",
-        "infrastructure_investment_ytd_yoy",
-        "real_estate_investment_ytd_yoy",
-        "private_investment_ytd_yoy"
-      ],
-      "recordedAt": "2026-09-15T16:23:44.370369+08:00",
-      "reason": "iFinD quota exhausted before the official release was mirrored"
-    }
-  }
+  ]
 }

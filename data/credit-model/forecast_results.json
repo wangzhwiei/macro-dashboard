@@ -4,7 +4,7 @@
   "modelFrozen": true,
   "modelFrozenAt": "2026-08-25",
   "forecastMonth": "2026-09",
-  "dataRetrievedAt": "2026-09-15T15:51:18.655989+08:00",
+  "dataRetrievedAt": "2026-09-16T09:33:15.787570+08:00",
   "method": "target-specific no-leakage models: M2 balance-change bridge converted back to YoY; seasonal-drift, bill-rate overlay and online residual correction for loans; structural and official-component TSF challengers with robust same-month shrinkage and online residual correction",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
   "current": {
@@ -43,8 +43,8 @@
     }
   },
   "monthlyModelInputs": {
-    "cpi": 0.810606,
-    "ppi": 4.843054,
+    "cpi": 0.810938,
+    "ppi": 4.850717,
     "pmi": 50.505723,
     "industrial_value": 4.939478
   },
@@ -61,7 +61,7 @@
       ]
     },
     "liveMonth": {
-      "asOf": "2026-09-15T15:51:18.655989+08:00",
+      "asOf": "2026-09-16T09:33:15.787570+08:00",
       "policy": "use released actual when available; otherwise use the project's generated no-consensus forecast"
     }
   },
@@ -1832,7 +1832,7 @@
       },
       {
         "date": "2026-09",
-        "model": 3.894814,
+        "model": 3.894822,
         "consensus": null,
         "actual": null
       }

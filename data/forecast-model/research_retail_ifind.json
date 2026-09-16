@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-09-15",
+  "end": "2026-09-16",
   "series": {
     "actual_retail_yoy": {
       "key": "actual_retail_yoy",
@@ -7721,7 +7721,7 @@
   },
   "errors": {},
   "warnings": {
-    "actual_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-07-31）：actual_retail_yoy 固定 ID M001625520 未唯一命中；候选=[]",
+    "actual_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：actual_retail_yoy 固定 ID M001625520 未唯一命中；候选=[]",
     "consensus_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：consensus_retail_yoy 固定 ID M005682254 未唯一命中；候选=[]",
     "cpi_food_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_food_yoy 固定 ID M002826732 未唯一命中；候选=[]",
     "cpi_nonfood_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_nonfood_yoy 固定 ID M002826748 未唯一命中；候选=[]",

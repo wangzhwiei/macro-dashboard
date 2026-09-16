@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-09-15T15:51:18.655989+08:00",
+  "retrievedAt": "2026-09-16T09:33:15.787570+08:00",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
   "series": {
     "m2_yoy": {
@@ -23138,18 +23138,5 @@
     "m2_consensus/M005682260 refresh failed; retained previously validated observations",
     "new_rmb_loans_consensus/M005682262 refresh failed; retained previously validated observations",
     "social_financing_consensus/M005682268 refresh failed; retained previously validated observations"
-  ],
-  "officialSupplements": {
-    "2026-08-31": {
-      "source": "中国人民银行2026年8月金融统计与社会融资规模发布（2026-09-14）",
-      "keys": [
-        "m2_yoy",
-        "m2_level",
-        "new_rmb_loans",
-        "social_financing"
-      ],
-      "recordedAt": "2026-09-15T16:23:44.394415+08:00",
-      "reason": "iFinD quota exhausted before the official release was mirrored"
-    }
-  }
+  ]
 }
