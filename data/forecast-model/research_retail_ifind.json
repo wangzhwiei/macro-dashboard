@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-09-16",
+  "end": "2026-09-17",
   "series": {
     "actual_retail_yoy": {
       "key": "actual_retail_yoy",
