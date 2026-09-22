@@ -154,19 +154,28 @@ def run_incremental(args: argparse.Namespace) -> int:
             ],
         )
 
+        # The industrial bridge uses the freshly extended dashboard series.
+        # Re-estimating from stored official targets is cheap and keeps its
+        # current-month estimate synchronized with the daily high-frequency data.
+        run_step("rerun frozen industrial model", [python, "scripts/industrial_value_forecast_model.py"])
+        run_step(
+            "publish industrial forecast",
+            [python, "scripts/publish_industrial_value_forecasts.py", "--base", "public/data/forecasts.json"],
+        )
+
         if 9 <= refresh_end.day <= 18:
             credit_source = ROOT / "data" / "credit-model" / "source_data.json"
             if not artifact_checked_today(credit_source, refresh_end):
                 run_step("refresh credit release-window inputs", [python, "scripts/fetch_credit_forecast_data.py", "--resume"])
-            run_step("rerun frozen credit models", [python, "scripts/credit_forecast_model.py"])
-            run_step("publish credit forecasts", [python, "scripts/publish_credit_forecasts.py", "--base", "public/data/forecasts.json"])
+        run_step("rerun frozen credit models", [python, "scripts/credit_forecast_model.py"])
+        run_step("publish credit forecasts", [python, "scripts/publish_credit_forecasts.py", "--base", "public/data/forecasts.json"])
 
         if 12 <= refresh_end.day <= 20:
             investment_source = ROOT / "data" / "investment-model" / "source_data.json"
             if not artifact_checked_today(investment_source, refresh_end):
                 run_step("refresh investment release-window inputs", [python, "scripts/fetch_investment_forecast_data.py", "--resume"])
-            run_step("rerun frozen investment model", [python, "scripts/investment_level_forecast_model.py"])
-            run_step("publish investment forecast", [python, "scripts/publish_investment_forecasts.py", "--base", "public/data/forecasts.json"])
+        run_step("rerun frozen investment model", [python, "scripts/investment_level_forecast_model.py"])
+        run_step("publish investment forecast", [python, "scripts/publish_investment_forecasts.py", "--base", "public/data/forecasts.json"])
 
         # Trade consensus is a small current-period request.  Reuse the already
         # stored factor history and do not redownload it on every daily run.
