@@ -94,6 +94,7 @@ def main() -> int:
     partner = json.loads(PARTNER_PATH.read_text(encoding="utf-8"))
     payloads = {"anchor": anchor, "partner": partner}
     errors = []
+    refreshed = 0
     for index, spec in enumerate(SPECS, 1):
         try:
             rows, attrs = fetch(call, spec)
@@ -105,15 +106,19 @@ def main() -> int:
             item["unit"] = spec["unit"]
             item["source"] = spec["source"]
             item["query"] = spec["query"]
+            refreshed += 1
             print(f"[OK] {spec['key']}: latest={rows[0]}", flush=True)
         except Exception as error:
             errors.append(f"{spec['key']}: {error}")
         if index < len(SPECS):
             time.sleep(.5)
+    if refreshed:
+        ANCHOR_PATH.write_text(json.dumps(anchor, ensure_ascii=False, indent=2), encoding="utf-8")
+        PARTNER_PATH.write_text(json.dumps(partner, ensure_ascii=False, indent=2), encoding="utf-8")
     if errors:
-        raise RuntimeError("；".join(errors))
-    ANCHOR_PATH.write_text(json.dumps(anchor, ensure_ascii=False, indent=2), encoding="utf-8")
-    PARTNER_PATH.write_text(json.dumps(partner, ensure_ascii=False, indent=2), encoding="utf-8")
+        print("[WARN] 未更新的因子继续使用上次校验通过的快照：" + "；".join(errors), file=sys.stderr)
+    if not refreshed:
+        raise RuntimeError("所有固定因子抓取均失败")
     return 0
 
 

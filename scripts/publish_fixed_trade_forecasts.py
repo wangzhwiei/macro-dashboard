@@ -82,6 +82,9 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
     stores = {"partner": partner, "anchor": anchor}
     factor_rows: dict[str, list[dict[str, Any]]] = {key: [] for key in CONFIG}
     for key, config in CONFIG.items():
+        previously_published = {
+            row["date"]: row for row in payload.get("history", {}).get(key, [])
+        }
         for store_name, factor_key, item_id, name, usage in config["factors"]:
             factor_rows[key].append(input_row(stores[store_name], factor_key, item_id, name, usage))
         selected = frame.loc[frame["target"].eq(key), ["date", config["field"]]].dropna()
@@ -105,8 +108,13 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
             forecast = forecasts.get(date_key)
             if date_key == current_day:
                 forecast = current.get("forecast")
+            elif date_key in previously_published and previously_published[date_key].get("forecast") is not None:
+                # A forecast already shown before the official release is immutable.
+                forecast = previously_published[date_key]["forecast"]
             actual = actual_maps[key].get(date_key)
             raw_consensus = consensus_maps[key].get(date_key)
+            if date_key < current_day and date_key in previously_published:
+                raw_consensus = previously_published[date_key].get("consensus")
             consensus_carried_forward = raw_consensus is None and last_consensus is not None
             if raw_consensus is not None:
                 last_consensus = raw_consensus

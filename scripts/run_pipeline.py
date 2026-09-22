@@ -177,11 +177,13 @@ def run_incremental(args: argparse.Namespace) -> int:
         run_step("rerun frozen investment model", [python, "scripts/investment_level_forecast_model.py"])
         run_step("publish investment forecast", [python, "scripts/publish_investment_forecasts.py", "--base", "public/data/forecasts.json"])
 
-        # Trade consensus is a small current-period request.  Reuse the already
-        # stored factor history and do not redownload it on every daily run.
-        # Consensus is comparison-only and must not block a daily deployment
-        # when the iFinD request quota is temporarily exhausted.  The locked
-        # model and previously verified consensus remain publishable.
+        # Customs actuals and partner indicators are monthly releases. Check
+        # them during the release window, while a quota/source failure keeps
+        # the last validated snapshot and never blocks the daily deployment.
+        if 7 <= refresh_end.day <= 25:
+            run_optional_step("refresh trade actuals", [python, "scripts/fetch_trade_actuals.py"])
+            run_optional_step("refresh fixed trade factors", [python, "scripts/fetch_trade_fixed_factors.py"])
+        # Consensus is comparison-only and must not block publication.
         run_optional_step("refresh current trade consensus", [python, "scripts/fetch_baseline.py"])
         trade_model_command = [python, "scripts/research_trade_model_race.py"]
         if args.forecast_target_month:

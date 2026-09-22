@@ -25,214 +25,214 @@
     "exports": {
       "all_available_scores": {
         "ar": {
-          "rmse": 10.4761,
-          "mae": 7.1973,
-          "direction_hit_pct": 88.0,
-          "observations": 25,
+          "rmse": 10.3486,
+          "mae": 7.2298,
+          "direction_hit_pct": 88.46,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_bridge": {
-          "rmse": 10.9311,
-          "mae": 7.546,
-          "direction_hit_pct": 84.0,
-          "observations": 25,
+          "rmse": 10.7915,
+          "mae": 7.501,
+          "direction_hit_pct": 84.62,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_ar_ensemble": {
-          "rmse": 10.6319,
-          "mae": 7.3088,
-          "direction_hit_pct": 88.0,
-          "observations": 25,
+          "rmse": 10.5103,
+          "mae": 7.3031,
+          "direction_hit_pct": 88.46,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "direct_ridge_bridge": {
-          "rmse": 10.8662,
-          "mae": 7.5886,
-          "direction_hit_pct": 76.0,
-          "observations": 25,
+          "rmse": 11.0207,
+          "mae": 7.8487,
+          "direction_hit_pct": 76.92,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_ridge": {
-          "rmse": 9.6888,
-          "mae": 6.6702,
-          "direction_hit_pct": 92.0,
-          "observations": 25,
+          "rmse": 9.9872,
+          "mae": 7.1146,
+          "direction_hit_pct": 92.31,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_hf_gated": {
-          "rmse": 9.6888,
-          "mae": 6.6702,
-          "direction_hit_pct": 92.0,
-          "observations": 25,
+          "rmse": 9.9872,
+          "mae": 7.1146,
+          "direction_hit_pct": 92.31,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "anchored_factor": {
-          "rmse": 10.471,
-          "mae": 6.8568,
-          "direction_hit_pct": 84.0,
-          "observations": 25,
+          "rmse": 10.2434,
+          "mae": 6.634,
+          "direction_hit_pct": 84.62,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_factor_corrected": {
-          "rmse": 8.1847,
-          "mae": 5.0576,
-          "direction_hit_pct": 92.0,
-          "observations": 25,
+          "rmse": 8.4714,
+          "mae": 5.4629,
+          "direction_hit_pct": 92.31,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "destination_import_bridge": {
-          "rmse": 6.644,
-          "mae": 4.2216,
-          "direction_hit_pct": 88.0,
-          "observations": 25,
+          "rmse": 6.5715,
+          "mae": 4.2395,
+          "direction_hit_pct": 88.46,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "destination_import_cny_gated": {
-          "rmse": 5.1439,
-          "mae": 3.5737,
-          "direction_hit_pct": 88.0,
-          "observations": 25,
+          "rmse": 5.1159,
+          "mae": 3.6153,
+          "direction_hit_pct": 88.46,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "export_fixed_bridge": {
-          "rmse": 6.5526,
-          "mae": 4.1667,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 6.4642,
+          "mae": 4.157,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-09",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "export_fixed_cny_gated": {
-          "rmse": 4.8913,
-          "mae": 3.3877,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 4.8546,
+          "mae": 3.4105,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-09",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "consensus": {
-          "rmse": 4.7126,
-          "mae": 3.9188,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 4.6623,
+          "mae": 3.893,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         }
       },
       "common_sample_scores": {
         "ar": {
-          "rmse": 8.7545,
-          "mae": 6.3003,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 8.6183,
+          "mae": 6.3511,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_bridge": {
-          "rmse": 8.8614,
-          "mae": 6.5324,
-          "direction_hit_pct": 82.61,
-          "observations": 23,
+          "rmse": 8.772,
+          "mae": 6.526,
+          "direction_hit_pct": 83.33,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_ar_ensemble": {
-          "rmse": 8.7209,
-          "mae": 6.3495,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 8.6235,
+          "mae": 6.3726,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "direct_ridge_bridge": {
-          "rmse": 9.4859,
-          "mae": 6.8858,
-          "direction_hit_pct": 73.91,
-          "observations": 23,
+          "rmse": 9.7374,
+          "mae": 7.197,
+          "direction_hit_pct": 75.0,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_ridge": {
-          "rmse": 7.1851,
-          "mae": 5.5501,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 7.6815,
+          "mae": 6.0592,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_hf_gated": {
-          "rmse": 7.1851,
-          "mae": 5.5501,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 7.6815,
+          "mae": 6.0592,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "anchored_factor": {
-          "rmse": 8.8095,
-          "mae": 6.1056,
-          "direction_hit_pct": 82.61,
-          "observations": 23,
+          "rmse": 8.5926,
+          "mae": 5.8956,
+          "direction_hit_pct": 83.33,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_factor_corrected": {
-          "rmse": 5.6001,
-          "mae": 4.1001,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 6.1777,
+          "mae": 4.5752,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "destination_import_bridge": {
-          "rmse": 5.1462,
-          "mae": 3.6128,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 5.1162,
+          "mae": 3.6568,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "destination_import_cny_gated": {
-          "rmse": 3.9225,
-          "mae": 3.0366,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 3.9423,
+          "mae": 3.1047,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "export_fixed_bridge": {
-          "rmse": 5.1081,
-          "mae": 3.4573,
-          "direction_hit_pct": 85.71,
-          "observations": 21,
+          "rmse": 5.0594,
+          "mae": 3.4781,
+          "direction_hit_pct": 86.36,
+          "observations": 22,
           "sample_start": "2024-09",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "export_fixed_cny_gated": {
-          "rmse": 3.8721,
-          "mae": 2.7968,
-          "direction_hit_pct": 90.48,
-          "observations": 21,
+          "rmse": 3.8735,
+          "mae": 2.8479,
+          "direction_hit_pct": 90.91,
+          "observations": 22,
           "sample_start": "2024-09",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "consensus": {
-          "rmse": 4.7126,
-          "mae": 3.9188,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 4.6623,
+          "mae": 3.893,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         }
       },
       "common_sample_winner": "export_fixed_cny_gated",
@@ -241,58 +241,51 @@
         "2026-02"
       ],
       "latest_attribution": {
-        "month": "2026-07",
+        "month": "2026-08",
         "features": [
           "usdcny_m3",
           "cfets_m3",
           "ccfi_m1",
-          "dxy_m3",
+          "scfi_m3",
           "bdi_m1",
-          "scfi_m1",
-          "port_container_m1"
+          "dxy_m3",
+          "port_container_m3"
         ],
         "feature_contributions": {
-          "usdcny_m3": 3.324219045902286,
-          "cfets_m3": 0.1425625091278631,
-          "ccfi_m1": 2.1489945065427905,
-          "dxy_m3": -0.5413949513568483,
-          "bdi_m1": -0.03205944290491345,
-          "scfi_m1": -0.14395312340991537,
-          "port_container_m1": -2.0101958092196552
+          "usdcny_m3": 2.6156325070156097,
+          "cfets_m3": -0.13137711759897966,
+          "ccfi_m1": -0.6903197899601395,
+          "scfi_m3": -1.7150929934418624,
+          "bdi_m1": -0.08703238827569353,
+          "dxy_m3": -0.08964312134860615,
+          "port_container_m3": -0.19048984387393939
         },
         "hf_gate_enabled": false,
         "standalone_residual_features": [
           "usdcny_m3",
           "cfets_m3",
-          "bdi_m1"
+          "ccfi_m1"
         ],
         "standalone_residual_contributions": {
-          "usdcny_m3": 2.136141205672276,
-          "cfets_m3": 0.3074852291946386,
-          "bdi_m1": 0.015413432940261783
+          "usdcny_m3": 1.5133495785693938,
+          "cfets_m3": 0.30955245355926747,
+          "ccfi_m1": -0.2601130215460729
         },
         "standalone_residual_correction": 0.0,
-        "anchor_factor_features": [
-          "vietnam_export_yoy_l1_d1"
-        ],
+        "anchor_factor_features": [],
         "anchor_factor_correlations": {
-          "vietnam_export_yoy_l1_d1": 0.4805828761959671,
-          "pmi_new_export_orders_m3": 0.1852106424759322
+          "vietnam_export_yoy_l1_d1": 0.4829264423000049,
+          "pmi_new_export_orders_m3": 0.18680405330039862
         },
-        "anchor_factor_contributions": {
-          "vietnam_export_yoy_l1_d1": 3.1770911503111496
-        },
-        "anchor_factor_predicted_change": 3.2063134466595185,
-        "corrected_export_seasonal_backbone": 10.915386262995721,
+        "anchor_factor_contributions": {},
+        "anchor_factor_predicted_change": 0.0,
+        "corrected_export_seasonal_backbone": 11.549894277885764,
         "corrected_export_residual_features": [
           "vietnam_export_yoy_l1_level",
           "pmi_new_export_orders_level"
         ],
-        "corrected_export_residual_contributions": {
-          "vietnam_export_yoy_l1_level": 6.016954885128103,
-          "pmi_new_export_orders_level": 1.618342022964494
-        },
-        "corrected_export_residual_correction": 5.0,
+        "corrected_export_residual_contributions": {},
+        "corrected_export_residual_correction": 0.0,
         "destination_import_features": [
           "korea_imports_from_china_yoy_lag0",
           "taiwan_imports_from_mainland_yoy_lag1",
@@ -302,32 +295,32 @@
           "us_imports_from_china_yoy_lag1": -0.2859274781631032,
           "us_imports_from_china_yoy_lag2": -0.24787298702726512,
           "us_imports_from_china_yoy_lag3": -0.28378999768050034,
-          "japan_imports_from_china_yoy_lag1": 0.06341850217896092,
-          "japan_imports_from_china_yoy_lag2": 0.09631996500945642,
-          "japan_imports_from_china_yoy_lag3": -0.03511994873945578,
-          "korea_imports_from_china_yoy_lag0": 0.8015746764653048,
-          "korea_imports_from_china_yoy_lag1": 0.7430690128903112,
-          "korea_imports_from_china_yoy_lag2": 0.5873855781355098,
-          "brazil_imports_from_china_yoy_lag0": 0.4312470480654534,
-          "brazil_imports_from_china_yoy_lag1": 0.4558307417043728,
-          "brazil_imports_from_china_yoy_lag2": 0.3720191394943288,
-          "eu27_imports_from_china_yoy_lag2": 0.37362965883225235,
-          "eu27_imports_from_china_yoy_lag3": 0.2451903316618201,
-          "eu27_imports_from_china_yoy_lag4": 0.16309509881174625,
-          "taiwan_imports_from_mainland_yoy_lag1": 0.741107465195281,
-          "taiwan_imports_from_mainland_yoy_lag2": 0.4401974631448686,
-          "taiwan_imports_from_mainland_yoy_lag3": 0.5107291969078118,
-          "malaysia_imports_from_china_yoy_lag1": 0.06780246148570301,
-          "malaysia_imports_from_china_yoy_lag2": 0.31453042296546563,
-          "malaysia_imports_from_china_yoy_lag3": 0.36909731834991566,
-          "thailand_imports_from_china_yoy_lag1": 0.4630822615259978,
-          "thailand_imports_from_china_yoy_lag2": 0.46811349162428995,
-          "thailand_imports_from_china_yoy_lag3": 0.42290996717715956
+          "japan_imports_from_china_yoy_lag1": 0.1205785381108611,
+          "japan_imports_from_china_yoy_lag2": 0.11252704503083949,
+          "japan_imports_from_china_yoy_lag3": -0.009024331835229986,
+          "korea_imports_from_china_yoy_lag0": 0.8002210047182897,
+          "korea_imports_from_china_yoy_lag1": 0.7360551063537015,
+          "korea_imports_from_china_yoy_lag2": 0.5766776093899642,
+          "brazil_imports_from_china_yoy_lag0": 0.3821894826113897,
+          "brazil_imports_from_china_yoy_lag1": 0.4589972373290349,
+          "brazil_imports_from_china_yoy_lag2": 0.3740396872326771,
+          "eu27_imports_from_china_yoy_lag2": 0.3729986717699297,
+          "eu27_imports_from_china_yoy_lag3": 0.23820660208548852,
+          "eu27_imports_from_china_yoy_lag4": 0.15315440908408537,
+          "taiwan_imports_from_mainland_yoy_lag1": 0.7520621656318516,
+          "taiwan_imports_from_mainland_yoy_lag2": 0.48223160758119005,
+          "taiwan_imports_from_mainland_yoy_lag3": 0.5283233287909519,
+          "malaysia_imports_from_china_yoy_lag1": 0.21042257541942017,
+          "malaysia_imports_from_china_yoy_lag2": 0.3772187259647132,
+          "malaysia_imports_from_china_yoy_lag3": 0.4249879316984182,
+          "thailand_imports_from_china_yoy_lag1": 0.5090210147663314,
+          "thailand_imports_from_china_yoy_lag2": 0.4913972098207509,
+          "thailand_imports_from_china_yoy_lag3": 0.45556924187049447
         },
         "destination_import_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.10464772642382,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.766989195694256,
-          "thailand_imports_from_china_yoy_lag1": -0.5537669286680118
+          "korea_imports_from_china_yoy_lag0": 10.547637259132001,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.448016957512607,
+          "thailand_imports_from_china_yoy_lag1": -0.14453397298599463
         },
         "cny_calendar_gate_active": false,
         "cny_calendar_features": [],
@@ -342,9 +335,9 @@
           "thailand_imports_from_china_yoy_lag1"
         ],
         "export_fixed_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.10464772642382,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.766989195694256,
-          "thailand_imports_from_china_yoy_lag1": -0.5537669286680118
+          "korea_imports_from_china_yoy_lag0": 10.547637259132001,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.448016957512607,
+          "thailand_imports_from_china_yoy_lag1": -0.14453397298599463
         },
         "export_fixed_cny_gate_active": false,
         "export_fixed_cny_features": [
@@ -353,9 +346,9 @@
           "thailand_imports_from_china_yoy_lag1"
         ],
         "export_fixed_cny_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.10464772642382,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.766989195694256,
-          "thailand_imports_from_china_yoy_lag1": -0.5537669286680118
+          "korea_imports_from_china_yoy_lag0": 10.547637259132001,
+          "taiwan_imports_from_mainland_yoy_lag1": 6.448016957512607,
+          "thailand_imports_from_china_yoy_lag1": -0.14453397298599463
         },
         "import_fixed_features": [],
         "import_fixed_contributions": {},
@@ -364,16 +357,20 @@
         "import_fixed_cny_contributions": {}
       },
       "current_forecast": {
-        "month": "2026-08",
-        "forecast": 20.83474,
-        "status": "READY",
-        "missing_factors": [],
-        "earliest_factor_release_date": "2026-09-01",
+        "month": "2026-09",
+        "forecast": null,
+        "status": "WAITING_FOR_FIXED_FACTORS",
+        "missing_factors": [
+          "korea_imports_from_china_yoy_lag0",
+          "taiwan_imports_from_mainland_yoy_lag1",
+          "thailand_imports_from_china_yoy_lag1"
+        ],
+        "earliest_factor_release_date": "2026-10-01",
         "method": "export_fixed_factors_cny_gated",
         "model_version": "fixed_factors_cny_gated_v1",
-        "ungated_model_forecast": 20.83474,
-        "legacy_dynamic_model_forecast": 20.83474,
-        "previous_actual_anchor": 23.639396,
+        "ungated_model_forecast": null,
+        "legacy_dynamic_model_forecast": 21.680065,
+        "previous_actual_anchor": 24.744651,
         "predicted_change": 0.0,
         "selected_factors": [
           "korea_imports_from_china_yoy_lag0",
@@ -385,46 +382,42 @@
           "us_imports_from_china_yoy_lag2": -0.24787298702726512,
           "us_imports_from_china_yoy_lag3": -0.28378999768050034,
           "japan_imports_from_china_yoy_lag1": 0.1205785381108611,
-          "japan_imports_from_china_yoy_lag2": 0.11252704503083949,
-          "japan_imports_from_china_yoy_lag3": -0.009024331835229986,
-          "korea_imports_from_china_yoy_lag0": 0.8091219503240884,
-          "korea_imports_from_china_yoy_lag1": 0.7537977006845124,
-          "korea_imports_from_china_yoy_lag2": 0.6078074153242679,
-          "brazil_imports_from_china_yoy_lag0": 0.41494958077835364,
-          "brazil_imports_from_china_yoy_lag1": 0.4589972373290349,
-          "brazil_imports_from_china_yoy_lag2": 0.3740396872326771,
-          "eu27_imports_from_china_yoy_lag2": 0.3620641514312639,
-          "eu27_imports_from_china_yoy_lag3": 0.23820660208548852,
-          "eu27_imports_from_china_yoy_lag4": 0.15315440908408537,
-          "taiwan_imports_from_mainland_yoy_lag1": 0.7520621656318516,
-          "taiwan_imports_from_mainland_yoy_lag2": 0.48223160758119005,
-          "taiwan_imports_from_mainland_yoy_lag3": 0.5283233287909519,
+          "japan_imports_from_china_yoy_lag2": 0.16658341031781215,
+          "japan_imports_from_china_yoy_lag3": 0.01140495101731944,
+          "korea_imports_from_china_yoy_lag0": 0.8089458397110197,
+          "korea_imports_from_china_yoy_lag1": 0.7482020608428909,
+          "korea_imports_from_china_yoy_lag2": 0.6040340517176785,
+          "brazil_imports_from_china_yoy_lag0": 0.3821894826113897,
+          "brazil_imports_from_china_yoy_lag1": 0.4404571146865336,
+          "brazil_imports_from_china_yoy_lag2": 0.3788161815379047,
+          "eu27_imports_from_china_yoy_lag2": 0.3729986717699297,
+          "eu27_imports_from_china_yoy_lag3": 0.22820877042584625,
+          "eu27_imports_from_china_yoy_lag4": 0.14734248468784136,
+          "taiwan_imports_from_mainland_yoy_lag1": 0.7609940205204307,
+          "taiwan_imports_from_mainland_yoy_lag2": 0.5076313645026234,
+          "taiwan_imports_from_mainland_yoy_lag3": 0.5634359289778978,
           "malaysia_imports_from_china_yoy_lag1": 0.21042257541942017,
-          "malaysia_imports_from_china_yoy_lag2": 0.3772187259647132,
-          "malaysia_imports_from_china_yoy_lag3": 0.4249879316984182,
-          "thailand_imports_from_china_yoy_lag1": 0.5097957657457008,
-          "thailand_imports_from_china_yoy_lag2": 0.4917638561967688,
-          "thailand_imports_from_china_yoy_lag3": 0.4506391293154849
+          "malaysia_imports_from_china_yoy_lag2": 0.4645683296191698,
+          "malaysia_imports_from_china_yoy_lag3": 0.4766877245734456,
+          "thailand_imports_from_china_yoy_lag1": 0.5334516237233937,
+          "thailand_imports_from_china_yoy_lag2": 0.5357352332520282,
+          "thailand_imports_from_china_yoy_lag3": 0.4800513938298538
         },
-        "factor_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.536657596690548,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.447424454517282,
-          "thailand_imports_from_china_yoy_lag1": -0.1438126888735859
-        },
-        "seasonal_backbone": 11.948332,
+        "factor_contributions": {},
+        "seasonal_backbone": 12.394573,
         "hf_gate_enabled": false,
         "hf_correction": 0.0,
         "hf_features": [
           "usdcny_m3",
           "cfets_m3",
-          "ccfi_m1"
+          "ccfi_m3"
         ],
         "hf_contributions": {
-          "usdcny_m3": 1.5007164653519691,
-          "cfets_m3": 0.2944298393172539,
-          "ccfi_m1": -0.2638345982137067
+          "usdcny_m3": 1.270844886087987,
+          "cfets_m3": -0.05552920024278872,
+          "ccfi_m3": 0.2738433216728184
         },
-        "export_seasonal_backbone": 11.948332,
+        "export_seasonal_backbone": 12.394573,
         "export_factor_correction": 0.0,
         "export_factor_features": [
           "vietnam_export_yoy_l1_level",
@@ -432,14 +425,14 @@
         ],
         "export_factor_contributions": {},
         "destination_import_features": [
-          "korea_imports_from_china_yoy_lag0",
-          "taiwan_imports_from_mainland_yoy_lag1",
-          "thailand_imports_from_china_yoy_lag1"
+          "korea_imports_from_china_yoy_lag1",
+          "thailand_imports_from_china_yoy_lag2",
+          "taiwan_imports_from_mainland_yoy_lag2"
         ],
         "destination_import_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.536657596690548,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.447424454517282,
-          "thailand_imports_from_china_yoy_lag1": -0.1438126888735859
+          "korea_imports_from_china_yoy_lag1": 13.418304894733973,
+          "thailand_imports_from_china_yoy_lag2": 2.9972995399953337,
+          "taiwan_imports_from_mainland_yoy_lag2": 0.8619383244150163
         },
         "cny_calendar_gate_active": false,
         "cny_calendar_features": [
@@ -447,11 +440,7 @@
           "taiwan_imports_from_mainland_yoy_lag1",
           "thailand_imports_from_china_yoy_lag1"
         ],
-        "cny_calendar_contributions": {
-          "korea_imports_from_china_yoy_lag0": 10.536657596690548,
-          "taiwan_imports_from_mainland_yoy_lag1": 6.447424454517282,
-          "thailand_imports_from_china_yoy_lag1": -0.1438126888735859
-        },
+        "cny_calendar_contributions": {},
         "parallel_import_cny_candidate": {
           "forecast": null,
           "gate_active": false,
@@ -466,182 +455,182 @@
     "imports": {
       "all_available_scores": {
         "ar": {
-          "rmse": 9.0338,
-          "mae": 6.5557,
-          "direction_hit_pct": 72.0,
-          "observations": 25,
+          "rmse": 8.8723,
+          "mae": 6.5236,
+          "direction_hit_pct": 73.08,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_bridge": {
-          "rmse": 10.3359,
-          "mae": 7.5691,
-          "direction_hit_pct": 68.0,
-          "observations": 25,
+          "rmse": 10.5272,
+          "mae": 7.8361,
+          "direction_hit_pct": 69.23,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_ar_ensemble": {
-          "rmse": 9.3004,
-          "mae": 6.6196,
-          "direction_hit_pct": 60.0,
-          "observations": 25,
+          "rmse": 9.2563,
+          "mae": 6.6865,
+          "direction_hit_pct": 61.54,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "direct_ridge_bridge": {
-          "rmse": 10.7821,
-          "mae": 7.8562,
-          "direction_hit_pct": 64.0,
-          "observations": 25,
+          "rmse": 10.8394,
+          "mae": 8.0226,
+          "direction_hit_pct": 65.38,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_ridge": {
-          "rmse": 7.8043,
-          "mae": 5.694,
-          "direction_hit_pct": 68.0,
-          "observations": 25,
+          "rmse": 7.918,
+          "mae": 5.922,
+          "direction_hit_pct": 73.08,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_hf_gated": {
-          "rmse": 7.3063,
-          "mae": 5.4338,
-          "direction_hit_pct": 72.0,
-          "observations": 25,
+          "rmse": 7.3171,
+          "mae": 5.4796,
+          "direction_hit_pct": 73.08,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "anchored_factor": {
-          "rmse": 3.9301,
-          "mae": 3.0403,
-          "direction_hit_pct": 80.0,
-          "observations": 25,
+          "rmse": 3.9133,
+          "mae": 3.0541,
+          "direction_hit_pct": 80.77,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "import_cny_gated": {
-          "rmse": 3.6793,
-          "mae": 2.8802,
-          "direction_hit_pct": 80.0,
-          "observations": 25,
+          "rmse": 3.7059,
+          "mae": 2.9182,
+          "direction_hit_pct": 80.77,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "import_fixed_bridge": {
-          "rmse": 3.9301,
-          "mae": 3.0403,
-          "direction_hit_pct": 80.0,
-          "observations": 25,
+          "rmse": 3.9133,
+          "mae": 3.0541,
+          "direction_hit_pct": 80.77,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "import_fixed_cny_gated": {
-          "rmse": 3.6793,
-          "mae": 2.8802,
-          "direction_hit_pct": 80.0,
-          "observations": 25,
+          "rmse": 3.7059,
+          "mae": 2.9182,
+          "direction_hit_pct": 80.77,
+          "observations": 26,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "consensus": {
-          "rmse": 6.6087,
-          "mae": 4.6884,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 6.476,
+          "mae": 4.5523,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         }
       },
       "common_sample_scores": {
         "ar": {
-          "rmse": 8.1586,
-          "mae": 6.0756,
-          "direction_hit_pct": 69.57,
-          "observations": 23,
+          "rmse": 8.0075,
+          "mae": 6.0458,
+          "direction_hit_pct": 70.83,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_bridge": {
-          "rmse": 9.1072,
-          "mae": 6.658,
-          "direction_hit_pct": 65.22,
-          "observations": 23,
+          "rmse": 9.3946,
+          "mae": 6.9853,
+          "direction_hit_pct": 66.67,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "dfm_ar_ensemble": {
-          "rmse": 8.2374,
-          "mae": 5.9554,
-          "direction_hit_pct": 56.52,
-          "observations": 23,
+          "rmse": 8.2385,
+          "mae": 6.0652,
+          "direction_hit_pct": 58.33,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "direct_ridge_bridge": {
-          "rmse": 9.9865,
-          "mae": 7.1111,
-          "direction_hit_pct": 60.87,
-          "observations": 23,
+          "rmse": 10.0876,
+          "mae": 7.3225,
+          "direction_hit_pct": 62.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_ridge": {
-          "rmse": 6.3824,
-          "mae": 4.7785,
-          "direction_hit_pct": 65.22,
-          "observations": 23,
+          "rmse": 6.6284,
+          "mae": 5.0476,
+          "direction_hit_pct": 70.83,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "seasonal_hf_gated": {
-          "rmse": 5.9443,
-          "mae": 4.6209,
-          "direction_hit_pct": 69.57,
-          "observations": 23,
+          "rmse": 6.1314,
+          "mae": 4.7047,
+          "direction_hit_pct": 70.83,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "anchored_factor": {
-          "rmse": 3.5818,
-          "mae": 2.7294,
-          "direction_hit_pct": 78.26,
-          "observations": 23,
+          "rmse": 3.5751,
+          "mae": 2.7564,
+          "direction_hit_pct": 79.17,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "import_cny_gated": {
-          "rmse": 3.4213,
-          "mae": 2.6477,
-          "direction_hit_pct": 78.26,
-          "observations": 23,
+          "rmse": 3.4505,
+          "mae": 2.6934,
+          "direction_hit_pct": 79.17,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "import_fixed_bridge": {
-          "rmse": 3.5818,
-          "mae": 2.7294,
-          "direction_hit_pct": 78.26,
-          "observations": 23,
+          "rmse": 3.5751,
+          "mae": 2.7564,
+          "direction_hit_pct": 79.17,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "import_fixed_cny_gated": {
-          "rmse": 3.4213,
-          "mae": 2.6477,
-          "direction_hit_pct": 78.26,
-          "observations": 23,
+          "rmse": 3.4505,
+          "mae": 2.6934,
+          "direction_hit_pct": 79.17,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         },
         "consensus": {
-          "rmse": 6.6087,
-          "mae": 4.6884,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 6.476,
+          "mae": 4.5523,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-07",
-          "sample_end": "2026-07"
+          "sample_end": "2026-08"
         }
       },
       "common_sample_winner": "import_cny_gated",
@@ -650,24 +639,24 @@
         "2026-02"
       ],
       "latest_attribution": {
-        "month": "2026-07",
+        "month": "2026-08",
         "features": [
           "usdcny_m3",
-          "brent_m3",
           "cfets_m3",
+          "brent_m3",
           "copper_price_m3",
           "bdi_m3",
           "dxy_m1",
-          "port_container_m1"
+          "port_container_m3"
         ],
         "feature_contributions": {
-          "usdcny_m3": 2.908858805218865,
-          "brent_m3": -2.0733908415979085,
-          "cfets_m3": -0.021672113350557177,
-          "copper_price_m3": 0.10517498844254619,
-          "bdi_m3": 0.053185744929115965,
-          "dxy_m1": 0.2316150300316372,
-          "port_container_m1": -1.4813865509936306
+          "usdcny_m3": 2.0748497770405674,
+          "cfets_m3": 0.42136800619428155,
+          "brent_m3": -1.2129483055065018,
+          "copper_price_m3": 0.003227401696318562,
+          "bdi_m3": -0.06227319322228862,
+          "dxy_m1": -0.21891972677248087,
+          "port_container_m3": -0.9003215404712644
         },
         "hf_gate_enabled": true,
         "standalone_residual_features": [
@@ -676,23 +665,23 @@
           "copper_price_m3"
         ],
         "standalone_residual_contributions": {
-          "usdcny_m3": 0.7246766377823891,
-          "bdi_m3": 0.10193582954035683,
-          "copper_price_m3": 0.07129619667992831
+          "usdcny_m3": 0.5086070476664416,
+          "bdi_m3": -0.28360672718092245,
+          "copper_price_m3": 0.003457087378489161
         },
-        "standalone_residual_correction": 0.2570079412864141,
+        "standalone_residual_correction": -0.4068770177792322,
         "anchor_factor_features": [
           "korea_export_yoy_d1"
         ],
         "anchor_factor_correlations": {
-          "korea_export_yoy_d1": 0.7950003578256183,
-          "pmi_new_export_orders_d1": 0.39483892767484396,
-          "pmi_imports_d1": 0.2944711177453524
+          "korea_export_yoy_d1": 0.7851787203764515,
+          "pmi_new_export_orders_d1": 0.3987327781463978,
+          "pmi_imports_d1": 0.2924294538895823
         },
         "anchor_factor_contributions": {
-          "korea_export_yoy_d1": -6.637499002985905
+          "korea_export_yoy_d1": 3.758835520920442
         },
-        "anchor_factor_predicted_change": -6.595881852192055,
+        "anchor_factor_predicted_change": 3.9276032296037418,
         "corrected_export_seasonal_backbone": NaN,
         "corrected_export_residual_features": [],
         "corrected_export_residual_contributions": {},
@@ -704,12 +693,12 @@
         "cny_calendar_features": [],
         "cny_calendar_contributions": {},
         "import_cny_gate_active": false,
-        "import_cny_predicted_change": -6.595881852192055,
+        "import_cny_predicted_change": 3.9276032296037418,
         "import_cny_features": [
           "korea_export_yoy_d1"
         ],
         "import_cny_contributions": {
-          "korea_export_yoy_d1": -6.637499002985905
+          "korea_export_yoy_d1": 3.758835520920442
         },
         "export_fixed_features": [],
         "export_fixed_contributions": {},
@@ -720,53 +709,53 @@
           "korea_export_yoy_d1"
         ],
         "import_fixed_contributions": {
-          "korea_export_yoy_d1": -6.637499002985905
+          "korea_export_yoy_d1": 3.758835520920442
         },
         "import_fixed_cny_gate_active": false,
         "import_fixed_cny_features": [
           "korea_export_yoy_d1"
         ],
         "import_fixed_cny_contributions": {
-          "korea_export_yoy_d1": -6.637499002985905
+          "korea_export_yoy_d1": 3.758835520920442
         }
       },
       "current_forecast": {
-        "month": "2026-08",
-        "forecast": 31.900484,
-        "status": "READY",
-        "missing_factors": [],
-        "earliest_factor_release_date": "2026-09-01",
+        "month": "2026-09",
+        "forecast": null,
+        "status": "WAITING_FOR_FIXED_FACTORS",
+        "missing_factors": [
+          "korea_export_yoy_d1"
+        ],
+        "earliest_factor_release_date": "2026-10-01",
         "method": "import_fixed_factors_cny_gated",
         "model_version": "fixed_factors_cny_gated_v1",
-        "ungated_model_forecast": 31.900484,
-        "legacy_dynamic_model_forecast": 31.900484,
-        "previous_actual_anchor": 27.652321,
-        "predicted_change": 4.248163,
+        "ungated_model_forecast": null,
+        "legacy_dynamic_model_forecast": 28.646812,
+        "previous_actual_anchor": 28.646812,
+        "predicted_change": 0.0,
         "selected_factors": [
           "korea_export_yoy_d1"
         ],
         "factor_correlations": {
-          "korea_export_yoy_d1": 0.7980068806853632,
-          "pmi_new_export_orders_d1": 0.395874048798486,
-          "pmi_imports_d1": 0.30703095745842757
+          "korea_export_yoy_d1": 0.7840103940871749,
+          "pmi_new_export_orders_d1": 0.3987327781463978,
+          "pmi_imports_d1": 0.2924294538895823
         },
-        "factor_contributions": {
-          "korea_export_yoy_d1": 4.352837539465335
-        },
-        "seasonal_backbone": 32.145904,
+        "factor_contributions": {},
+        "seasonal_backbone": 29.406265,
         "hf_gate_enabled": true,
-        "hf_correction": -0.361636,
+        "hf_correction": 0.353024,
         "hf_features": [
           "usdcny_m3",
           "bdi_m3",
           "copper_price_m3"
         ],
         "hf_contributions": {
-          "usdcny_m3": 0.541505440990319,
-          "bdi_m3": -0.27228976610480377,
-          "copper_price_m3": 0.00360596571620495
+          "usdcny_m3": 0.4358557229377585,
+          "bdi_m3": 0.33753631984162485,
+          "copper_price_m3": 0.19575421674682
         },
-        "export_seasonal_backbone": 32.145904,
+        "export_seasonal_backbone": 29.406265,
         "export_factor_correction": 0.0,
         "export_factor_features": [],
         "export_factor_contributions": {},
@@ -776,19 +765,15 @@
         "cny_calendar_features": [
           "korea_export_yoy_d1"
         ],
-        "cny_calendar_contributions": {
-          "korea_export_yoy_d1": 4.352837539465335
-        },
+        "cny_calendar_contributions": {},
         "parallel_import_cny_candidate": {
-          "forecast": 31.900484,
+          "forecast": 28.646812,
           "gate_active": false,
-          "predicted_change": 4.248163,
+          "predicted_change": null,
           "features": [
             "korea_export_yoy_d1"
           ],
-          "contributions": {
-            "korea_export_yoy_d1": 4.352837539465335
-          },
+          "contributions": {},
           "original_model_preserved": true
         },
         "data_as_of": "2026-09-22T02:13:02.750737+00:00"

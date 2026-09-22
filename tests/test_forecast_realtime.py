@@ -50,9 +50,17 @@ class ForecastRealtimeTests(unittest.TestCase):
         self.assertNotIn("进出口", self.data["highFrequency"])
         self.assertEqual(self.data["tradeModel"]["version"], "trade-fixed-factors-cny-gated-v1")
         for key in ("exports", "imports"):
-            self.assertEqual(self.data["models"][key]["status"], "READY")
-            self.assertIsNotNone(self.data["history"][key][-1]["forecast"])
-            self.assertEqual(self.data["history"][key][-1]["date"], "2026-08-31")
+            rows = self.data["history"][key]
+            self.assertEqual(rows[-1]["date"][:7], self.data["models"][key]["forecastMonth"])
+            if self.data["models"][key]["status"] == "READY":
+                self.assertIsNotNone(rows[-1]["forecast"])
+            else:
+                self.assertEqual(self.data["models"][key]["status"], "WAITING_FOR_FIXED_FACTORS")
+                self.assertIsNone(rows[-1]["forecast"])
+                self.assertTrue(self.data["models"][key]["missingFactors"])
+            august = next(row for row in rows if row["date"] == "2026-08-31")
+            self.assertIsNotNone(august["actual"])
+            self.assertIsNotNone(august["forecast"])
 
     def test_high_frequency_rows_are_not_monthly_aggregates(self) -> None:
         expected_frequency = {
