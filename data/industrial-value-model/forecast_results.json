@@ -7,10 +7,10 @@
   "target": "规模以上工业增加值同比；2月使用1-2月累计同比，1月不单列",
   "method": "strict walk-forward fixed-volume carry plus fixed 19-series family and individual residual bridges, two prior-error-only online weights and historical calibration",
   "consensusPolicy": "一致预期仅在模型预测完成后合并用于对比，不参与因子、筛选、拟合或参数选择",
-  "asOf": "2026-09-11",
+  "asOf": "2026-09-21",
   "latest": {
     "date": "2026-09-30",
-    "model": 4.939478,
+    "model": 4.939782,
     "selectedFactors": [
       "known_fixed_volume_carry",
       "power_coal",
@@ -61,6 +61,7 @@
     ],
     "availableIndividualReportFactors": [
       "blast_furnace_level",
+      "crude_steel_level",
       "construction_steel_level",
       "power_coal_level",
       "pta_rate_level",
@@ -73,12 +74,12 @@
       "car_retail_yoy_level"
     ],
     "knownFixedVolumeCarry": 4.236694,
-    "baseModel": 4.894693,
-    "uncalibratedModel": 4.413023,
+    "baseModel": 4.910695,
+    "uncalibratedModel": 4.413327,
     "historicalErrorCorrection": 0.526455,
-    "reportResidualModel": 3.015387,
+    "reportResidualModel": 2.945285,
     "reportOnlineWeight": 0.357611,
-    "individualResidualModel": 4.413023,
+    "individualResidualModel": 4.413327,
     "individualOnlineWeight": 1.0,
     "consensus": null,
     "actual": null,
@@ -93,7 +94,7 @@
       "recentCorrelation": -0.086802,
       "stableAbsCorrelation": 0.0,
       "observations": 62,
-      "latestSignal": 1.310891
+      "latestSignal": -2.83594
     },
     {
       "name": "blast_furnace",
@@ -103,7 +104,7 @@
       "recentCorrelation": -0.227402,
       "stableAbsCorrelation": 0.0,
       "observations": 62,
-      "latestSignal": 2.445
+      "latestSignal": 2.625
     },
     {
       "name": "methanol_rate",
@@ -113,7 +114,7 @@
       "recentCorrelation": 0.144529,
       "stableAbsCorrelation": 0.25801,
       "observations": 62,
-      "latestSignal": -0.27
+      "latestSignal": 0.098333
     },
     {
       "name": "full_tire_rate",
@@ -123,7 +124,7 @@
       "recentCorrelation": 0.150848,
       "stableAbsCorrelation": 0.190657,
       "observations": 29,
-      "latestSignal": -0.4625
+      "latestSignal": -1.740833
     },
     {
       "name": "asphalt_rate",
@@ -133,7 +134,7 @@
       "recentCorrelation": 0.555218,
       "stableAbsCorrelation": 0.477949,
       "observations": 29,
-      "latestSignal": -10.833333
+      "latestSignal": -10.375
     }
   ],
   "modelSpecification": {
@@ -251,7 +252,7 @@
     "consensusIncluded": false
   },
   "backtest": {
-    "rmse": 0.877126,
+    "rmse": 0.877125,
     "mae": 0.723012,
     "bias": 0.032842,
     "directionHitPct": 71.79,
@@ -259,20 +260,20 @@
     "turningPoints": 24,
     "actualCorrelation": 0.673219,
     "lagCorrelation": 0.655604,
-    "lagCorrelationGap": -0.017614,
+    "lagCorrelationGap": -0.017615,
     "observations": 39,
     "sampleStart": "2023-03-31",
     "sampleEnd": "2026-08-31"
   },
   "preCalibrationBacktest": {
-    "rmse": 0.861713,
+    "rmse": 0.861712,
     "mae": 0.727842,
     "bias": -0.334353,
     "directionHitPct": 74.36,
     "turningPointHitPct": 79.17,
     "turningPoints": 24,
     "actualCorrelation": 0.683318,
-    "lagCorrelation": 0.659201,
+    "lagCorrelation": 0.6592,
     "lagCorrelationGap": -0.024117,
     "observations": 39,
     "sampleStart": "2023-03-31",
@@ -295,8 +296,8 @@
   "sharpChangeBacktest": {
     "thresholdPctPoint": 1.0,
     "observations": 15,
-    "rmse": 1.025852,
-    "mae": 0.820456,
+    "rmse": 1.025851,
+    "mae": 0.820455,
     "directionHitPct": 93.33,
     "months": [
       "2023-03-31",
@@ -319,20 +320,20 @@
   "volatilityBacktest": {
     "levelStdRatio": 1.197495,
     "changeStdRatio": 0.69644,
-    "changeCorrelation": 0.497246,
+    "changeCorrelation": 0.497247,
     "changeDirectionHitPct": 60.53,
     "sharpChangeThresholdPctPoint": 1.0,
     "sharpChangeObservations": 14,
-    "sharpMedianAmplitudeCapture": 0.307147
+    "sharpMedianAmplitudeCapture": 0.307145
   },
   "preCalibrationVolatilityBacktest": {
-    "levelStdRatio": 1.05948,
+    "levelStdRatio": 1.059479,
     "changeStdRatio": 0.734137,
-    "changeCorrelation": 0.463705,
+    "changeCorrelation": 0.463706,
     "changeDirectionHitPct": 47.37,
     "sharpChangeThresholdPctPoint": 1.0,
     "sharpChangeObservations": 14,
-    "sharpMedianAmplitudeCapture": 0.366107
+    "sharpMedianAmplitudeCapture": 0.366105
   },
   "baseModelVolatilityBacktest": {
     "levelStdRatio": 1.069647,
@@ -346,14 +347,14 @@
   "comparisonOnCommonSample": {
     "model": {
       "rmse": 0.894605,
-      "mae": 0.742763,
+      "mae": 0.742762,
       "bias": 0.053948,
       "directionHitPct": 64.86,
       "turningPointHitPct": 78.26,
       "turningPoints": 23,
       "actualCorrelation": 0.669743,
       "lagCorrelation": 0.594331,
-      "lagCorrelationGap": -0.075412,
+      "lagCorrelationGap": -0.075413,
       "observations": 37,
       "sampleStart": "2023-03-31",
       "sampleEnd": "2026-07-31"
@@ -2015,7 +2016,7 @@
       "baseModel": 5.242716,
       "uncalibratedModel": 5.467687,
       "historicalErrorCorrection": 0.499068,
-      "reportResidualModel": 5.747233,
+      "reportResidualModel": 5.747232,
       "reportOnlineWeight": 0.4807,
       "individualResidualModel": 5.415037,
       "individualOnlineWeight": 0.25,
@@ -2099,7 +2100,7 @@
       "baseModel": 4.974003,
       "uncalibratedModel": 5.059213,
       "historicalErrorCorrection": 0.223297,
-      "reportResidualModel": 4.369057,
+      "reportResidualModel": 4.369016,
       "reportOnlineWeight": 0.489673,
       "individualResidualModel": 5.059213,
       "individualOnlineWeight": 1.0,
@@ -2250,7 +2251,7 @@
       "baseModel": 5.735766,
       "uncalibratedModel": 6.306323,
       "historicalErrorCorrection": -0.02557,
-      "reportResidualModel": 6.373338,
+      "reportResidualModel": 6.373362,
       "reportOnlineWeight": 0.489673,
       "individualResidualModel": 6.306323,
       "individualOnlineWeight": 1.0,
@@ -2334,8 +2335,8 @@
       "baseModel": 5.608423,
       "uncalibratedModel": 5.727804,
       "historicalErrorCorrection": 0.501927,
-      "reportResidualModel": 6.18053,
-      "reportOnlineWeight": 0.51562,
+      "reportResidualModel": 6.180531,
+      "reportOnlineWeight": 0.515621,
       "individualResidualModel": 5.727804,
       "individualOnlineWeight": 1.0,
       "consensus": 5.363636,
@@ -2344,7 +2345,7 @@
     },
     {
       "date": "2025-05-31",
-      "model": 5.329542,
+      "model": 5.329539,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2416,11 +2417,11 @@
       ],
       "knownFixedVolumeCarry": 5.732975,
       "baseModel": 5.88047,
-      "uncalibratedModel": 5.194605,
+      "uncalibratedModel": 5.194602,
       "historicalErrorCorrection": 0.134937,
-      "reportResidualModel": 5.778646,
-      "reportOnlineWeight": 0.518368,
-      "individualResidualModel": 5.194605,
+      "reportResidualModel": 5.778655,
+      "reportOnlineWeight": 0.518369,
+      "individualResidualModel": 5.194602,
       "individualOnlineWeight": 1.0,
       "consensus": 5.57,
       "actual": 5.8,
@@ -2428,7 +2429,7 @@
     },
     {
       "date": "2025-06-30",
-      "model": 5.944875,
+      "model": 5.944877,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2500,11 +2501,11 @@
       ],
       "knownFixedVolumeCarry": 5.627778,
       "baseModel": 5.817995,
-      "uncalibratedModel": 5.620804,
+      "uncalibratedModel": 5.620806,
       "historicalErrorCorrection": 0.324071,
-      "reportResidualModel": 5.22061,
-      "reportOnlineWeight": 0.518437,
-      "individualResidualModel": 5.620804,
+      "reportResidualModel": 5.220616,
+      "reportOnlineWeight": 0.518438,
+      "individualResidualModel": 5.620806,
       "individualOnlineWeight": 1.0,
       "consensus": 5.725,
       "actual": 6.8,
@@ -2512,7 +2513,7 @@
     },
     {
       "date": "2025-07-31",
-      "model": 6.133786,
+      "model": 6.133783,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2584,11 +2585,11 @@
       ],
       "knownFixedVolumeCarry": 5.680356,
       "baseModel": 6.102383,
-      "uncalibratedModel": 5.858171,
+      "uncalibratedModel": 5.858169,
       "historicalErrorCorrection": 0.275614,
-      "reportResidualModel": 5.696079,
-      "reportOnlineWeight": 0.499748,
-      "individualResidualModel": 5.858171,
+      "reportResidualModel": 5.696081,
+      "reportOnlineWeight": 0.499749,
+      "individualResidualModel": 5.858169,
       "individualOnlineWeight": 1.0,
       "consensus": 5.91,
       "actual": 5.7,
@@ -2596,7 +2597,7 @@
     },
     {
       "date": "2025-08-31",
-      "model": 5.978886,
+      "model": 5.978885,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2668,11 +2669,11 @@
       ],
       "knownFixedVolumeCarry": 5.669829,
       "baseModel": 5.392027,
-      "uncalibratedModel": 5.879069,
+      "uncalibratedModel": 5.879067,
       "historicalErrorCorrection": 0.099818,
-      "reportResidualModel": 5.351688,
-      "reportOnlineWeight": 0.501702,
-      "individualResidualModel": 5.879069,
+      "reportResidualModel": 5.351706,
+      "reportOnlineWeight": 0.501703,
+      "individualResidualModel": 5.879067,
       "individualOnlineWeight": 1.0,
       "consensus": 5.8,
       "actual": 5.2,
@@ -2680,7 +2681,7 @@
     },
     {
       "date": "2025-09-30",
-      "model": 5.576722,
+      "model": 5.576725,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2752,11 +2753,11 @@
       ],
       "knownFixedVolumeCarry": 5.291912,
       "baseModel": 4.944149,
-      "uncalibratedModel": 5.397238,
+      "uncalibratedModel": 5.397241,
       "historicalErrorCorrection": 0.179483,
-      "reportResidualModel": 4.719507,
-      "reportOnlineWeight": 0.501869,
-      "individualResidualModel": 5.397238,
+      "reportResidualModel": 4.719521,
+      "reportOnlineWeight": 0.50187,
+      "individualResidualModel": 5.397241,
       "individualOnlineWeight": 1.0,
       "consensus": 5.266667,
       "actual": 6.5,
@@ -2764,7 +2765,7 @@
     },
     {
       "date": "2025-10-31",
-      "model": 5.6777,
+      "model": 5.677694,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2836,11 +2837,11 @@
       ],
       "knownFixedVolumeCarry": 5.438616,
       "baseModel": 5.339673,
-      "uncalibratedModel": 5.647499,
+      "uncalibratedModel": 5.647493,
       "historicalErrorCorrection": 0.030201,
       "reportResidualModel": 4.592825,
-      "reportOnlineWeight": 0.492838,
-      "individualResidualModel": 5.647499,
+      "reportOnlineWeight": 0.492839,
+      "individualResidualModel": 5.647493,
       "individualOnlineWeight": 1.0,
       "consensus": 5.454545,
       "actual": 4.9,
@@ -2848,7 +2849,7 @@
     },
     {
       "date": "2025-11-30",
-      "model": 5.364435,
+      "model": 5.364438,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -2920,11 +2921,11 @@
       ],
       "knownFixedVolumeCarry": 5.155094,
       "baseModel": 5.096875,
-      "uncalibratedModel": 5.231785,
+      "uncalibratedModel": 5.231788,
       "historicalErrorCorrection": 0.13265,
-      "reportResidualModel": 4.377363,
-      "reportOnlineWeight": 0.494109,
-      "individualResidualModel": 5.231785,
+      "reportResidualModel": 4.37736,
+      "reportOnlineWeight": 0.494111,
+      "individualResidualModel": 5.231788,
       "individualOnlineWeight": 1.0,
       "consensus": 5.07,
       "actual": 4.8,
@@ -2932,7 +2933,7 @@
     },
     {
       "date": "2025-12-31",
-      "model": 5.459242,
+      "model": 5.459241,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3006,17 +3007,17 @@
       "baseModel": 5.197438,
       "uncalibratedModel": 5.036255,
       "historicalErrorCorrection": 0.422987,
-      "reportResidualModel": 4.045744,
-      "reportOnlineWeight": 0.493118,
-      "individualResidualModel": 5.046525,
-      "individualOnlineWeight": 0.975374,
+      "reportResidualModel": 4.045733,
+      "reportOnlineWeight": 0.49312,
+      "individualResidualModel": 5.046527,
+      "individualOnlineWeight": 0.975367,
       "consensus": 5.17,
       "actual": 5.2,
       "kind": "walk_forward"
     },
     {
       "date": "2026-01-31",
-      "model": 5.166755,
+      "model": 5.166756,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3088,19 +3089,19 @@
       ],
       "knownFixedVolumeCarry": 4.83134,
       "baseModel": 5.084813,
-      "uncalibratedModel": 4.930505,
+      "uncalibratedModel": 4.930506,
       "historicalErrorCorrection": 0.236249,
-      "reportResidualModel": 4.762077,
-      "reportOnlineWeight": 0.478154,
-      "individualResidualModel": 4.930505,
-      "individualOnlineWeight": 0.999427,
+      "reportResidualModel": 4.762104,
+      "reportOnlineWeight": 0.478155,
+      "individualResidualModel": 4.930506,
+      "individualOnlineWeight": 0.99942,
       "consensus": null,
       "actual": null,
       "kind": "live_nowcast"
     },
     {
       "date": "2026-02-28",
-      "model": 6.20414,
+      "model": 6.204138,
       "selectedFactors": [
         "power_coal",
         "blast_furnace",
@@ -3155,19 +3156,19 @@
       ],
       "knownFixedVolumeCarry": null,
       "baseModel": 5.088035,
-      "uncalibratedModel": 5.711087,
-      "historicalErrorCorrection": 0.493052,
+      "uncalibratedModel": 5.711086,
+      "historicalErrorCorrection": 0.493053,
       "reportResidualModel": 5.088035,
-      "reportOnlineWeight": 0.478154,
-      "individualResidualModel": 5.711445,
-      "individualOnlineWeight": 0.999427,
+      "reportOnlineWeight": 0.478155,
+      "individualResidualModel": 5.711447,
+      "individualOnlineWeight": 0.99942,
       "consensus": null,
       "actual": 6.3,
       "kind": "walk_forward"
     },
     {
       "date": "2026-03-31",
-      "model": 5.127788,
+      "model": 5.12779,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3239,11 +3240,11 @@
       ],
       "knownFixedVolumeCarry": 4.477021,
       "baseModel": 4.846033,
-      "uncalibratedModel": 4.536895,
+      "uncalibratedModel": 4.536896,
       "historicalErrorCorrection": 0.590894,
-      "reportResidualModel": 3.71512,
-      "reportOnlineWeight": 0.478154,
-      "individualResidualModel": 4.536895,
+      "reportResidualModel": 3.715105,
+      "reportOnlineWeight": 0.478155,
+      "individualResidualModel": 4.536896,
       "individualOnlineWeight": 1.0,
       "consensus": 5.171429,
       "actual": 5.7,
@@ -3325,7 +3326,7 @@
       "baseModel": 5.01184,
       "uncalibratedModel": 4.791792,
       "historicalErrorCorrection": 0.354049,
-      "reportResidualModel": 3.708129,
+      "reportResidualModel": 3.708136,
       "reportOnlineWeight": 0.443248,
       "individualResidualModel": 4.791792,
       "individualOnlineWeight": 1.0,
@@ -3335,7 +3336,7 @@
     },
     {
       "date": "2026-05-31",
-      "model": 4.6766,
+      "model": 4.676602,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3407,11 +3408,11 @@
       ],
       "knownFixedVolumeCarry": 4.227163,
       "baseModel": 4.816706,
-      "uncalibratedModel": 4.286533,
-      "historicalErrorCorrection": 0.390067,
-      "reportResidualModel": 3.47737,
-      "reportOnlineWeight": 0.452534,
-      "individualResidualModel": 4.286533,
+      "uncalibratedModel": 4.286534,
+      "historicalErrorCorrection": 0.390068,
+      "reportResidualModel": 3.477374,
+      "reportOnlineWeight": 0.452535,
+      "individualResidualModel": 4.286534,
       "individualOnlineWeight": 1.0,
       "consensus": 4.166667,
       "actual": 4.5,
@@ -3419,7 +3420,7 @@
     },
     {
       "date": "2026-06-30",
-      "model": 4.690241,
+      "model": 4.690242,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3491,11 +3492,11 @@
       ],
       "knownFixedVolumeCarry": 4.123454,
       "baseModel": 4.762086,
-      "uncalibratedModel": 4.158908,
+      "uncalibratedModel": 4.158909,
       "historicalErrorCorrection": 0.531333,
-      "reportResidualModel": 3.922757,
-      "reportOnlineWeight": 0.444572,
-      "individualResidualModel": 4.158908,
+      "reportResidualModel": 3.922759,
+      "reportOnlineWeight": 0.444573,
+      "individualResidualModel": 4.158909,
       "individualOnlineWeight": 1.0,
       "consensus": 4.63,
       "actual": 5.3,
@@ -3503,7 +3504,7 @@
     },
     {
       "date": "2026-07-31",
-      "model": 4.861998,
+      "model": 4.861999,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3576,9 +3577,9 @@
       "knownFixedVolumeCarry": 4.517625,
       "baseModel": 5.03683,
       "uncalibratedModel": 4.648269,
-      "historicalErrorCorrection": 0.213729,
-      "reportResidualModel": 4.036023,
-      "reportOnlineWeight": 0.429088,
+      "historicalErrorCorrection": 0.21373,
+      "reportResidualModel": 4.036011,
+      "reportOnlineWeight": 0.429089,
       "individualResidualModel": 4.648269,
       "individualOnlineWeight": 1.0,
       "consensus": 4.7625,
@@ -3587,7 +3588,7 @@
     },
     {
       "date": "2026-08-31",
-      "model": 4.580613,
+      "model": 4.580615,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3656,11 +3657,11 @@
       ],
       "knownFixedVolumeCarry": 4.319636,
       "baseModel": 4.88637,
-      "uncalibratedModel": 4.506699,
-      "historicalErrorCorrection": 0.073913,
-      "reportResidualModel": 2.074683,
-      "reportOnlineWeight": 0.431221,
-      "individualResidualModel": 4.506699,
+      "uncalibratedModel": 4.506701,
+      "historicalErrorCorrection": 0.073914,
+      "reportResidualModel": 2.074668,
+      "reportOnlineWeight": 0.431222,
+      "individualResidualModel": 4.506701,
       "individualOnlineWeight": 1.0,
       "consensus": null,
       "actual": 5.2,
@@ -3668,7 +3669,7 @@
     },
     {
       "date": "2026-09-30",
-      "model": 4.939478,
+      "model": 4.939782,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3719,6 +3720,7 @@
       ],
       "availableIndividualReportFactors": [
         "blast_furnace_level",
+        "crude_steel_level",
         "construction_steel_level",
         "power_coal_level",
         "pta_rate_level",
@@ -3731,12 +3733,12 @@
         "car_retail_yoy_level"
       ],
       "knownFixedVolumeCarry": 4.236694,
-      "baseModel": 4.894693,
-      "uncalibratedModel": 4.413023,
+      "baseModel": 4.910695,
+      "uncalibratedModel": 4.413327,
       "historicalErrorCorrection": 0.526455,
-      "reportResidualModel": 3.015387,
+      "reportResidualModel": 2.945285,
       "reportOnlineWeight": 0.357611,
-      "individualResidualModel": 4.413023,
+      "individualResidualModel": 4.413327,
       "individualOnlineWeight": 1.0,
       "consensus": null,
       "actual": null,
@@ -3756,10 +3758,10 @@
       {
         "name": "steel_inventory",
         "family": "black",
-        "score": 0.610796,
-        "fullCorrelation": -0.567487,
-        "recentCorrelation": -0.671031,
-        "stableAbsCorrelation": 0.586397,
+        "score": 0.610848,
+        "fullCorrelation": -0.567543,
+        "recentCorrelation": -0.671072,
+        "stableAbsCorrelation": 0.586476,
         "observations": 29
       },
       {
@@ -3909,10 +3911,10 @@
       {
         "name": "tire_composite",
         "family": "auto",
-        "score": 0.311476,
-        "fullCorrelation": 0.322504,
-        "recentCorrelation": 0.337097,
-        "stableAbsCorrelation": 0.153852,
+        "score": 0.311536,
+        "fullCorrelation": 0.322539,
+        "recentCorrelation": 0.337165,
+        "stableAbsCorrelation": 0.154006,
         "observations": 29
       },
       {
@@ -3963,9 +3965,9 @@
       {
         "name": "metro_composite",
         "family": "demand",
-        "score": 0.199868,
-        "fullCorrelation": 0.319035,
-        "recentCorrelation": 0.100876,
+        "score": 0.199909,
+        "fullCorrelation": 0.319081,
+        "recentCorrelation": 0.100922,
         "stableAbsCorrelation": 0.0,
         "observations": 29
       },
@@ -3990,10 +3992,10 @@
       {
         "name": "coking_rate",
         "family": "black",
-        "score": 0.166901,
-        "fullCorrelation": 0.10872,
-        "recentCorrelation": 0.270458,
-        "stableAbsCorrelation": 0.043582,
+        "score": 0.163828,
+        "fullCorrelation": 0.090074,
+        "recentCorrelation": 0.293122,
+        "stableAbsCorrelation": 0.015418,
         "observations": 29
       },
       {
@@ -4170,8 +4172,8 @@
       "role": "diffusion",
       "providerId": "S005653695",
       "start": "2020-01-03",
-      "end": "2026-09-11",
-      "observations": 355
+      "end": "2026-09-18",
+      "observations": 356
     },
     "rebar_rate": {
       "family": "black",
@@ -4188,8 +4190,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-10",
-      "end": "2026-08-31",
-      "observations": 133
+      "end": "2026-09-10",
+      "observations": 134
     },
     "construction_steel": {
       "family": "black",
@@ -4197,8 +4199,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-03",
-      "end": "2026-09-11",
-      "observations": 873
+      "end": "2026-09-21",
+      "observations": 880
     },
     "power_coal": {
       "family": "energy",
@@ -4206,8 +4208,8 @@
       "role": "diffusion",
       "providerId": "S003839324",
       "start": "2020-01-01",
-      "end": "2026-09-10",
-      "observations": 2025
+      "end": "2026-09-21",
+      "observations": 2036
     },
     "pta_rate": {
       "family": "chemical",
@@ -4215,8 +4217,8 @@
       "role": "diffusion",
       "providerId": "S019765727",
       "start": "2020-02-19",
-      "end": "2026-09-11",
-      "observations": 1579
+      "end": "2026-09-21",
+      "observations": 1586
     },
     "methanol_rate": {
       "family": "chemical",
@@ -4233,8 +4235,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-01",
-      "end": "2026-09-11",
-      "observations": 1350
+      "end": "2026-09-21",
+      "observations": 1360
     },
     "car_wholesale": {
       "family": "auto",
@@ -4278,8 +4280,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-05",
-      "end": "2026-09-10",
-      "observations": 194
+      "end": "2026-09-17",
+      "observations": 195
     },
     "semi_tire": {
       "family": "auto",
@@ -4287,8 +4289,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-05",
-      "end": "2026-09-10",
-      "observations": 194
+      "end": "2026-09-17",
+      "observations": 195
     }
   },
   "providerIds": {

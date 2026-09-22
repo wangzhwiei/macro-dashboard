@@ -9,14 +9,14 @@
   "method": "forecast bias-corrected monthly fixed investment amount from high-frequency and existing monthly-model signals, accumulate to a fixed amount, then convert with a walk-forward comparable base",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "current": {
-    "model": -7.366844,
+    "model": -7.363794,
     "unit": "%",
     "approx68PctRange": [
       -8.38,
       -6.35
     ],
-    "predictedMonthlyFlowTrillion": 7.154131,
-    "predictedComparableCumulativeTrillion": 55.903639,
+    "predictedMonthlyFlowTrillion": 7.155972,
+    "predictedComparableCumulativeTrillion": 55.90548,
     "comparableBaseTrillion": 60.349492,
     "consensus": null,
     "onlineFlowWeights": {
@@ -144,7 +144,7 @@
       "sampleEnd": "2026-08"
     },
     "monthly_model_bridge": {
-      "rmse": 0.36173,
+      "rmse": 0.361729,
       "mae": 0.24338,
       "bias": 0.174982,
       "directionHitPct": 92.59,
@@ -543,7 +543,7 @@
     },
     {
       "date": "2025-12",
-      "model": -2.721444,
+      "model": -2.721445,
       "legacyModel": -2.564577,
       "consensus": 0.579167,
       "actual": -3.8,
@@ -565,7 +565,7 @@
     },
     {
       "date": "2026-03",
-      "model": -2.03182,
+      "model": -2.031819,
       "legacyModel": 2.446365,
       "consensus": 1.444444,
       "actual": 1.7,
@@ -625,18 +625,18 @@
       "consensus": -7.02,
       "actual": -7.2,
       "predictedMonthlyFlowTrillion": 5.824395,
-      "predictedComparableCumulativeTrillion": 48.848937,
+      "predictedComparableCumulativeTrillion": 48.848938,
       "comparableBaseTrillion": 52.531798,
       "kind": "walk_forward"
     },
     {
       "date": "2026-09",
-      "model": -7.366844,
+      "model": -7.363794,
       "legacyModel": null,
       "consensus": null,
       "actual": null,
-      "predictedMonthlyFlowTrillion": 7.154131,
-      "predictedComparableCumulativeTrillion": 55.903639,
+      "predictedMonthlyFlowTrillion": 7.155972,
+      "predictedComparableCumulativeTrillion": 55.90548,
       "comparableBaseTrillion": 60.349492,
       "kind": "live_nowcast"
     }
