@@ -7,10 +7,10 @@
   "target": "规模以上工业增加值同比；2月使用1-2月累计同比，1月不单列",
   "method": "strict walk-forward fixed-volume carry plus fixed 19-series family and individual residual bridges, two prior-error-only online weights and historical calibration",
   "consensusPolicy": "一致预期仅在模型预测完成后合并用于对比，不参与因子、筛选、拟合或参数选择",
-  "asOf": "2026-09-21",
+  "asOf": "2026-09-22",
   "latest": {
     "date": "2026-09-30",
-    "model": 4.939782,
+    "model": 4.939657,
     "selectedFactors": [
       "known_fixed_volume_carry",
       "power_coal",
@@ -74,12 +74,12 @@
       "car_retail_yoy_level"
     ],
     "knownFixedVolumeCarry": 4.236694,
-    "baseModel": 4.910695,
-    "uncalibratedModel": 4.413327,
+    "baseModel": 4.910533,
+    "uncalibratedModel": 4.413203,
     "historicalErrorCorrection": 0.526455,
-    "reportResidualModel": 2.945285,
+    "reportResidualModel": 2.949406,
     "reportOnlineWeight": 0.357611,
-    "individualResidualModel": 4.413327,
+    "individualResidualModel": 4.413203,
     "individualOnlineWeight": 1.0,
     "consensus": null,
     "actual": null,
@@ -94,7 +94,7 @@
       "recentCorrelation": -0.086802,
       "stableAbsCorrelation": 0.0,
       "observations": 62,
-      "latestSignal": -2.83594
+      "latestSignal": -2.951584
     },
     {
       "name": "blast_furnace",
@@ -3669,7 +3669,7 @@
     },
     {
       "date": "2026-09-30",
-      "model": 4.939782,
+      "model": 4.939657,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3733,12 +3733,12 @@
         "car_retail_yoy_level"
       ],
       "knownFixedVolumeCarry": 4.236694,
-      "baseModel": 4.910695,
-      "uncalibratedModel": 4.413327,
+      "baseModel": 4.910533,
+      "uncalibratedModel": 4.413203,
       "historicalErrorCorrection": 0.526455,
-      "reportResidualModel": 2.945285,
+      "reportResidualModel": 2.949406,
       "reportOnlineWeight": 0.357611,
-      "individualResidualModel": 4.413327,
+      "individualResidualModel": 4.413203,
       "individualOnlineWeight": 1.0,
       "consensus": null,
       "actual": null,
@@ -3965,9 +3965,9 @@
       {
         "name": "metro_composite",
         "family": "demand",
-        "score": 0.199909,
-        "fullCorrelation": 0.319081,
-        "recentCorrelation": 0.100922,
+        "score": 0.199913,
+        "fullCorrelation": 0.319085,
+        "recentCorrelation": 0.100926,
         "stableAbsCorrelation": 0.0,
         "observations": 29
       },
@@ -4199,8 +4199,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-03",
-      "end": "2026-09-21",
-      "observations": 880
+      "end": "2026-09-22",
+      "observations": 881
     },
     "power_coal": {
       "family": "energy",
@@ -4208,8 +4208,8 @@
       "role": "diffusion",
       "providerId": "S003839324",
       "start": "2020-01-01",
-      "end": "2026-09-21",
-      "observations": 2036
+      "end": "2026-09-22",
+      "observations": 2037
     },
     "pta_rate": {
       "family": "chemical",
@@ -4217,8 +4217,8 @@
       "role": "diffusion",
       "providerId": "S019765727",
       "start": "2020-02-19",
-      "end": "2026-09-21",
-      "observations": 1586
+      "end": "2026-09-22",
+      "observations": 1587
     },
     "methanol_rate": {
       "family": "chemical",
@@ -4235,8 +4235,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-01",
-      "end": "2026-09-21",
-      "observations": 1360
+      "end": "2026-09-22",
+      "observations": 1361
     },
     "car_wholesale": {
       "family": "auto",
