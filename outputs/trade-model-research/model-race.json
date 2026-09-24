@@ -413,7 +413,7 @@
           "ccfi_m3"
         ],
         "hf_contributions": {
-          "usdcny_m3": 1.3201559877564302,
+          "usdcny_m3": 1.3620295270091247,
           "cfets_m3": -0.05552920024278872,
           "ccfi_m3": 0.2738433216728184
         },
@@ -449,7 +449,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-09-23T06:23:34.877181+00:00"
+        "data_as_of": "2026-09-24T01:34:10.602816+00:00"
       }
     },
     "imports": {
@@ -503,32 +503,32 @@
           "sample_end": "2026-08"
         },
         "anchored_factor": {
-          "rmse": 3.9146,
-          "mae": 3.056,
+          "rmse": 3.9133,
+          "mae": 3.0541,
           "direction_hit_pct": 80.77,
           "observations": 26,
           "sample_start": "2024-07",
           "sample_end": "2026-08"
         },
         "import_cny_gated": {
-          "rmse": 3.7076,
-          "mae": 2.9212,
+          "rmse": 3.7059,
+          "mae": 2.9182,
           "direction_hit_pct": 80.77,
           "observations": 26,
           "sample_start": "2024-07",
           "sample_end": "2026-08"
         },
         "import_fixed_bridge": {
-          "rmse": 3.9146,
-          "mae": 3.056,
+          "rmse": 3.9133,
+          "mae": 3.0541,
           "direction_hit_pct": 80.77,
           "observations": 26,
           "sample_start": "2024-07",
           "sample_end": "2026-08"
         },
         "import_fixed_cny_gated": {
-          "rmse": 3.7076,
-          "mae": 2.9212,
+          "rmse": 3.7059,
+          "mae": 2.9182,
           "direction_hit_pct": 80.77,
           "observations": 26,
           "sample_start": "2024-07",
@@ -593,32 +593,32 @@
           "sample_end": "2026-08"
         },
         "anchored_factor": {
-          "rmse": 3.577,
-          "mae": 2.7586,
+          "rmse": 3.5751,
+          "mae": 2.7564,
           "direction_hit_pct": 79.17,
           "observations": 24,
           "sample_start": "2024-07",
           "sample_end": "2026-08"
         },
         "import_cny_gated": {
-          "rmse": 3.4526,
-          "mae": 2.6967,
+          "rmse": 3.4505,
+          "mae": 2.6934,
           "direction_hit_pct": 79.17,
           "observations": 24,
           "sample_start": "2024-07",
           "sample_end": "2026-08"
         },
         "import_fixed_bridge": {
-          "rmse": 3.577,
-          "mae": 2.7586,
+          "rmse": 3.5751,
+          "mae": 2.7564,
           "direction_hit_pct": 79.17,
           "observations": 24,
           "sample_start": "2024-07",
           "sample_end": "2026-08"
         },
         "import_fixed_cny_gated": {
-          "rmse": 3.4526,
-          "mae": 2.6967,
+          "rmse": 3.4505,
+          "mae": 2.6934,
           "direction_hit_pct": 79.17,
           "observations": 24,
           "sample_start": "2024-07",
@@ -674,14 +674,14 @@
           "korea_export_yoy_d1"
         ],
         "anchor_factor_correlations": {
-          "korea_export_yoy_d1": 0.7854426917776725,
+          "korea_export_yoy_d1": 0.7851787203764515,
           "pmi_new_export_orders_d1": 0.3987327781463978,
           "pmi_imports_d1": 0.2924294538895823
         },
         "anchor_factor_contributions": {
-          "korea_export_yoy_d1": 4.0787912134574125
+          "korea_export_yoy_d1": 3.758835520920442
         },
-        "anchor_factor_predicted_change": 4.247558922140713,
+        "anchor_factor_predicted_change": 3.9276032296037418,
         "corrected_export_seasonal_backbone": NaN,
         "corrected_export_residual_features": [],
         "corrected_export_residual_contributions": {},
@@ -693,12 +693,12 @@
         "cny_calendar_features": [],
         "cny_calendar_contributions": {},
         "import_cny_gate_active": false,
-        "import_cny_predicted_change": 4.247558922140713,
+        "import_cny_predicted_change": 3.9276032296037418,
         "import_cny_features": [
           "korea_export_yoy_d1"
         ],
         "import_cny_contributions": {
-          "korea_export_yoy_d1": 4.0787912134574125
+          "korea_export_yoy_d1": 3.758835520920442
         },
         "export_fixed_features": [],
         "export_fixed_contributions": {},
@@ -709,14 +709,14 @@
           "korea_export_yoy_d1"
         ],
         "import_fixed_contributions": {
-          "korea_export_yoy_d1": 4.0787912134574125
+          "korea_export_yoy_d1": 3.758835520920442
         },
         "import_fixed_cny_gate_active": false,
         "import_fixed_cny_features": [
           "korea_export_yoy_d1"
         ],
         "import_fixed_cny_contributions": {
-          "korea_export_yoy_d1": 4.0787912134574125
+          "korea_export_yoy_d1": 3.758835520920442
         }
       },
       "current_forecast": {
@@ -737,23 +737,23 @@
           "korea_export_yoy_d1"
         ],
         "factor_correlations": {
-          "korea_export_yoy_d1": 0.7840003848512996,
+          "korea_export_yoy_d1": 0.7840103940871749,
           "pmi_new_export_orders_d1": 0.3987327781463978,
           "pmi_imports_d1": 0.2924294538895823
         },
         "factor_contributions": {},
         "seasonal_backbone": 29.406265,
         "hf_gate_enabled": true,
-        "hf_correction": 0.383818,
+        "hf_correction": 0.410426,
         "hf_features": [
           "usdcny_m3",
           "bdi_m3",
           "copper_price_m3"
         ],
         "hf_contributions": {
-          "usdcny_m3": 0.4527677206975454,
-          "bdi_m3": 0.33702990406785227,
-          "copper_price_m3": 0.21014260434574633
+          "usdcny_m3": 0.4671288924839204,
+          "bdi_m3": 0.3364978438198297,
+          "copper_price_m3": 0.2229209518193582
         },
         "export_seasonal_backbone": 29.406265,
         "export_factor_correction": 0.0,
@@ -776,7 +776,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-09-23T06:23:34.877181+00:00"
+        "data_as_of": "2026-09-24T01:34:10.602816+00:00"
       }
     }
   }
