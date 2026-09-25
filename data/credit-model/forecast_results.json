@@ -43,10 +43,10 @@
     }
   },
   "monthlyModelInputs": {
-    "cpi": 0.8089,
-    "ppi": 4.914475,
-    "pmi": 50.773969,
-    "industrial_value": 4.939593
+    "cpi": 0.801535,
+    "ppi": 4.922443,
+    "pmi": 50.769648,
+    "industrial_value": 4.942533
   },
   "informationSet": {
     "historicalBacktest": {
@@ -1832,7 +1832,7 @@
       },
       {
         "date": "2026-09",
-        "model": 3.902438,
+        "model": 3.902215,
         "consensus": null,
         "actual": null
       }
