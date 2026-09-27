@@ -241,6 +241,8 @@ UNIT_FACTORS: dict[str, tuple[str, float]] = {
     "吨": ("tonne", 1.0),
     "千吨": ("tonne", 1e3),
     "万吨": ("tonne", 1e4),
+    "平方米": ("area", 1.0),
+    "万平方米": ("area", 1e4),
 }
 
 
