@@ -156,7 +156,7 @@ class HybridRoutingTests(unittest.TestCase):
             hybrid_adapter.CACHE_DIR = original_dir
             hybrid_adapter._ifind_call = original_call
 
-    def test_provider_drift_fails_once_even_with_cached_data(self):
+    def test_provider_drift_fails_after_one_disambiguation_even_with_cache(self):
         original_dir = hybrid_adapter.CACHE_DIR
         original_call = hybrid_adapter._ifind_call
         try:
@@ -179,7 +179,7 @@ class HybridRoutingTests(unittest.TestCase):
                         date(2026, 8, 1),
                         date(2026, 8, 7),
                     )
-                self.assertEqual(len(calls), 1)
+                self.assertEqual(len(calls), 2)
         finally:
             hybrid_adapter.CACHE_DIR = original_dir
             hybrid_adapter._ifind_call = original_call

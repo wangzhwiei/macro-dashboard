@@ -370,7 +370,8 @@
   "IFIND:NANHUA_ENERGY": {
     "provider": "iFinD",
     "provider_code": "iFinD:S004094484",
-    "query_name": "南华期货:能化指数"
+    "query_name": "南华期货:能化指数",
+    "query_hint": "日频"
   },
   "IFIND:NANHUA_INDUSTRY": {
     "provider": "CJHX",

@@ -348,6 +348,9 @@ def validate_generated_data(
         if not definition:
             continue
         prefix = item_id
+        for check in indicator.get("dataQuality", []):
+            if check.get("status") == "warning":
+                warnings.append(f"{prefix} 来源核验未通过，正在使用历史缓存：{check.get('message', '')}")
         series = indicator.get("series", [])
         min_points = 120 if definition["frequency"] == "daily" else 26
         if len(series) < min_points:

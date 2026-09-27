@@ -74,6 +74,8 @@ def run_incremental(args: argparse.Namespace) -> int:
     try:
         run_step("source integrity regression guards", [python, "-m", "unittest", "discover",
                  "-s", "tests", "-p", "test_source_reconciliation.py"])
+        run_step("provider identity regression guards", [python, "-m", "unittest", "discover",
+                 "-s", "tests", "-p", "test_nanhua_identity.py"])
         run_step("extend cached high-frequency dashboard series", update_command)
         if published_snapshot.exists():
             run_step(

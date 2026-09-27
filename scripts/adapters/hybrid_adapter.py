@@ -420,6 +420,7 @@ def _fetch_ifind(
 
     query = (
         f"{metadata['provider_id']} {metadata['query_name']}"
+        f"{' ' + metadata['query_hint'] if metadata.get('query_hint') else ''}"
         f"（{fetch_start:%Y%m%d}-{end_date:%Y%m%d}）"
     )
     fresh = None
@@ -458,6 +459,12 @@ def _fetch_ifind(
             _write_json(CACHE_DIR / "health" / _cache_path(semantic_code).name,
                         SOURCE_STATUS[semantic_code])
             if "模糊匹配漂移" in str(error):
+                if attempt == 0:
+                    # EDB accepts natural language, not a hard-coded ID parameter.
+                    # Disambiguate same-name daily/weekly variants, then validate again.
+                    frequency = {"D": "日频", "W": "周频", "M": "月频"}.get(metadata["frequency"], metadata["frequency"])
+                    query = f"{metadata['query_name']} {frequency}（{fetch_start:%Y%m%d}-{end_date:%Y%m%d}）"
+                    continue
                 if cached and os.environ.get("MACRO_INCREMENTAL", "").lower() in {
                     "1",
                     "true",
