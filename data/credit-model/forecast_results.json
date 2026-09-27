@@ -45,7 +45,7 @@
   "monthlyModelInputs": {
     "cpi": 0.800407,
     "ppi": 4.929345,
-    "pmi": 50.7609,
+    "pmi": 50.739453,
     "industrial_value": 4.942534
   },
   "informationSet": {
@@ -1832,7 +1832,7 @@
       },
       {
         "date": "2026-09",
-        "model": 3.901956,
+        "model": 3.901347,
         "consensus": null,
         "actual": null
       }

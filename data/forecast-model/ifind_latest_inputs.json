@@ -6695,7 +6695,9 @@
           "2026-09-24",
           4.5
         ]
-      ]
+      ],
+      "providerUnit": "元/公斤",
+      "unitConversionFactor": 1.0
     },
     "cpi_pork": {
       "key": "cpi_pork",
@@ -16478,7 +16480,9 @@
           "2026-09-26",
           16.16
         ]
-      ]
+      ],
+      "providerUnit": "元/公斤",
+      "unitConversionFactor": 1.0
     },
     "cpi_crb": {
       "key": "cpi_crb",
@@ -23296,7 +23300,9 @@
           "2026-09-25",
           418.54
         ]
-      ]
+      ],
+      "providerUnit": null,
+      "unitConversionFactor": 1.0
     },
     "cpi_pmi": {
       "key": "cpi_pmi",
@@ -24110,7 +24116,9 @@
           "2026-08-31",
           49.8
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "ppi_nanhua": {
       "key": "ppi_nanhua",
@@ -25468,7 +25476,9 @@
           "2026-09-25",
           4153.02
         ]
-      ]
+      ],
+      "providerUnit": null,
+      "unitConversionFactor": 1.0
     },
     "ppi_brent": {
       "key": "ppi_brent",
@@ -32274,7 +32284,9 @@
           "2026-09-25",
           123.36
         ]
-      ]
+      ],
+      "providerUnit": "美元/桶",
+      "unitConversionFactor": 1.0
     },
     "ppi_coal": {
       "key": "ppi_coal",
@@ -39032,7 +39044,9 @@
           "2026-09-24",
           765.0
         ]
-      ]
+      ],
+      "providerUnit": "元/吨",
+      "unitConversionFactor": 1.0
     },
     "ppi_rebar": {
       "key": "ppi_rebar",
@@ -45574,7 +45588,9 @@
           "2026-09-24",
           3173.5
         ]
-      ]
+      ],
+      "providerUnit": "元/吨",
+      "unitConversionFactor": 1.0
     },
     "ppi_copper": {
       "key": "ppi_copper",
@@ -52396,7 +52412,9 @@
           "2026-09-25",
           14740.0
         ]
-      ]
+      ],
+      "providerUnit": "美元/吨",
+      "unitConversionFactor": 1.0
     },
     "ppi_crb": {
       "key": "ppi_crb",
@@ -59214,7 +59232,9 @@
           "2026-09-25",
           418.54
         ]
-      ]
+      ],
+      "providerUnit": null,
+      "unitConversionFactor": 1.0
     },
     "pmi_blast_furnace": {
       "key": "pmi_blast_furnace",
@@ -60616,7 +60636,9 @@
           "2026-09-25",
           82.01
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_rebar_steel_rate": {
       "key": "pmi_rebar_steel_rate",
@@ -62026,7 +62048,9 @@
           "2026-09-18",
           35.08
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_power_coal": {
       "key": "pmi_power_coal",
@@ -62037,8 +62061,8 @@
       "unit": "吨",
       "name": "煤炭:日均耗煤量:六大发电集团:总计",
       "startTime": "2020-01-01",
-      "endTime": "2026-09-08",
-      "description": "提取数据：EDB-煤炭:日均耗煤量:六大发电集团:总计（20260726-20260909）-",
+      "endTime": "2026-09-24",
+      "description": "提取数据：EDB-煤炭:日均耗煤量:六大发电集团:总计（20260813-20260927）-",
       "records": [
         [
           "2020-01-01",
@@ -70131,8 +70155,74 @@
         [
           "2026-09-08",
           848600.0
+        ],
+        [
+          "2026-09-09",
+          821200.0
+        ],
+        [
+          "2026-09-10",
+          813700.0
+        ],
+        [
+          "2026-09-11",
+          832800.0
+        ],
+        [
+          "2026-09-12",
+          842600.0
+        ],
+        [
+          "2026-09-13",
+          841600.0
+        ],
+        [
+          "2026-09-14",
+          820900.0
+        ],
+        [
+          "2026-09-15",
+          815400.0000000001
+        ],
+        [
+          "2026-09-16",
+          831600.0
+        ],
+        [
+          "2026-09-17",
+          836700.0
+        ],
+        [
+          "2026-09-18",
+          835900.0
+        ],
+        [
+          "2026-09-19",
+          831400.0
+        ],
+        [
+          "2026-09-20",
+          827000.0
+        ],
+        [
+          "2026-09-21",
+          856600.0
+        ],
+        [
+          "2026-09-22",
+          887800.0
+        ],
+        [
+          "2026-09-23",
+          914700.0
+        ],
+        [
+          "2026-09-24",
+          937600.0
         ]
-      ]
+      ],
+      "providerUnit": "万吨",
+      "unitConversionFactor": 10000.0
     },
     "pmi_pta": {
       "key": "pmi_pta",
@@ -76502,7 +76592,9 @@
           "2026-09-24",
           74.2
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_methanol": {
       "key": "pmi_methanol",
@@ -77892,7 +77984,9 @@
           "2026-09-18",
           83.8
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_car_wholesale": {
       "key": "pmi_car_wholesale",
@@ -79898,7 +79992,9 @@
           "2026-09-20",
           50058.0
         ]
-      ]
+      ],
+      "providerUnit": "辆",
+      "unitConversionFactor": 1.0
     },
     "pmi_car_retail": {
       "key": "pmi_car_retail",
@@ -81940,7 +82036,9 @@
           "2026-09-20",
           43884.0
         ]
-      ]
+      ],
+      "providerUnit": "辆",
+      "unitConversionFactor": 1.0
     },
     "pmi_newhome_30": {
       "key": "pmi_newhome_30",
@@ -81951,8 +82049,8 @@
       "unit": "平方米",
       "name": "30大中城市:商品房成交面积",
       "startTime": "2020-01-01",
-      "endTime": "2026-09-08",
-      "description": "提取数据：EDB-30大中城市:商品房成交面积（20260726-20260909）-",
+      "endTime": "2026-09-23",
+      "description": "提取数据：EDB-30大中城市:商品房成交面积（20260813-20260927）-",
       "records": [
         [
           "2020-01-01",
@@ -91725,8 +91823,70 @@
         [
           "2026-09-08",
           209793.1961
+        ],
+        [
+          "2026-09-09",
+          266800.5507
+        ],
+        [
+          "2026-09-10",
+          236539.379
+        ],
+        [
+          "2026-09-11",
+          199454.676
+        ],
+        [
+          "2026-09-12",
+          119503.1743
+        ],
+        [
+          "2026-09-13",
+          77598.9936
+        ],
+        [
+          "2026-09-14",
+          187271.091
+        ],
+        [
+          "2026-09-15",
+          227989.5809
+        ],
+        [
+          "2026-09-16",
+          255384.4769
+        ],
+        [
+          "2026-09-17",
+          308932.464
+        ],
+        [
+          "2026-09-18",
+          316248.9973
+        ],
+        [
+          "2026-09-19",
+          182445.0181
+        ],
+        [
+          "2026-09-20",
+          276732.1335
+        ],
+        [
+          "2026-09-21",
+          264286.41479999997
+        ],
+        [
+          "2026-09-22",
+          360985.96270000003
+        ],
+        [
+          "2026-09-23",
+          353954.5388
         ]
-      ]
+      ],
+      "providerUnit": "万平方米",
+      "unitConversionFactor": 10000.0
     },
     "pmi_secondhand_shenzhen": {
       "key": "pmi_secondhand_shenzhen",
@@ -100512,7 +100672,9 @@
           "2026-09-26",
           2417.02
         ]
-      ]
+      ],
+      "providerUnit": "平方米",
+      "unitConversionFactor": 1.0
     },
     "pmi_rebar_consumption": {
       "key": "pmi_rebar_consumption",
@@ -100523,8 +100685,8 @@
       "unit": "吨",
       "name": "表观消费量:螺纹钢:当周值",
       "startTime": "2020-01-03",
-      "endTime": "2026-09-04",
-      "description": "提取数据：EDB-表观消费量:螺纹钢:当周值（20260726-20260909）-",
+      "endTime": "2026-09-25",
+      "description": "提取数据：EDB-表观消费量:螺纹钢:当周值（20260813-20260927）-",
       "records": [
         [
           "2020-01-03",
@@ -101913,8 +102075,22 @@
         [
           "2026-09-04",
           1793200.0
+        ],
+        [
+          "2026-09-11",
+          1857500.0
+        ],
+        [
+          "2026-09-18",
+          1896100.0000000002
+        ],
+        [
+          "2026-09-25",
+          2088500.0
         ]
-      ]
+      ],
+      "providerUnit": "万吨",
+      "unitConversionFactor": 10000.0
     },
     "pmi_production": {
       "key": "pmi_production",
@@ -102249,7 +102425,9 @@
           "2026-08-31",
           50.4
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_new_orders": {
       "key": "pmi_new_orders",
@@ -103063,7 +103241,9 @@
           "2026-08-31",
           50.6
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_employment": {
       "key": "pmi_employment",
@@ -103877,7 +104057,9 @@
           "2026-08-31",
           48.7
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_delivery": {
       "key": "pmi_delivery",
@@ -104691,7 +104873,9 @@
           "2026-08-31",
           50.1
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_inventory": {
       "key": "pmi_inventory",
@@ -105505,7 +105689,9 @@
           "2026-08-31",
           48.1
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "actual_cpi_yoy": {
       "key": "actual_cpi_yoy",
@@ -106319,7 +106505,9 @@
           "2026-08-31",
           0.8
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "actual_ppi_yoy": {
       "key": "actual_ppi_yoy",
@@ -106653,7 +106841,9 @@
           "2026-08-31",
           3.8
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "actual_ppi_mom": {
       "key": "actual_ppi_mom",
@@ -106987,7 +107177,9 @@
           "2026-08-31",
           0.4
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "actual_cpi_mom": {
       "key": "actual_cpi_mom",
@@ -107017,13 +107209,11 @@
           "2026-08-31",
           0.4
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     }
   },
   "errors": {},
-  "warnings": {
-    "pmi_power_coal": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-08）：单位不一致：期望 吨，返回 万吨",
-    "pmi_newhome_30": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-08）：单位不一致：期望 平方米，返回 万平方米",
-    "pmi_rebar_consumption": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-04）：单位不一致：期望 吨，返回 万吨"
-  }
+  "warnings": {}
 }
