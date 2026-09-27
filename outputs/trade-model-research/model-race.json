@@ -449,7 +449,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-09-27T06:59:06.387258+00:00"
+        "data_as_of": "2026-09-27T07:31:40.937052+00:00"
       }
     },
     "imports": {
@@ -744,7 +744,7 @@
         "factor_contributions": {},
         "seasonal_backbone": 29.406265,
         "hf_gate_enabled": true,
-        "hf_correction": 0.432883,
+        "hf_correction": 0.432217,
         "hf_features": [
           "usdcny_m3",
           "bdi_m3",
@@ -752,7 +752,7 @@
         ],
         "hf_contributions": {
           "usdcny_m3": 0.47865264633548243,
-          "bdi_m3": 0.3377533236574894,
+          "bdi_m3": 0.33708702378049926,
           "copper_price_m3": 0.2325996698564003
         },
         "export_seasonal_backbone": 29.406265,
@@ -776,7 +776,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-09-27T06:59:06.387258+00:00"
+        "data_as_of": "2026-09-27T07:31:40.937052+00:00"
       }
     }
   }

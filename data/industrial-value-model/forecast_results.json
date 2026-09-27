@@ -10,7 +10,7 @@
   "asOf": "2026-09-24",
   "latest": {
     "date": "2026-09-30",
-    "model": 4.942533,
+    "model": 4.942534,
     "selectedFactors": [
       "known_fixed_volume_carry",
       "power_coal",
@@ -77,7 +77,7 @@
     "baseModel": 4.903968,
     "uncalibratedModel": 4.416079,
     "historicalErrorCorrection": 0.526454,
-    "reportResidualModel": 2.983652,
+    "reportResidualModel": 2.98366,
     "reportOnlineWeight": 0.357611,
     "individualResidualModel": 4.416079,
     "individualOnlineWeight": 1.0,
@@ -3669,7 +3669,7 @@
     },
     {
       "date": "2026-09-30",
-      "model": 4.942533,
+      "model": 4.942534,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3736,7 +3736,7 @@
       "baseModel": 4.903968,
       "uncalibratedModel": 4.416079,
       "historicalErrorCorrection": 0.526454,
-      "reportResidualModel": 2.983652,
+      "reportResidualModel": 2.98366,
       "reportOnlineWeight": 0.357611,
       "individualResidualModel": 4.416079,
       "individualOnlineWeight": 1.0,
@@ -3965,9 +3965,9 @@
       {
         "name": "metro_composite",
         "family": "demand",
-        "score": 0.199919,
-        "fullCorrelation": 0.319094,
-        "recentCorrelation": 0.100931,
+        "score": 0.19993,
+        "fullCorrelation": 0.319104,
+        "recentCorrelation": 0.100945,
         "stableAbsCorrelation": 0.0,
         "observations": 29
       },
