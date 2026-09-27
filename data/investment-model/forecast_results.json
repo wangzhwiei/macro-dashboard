@@ -9,7 +9,7 @@
   "method": "forecast bias-corrected monthly fixed investment amount from high-frequency and existing monthly-model signals, accumulate to a fixed amount, then convert with a walk-forward comparable base",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "current": {
-    "model": -7.359241,
+    "model": -7.359242,
     "unit": "%",
     "approx68PctRange": [
       -8.37,
@@ -631,7 +631,7 @@
     },
     {
       "date": "2026-09",
-      "model": -7.359241,
+      "model": -7.359242,
       "legacyModel": null,
       "consensus": null,
       "actual": null,
