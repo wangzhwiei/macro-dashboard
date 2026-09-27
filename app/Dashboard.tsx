@@ -768,6 +768,11 @@ function IndicatorRow({
       <div className="updated-cell">
         <strong>{indicator.updatedAt.slice(5)}</strong>
         <small>{indicator.source}</small>
+        {indicator.dataQuality?.some((check) => check.status === "warning") && (
+          <small role="status" title="本次来源核验未通过，展示历史缓存，不代表更新成功" style={{ color: "#b45309" }}>
+            核验未通过·缓存
+          </small>
+        )}
       </div>
       <button
         className="research-button"

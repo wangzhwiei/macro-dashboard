@@ -588,6 +588,15 @@ def build_dashboard(
                 threshold,
             )
             if indicator:
+                source_status = fetcher.__globals__.get("SOURCE_STATUS", {})
+                checks = [dict(code=s["code"], **{
+                    k: v for k, v in source_status.get(s["code"], {}).items()
+                    if k not in {"evidence", "backup"}
+                }) for s in definition["series"] if s["code"] in source_status]
+                indicator["dataQuality"] = checks
+                warnings = [x for x in checks if x.get("status") == "warning"]
+                if warnings:
+                    indicator["reason"] += " 数据核验警告：本次来源核验未通过，展示历史缓存，不代表本次更新成功。"
                 indicators.append(indicator)
             else:
                 failures.append(f"{definition['id']}: 无有效数据")

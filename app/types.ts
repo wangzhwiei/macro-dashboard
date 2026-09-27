@@ -66,6 +66,7 @@ export interface Indicator {
   percentile: number;
   updatedAt: string;
   source: string;
+  dataQuality?: Array<{ code: string; status: string; message?: string; last_verified?: string | null }>;
   core: boolean;
   reason: string;
   history: number[];

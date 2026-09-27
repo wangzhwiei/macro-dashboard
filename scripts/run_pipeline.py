@@ -72,6 +72,8 @@ def run_incremental(args: argparse.Namespace) -> int:
         update_command.extend(["--end-date", args.end_date])
 
     try:
+        run_step("source integrity regression guards", [python, "-m", "unittest", "discover",
+                 "-s", "tests", "-p", "test_source_reconciliation.py"])
         run_step("extend cached high-frequency dashboard series", update_command)
         if published_snapshot.exists():
             run_step(

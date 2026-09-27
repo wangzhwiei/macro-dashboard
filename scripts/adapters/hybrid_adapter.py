@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import importlib.util
 import json
 import logging
@@ -12,7 +13,7 @@ import re
 import time
 import urllib.request
 from collections import defaultdict
-from datetime import date, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Callable
 
@@ -37,6 +38,30 @@ IFIND_SKILL_DIR = Path(
 
 _cjhx_index: dict[str, list[dict[str, Any]]] | None = None
 _ifind_call: Callable[..., dict[str, Any]] | None = None
+SOURCE_STATUS: dict[str, dict[str, Any]] = {}
+CACHE_SCHEMA = 2
+
+
+def _identity(code: str) -> dict[str, Any]:
+    metadata = _load_ifind_map()[code]
+    return {key: metadata.get(key, "") for key in
+            ("semantic_code", "provider_id", "frequency", "raw_unit", "scale")}
+
+
+def _write_json(path: Path, payload: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    temporary.replace(path)
+
+
+def _archive(code: str, kind: str, payload: Any) -> str:
+    """Keep immutable source evidence and pre-reconciliation cache backups."""
+    digest = hashlib.sha256(json.dumps(payload, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    path = CACHE_DIR / "evidence" / _cache_path(code).stem / f"{kind}-{digest}.json"
+    if not path.exists():
+        _write_json(path, {"captured_at": datetime.now(timezone.utc).isoformat(), "payload": payload})
+    return str(path)
 
 
 def _parse_day(value: Any) -> date:
@@ -68,7 +93,11 @@ def _load_cache(semantic_code: str) -> tuple[list[dict[str, Any]], str | None]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if isinstance(payload, list):
         return payload, None
-    return payload.get("records", []), payload.get("last_checked_date")
+    compatible = payload.get("identity") == _identity(semantic_code)
+    if payload.get("identity") and not compatible:
+        raise RuntimeError(f"缓存指标身份变更，拒绝复用：{semantic_code}")
+    checked = payload.get("last_checked_date") if compatible and payload.get("schema") == CACHE_SCHEMA else None
+    return payload.get("records", []), checked
 
 
 def _save_cache(
@@ -79,10 +108,10 @@ def _save_cache(
     payload: object = records
     if last_checked_date is not None:
         payload = {"records": records, "last_checked_date": last_checked_date}
-    _cache_path(semantic_code).write_text(
-        json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
-        encoding="utf-8",
-    )
+    if isinstance(payload, dict):
+        payload.update(schema=CACHE_SCHEMA, identity=_identity(semantic_code),
+                       validation=SOURCE_STATUS.get(semantic_code, {}))
+    _write_json(_cache_path(semantic_code), payload)
 
 
 def _merge_records(
@@ -264,6 +293,7 @@ def _parse_ifind_records(
     start_date: date,
     end_date: date,
     expected_unit: str = "",
+    expected_frequency: str = "",
 ) -> list[dict[str, Any]]:
     observed_ids: set[str] = set()
     extra = data.get("extra", {})
@@ -282,6 +312,8 @@ def _parse_ifind_records(
                 if provider_id == expected_id:
                     expected_metadata.append(metadata)
         if expected_metadata:
+            if len(attrs) != 1:
+                raise RuntimeError("iFinD多列响应缺少明确列映射，拒绝读取第一数值列")
             if len(expected_metadata) != 1:
                 raise RuntimeError(f"iFinD固定ID {expected_id} 在单个候选中重复")
             matches.append((container, expected_metadata[0]))
@@ -293,21 +325,35 @@ def _parse_ifind_records(
 
     container, metadata = matches[0]
     returned_unit = str(metadata.get("unit") or "")
+    if expected_frequency and metadata.get("freq") != expected_frequency:
+        raise RuntimeError(f"iFinD频率漂移：期望{expected_frequency}，实际{metadata.get('freq')}")
     records: dict[str, float] = {}
     points = container.get("data", []) if isinstance(container, dict) else []
     for point in points:
-        if not isinstance(point, list) or len(point) < 2 or point[1] is None:
+        if not isinstance(point, list) or len(point) != 2:
+            raise RuntimeError("iFinD观测列结构异常")
+        if point[1] is None:
             continue
         try:
             day = _parse_day(point[0])
             value = _convert_provider_unit(float(point[1]), returned_unit, expected_unit)
-        except (TypeError, ValueError):
-            continue
-        if start_date <= day <= end_date and math.isfinite(value):
+        except (TypeError, ValueError) as error:
+            raise RuntimeError("iFinD观测日期或数值非法") from error
+        if not math.isfinite(value):
+            raise RuntimeError("iFinD观测包含非有限数值")
+        if start_date <= day <= end_date:
+            if day.isoformat() in records and records[day.isoformat()] != value:
+                raise RuntimeError("iFinD同一日期存在冲突数值")
             records[day.isoformat()] = value
     if not records:
         raise RuntimeError(f"iFinD {expected_id} 未返回可用数据")
     return [{"date": day, "value": value} for day, value in sorted(records.items())]
+
+
+def _reconcile_records(cached, fresh):
+    """Replace only the bounded observed coverage; preserve unqueried history."""
+    lo, hi = min(x["date"] for x in fresh), max(x["date"] for x in fresh)
+    return _merge_records([x for x in cached if not lo <= x["date"] <= hi], fresh)
 
 
 def _harmonize_legacy_cache_units(
@@ -341,6 +387,7 @@ def _fetch_ifind(
 ) -> list[dict[str, Any]]:
     metadata = _load_ifind_map()[semantic_code]
     cached, last_checked_date = _load_cache(semantic_code)
+    SOURCE_STATUS[semantic_code] = {"status": "cached", "last_verified": last_checked_date}
     if (
         cached
         and last_checked_date
@@ -372,14 +419,15 @@ def _fetch_ifind(
         fetch_start = start_date
 
     query = (
-        f"{metadata['query_name']}"
-        f"（{fetch_start.isoformat()}至{end_date.isoformat()}）"
+        f"{metadata['provider_id']} {metadata['query_name']}"
+        f"（{fetch_start:%Y%m%d}-{end_date:%Y%m%d}）"
     )
     fresh = None
     last_error = None
     for attempt in range(3):
         try:
             result = _get_ifind_call()("edb", "get_edb_data", {"query": query})
+            evidence = _archive(semantic_code, "response", result)
             data = _extract_ifind_payload(result)
             fresh = _parse_ifind_records(
                 data,
@@ -387,10 +435,28 @@ def _fetch_ifind(
                 fetch_start,
                 end_date,
                 str(metadata.get("raw_unit") or ""),
+                metadata["frequency"],
             )
+            lo, hi = fresh[0]["date"], fresh[-1]["date"]
+            dates = {x["date"] for x in fresh}
+            removed = [x for x in cached if lo <= x["date"] <= hi and x["date"] not in dates]
+            if removed:
+                # Never delete on the strength of a single possibly truncated response.
+                confirmation = _get_ifind_call()("edb", "get_edb_data", {
+                    "query": f"{metadata['provider_id']} {query}"})
+                _archive(semantic_code, "confirmation", confirmation)
+                confirmed = _parse_ifind_records(_extract_ifind_payload(confirmation),
+                    metadata["provider_id"], fetch_start, end_date,
+                    str(metadata.get("raw_unit") or ""), metadata["frequency"])
+                if confirmed != fresh:
+                    raise RuntimeError("原始数据缺失日期二次核验不一致，拒绝删除缓存")
             break
         except Exception as error:
             last_error = error
+            SOURCE_STATUS[semantic_code] = {"status": "warning", "last_verified": last_checked_date,
+                                            "message": str(error)}
+            _write_json(CACHE_DIR / "health" / _cache_path(semantic_code).name,
+                        SOURCE_STATUS[semantic_code])
             if "模糊匹配漂移" in str(error):
                 if cached and os.environ.get("MACRO_INCREMENTAL", "").lower() in {
                     "1",
@@ -398,11 +464,10 @@ def _fetch_ifind(
                     "yes",
                 }:
                     logger.warning(
-                        "iFinD provider ID drift; retaining validated cache: %s (%s)",
+                        "iFinD provider ID drift; unverified fallback cache: %s (%s)",
                         semantic_code,
                         error,
                     )
-                    _save_cache(semantic_code, cached, end_date.isoformat())
                     return [
                         item
                         for item in cached
@@ -410,11 +475,10 @@ def _fetch_ifind(
                     ]
                 raise
             if cached and "未返回可用数据" in str(error):
-                logger.info(
-                    "iFinD增量区间无新观测，记录当天检查：%s",
+                logger.warning(
+                    "iFinD无可用观测，保留缓存但不记录验证成功：%s",
                     semantic_code,
                 )
-                _save_cache(semantic_code, cached, end_date.isoformat())
                 return [
                     item
                     for item in cached
@@ -422,8 +486,8 @@ def _fetch_ifind(
                 ]
             if attempt == 2:
                 if cached:
-                    logger.info(
-                        "iFinD增量区间无新观测，保留已验证缓存：%s (%s)",
+                    logger.warning(
+                        "iFinD本次核验失败，使用缓存并标记警告：%s (%s)",
                         semantic_code,
                         error,
                     )
@@ -447,8 +511,13 @@ def _fetch_ifind(
         {"date": item["date"], "value": float(item["value"]) * scale}
         for item in fresh
     ]
-    cached = _harmonize_legacy_cache_units(cached, fresh)
-    merged = _merge_records(cached, fresh)
+    # No heuristic rescaling of untouched history: conversions require source metadata.
+    backup = _archive(semantic_code, "cache-before-reconcile", cached)
+    merged = _reconcile_records(cached, fresh)
+    SOURCE_STATUS[semantic_code] = {"status": "verified", "last_verified": end_date.isoformat(),
+        "coverage_start": fresh[0]["date"], "coverage_end": fresh[-1]["date"],
+        "removed": removed, "evidence": evidence, "backup": backup}
+    _write_json(CACHE_DIR / "health" / _cache_path(semantic_code).name, SOURCE_STATUS[semantic_code])
     _save_cache(semantic_code, merged, end_date.isoformat())
     return [
         item

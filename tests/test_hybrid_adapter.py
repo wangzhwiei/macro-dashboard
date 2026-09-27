@@ -184,7 +184,7 @@ class HybridRoutingTests(unittest.TestCase):
             hybrid_adapter.CACHE_DIR = original_dir
             hybrid_adapter._ifind_call = original_call
 
-    def test_no_new_data_is_checked_once_and_cached_for_the_day(self):
+    def test_no_usable_data_does_not_mark_cache_verified(self):
         original_dir = hybrid_adapter.CACHE_DIR
         original_call = hybrid_adapter._ifind_call
         try:
@@ -211,7 +211,7 @@ class HybridRoutingTests(unittest.TestCase):
                 _, checked = hybrid_adapter._load_cache(
                     "IFIND:BILL_DISCOUNT_6M"
                 )
-                self.assertEqual(checked, "2026-08-07")
+                self.assertIsNone(checked)
         finally:
             hybrid_adapter.CACHE_DIR = original_dir
             hybrid_adapter._ifind_call = original_call

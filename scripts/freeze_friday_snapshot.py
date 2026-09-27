@@ -101,6 +101,20 @@ def freeze_snapshot(published: dict, generated: dict) -> dict:
     )
     freeze_latest = trusted_published_latest and latest_information_unchanged
     freeze_dates = set(published_dates)
+    corrected_dates = []
+    for item_id, current in generated_indicators.items():
+        fresh = {x["date"]: x["value"] for x in current.get("series", [])}
+        if not fresh:
+            continue
+        lo, hi = min(fresh), max(fresh)
+        for point in published_indicators.get(item_id, {}).get("series", []):
+            day = point["date"]
+            if lo <= day <= hi and (day not in fresh or abs(point["value"] - fresh[day]) > 1e-7):
+                corrected_dates.append(day)
+    if corrected_dates:
+        # Source corrections must also repair derived history, not freeze known errors.
+        freeze_dates = {day for day in freeze_dates if day < min(corrected_dates)}
+        freeze_latest = False
     if same_snapshot and not freeze_latest:
         # Legacy or internally inconsistent payloads cannot be allowed to
         # overwrite a correctly regenerated latest Friday. Older Friday
