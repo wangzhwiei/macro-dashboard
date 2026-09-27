@@ -2,14 +2,14 @@
 irs_1y,FR007 IRS 1Y,CJHX,daily,日频,2026-09-24,2026-09-27,1,4,1.0,ok,,fresh
 irs_5y,FR007 IRS 5Y,CJHX,daily,日频,2026-09-24,2026-09-27,1,4,1.0,ok,,fresh
 shibor_3m,SHIBOR 3M,CJHX,daily,日频,2026-09-24,2026-09-27,1,4,1.0,ok,,fresh
-bill_6m,票据转贴 6M,iFinD,daily,日频,2026-08-28,2026-09-27,20,4,1.0,ok,,stale
+bill_6m,票据转贴 6M,iFinD,daily,日频,2026-09-24,2026-09-27,1,4,1.0,ok,,fresh
 car_retail_yoy,乘用车厂家零售当周同比,CJHX,weekly,周频,2026-09-20,2026-09-27,7,21,7.0,ok,,fresh
 metro_composite,重点城市地铁客流指数,CJHX,daily,日频,2026-09-25,2026-09-27,0,4,1.0,ok,,fresh
 boxoffice_7d,全国电影票房 7日合计,CJHX,daily,日频,2026-09-26,2026-09-27,0,4,1.0,ok,,fresh
 flights_7d,国内航班执行量 7日均值,iFinD,daily,日频,2026-09-26,2026-09-27,0,4,1.0,ok,,fresh
 land_4w,100城土地成交面积 4周均值,CJHX,weekly,周频,2026-09-20,2026-09-27,7,14,7.0,ok,,fresh
 newhome_30c,30城商品房成交 7日均值,CJHX,daily,日频,2026-09-25,2026-09-27,0,4,1.0,ok,,fresh
-secondhand,重点城市二手房成交指数,iFinD,daily,日频,2026-09-26,2026-09-27,0,4,1.0,ok,,fresh
+secondhand,重点城市二手房成交指数,iFinD,daily,日频,2026-09-27,2026-09-27,0,4,1.0,ok,,fresh
 listing_price,全国二手房挂牌价指数,CJHX,weekly,周频,2026-09-14,2026-09-27,13,21,7.0,ok,,fresh
 construction_steel,建筑钢材成交,iFinD,daily,日频,2026-09-24,2026-09-27,1,4,1.0,ok,,fresh
 asphalt_rate,沥青装置开工率,iFinD,weekly,周频,2026-09-17,2026-09-27,10,14,7.0,ok,,fresh
