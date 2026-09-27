@@ -4,10 +4,31 @@ import unittest
 import json
 from pathlib import Path
 
-from scripts.fetch_forecast_inputs_ifind import merge_records
+from scripts.fetch_forecast_inputs_ifind import choose_candidate, merge_records, normalize_candidate_unit
 
 
 class ForecastIncrementalTests(unittest.TestCase):
+    def test_fixed_provider_id_wins_and_compatible_units_are_normalized(self) -> None:
+        entry = {"key": "coal", "providerId": "EXPECTED"}
+        payload = {"datas": [
+            {"data": {"data": [["2026-09-25", 81.37]], "attrs": {
+                "煤耗": {"index_id": "EXPECTED", "freq": "D", "unit": "万吨"}
+            }}},
+            {"data": {"data": [["2026-09-25", 999.0]], "attrs": {
+                "错误候选": {"index_id": "WRONG", "freq": "D", "unit": "吨"}
+            }}},
+        ]}
+        candidate = normalize_candidate_unit(choose_candidate(entry, payload), "吨")
+        self.assertEqual(candidate["providerId"], "EXPECTED")
+        self.assertEqual(candidate["unit"], "吨")
+        self.assertEqual(candidate["providerUnit"], "万吨")
+        self.assertEqual(candidate["unitConversionFactor"], 10000.0)
+        self.assertEqual(candidate["records"], [["2026-09-25", 813700.0]])
+
+    def test_incompatible_dimension_still_fails_closed(self) -> None:
+        with self.assertRaisesRegex(RuntimeError, "量纲不一致"):
+            normalize_candidate_unit({"unit": "%", "records": [["2026-09-25", 1.0]]}, "吨")
+
     def test_incremental_records_preserve_history_and_override_overlap(self) -> None:
         previous = {
             "providerId": "fixed",

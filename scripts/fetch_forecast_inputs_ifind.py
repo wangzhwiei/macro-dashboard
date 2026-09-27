@@ -14,6 +14,14 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 
+UNIT_FACTORS: dict[str, tuple[str, float]] = {
+    "吨": ("mass", 1.0),
+    "千吨": ("mass", 1e3),
+    "万吨": ("mass", 1e4),
+    "平方米": ("area", 1.0),
+    "万平方米": ("area", 1e4),
+}
+
 
 def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8-sig"))
@@ -67,6 +75,38 @@ def choose_candidate(entry: dict[str, Any], payload: dict[str, Any]) -> dict[str
     if len(candidates) != 1:
         raise RuntimeError(f"{entry['key']} 未唯一命中；候选={[(x['providerId'], x['name']) for x in candidates]}")
     return candidates[0]
+
+
+def normalize_candidate_unit(candidate: dict[str, Any], expected_unit: str | None) -> dict[str, Any]:
+    """Normalize a fixed-provider series to the model's declared unit.
+
+    Provider ID is the series identity. A compatible display-unit change (for
+    example 万吨 instead of 吨) must not make a validated series stale, but an
+    incompatible physical dimension must still fail closed.
+    """
+    if not expected_unit:
+        return candidate
+    returned_unit = str(candidate.get("unit") or "")
+    output = dict(candidate)
+    if not returned_unit:
+        output["unit"] = expected_unit
+        output["providerUnit"] = None
+        output["unitConversionFactor"] = 1.0
+        return output
+    if returned_unit == expected_unit:
+        output["providerUnit"] = returned_unit
+        output["unitConversionFactor"] = 1.0
+        return output
+    returned = UNIT_FACTORS.get(returned_unit)
+    expected = UNIT_FACTORS.get(expected_unit)
+    if not returned or not expected or returned[0] != expected[0]:
+        raise RuntimeError(f"量纲不一致：期望 {expected_unit}，返回 {returned_unit}")
+    factor = returned[1] / expected[1]
+    output["records"] = [[day, float(value) * factor] for day, value in output.get("records", [])]
+    output["providerUnit"] = returned_unit
+    output["unit"] = expected_unit
+    output["unitConversionFactor"] = factor
+    return output
 
 
 def merge_records(previous: dict[str, Any] | None, candidate: dict[str, Any]) -> dict[str, Any]:
@@ -169,13 +209,7 @@ def main() -> int:
             candidate = choose_candidate(entry, inner_payload(response))
             if entry.get("frequency") and candidate.get("frequency") != entry["frequency"]:
                 raise RuntimeError(f"频率不一致：期望 {entry['frequency']}，返回 {candidate.get('frequency')}")
-            if entry.get("unit") and candidate.get("unit") not in (entry["unit"], None, ""):
-                raise RuntimeError(f"单位不一致：期望 {entry['unit']}，返回 {candidate.get('unit')}")
-            if entry.get("unit") and not candidate.get("unit"):
-                # Some exact-ID EDB responses omit the unit even though the
-                # catalog definition is stable. Keep the manifest unit after
-                # exact provider-ID and frequency validation.
-                candidate["unit"] = entry["unit"]
+            candidate = normalize_candidate_unit(candidate, entry.get("unit"))
             candidate["records"] = [
                 row for row in candidate["records"]
                 if args.start <= str(row[0])[:10] <= args.end
