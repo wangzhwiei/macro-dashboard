@@ -40,6 +40,7 @@ _cjhx_index: dict[str, list[dict[str, Any]]] | None = None
 _ifind_call: Callable[..., dict[str, Any]] | None = None
 SOURCE_STATUS: dict[str, dict[str, Any]] = {}
 CACHE_SCHEMA = 2
+_ifind_unavailable_reason: str | None = None
 
 
 def _identity(code: str) -> dict[str, Any]:
@@ -256,6 +257,11 @@ def _extract_ifind_payload(result: dict[str, Any]) -> dict[str, Any]:
     data = payload.get("data") if isinstance(payload, dict) else None
     if not isinstance(data, dict):
         raise RuntimeError(f"iFinD EDB响应缺少data对象：{payload}")
+    answer = str(data.get("answer") or "")
+    if "用量已耗尽" in answer or "额度已耗尽" in answer:
+        raise RuntimeError("iFinD接口额度耗尽：未返回指标数据，请恢复接口额度；保留上次已验证数据")
+    if not data.get("datas"):
+        raise RuntimeError(f"iFinD未返回指标候选，无法核验编码：{answer[:300]}")
     return data
 
 
@@ -385,6 +391,7 @@ def _harmonize_legacy_cache_units(
 def _fetch_ifind(
     semantic_code: str, start_date: date, end_date: date
 ) -> list[dict[str, Any]]:
+    global _ifind_unavailable_reason
     metadata = _load_ifind_map()[semantic_code]
     cached, last_checked_date = _load_cache(semantic_code)
     SOURCE_STATUS[semantic_code] = {"status": "cached", "last_verified": last_checked_date}
@@ -404,6 +411,13 @@ def _fetch_ifind(
             for item in cached
             if start_date <= date.fromisoformat(item["date"]) <= end_date
         ]
+    if _ifind_unavailable_reason:
+        SOURCE_STATUS[semantic_code] = {"status": "warning", "last_verified": last_checked_date,
+                                        "message": _ifind_unavailable_reason}
+        _write_json(CACHE_DIR / "health" / _cache_path(semantic_code).name, SOURCE_STATUS[semantic_code])
+        if not cached:
+            raise RuntimeError(_ifind_unavailable_reason)
+        return [x for x in cached if start_date.isoformat() <= x["date"] <= end_date.isoformat()]
     if cached:
         latest = date.fromisoformat(cached[-1]["date"])
         # Re-query an overlap so provider revisions, delayed observations and
@@ -458,7 +472,13 @@ def _fetch_ifind(
                                             "message": str(error)}
             _write_json(CACHE_DIR / "health" / _cache_path(semantic_code).name,
                         SOURCE_STATUS[semantic_code])
-            if "模糊匹配漂移" in str(error):
+            if "接口额度耗尽" in str(error):
+                _ifind_unavailable_reason = str(error)
+                if not cached:
+                    raise
+                logger.warning("%s", error)
+                return [x for x in cached if start_date.isoformat() <= x["date"] <= end_date.isoformat()]
+            if "模糊匹配漂移" in str(error) or "未返回指标候选" in str(error):
                 if attempt == 0:
                     # EDB accepts natural language, not a hard-coded ID parameter.
                     # Disambiguate same-name daily/weekly variants, then validate again.

@@ -769,8 +769,8 @@ function IndicatorRow({
         <strong>{indicator.updatedAt.slice(5)}</strong>
         <small>{indicator.source}</small>
         {indicator.dataQuality?.some((check) => check.status === "warning") && (
-          <small role="status" title="本次来源核验未通过，展示历史缓存，不代表更新成功" style={{ color: "#b45309" }}>
-            核验未通过·缓存
+          <small role="status" title={indicator.dataQuality.filter((check) => check.status === "warning").map((check) => check.message).join("；")} style={{ color: "#b45309" }}>
+            {indicator.dataQuality.some((check) => check.message?.includes("接口额度耗尽")) ? "接口额度耗尽·缓存" : "核验未通过·缓存"}
           </small>
         )}
       </div>
