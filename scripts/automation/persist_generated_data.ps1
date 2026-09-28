@@ -16,6 +16,26 @@ $headers = @{
     "User-Agent" = "MacroDashboard-DailyUpdate"
 }
 
+# Content-addressed blob/tree creation and reads are safe to retry after transport
+# failures. A ref update remains non-forced and is reconciled by the outer loop.
+function Invoke-RestMethod {
+    param([string]$Method = 'Get', $Headers, [string]$Uri, $Body,
+          [string]$ContentType, [int]$TimeoutSec = 60)
+    $request = @{ Method=$Method; Headers=$Headers; Uri=$Uri; TimeoutSec=$TimeoutSec }
+    if ($null -ne $Body) { $request.Body=$Body }
+    if ($ContentType) { $request.ContentType=$ContentType }
+    for ($requestAttempt=1; $requestAttempt -le 3; $requestAttempt++) {
+        try { return Microsoft.PowerShell.Utility\Invoke-RestMethod @request }
+        catch {
+            $detail = [string]$_.ErrorDetails.Message
+            if ($detail.Length -gt 600) { $detail=$detail.Substring(0,600) }
+            Write-Warning "GitHub request failed (attempt $requestAttempt/3): $Method $Uri; $($_.Exception.Message); $detail"
+            if ($requestAttempt -eq 3) { throw }
+            Start-Sleep -Seconds (2 * $requestAttempt)
+        }
+    }
+}
+
 function Get-GitBlobSha([byte[]]$bytes) {
     $prefix = [Text.Encoding]::ASCII.GetBytes("blob $($bytes.Length)`0")
     $buffer = [byte[]]::new($prefix.Length + $bytes.Length)
