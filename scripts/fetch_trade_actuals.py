@@ -30,7 +30,11 @@ def load_client():
         from call import call
     finally:
         os.chdir(previous)
-    return call
+    try:
+        from scripts.ifind_request_cache import wrap_ifind_call
+    except ModuleNotFoundError:
+        from ifind_request_cache import wrap_ifind_call
+    return wrap_ifind_call(call)
 
 
 def fetch(call, spec: dict) -> tuple[list[list], dict]:

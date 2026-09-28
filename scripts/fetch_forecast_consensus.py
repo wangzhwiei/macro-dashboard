@@ -183,7 +183,11 @@ def load_ifind_call(skill_dir: Path) -> Callable[..., dict[str, Any]]:
         from call import call as ifind_call
     finally:
         os.chdir(previous_cwd)
-    return ifind_call
+    try:
+        from scripts.ifind_request_cache import wrap_ifind_call
+    except ModuleNotFoundError:
+        from ifind_request_cache import wrap_ifind_call
+    return wrap_ifind_call(ifind_call)
 
 
 def fetch_candidate(

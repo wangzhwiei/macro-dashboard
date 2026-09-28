@@ -2,13 +2,7 @@ name: Daily refresh watchdog
 
 on:
   workflow_dispatch:
-  schedule:
-    # Cloud-side dispatches at 09:30 and 14:30 Asia/Shanghai.
-    - cron: "30 1 * * *"
-    - cron: "30 6 * * *"
-    # 18:30 and 20:30 Asia/Shanghai, after all local retry windows.
-    - cron: "30 10 * * *"
-    - cron: "30 12 * * *"
+  # Manual-only: automatic dispatches and daily failure reminders are disabled.
 
 permissions:
   actions: write

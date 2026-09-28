@@ -241,7 +241,11 @@ def _get_ifind_call() -> Callable[..., dict[str, Any]]:
         spec.loader.exec_module(module)
     finally:
         os.chdir(previous)
-    _ifind_call = module.call
+    try:
+        from scripts.ifind_request_cache import wrap_ifind_call
+    except ModuleNotFoundError:
+        from ifind_request_cache import wrap_ifind_call
+    _ifind_call = wrap_ifind_call(module.call)
     return _ifind_call
 
 
@@ -397,6 +401,7 @@ def _fetch_ifind(
     SOURCE_STATUS[semantic_code] = {"status": "cached", "last_verified": last_checked_date}
     if (
         cached
+        and os.environ.get("MACRO_FORCE_IFIND") != "1"
         and last_checked_date
         and last_checked_date >= end_date.isoformat()
     ):
@@ -422,7 +427,7 @@ def _fetch_ifind(
         latest = date.fromisoformat(cached[-1]["date"])
         # Re-query an overlap so provider revisions, delayed observations and
         # transient bad values can be corrected instead of becoming permanent.
-        fetch_start = max(start_date, latest - timedelta(days=35))
+        fetch_start = max(start_date, min(latest - timedelta(days=35), end_date - timedelta(days=45)))
         if fetch_start > end_date:
             return [
                 item
@@ -441,7 +446,9 @@ def _fetch_ifind(
     last_error = None
     for attempt in range(3):
         try:
-            result = _get_ifind_call()("edb", "get_edb_data", {"query": query})
+            result = _get_ifind_call()("edb", "get_edb_data", {"query": query, "_cache_identity": {
+                "id": metadata["provider_id"], "frequency": metadata["frequency"],
+                "start": fetch_start.isoformat(), "end": end_date.isoformat()}})
             evidence = _archive(semantic_code, "response", result)
             data = _extract_ifind_payload(result)
             fresh = _parse_ifind_records(
@@ -458,7 +465,7 @@ def _fetch_ifind(
             if removed:
                 # Never delete on the strength of a single possibly truncated response.
                 confirmation = _get_ifind_call()("edb", "get_edb_data", {
-                    "query": f"{metadata['provider_id']} {query}"})
+                    "query": f"{metadata['provider_id']} {query}", "_cache_bypass": True})
                 _archive(semantic_code, "confirmation", confirmation)
                 confirmed = _parse_ifind_records(_extract_ifind_payload(confirmation),
                     metadata["provider_id"], fetch_start, end_date,

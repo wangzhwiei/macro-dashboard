@@ -90,7 +90,11 @@ def load_call(path: Path):
         spec.loader.exec_module(module)
     finally:
         os.chdir(previous)
-    return module.call
+    try:
+        from scripts.ifind_request_cache import wrap_ifind_call
+    except ModuleNotFoundError:
+        from ifind_request_cache import wrap_ifind_call
+    return wrap_ifind_call(module.call)
 
 
 def parse(response: dict[str, Any], expected_id: str) -> dict[str, Any]:

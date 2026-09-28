@@ -156,6 +156,11 @@ def main() -> int:
     finally:
         os.chdir(previous_cwd)
 
+    try:
+        from scripts.ifind_request_cache import wrap_ifind_call
+    except ModuleNotFoundError:
+        from ifind_request_cache import wrap_ifind_call
+    ifind_call = wrap_ifind_call(ifind_call)
     manifest = read_json(args.manifest)
     selected = [entry for entry in manifest["series"] if not args.only or entry["key"] in args.only]
     output = read_json(args.output) if args.merge_existing and args.output.exists() else {
@@ -200,7 +205,9 @@ def main() -> int:
             response = None
             for attempt in range(1, max(args.attempts, 1) + 1):
                 try:
-                    response = ifind_call("edb", "get_edb_data", {"query": request})
+                    response = ifind_call("edb", "get_edb_data", {"query": request, "_cache_identity": {
+                        "id": entry["providerId"], "frequency": entry.get("frequency"),
+                        "start": entry_start, "end": args.end}})
                     break
                 except Exception:
                     if attempt >= max(args.attempts, 1):

@@ -41,7 +41,7 @@ class IFindLoaderPathTests(unittest.TestCase):
             )
             for module, loader_name in modules:
                 loaded = getattr(module, loader_name)(skill / "call.py")
-                self.assertEqual(loaded(), {"ok": True})
+                self.assertEqual(loaded("health", "probe", {}), {"ok": True})
                 self.assertEqual(Path.cwd(), original)
 
     def test_resume_refreshes_live_and_uses_validated_series_only_as_fallback(self) -> None:

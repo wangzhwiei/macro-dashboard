@@ -13,11 +13,15 @@ from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+try:
+    from scripts.ifind_request_cache import quota_blocked, reset_generation
+except ModuleNotFoundError:
+    from ifind_request_cache import quota_blocked, reset_generation
 
 
 def artifact_checked_today(path: Path, day: date) -> bool:
     """Return true when a provider snapshot was already refreshed today."""
-    if not path.exists():
+    if os.environ.get("MACRO_FORCE_IFIND") == "1" or not path.exists():
         return False
     try:
         payload = json.loads(path.read_text(encoding="utf-8-sig"))
@@ -29,7 +33,12 @@ def artifact_checked_today(path: Path, day: date) -> bool:
 
 def run_step(label: str, command: list[str]) -> None:
     print(f"\n[{label}] {' '.join(command)}", flush=True)
-    subprocess.run(command, cwd=ROOT, check=True)
+    fetch = next((Path(x).name for x in command if Path(x).name.startswith('fetch_') and x.endswith('.py')), None)
+    if fetch and quota_blocked():
+        print(f"[SKIP] {fetch}: iFinD额度耗尽，保留原输入，不重复调用接口。", flush=True)
+        return
+    env = dict(os.environ, IFIND_CONSUMER=label)
+    subprocess.run(command, cwd=ROOT, check=True, env=env)
 
 
 def run_optional_step(label: str, command: list[str]) -> bool:
@@ -78,6 +87,8 @@ def run_incremental(args: argparse.Namespace) -> int:
                  "-s", "tests", "-p", "test_nanhua_identity.py"])
         run_step("provider quota regression guards", [python, "-m", "unittest", "discover",
                  "-s", "tests", "-p", "test_ifind_quota.py"])
+        run_step("shared request cache regression guards", [python, "-m", "unittest", "discover",
+                 "-s", "tests", "-p", "test_ifind_request_cache.py"])
         run_step("extend cached high-frequency dashboard series", update_command)
         if published_snapshot.exists():
             run_step(
@@ -116,7 +127,8 @@ def run_incremental(args: argparse.Namespace) -> int:
         ]
         if forecast_inputs.exists():
             fetch_command.append("--merge-existing")
-            fetch_command.append("--skip-checked-through")
+            if not getattr(args, 'force_ifind', False):
+                fetch_command.append("--skip-checked-through")
         run_step("merge recent CPI/PPI/PMI inputs", fetch_command)
 
         consensus_command = [python, "scripts/fetch_forecast_consensus.py"]
@@ -146,7 +158,7 @@ def run_incremental(args: argparse.Namespace) -> int:
                 "--end",
                 refresh_end.isoformat(),
                 "--merge-existing",
-                "--skip-checked-through",
+                *([] if getattr(args, 'force_ifind', False) else ["--skip-checked-through"]),
             ]
             run_step("refresh retail release-window inputs", retail_fetch)
             run_step("rerun frozen retail model", [python, "scripts/research_retail_forecast.py"])
@@ -221,6 +233,7 @@ def run_incremental(args: argparse.Namespace) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--force-ifind', action='store_true', help='手动清除请求缓存与额度暂停状态，再验证一次接口')
     parser.add_argument(
         "--adapter",
         choices=["mock", "http", "custom", "hybrid"],
@@ -263,6 +276,9 @@ def main() -> int:
         default=ROOT / "outputs" / "series-catalog.csv",
     )
     args = parser.parse_args()
+    if args.force_ifind:
+        reset_generation()
+        os.environ['MACRO_FORCE_IFIND'] = '1'
 
     if args.incremental:
         return run_incremental(args)
