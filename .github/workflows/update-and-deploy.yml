@@ -2,6 +2,16 @@ name: Update and deploy macro dashboard
 
 on:
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'refresh=增量取数后发布；publish_only=只发布仓库已有数据，不调用iFinD'
+        type: choice
+        options: [refresh, publish_only]
+        default: refresh
+      force_ifind:
+        description: '强制重新取数：额度恢复或需要重新核验时勾选，会增加调用量'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -74,13 +84,15 @@ jobs:
         run: npm ci --no-audit --no-fund
 
       - name: Verify internal iFinD runtime
+        if: inputs.mode != 'publish_only'
         shell: cmd
         run: wsl.exe -d Ubuntu -- bash -lc "test -f ~/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/call.py && test -s ~/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data/mcp_config.json && python3 -c 'import numpy, pandas, statsmodels'"
 
       - name: Refresh data and validate structural integrity
+        if: inputs.mode != 'publish_only'
         shell: cmd
         run: >-
-          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR=~/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data; export MACRO_DATA_CACHE_DIR=~/.cache/macro-dashboard/ifind-cache; mkdir -p ~/.cache/macro-dashboard/ifind-cache; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --incremental --data-only --allow-stale"
+          wsl.exe -d Ubuntu -- bash -lc "export PYTHONUTF8=1; export IFIND_SKILL_DIR=~/.openclaw/workspace/skills/ifind-finance-data/ifind-finance-data; export MACRO_DATA_CACHE_DIR=~/.cache/macro-dashboard/ifind-cache; mkdir -p ~/.cache/macro-dashboard/ifind-cache; unset IFIND_CACHE_ONLY; python3 scripts/run_pipeline.py --adapter hybrid --days 1310 --incremental --data-only --allow-stale ${{ inputs.force_ifind && '--force-ifind' || '' }}"
 
       - name: Build GitHub Pages site
         shell: cmd
@@ -90,6 +102,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Persist refreshed dashboard data
+        if: inputs.mode != 'publish_only'
         shell: powershell
         env:
           GH_TOKEN: ${{ github.token }}
