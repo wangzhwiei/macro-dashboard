@@ -130,6 +130,7 @@ def run_incremental(args: argparse.Namespace) -> int:
             if not getattr(args, 'force_ifind', False):
                 fetch_command.append("--skip-checked-through")
         run_step("merge recent CPI/PPI/PMI inputs", fetch_command)
+        run_step("synchronize fixed production factors", [python, "scripts/sync_production_inputs.py"])
 
         consensus_command = [python, "scripts/fetch_forecast_consensus.py"]
         if args.forecast_target_month:
@@ -330,6 +331,7 @@ def main() -> int:
         if forecast_inputs.exists():
             fetch_command.append("--merge-existing")
         run_step("增量刷新 CPI/PPI/PMI 固定 iFinD 输入", fetch_command)
+        run_step("同步工业与投资固定生产因子", [python, "scripts/sync_production_inputs.py"])
         consensus_command = [python, "scripts/fetch_forecast_consensus.py"]
         if args.forecast_target_month:
             consensus_command.extend(["--target-month", args.forecast_target_month])

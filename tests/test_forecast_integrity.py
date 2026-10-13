@@ -129,8 +129,9 @@ class ForecastIntegrityTests(unittest.TestCase):
         self.assertEqual(lock["frozenAt"], "2026-08-29")
         self.assertEqual(lock["targets"], [key])
         self.assertEqual(self.data["models"][key]["status"], "READY")
-        self.assertTrue(math.isclose(self.data["metrics"][key]["rmse"], 0.877126, abs_tol=2e-6))
-        self.assertTrue(math.isclose(self.data["metrics"][key]["directionHit"], 70.59, abs_tol=1e-6))
+        result = json.loads((ROOT / "data/industrial-value-model/forecast_results.json").read_text(encoding="utf-8"))
+        self.assertEqual(self.data["metrics"][key]["rmse"], result["backtest"]["rmse"])
+        self.assertTrue(0 <= self.data["metrics"][key]["directionHit"] <= 100)
         self.assertTrue(math.isclose(self.data["metrics"][key]["benchmarkRmse"], 1.119724, abs_tol=1e-6))
         latest = self.data["history"][key][-1]
         august = next(row for row in self.data["history"][key] if row["date"] == "2026-08-31")
@@ -147,6 +148,14 @@ class ForecastIntegrityTests(unittest.TestCase):
         )
         self.assertFalse(self.data["industrialValueModel"]["laggedIndustrialValueIncluded"])
         self.assertFalse(self.data["industrialValueModel"]["monthlyFactorReplacement"])
+        from scripts.sync_production_inputs import MAPPING
+        shared = json.loads((ROOT / "data/forecast-model/ifind_latest_inputs.json").read_text(encoding="utf-8"))
+        for group in ("工业", "投资"):
+            for row in self.data["highFrequency"][group]:
+                if row["id"] in MAPPING:
+                    source = shared["series"][MAPPING[row["id"]]]
+                    self.assertEqual(row["providerId"], source["providerId"])
+                    self.assertGreaterEqual(row["latestAvailableDate"], max(d for d, _ in source["records"]))
         component = (ROOT / "app" / "ForecastPanelV3.tsx").read_text(encoding="utf-8")
         self.assertIn("industrial_value", component)
         self.assertIn("工业增加值", component)

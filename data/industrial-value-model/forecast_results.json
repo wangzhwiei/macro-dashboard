@@ -10,7 +10,7 @@
   "asOf": "2026-10-12",
   "latest": {
     "date": "2026-09-30",
-    "model": 4.941453,
+    "model": 4.911308,
     "selectedFactors": [
       "known_fixed_volume_carry",
       "power_coal",
@@ -61,11 +61,15 @@
     ],
     "availableIndividualReportFactors": [
       "blast_furnace_level",
+      "rebar_rate_level",
       "crude_steel_level",
       "construction_steel_level",
       "power_coal_level",
       "pta_rate_level",
+      "methanol_rate_level",
       "polyester_rate_level",
+      "car_wholesale_level",
+      "car_retail_level",
       "full_tire_level",
       "semi_tire_level",
       "newhome_level",
@@ -74,12 +78,12 @@
       "car_retail_yoy_level"
     ],
     "knownFixedVolumeCarry": 4.236694,
-    "baseModel": 4.933723,
-    "uncalibratedModel": 4.415009,
-    "historicalErrorCorrection": 0.526444,
-    "reportResidualModel": 2.804355,
-    "reportOnlineWeight": 0.35761,
-    "individualResidualModel": 4.415009,
+    "baseModel": 4.929635,
+    "uncalibratedModel": 4.383508,
+    "historicalErrorCorrection": 0.5278,
+    "reportResidualModel": 3.8516,
+    "reportOnlineWeight": 0.419755,
+    "individualResidualModel": 4.383508,
     "individualOnlineWeight": 1.0,
     "consensus": null,
     "actual": null,
@@ -104,7 +108,7 @@
       "recentCorrelation": -0.227402,
       "stableAbsCorrelation": 0.0,
       "observations": 62,
-      "latestSignal": 2.9875
+      "latestSignal": 2.433
     },
     {
       "name": "methanol_rate",
@@ -252,29 +256,29 @@
     "consensusIncluded": false
   },
   "backtest": {
-    "rmse": 0.877124,
-    "mae": 0.723011,
-    "bias": 0.032842,
+    "rmse": 0.878472,
+    "mae": 0.724818,
+    "bias": 0.031035,
     "directionHitPct": 71.79,
     "turningPointHitPct": 79.17,
     "turningPoints": 24,
-    "actualCorrelation": 0.67322,
-    "lagCorrelation": 0.655603,
-    "lagCorrelationGap": -0.017617,
+    "actualCorrelation": 0.672715,
+    "lagCorrelation": 0.656003,
+    "lagCorrelationGap": -0.016712,
     "observations": 39,
     "sampleStart": "2023-03-31",
     "sampleEnd": "2026-08-31"
   },
   "preCalibrationBacktest": {
-    "rmse": 0.861711,
-    "mae": 0.727841,
-    "bias": -0.334353,
-    "directionHitPct": 74.36,
-    "turningPointHitPct": 79.17,
+    "rmse": 0.863237,
+    "mae": 0.729648,
+    "bias": -0.33616,
+    "directionHitPct": 71.79,
+    "turningPointHitPct": 75.0,
     "turningPoints": 24,
-    "actualCorrelation": 0.683319,
-    "lagCorrelation": 0.659199,
-    "lagCorrelationGap": -0.02412,
+    "actualCorrelation": 0.682965,
+    "lagCorrelation": 0.659868,
+    "lagCorrelationGap": -0.023097,
     "observations": 39,
     "sampleStart": "2023-03-31",
     "sampleEnd": "2026-08-31"
@@ -318,18 +322,18 @@
     ]
   },
   "volatilityBacktest": {
-    "levelStdRatio": 1.197494,
-    "changeStdRatio": 0.696438,
-    "changeCorrelation": 0.497253,
+    "levelStdRatio": 1.198871,
+    "changeStdRatio": 0.697249,
+    "changeCorrelation": 0.495226,
     "changeDirectionHitPct": 60.53,
     "sharpChangeThresholdPctPoint": 1.0,
     "sharpChangeObservations": 14,
     "sharpMedianAmplitudeCapture": 0.30713
   },
   "preCalibrationVolatilityBacktest": {
-    "levelStdRatio": 1.059479,
-    "changeStdRatio": 0.734135,
-    "changeCorrelation": 0.463711,
+    "levelStdRatio": 1.0605,
+    "changeStdRatio": 0.734612,
+    "changeCorrelation": 0.462035,
     "changeDirectionHitPct": 47.37,
     "sharpChangeThresholdPctPoint": 1.0,
     "sharpChangeObservations": 14,
@@ -3588,7 +3592,7 @@
     },
     {
       "date": "2026-08-31",
-      "model": 4.580619,
+      "model": 4.510133,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3657,11 +3661,11 @@
       ],
       "knownFixedVolumeCarry": 4.319636,
       "baseModel": 4.88637,
-      "uncalibratedModel": 4.506706,
+      "uncalibratedModel": 4.43622,
       "historicalErrorCorrection": 0.073913,
-      "reportResidualModel": 2.074598,
+      "reportResidualModel": 4.028615,
       "reportOnlineWeight": 0.431223,
-      "individualResidualModel": 4.506706,
+      "individualResidualModel": 4.43622,
       "individualOnlineWeight": 1.0,
       "consensus": null,
       "actual": 5.2,
@@ -3669,7 +3673,7 @@
     },
     {
       "date": "2026-09-30",
-      "model": 4.941453,
+      "model": 4.911308,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3720,11 +3724,15 @@
       ],
       "availableIndividualReportFactors": [
         "blast_furnace_level",
+        "rebar_rate_level",
         "crude_steel_level",
         "construction_steel_level",
         "power_coal_level",
         "pta_rate_level",
+        "methanol_rate_level",
         "polyester_rate_level",
+        "car_wholesale_level",
+        "car_retail_level",
         "full_tire_level",
         "semi_tire_level",
         "newhome_level",
@@ -3733,12 +3741,12 @@
         "car_retail_yoy_level"
       ],
       "knownFixedVolumeCarry": 4.236694,
-      "baseModel": 4.933723,
-      "uncalibratedModel": 4.415009,
-      "historicalErrorCorrection": 0.526444,
-      "reportResidualModel": 2.804355,
-      "reportOnlineWeight": 0.35761,
-      "individualResidualModel": 4.415009,
+      "baseModel": 4.929635,
+      "uncalibratedModel": 4.383508,
+      "historicalErrorCorrection": 0.5278,
+      "reportResidualModel": 3.8516,
+      "reportOnlineWeight": 0.419755,
+      "individualResidualModel": 4.383508,
       "individualOnlineWeight": 1.0,
       "consensus": null,
       "actual": null,
@@ -4173,7 +4181,7 @@
       "providerId": "S005653695",
       "start": "2020-01-03",
       "end": "2026-10-09",
-      "observations": 358
+      "observations": 360
     },
     "rebar_rate": {
       "family": "black",
@@ -4181,8 +4189,8 @@
       "role": "diffusion",
       "providerId": "S005580571",
       "start": "2020-01-03",
-      "end": "2026-08-21",
-      "observations": 345
+      "end": "2026-10-09",
+      "observations": 352
     },
     "crude_steel": {
       "family": "black",
@@ -4226,8 +4234,8 @@
       "role": "diffusion",
       "providerId": "S005439668",
       "start": "2020-01-03",
-      "end": "2026-08-21",
-      "observations": 340
+      "end": "2026-10-09",
+      "observations": 347
     },
     "polyester_rate": {
       "family": "chemical",
@@ -4244,8 +4252,8 @@
       "role": "diffusion",
       "providerId": "S023782827",
       "start": "2020-01-12",
-      "end": "2026-08-16",
-      "observations": 343
+      "end": "2026-09-30",
+      "observations": 350
     },
     "car_retail": {
       "family": "auto",
@@ -4253,8 +4261,8 @@
       "role": "diffusion",
       "providerId": "S023782829",
       "start": "2020-01-12",
-      "end": "2026-08-16",
-      "observations": 344
+      "end": "2026-09-30",
+      "observations": 351
     },
     "broad_car_output_yoy": {
       "family": "auto",
