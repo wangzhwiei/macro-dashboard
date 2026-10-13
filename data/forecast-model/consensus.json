@@ -1,7 +1,7 @@
 {
   "_meta": {
     "source": "iFinD EDB",
-    "retrievedAt": "2026-09-28T09:30:16.436029+08:00",
+    "retrievedAt": "2026-10-13T09:23:12.925061+08:00",
     "usage": "personal research",
     "field": "iFinD 预测平均值",
     "queryMode": "Chinese name discovery + fixed provider ID validation",
@@ -11,11 +11,7 @@
       "pmi": "M005779145"
     },
     "pmiMissingPolicy": "internal missing months use previous month value",
-    "warnings": {
-      "cpi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_cpi_yoy iFinD查询失败：consensus_cpi_yoy 固定 ID M005682252 未唯一命中；候选=[]",
-      "ppi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_ppi_yoy iFinD查询失败：consensus_ppi_yoy 固定 ID M005682253 未唯一命中；候选=[]",
-      "pmi": "本次查询未通过固定ID校验，保留上一版已验证数据：consensus_pmi iFinD查询失败：consensus_pmi 固定 ID M005779145 未唯一命中；候选=[]"
-    }
+    "warnings": {}
   },
   "cpi": [
     {
@@ -764,6 +760,17 @@
       "frequency": "M",
       "unit": "%",
       "retrievedAt": "2026-09-08T13:01:41.683095+08:00",
+      "imputed": false
+    },
+    {
+      "date": "2026-09-30",
+      "value": 1.10375,
+      "source": "iFinD EDB",
+      "queryName": "预测平均值:CPI:当月同比",
+      "providerId": "M005682252",
+      "frequency": "M",
+      "unit": "%",
+      "retrievedAt": "2026-10-13T09:23:12.925061+08:00",
       "imputed": false
     }
   ],
@@ -1514,6 +1521,17 @@
       "frequency": "M",
       "unit": "%",
       "retrievedAt": "2026-09-02T11:42:44.140908+08:00",
+      "imputed": false
+    },
+    {
+      "date": "2026-09-30",
+      "value": 3.942,
+      "source": "iFinD EDB",
+      "queryName": "预测平均值:PPI:当月同比",
+      "providerId": "M005682253",
+      "frequency": "M",
+      "unit": "%",
+      "retrievedAt": "2026-10-13T09:23:12.925061+08:00",
       "imputed": false
     }
   ],

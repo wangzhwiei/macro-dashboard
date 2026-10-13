@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T08:59:33.817875+08:00",
+  "generatedAt": "2026-10-13T09:24:47.593611+08:00",
   "modelVersion": "retail-long-history-scope-ranked-v6-research",
   "target": {
     "providerId": "M001625520",
@@ -365,7 +365,7 @@
       "observations": 36,
       "sampleStart": "2023-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.8436,
+      "pearson": 0.8437,
       "spearman": 0.8211
     },
     {
@@ -388,8 +388,8 @@
       "providerId": "S004110574",
       "source": "iFinD",
       "transform": "日值月度求和后计算12个月同比",
-      "sourceAsOf": "2026-09-23",
-      "latestCompleteMonth": "2026-08-31",
+      "sourceAsOf": "2026-10-12",
+      "latestCompleteMonth": "2026-09-30",
       "currentMonthStatus": "partial",
       "observations": 56,
       "sampleStart": "2021-03",
@@ -422,7 +422,7 @@
       "observations": 170,
       "sampleStart": "2010-01",
       "sampleEnd": "2026-08",
-      "pearson": 0.6646,
+      "pearson": 0.6647,
       "spearman": 0.6524
     },
     {
@@ -436,7 +436,7 @@
       "observations": 146,
       "sampleStart": "2012-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.6308,
+      "pearson": 0.6309,
       "spearman": 0.6432
     },
     {
@@ -450,7 +450,7 @@
       "observations": 93,
       "sampleStart": "2017-06",
       "sampleEnd": "2026-08",
-      "pearson": 0.6206,
+      "pearson": 0.6207,
       "spearman": 0.6522
     },
     {
@@ -474,9 +474,9 @@
       "providerId": "S023782829",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 88,
       "sampleStart": "2017-11",
       "sampleEnd": "2026-08",
@@ -535,7 +535,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.4801,
+      "pearson": -0.48,
       "spearman": -0.5014
     },
     {
@@ -562,7 +562,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.4456,
+      "pearson": -0.4457,
       "spearman": -0.4185
     },
     {
@@ -572,9 +572,9 @@
       "providerId": "S023782827",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 88,
       "sampleStart": "2017-11",
       "sampleEnd": "2026-08",
@@ -634,7 +634,7 @@
       "observations": 170,
       "sampleStart": "2010-01",
       "sampleEnd": "2026-08",
-      "pearson": 0.3128,
+      "pearson": 0.3127,
       "spearman": 0.2624
     },
     {
@@ -645,11 +645,11 @@
       "source": "iFinD",
       "transform": "当月官方消费品分项；社零发布前已公布",
       "releaseTiming": "available_before_retail_release",
-      "observations": 169,
+      "observations": 170,
       "sampleStart": "2010-01",
-      "sampleEnd": "2026-07",
-      "pearson": 0.2615,
-      "spearman": 0.3464
+      "sampleEnd": "2026-08",
+      "pearson": 0.2649,
+      "spearman": 0.3494
     },
     {
       "key": "flights_yoy",
@@ -661,7 +661,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.244,
+      "pearson": 0.2438,
       "spearman": 0.1831
     },
     {
@@ -702,7 +702,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.1701,
+      "pearson": -0.169,
       "spearman": -0.1739
     },
     {
@@ -712,8 +712,8 @@
       "providerId": "S000054121",
       "source": "iFinD",
       "transform": "日值月度求和后计算12个月同比",
-      "sourceAsOf": "2026-09-26",
-      "latestCompleteMonth": "2026-08-31",
+      "sourceAsOf": "2026-10-12",
+      "latestCompleteMonth": "2026-09-30",
       "currentMonthStatus": "partial",
       "observations": 56,
       "sampleStart": "2021-03",
@@ -842,9 +842,9 @@
       "providerId": "S023782829",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 22,
       "sampleStart": "2017-11",
       "sampleEnd": "2019-12",
@@ -914,9 +914,9 @@
       "providerId": "S023782827",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 22,
       "sampleStart": "2017-11",
       "sampleEnd": "2019-12",
@@ -1002,9 +1002,9 @@
       "providerId": "S023782829",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 21,
       "sampleStart": "2017-12",
       "sampleEnd": "2019-12",
@@ -1074,9 +1074,9 @@
       "providerId": "S023782827",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 21,
       "sampleStart": "2017-12",
       "sampleEnd": "2019-12",
@@ -1439,7 +1439,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.8871,
+      "pearson": 0.8872,
       "spearman": 0.8747
     },
     {
@@ -1449,13 +1449,13 @@
       "providerId": "S023782829",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.8869,
+      "pearson": 0.8871,
       "spearman": 0.884
     },
     {
@@ -1469,7 +1469,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.812,
+      "pearson": -0.8118,
       "spearman": -0.8214
     },
     {
@@ -1483,7 +1483,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.7964,
+      "pearson": -0.796,
       "spearman": -0.8197
     },
     {
@@ -1496,7 +1496,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.7879,
+      "pearson": 0.788,
       "spearman": 0.8311
     },
     {
@@ -1506,13 +1506,13 @@
       "providerId": "S023782827",
       "source": "iFinD",
       "transform": "月末值计算12个月同比",
-      "sourceAsOf": "2026-09-20",
-      "latestCompleteMonth": "2026-08-31",
-      "currentMonthStatus": "partial",
+      "sourceAsOf": "2026-09-30",
+      "latestCompleteMonth": "2026-09-30",
+      "currentMonthStatus": "complete",
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.759,
+      "pearson": 0.7587,
       "spearman": 0.7423
     },
     {
@@ -1523,11 +1523,11 @@
       "source": "iFinD",
       "transform": "当月官方消费品分项；社零发布前已公布",
       "releaseTiming": "available_before_retail_release",
-      "observations": 25,
+      "observations": 26,
       "sampleStart": "2024-03",
-      "sampleEnd": "2026-07",
-      "pearson": -0.7295,
-      "spearman": -0.7473
+      "sampleEnd": "2026-08",
+      "pearson": -0.7383,
+      "spearman": -0.7686
     },
     {
       "key": "cpi_services_detail_yoy",
@@ -1540,7 +1540,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.6695,
+      "pearson": -0.6693,
       "spearman": -0.6827
     },
     {
@@ -1554,7 +1554,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.6601,
+      "pearson": -0.661,
       "spearman": -0.6731
     },
     {
@@ -1568,7 +1568,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.5172,
+      "pearson": -0.5173,
       "spearman": -0.4079
     },
     {
@@ -1581,7 +1581,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.4801,
+      "pearson": -0.48,
       "spearman": -0.5014
     },
     {
@@ -1594,7 +1594,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.4456,
+      "pearson": -0.4457,
       "spearman": -0.4185
     },
     {
@@ -1608,7 +1608,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.422,
+      "pearson": 0.4224,
       "spearman": 0.4131
     },
     {
@@ -1622,7 +1622,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.4025,
+      "pearson": 0.4028,
       "spearman": 0.4762
     },
     {
@@ -1650,7 +1650,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.3969,
+      "pearson": 0.3975,
       "spearman": 0.5538
     },
     {
@@ -1660,8 +1660,8 @@
       "providerId": "S000054121",
       "source": "iFinD",
       "transform": "日值月度求和后计算12个月同比",
-      "sourceAsOf": "2026-09-26",
-      "latestCompleteMonth": "2026-08-31",
+      "sourceAsOf": "2026-10-12",
+      "latestCompleteMonth": "2026-09-30",
       "currentMonthStatus": "partial",
       "observations": 26,
       "sampleStart": "2024-03",
@@ -1680,7 +1680,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.3211,
+      "pearson": 0.3217,
       "spearman": 0.3331
     },
     {
@@ -1694,7 +1694,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.3021,
+      "pearson": 0.3026,
       "spearman": 0.3333
     },
     {
@@ -1707,7 +1707,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.244,
+      "pearson": 0.2438,
       "spearman": 0.1831
     },
     {
@@ -1720,7 +1720,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.1701,
+      "pearson": -0.169,
       "spearman": -0.1739
     },
     {
@@ -1734,7 +1734,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.1302,
+      "pearson": 0.1308,
       "spearman": 0.1277
     },
     {
@@ -1748,7 +1748,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.0997,
+      "pearson": 0.0998,
       "spearman": 0.086
     },
     {
@@ -1762,7 +1762,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": -0.0948,
+      "pearson": -0.0941,
       "spearman": -0.0855
     },
     {
@@ -1772,13 +1772,13 @@
       "providerId": "S004110574",
       "source": "iFinD",
       "transform": "日值月度求和后计算12个月同比",
-      "sourceAsOf": "2026-09-23",
-      "latestCompleteMonth": "2026-08-31",
+      "sourceAsOf": "2026-10-12",
+      "latestCompleteMonth": "2026-09-30",
       "currentMonthStatus": "partial",
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.0933,
+      "pearson": 0.0929,
       "spearman": 0.063
     },
     {
@@ -1792,7 +1792,7 @@
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08",
-      "pearson": 0.0263,
+      "pearson": 0.0271,
       "spearman": 0.0104
     }
   ],
@@ -1806,8 +1806,8 @@
       "sampleEnd": "2026-08"
     },
     "seasonalNaive": {
-      "rmse": 10.7941,
-      "mae": 7.7636,
+      "rmse": 10.7943,
+      "mae": 7.7639,
       "directionHitPct": 61.54,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -1815,7 +1815,7 @@
     },
     "seasonalBackbone": {
       "rmse": 9.596,
-      "mae": 5.2288,
+      "mae": 5.229,
       "directionHitPct": 56.92,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -1823,7 +1823,7 @@
     },
     "seasonalBias": {
       "rmse": 9.6943,
-      "mae": 5.3219,
+      "mae": 5.3222,
       "directionHitPct": 55.38,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -1831,39 +1831,39 @@
     },
     "directCarArx": {
       "rmse": 8.3845,
-      "mae": 4.0229,
+      "mae": 4.0223,
       "directionHitPct": 63.08,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "directCarHomeArx": {
-      "rmse": 2.5565,
-      "mae": 1.8357,
+      "rmse": 2.5566,
+      "mae": 1.8361,
       "directionHitPct": 72.97,
       "observations": 38,
       "sampleStart": "2022-11",
       "sampleEnd": "2026-08"
     },
     "directMacroArx": {
-      "rmse": 8.1868,
-      "mae": 3.65,
+      "rmse": 8.1867,
+      "mae": 3.6495,
       "directionHitPct": 69.23,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "directSelectedMacroArx": {
-      "rmse": 2.5871,
-      "mae": 1.8418,
+      "rmse": 2.587,
+      "mae": 1.8411,
       "directionHitPct": 67.57,
       "observations": 38,
       "sampleStart": "2022-11",
       "sampleEnd": "2026-08"
     },
     "directConsumptionDetailArx": {
-      "rmse": 2.4381,
-      "mae": 1.7197,
+      "rmse": 2.4382,
+      "mae": 1.7202,
       "directionHitPct": 64.86,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1871,7 +1871,7 @@
     },
     "directConsumptionSelectedArx": {
       "rmse": 2.5762,
-      "mae": 1.6505,
+      "mae": 1.6498,
       "directionHitPct": 81.08,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1879,15 +1879,15 @@
     },
     "directIncServiceExpectations": {
       "rmse": 2.3992,
-      "mae": 1.6145,
+      "mae": 1.615,
       "directionHitPct": 78.38,
       "observations": 38,
       "sampleStart": "2022-11",
       "sampleEnd": "2026-08"
     },
     "directIncServiceNewOrders": {
-      "rmse": 2.4913,
-      "mae": 1.6994,
+      "rmse": 2.4914,
+      "mae": 1.6998,
       "directionHitPct": 70.27,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1895,7 +1895,7 @@
     },
     "directIncNonmanufacturingNewOrders": {
       "rmse": 2.4395,
-      "mae": 1.6353,
+      "mae": 1.6345,
       "directionHitPct": 75.68,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1903,7 +1903,7 @@
     },
     "directIncNonmanufacturingBusiness": {
       "rmse": 2.4412,
-      "mae": 1.6443,
+      "mae": 1.6448,
       "directionHitPct": 72.97,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1911,15 +1911,15 @@
     },
     "directIncServicesBusiness": {
       "rmse": 2.4656,
-      "mae": 1.7402,
+      "mae": 1.7407,
       "directionHitPct": 67.57,
       "observations": 38,
       "sampleStart": "2022-11",
       "sampleEnd": "2026-08"
     },
     "directIncCpiNonfood": {
-      "rmse": 2.6033,
-      "mae": 1.8637,
+      "rmse": 2.6034,
+      "mae": 1.8641,
       "directionHitPct": 70.27,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1927,7 +1927,7 @@
     },
     "directIncTop2Service": {
       "rmse": 2.5,
-      "mae": 1.5738,
+      "mae": 1.5743,
       "directionHitPct": 75.68,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1935,7 +1935,7 @@
     },
     "directIncTop3Service": {
       "rmse": 2.5505,
-      "mae": 1.6055,
+      "mae": 1.605,
       "directionHitPct": 75.68,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1943,7 +1943,7 @@
     },
     "directIncTop4Service": {
       "rmse": 2.59,
-      "mae": 1.6395,
+      "mae": 1.6388,
       "directionHitPct": 75.68,
       "observations": 38,
       "sampleStart": "2022-11",
@@ -1951,23 +1951,23 @@
     },
     "directRankedTop1": {
       "rmse": 7.0519,
-      "mae": 3.5793,
+      "mae": 3.5795,
       "directionHitPct": 55.38,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop2": {
-      "rmse": 6.6864,
-      "mae": 2.9513,
+      "rmse": 6.6865,
+      "mae": 2.9514,
       "directionHitPct": 67.69,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop3": {
-      "rmse": 6.9188,
-      "mae": 3.1442,
+      "rmse": 6.9187,
+      "mae": 3.144,
       "directionHitPct": 78.46,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -1975,7 +1975,7 @@
     },
     "directRankedTop4": {
       "rmse": 6.4054,
-      "mae": 3.1596,
+      "mae": 3.1593,
       "directionHitPct": 78.46,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -1983,7 +1983,7 @@
     },
     "directRankedTop5": {
       "rmse": 6.4001,
-      "mae": 3.0555,
+      "mae": 3.0552,
       "directionHitPct": 83.08,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -1991,7 +1991,7 @@
     },
     "directRankedTop6": {
       "rmse": 6.4219,
-      "mae": 3.1002,
+      "mae": 3.0999,
       "directionHitPct": 80.0,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2015,7 +2015,7 @@
     },
     "anchorMacroBridge": {
       "rmse": 5.8851,
-      "mae": 3.1207,
+      "mae": 3.12,
       "directionHitPct": 73.85,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2031,14 +2031,14 @@
     },
     "anchorSelectedMacroBridge": {
       "rmse": 3.2248,
-      "mae": 2.0905,
+      "mae": 2.0892,
       "directionHitPct": 66.67,
       "observations": 37,
       "sampleStart": "2022-12",
       "sampleEnd": "2026-08"
     },
     "anchorConsumptionDetailBridge": {
-      "rmse": 3.1271,
+      "rmse": 3.127,
       "mae": 2.0437,
       "directionHitPct": 63.89,
       "observations": 37,
@@ -2046,7 +2046,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorConsumptionSelectedBridge": {
-      "rmse": 3.1507,
+      "rmse": 3.1506,
       "mae": 2.0834,
       "directionHitPct": 61.11,
       "observations": 37,
@@ -2062,7 +2062,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncServiceNewOrders": {
-      "rmse": 3.087,
+      "rmse": 3.0869,
       "mae": 2.0142,
       "directionHitPct": 63.89,
       "observations": 37,
@@ -2070,7 +2070,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncNonmanufacturingNewOrders": {
-      "rmse": 3.0807,
+      "rmse": 3.0805,
       "mae": 2.0237,
       "directionHitPct": 63.89,
       "observations": 37,
@@ -2078,7 +2078,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncNonmanufacturingBusiness": {
-      "rmse": 3.1142,
+      "rmse": 3.1141,
       "mae": 2.0444,
       "directionHitPct": 61.11,
       "observations": 37,
@@ -2094,8 +2094,8 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncCpiNonfood": {
-      "rmse": 3.1799,
-      "mae": 2.0419,
+      "rmse": 3.1801,
+      "mae": 2.0432,
       "directionHitPct": 69.44,
       "observations": 37,
       "sampleStart": "2022-12",
@@ -2110,7 +2110,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncTop3Service": {
-      "rmse": 3.1192,
+      "rmse": 3.1191,
       "mae": 2.0605,
       "directionHitPct": 61.11,
       "observations": 37,
@@ -2118,7 +2118,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncTop4Service": {
-      "rmse": 3.1637,
+      "rmse": 3.1636,
       "mae": 2.0867,
       "directionHitPct": 61.11,
       "observations": 37,
@@ -2134,7 +2134,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop2": {
-      "rmse": 6.1068,
+      "rmse": 6.1067,
       "mae": 3.3819,
       "directionHitPct": 60.0,
       "observations": 66,
@@ -2142,24 +2142,24 @@
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop3": {
-      "rmse": 5.637,
-      "mae": 2.9996,
+      "rmse": 5.6369,
+      "mae": 2.9989,
       "directionHitPct": 73.85,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop4": {
-      "rmse": 5.6786,
-      "mae": 3.0526,
+      "rmse": 5.6785,
+      "mae": 3.0518,
       "directionHitPct": 67.69,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop5": {
-      "rmse": 5.6722,
-      "mae": 3.0374,
+      "rmse": 5.6721,
+      "mae": 3.0367,
       "directionHitPct": 70.77,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2167,7 +2167,7 @@
     },
     "anchorRankedTop6": {
       "rmse": 5.6698,
-      "mae": 3.0353,
+      "mae": 3.0346,
       "directionHitPct": 72.31,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2182,8 +2182,8 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedMacroBridge": {
-      "rmse": 7.9133,
-      "mae": 3.1095,
+      "rmse": 7.9132,
+      "mae": 3.1088,
       "directionHitPct": 76.92,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2199,30 +2199,30 @@
     },
     "seasonalGatedFullMacroBridge": {
       "rmse": 8.4665,
-      "mae": 2.8773,
+      "mae": 2.8772,
       "directionHitPct": 76.09,
       "observations": 47,
       "sampleStart": "2021-03",
       "sampleEnd": "2026-08"
     },
     "seasonalHf": {
-      "rmse": 9.4447,
-      "mae": 4.9748,
+      "rmse": 9.4448,
+      "mae": 4.975,
       "directionHitPct": 58.46,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedSelectedMacroBridge": {
-      "rmse": 2.3201,
-      "mae": 1.4876,
+      "rmse": 2.32,
+      "mae": 1.4864,
       "directionHitPct": 75.0,
       "observations": 37,
       "sampleStart": "2022-12",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedConsumptionDetailBridge": {
-      "rmse": 2.296,
+      "rmse": 2.2959,
       "mae": 1.4843,
       "directionHitPct": 75.0,
       "observations": 37,
@@ -2230,7 +2230,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedConsumptionSelectedBridge": {
-      "rmse": 2.629,
+      "rmse": 2.6289,
       "mae": 1.699,
       "directionHitPct": 63.89,
       "observations": 37,
@@ -2246,7 +2246,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncServiceNewOrders": {
-      "rmse": 2.406,
+      "rmse": 2.4059,
       "mae": 1.6027,
       "directionHitPct": 69.44,
       "observations": 37,
@@ -2254,7 +2254,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncNonmanufacturingNewOrders": {
-      "rmse": 2.3692,
+      "rmse": 2.369,
       "mae": 1.6001,
       "directionHitPct": 69.44,
       "observations": 37,
@@ -2270,16 +2270,16 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncServicesBusiness": {
-      "rmse": 2.3588,
-      "mae": 1.6014,
+      "rmse": 2.3587,
+      "mae": 1.6013,
       "directionHitPct": 66.67,
       "observations": 37,
       "sampleStart": "2022-12",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncCpiNonfood": {
-      "rmse": 1.9342,
-      "mae": 1.4629,
+      "rmse": 1.9344,
+      "mae": 1.4642,
       "directionHitPct": 72.22,
       "observations": 37,
       "sampleStart": "2022-12",
@@ -2294,7 +2294,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncTop3Service": {
-      "rmse": 2.6177,
+      "rmse": 2.6175,
       "mae": 1.6869,
       "directionHitPct": 63.89,
       "observations": 37,
@@ -2302,7 +2302,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncTop4Service": {
-      "rmse": 2.6874,
+      "rmse": 2.6873,
       "mae": 1.7202,
       "directionHitPct": 63.89,
       "observations": 37,
@@ -2318,7 +2318,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop2": {
-      "rmse": 6.8683,
+      "rmse": 6.8682,
       "mae": 3.2409,
       "directionHitPct": 63.08,
       "observations": 66,
@@ -2327,23 +2327,23 @@
     },
     "seasonalGatedRankedTop3": {
       "rmse": 6.2786,
-      "mae": 2.9037,
+      "mae": 2.903,
       "directionHitPct": 72.31,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop4": {
-      "rmse": 5.5398,
-      "mae": 2.8708,
+      "rmse": 5.5397,
+      "mae": 2.87,
       "directionHitPct": 66.15,
       "observations": 66,
       "sampleStart": "2020-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop5": {
-      "rmse": 5.4316,
-      "mae": 2.8815,
+      "rmse": 5.4315,
+      "mae": 2.8808,
       "directionHitPct": 69.23,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2351,7 +2351,7 @@
     },
     "seasonalGatedRankedTop6": {
       "rmse": 5.6008,
-      "mae": 2.8656,
+      "mae": 2.8649,
       "directionHitPct": 70.77,
       "observations": 66,
       "sampleStart": "2020-03",
@@ -2360,7 +2360,7 @@
   },
   "stablePeriodMetrics": {
     "previousMonth": {
-      "rmse": 1.4214,
+      "rmse": 1.4215,
       "mae": 1.1462,
       "directionHitPct": 0.0,
       "observations": 26,
@@ -2368,64 +2368,64 @@
       "sampleEnd": "2026-08"
     },
     "seasonalNaive": {
-      "rmse": 5.2794,
-      "mae": 3.8798,
+      "rmse": 5.2804,
+      "mae": 3.8808,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalBackbone": {
-      "rmse": 2.709,
-      "mae": 2.0047,
+      "rmse": 2.7093,
+      "mae": 2.0053,
       "directionHitPct": 48.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalBias": {
-      "rmse": 2.7925,
-      "mae": 2.0217,
+      "rmse": 2.7927,
+      "mae": 2.0223,
       "directionHitPct": 48.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directCarArx": {
-      "rmse": 1.8751,
-      "mae": 1.5213,
+      "rmse": 1.875,
+      "mae": 1.5199,
       "directionHitPct": 48.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directCarHomeArx": {
-      "rmse": 1.9417,
-      "mae": 1.3791,
+      "rmse": 1.9419,
+      "mae": 1.3798,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directMacroArx": {
-      "rmse": 2.5152,
-      "mae": 1.837,
+      "rmse": 2.5141,
+      "mae": 1.8358,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directSelectedMacroArx": {
-      "rmse": 2.2126,
-      "mae": 1.7147,
+      "rmse": 2.2124,
+      "mae": 1.7136,
       "directionHitPct": 60.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directConsumptionDetailArx": {
-      "rmse": 1.8827,
-      "mae": 1.4917,
+      "rmse": 1.8829,
+      "mae": 1.4924,
       "directionHitPct": 52.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2433,31 +2433,31 @@
     },
     "directConsumptionSelectedArx": {
       "rmse": 1.6283,
-      "mae": 1.1355,
+      "mae": 1.1344,
       "directionHitPct": 84.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directIncServiceExpectations": {
-      "rmse": 1.7279,
-      "mae": 1.225,
+      "rmse": 1.728,
+      "mae": 1.2258,
       "directionHitPct": 80.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directIncServiceNewOrders": {
-      "rmse": 1.6105,
-      "mae": 1.2007,
+      "rmse": 1.6106,
+      "mae": 1.2014,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directIncNonmanufacturingNewOrders": {
-      "rmse": 1.6007,
-      "mae": 1.1339,
+      "rmse": 1.6006,
+      "mae": 1.1327,
       "directionHitPct": 76.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2465,23 +2465,23 @@
     },
     "directIncNonmanufacturingBusiness": {
       "rmse": 1.6611,
-      "mae": 1.1933,
+      "mae": 1.194,
       "directionHitPct": 72.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directIncServicesBusiness": {
-      "rmse": 1.7933,
-      "mae": 1.3553,
+      "rmse": 1.7935,
+      "mae": 1.356,
       "directionHitPct": 64.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directIncCpiNonfood": {
-      "rmse": 1.9686,
-      "mae": 1.3832,
+      "rmse": 1.9687,
+      "mae": 1.3839,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2489,7 +2489,7 @@
     },
     "directIncTop2Service": {
       "rmse": 1.5804,
-      "mae": 1.1053,
+      "mae": 1.1061,
       "directionHitPct": 76.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2497,7 +2497,7 @@
     },
     "directIncTop3Service": {
       "rmse": 1.5607,
-      "mae": 1.099,
+      "mae": 1.0983,
       "directionHitPct": 76.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2505,55 +2505,55 @@
     },
     "directIncTop4Service": {
       "rmse": 1.552,
-      "mae": 1.0939,
+      "mae": 1.0929,
       "directionHitPct": 76.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop1": {
-      "rmse": 1.772,
-      "mae": 1.5544,
+      "rmse": 1.7723,
+      "mae": 1.5548,
       "directionHitPct": 44.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop2": {
-      "rmse": 1.4782,
-      "mae": 1.1991,
+      "rmse": 1.4784,
+      "mae": 1.1996,
       "directionHitPct": 60.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop3": {
-      "rmse": 1.5035,
-      "mae": 1.114,
+      "rmse": 1.5029,
+      "mae": 1.1134,
       "directionHitPct": 76.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop4": {
-      "rmse": 1.6187,
-      "mae": 1.1558,
+      "rmse": 1.6181,
+      "mae": 1.1551,
       "directionHitPct": 80.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop5": {
-      "rmse": 1.4088,
-      "mae": 1.0217,
+      "rmse": 1.4082,
+      "mae": 1.0211,
       "directionHitPct": 76.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "directRankedTop6": {
-      "rmse": 1.4076,
-      "mae": 1.0179,
+      "rmse": 1.407,
+      "mae": 1.0172,
       "directionHitPct": 72.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2561,7 +2561,7 @@
     },
     "anchorCarBridge": {
       "rmse": 1.5492,
-      "mae": 1.0058,
+      "mae": 1.0059,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2576,15 +2576,15 @@
       "sampleEnd": "2026-08"
     },
     "anchorMacroBridge": {
-      "rmse": 1.5894,
-      "mae": 1.0149,
+      "rmse": 1.589,
+      "mae": 1.0131,
       "directionHitPct": 80.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorFullMacroBridge": {
-      "rmse": 1.4439,
+      "rmse": 1.444,
       "mae": 1.1017,
       "directionHitPct": 64.0,
       "observations": 26,
@@ -2592,15 +2592,15 @@
       "sampleEnd": "2026-08"
     },
     "anchorSelectedMacroBridge": {
-      "rmse": 1.4681,
-      "mae": 1.13,
+      "rmse": 1.4678,
+      "mae": 1.1281,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorConsumptionDetailBridge": {
-      "rmse": 1.4277,
+      "rmse": 1.4274,
       "mae": 1.0874,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2608,7 +2608,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorConsumptionSelectedBridge": {
-      "rmse": 1.4504,
+      "rmse": 1.4501,
       "mae": 1.1221,
       "directionHitPct": 60.0,
       "observations": 26,
@@ -2624,7 +2624,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncServiceNewOrders": {
-      "rmse": 1.3806,
+      "rmse": 1.3803,
       "mae": 1.0642,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2632,7 +2632,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncNonmanufacturingNewOrders": {
-      "rmse": 1.3966,
+      "rmse": 1.3962,
       "mae": 1.082,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2640,7 +2640,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncNonmanufacturingBusiness": {
-      "rmse": 1.4473,
+      "rmse": 1.4471,
       "mae": 1.0949,
       "directionHitPct": 64.0,
       "observations": 26,
@@ -2648,7 +2648,7 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncServicesBusiness": {
-      "rmse": 1.4487,
+      "rmse": 1.4485,
       "mae": 1.0839,
       "directionHitPct": 64.0,
       "observations": 26,
@@ -2656,23 +2656,23 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncCpiNonfood": {
-      "rmse": 1.3462,
-      "mae": 1.061,
+      "rmse": 1.3468,
+      "mae": 1.0628,
       "directionHitPct": 72.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorIncTop2Service": {
-      "rmse": 1.3976,
-      "mae": 1.0885,
+      "rmse": 1.3974,
+      "mae": 1.0884,
       "directionHitPct": 64.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorIncTop3Service": {
-      "rmse": 1.4147,
+      "rmse": 1.4143,
       "mae": 1.1072,
       "directionHitPct": 60.0,
       "observations": 26,
@@ -2680,23 +2680,23 @@
       "sampleEnd": "2026-08"
     },
     "anchorIncTop4Service": {
-      "rmse": 1.4458,
-      "mae": 1.1155,
+      "rmse": 1.4454,
+      "mae": 1.1154,
       "directionHitPct": 60.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop1": {
-      "rmse": 1.4306,
-      "mae": 1.1008,
+      "rmse": 1.4305,
+      "mae": 1.1009,
       "directionHitPct": 52.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop2": {
-      "rmse": 1.4465,
+      "rmse": 1.4459,
       "mae": 1.0922,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2704,32 +2704,32 @@
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop3": {
-      "rmse": 1.5123,
-      "mae": 1.0195,
+      "rmse": 1.512,
+      "mae": 1.0177,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop4": {
-      "rmse": 1.6053,
-      "mae": 1.0968,
+      "rmse": 1.6044,
+      "mae": 1.095,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop5": {
-      "rmse": 1.5707,
-      "mae": 1.0824,
+      "rmse": 1.5701,
+      "mae": 1.0806,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "anchorRankedTop6": {
-      "rmse": 1.6499,
-      "mae": 1.1162,
+      "rmse": 1.6493,
+      "mae": 1.1144,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2744,8 +2744,8 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedMacroBridge": {
-      "rmse": 1.5894,
-      "mae": 1.0149,
+      "rmse": 1.589,
+      "mae": 1.0131,
       "directionHitPct": 80.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -2753,14 +2753,14 @@
     },
     "seasonalGatedCarRetail": {
       "rmse": 1.5492,
-      "mae": 1.0058,
+      "mae": 1.0059,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedFullMacroBridge": {
-      "rmse": 1.4439,
+      "rmse": 1.444,
       "mae": 1.1017,
       "directionHitPct": 64.0,
       "observations": 26,
@@ -2768,23 +2768,23 @@
       "sampleEnd": "2026-08"
     },
     "seasonalHf": {
-      "rmse": 2.4082,
-      "mae": 1.6257,
+      "rmse": 2.4083,
+      "mae": 1.6263,
       "directionHitPct": 52.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedSelectedMacroBridge": {
-      "rmse": 1.4681,
-      "mae": 1.13,
+      "rmse": 1.4678,
+      "mae": 1.1281,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedConsumptionDetailBridge": {
-      "rmse": 1.4277,
+      "rmse": 1.4274,
       "mae": 1.0874,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2792,7 +2792,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedConsumptionSelectedBridge": {
-      "rmse": 1.4504,
+      "rmse": 1.4501,
       "mae": 1.1221,
       "directionHitPct": 60.0,
       "observations": 26,
@@ -2808,7 +2808,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncServiceNewOrders": {
-      "rmse": 1.3806,
+      "rmse": 1.3803,
       "mae": 1.0642,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2816,7 +2816,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncNonmanufacturingNewOrders": {
-      "rmse": 1.3966,
+      "rmse": 1.3962,
       "mae": 1.082,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2824,7 +2824,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncNonmanufacturingBusiness": {
-      "rmse": 1.4473,
+      "rmse": 1.4471,
       "mae": 1.0949,
       "directionHitPct": 64.0,
       "observations": 26,
@@ -2832,7 +2832,7 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncServicesBusiness": {
-      "rmse": 1.4487,
+      "rmse": 1.4485,
       "mae": 1.0839,
       "directionHitPct": 64.0,
       "observations": 26,
@@ -2840,23 +2840,23 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncCpiNonfood": {
-      "rmse": 1.3462,
-      "mae": 1.061,
+      "rmse": 1.3468,
+      "mae": 1.0628,
       "directionHitPct": 72.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncTop2Service": {
-      "rmse": 1.3976,
-      "mae": 1.0885,
+      "rmse": 1.3974,
+      "mae": 1.0884,
       "directionHitPct": 64.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncTop3Service": {
-      "rmse": 1.4147,
+      "rmse": 1.4143,
       "mae": 1.1072,
       "directionHitPct": 60.0,
       "observations": 26,
@@ -2864,23 +2864,23 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedIncTop4Service": {
-      "rmse": 1.4458,
-      "mae": 1.1155,
+      "rmse": 1.4454,
+      "mae": 1.1154,
       "directionHitPct": 60.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop1": {
-      "rmse": 1.4306,
-      "mae": 1.1008,
+      "rmse": 1.4305,
+      "mae": 1.1009,
       "directionHitPct": 52.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop2": {
-      "rmse": 1.4465,
+      "rmse": 1.4459,
       "mae": 1.0922,
       "directionHitPct": 68.0,
       "observations": 26,
@@ -2888,32 +2888,32 @@
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop3": {
-      "rmse": 1.5123,
-      "mae": 1.0195,
+      "rmse": 1.512,
+      "mae": 1.0177,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop4": {
-      "rmse": 1.6053,
-      "mae": 1.0968,
+      "rmse": 1.6044,
+      "mae": 1.095,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop5": {
-      "rmse": 1.5707,
-      "mae": 1.0824,
+      "rmse": 1.5701,
+      "mae": 1.0806,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "seasonalGatedRankedTop6": {
-      "rmse": 1.6499,
-      "mae": 1.1162,
+      "rmse": 1.6493,
+      "mae": 1.1144,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -3058,7 +3058,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncServiceNewOrders": {
-        "rmse": 2.2878,
+        "rmse": 2.2877,
         "mae": 1.5062,
         "directionHitPct": 68.57,
         "observations": 36,
@@ -3066,7 +3066,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncNonmanufacturingNewOrders": {
-        "rmse": 2.2489,
+        "rmse": 2.2487,
         "mae": 1.5039,
         "directionHitPct": 68.57,
         "observations": 36,
@@ -3074,7 +3074,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncNonmanufacturingBusiness": {
-        "rmse": 2.2718,
+        "rmse": 2.2717,
         "mae": 1.5295,
         "directionHitPct": 65.71,
         "observations": 36,
@@ -3090,15 +3090,15 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncCpiNonfood": {
-        "rmse": 1.796,
-        "mae": 1.3724,
+        "rmse": 1.7963,
+        "mae": 1.3737,
         "directionHitPct": 71.43,
         "observations": 36,
         "sampleStart": "2023-03",
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncTop2Service": {
-        "rmse": 2.4252,
+        "rmse": 2.4251,
         "mae": 1.5463,
         "directionHitPct": 65.71,
         "observations": 36,
@@ -3106,7 +3106,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncTop3Service": {
-        "rmse": 2.4984,
+        "rmse": 2.4982,
         "mae": 1.5846,
         "directionHitPct": 62.86,
         "observations": 36,
@@ -3114,7 +3114,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedIncTop4Service": {
-        "rmse": 2.5481,
+        "rmse": 2.5479,
         "mae": 1.6073,
         "directionHitPct": 62.86,
         "observations": 36,
@@ -3213,7 +3213,7 @@
     },
     "holdoutPeriod": {
       "seasonalGatedRankedTop1": {
-        "rmse": 2.5724,
+        "rmse": 2.5723,
         "mae": 1.7095,
         "directionHitPct": 60.0,
         "observations": 36,
@@ -3221,7 +3221,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop2": {
-        "rmse": 1.8867,
+        "rmse": 1.8863,
         "mae": 1.3654,
         "directionHitPct": 65.71,
         "observations": 36,
@@ -3229,32 +3229,32 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop3": {
-        "rmse": 1.6628,
-        "mae": 1.1806,
+        "rmse": 1.6625,
+        "mae": 1.1793,
         "directionHitPct": 71.43,
         "observations": 36,
         "sampleStart": "2023-03",
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop4": {
-        "rmse": 1.6191,
-        "mae": 1.194,
+        "rmse": 1.6185,
+        "mae": 1.1927,
         "directionHitPct": 60.0,
         "observations": 36,
         "sampleStart": "2023-03",
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop5": {
-        "rmse": 1.6429,
-        "mae": 1.1956,
+        "rmse": 1.6424,
+        "mae": 1.1942,
         "directionHitPct": 62.86,
         "observations": 36,
         "sampleStart": "2023-03",
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop6": {
-        "rmse": 1.6735,
-        "mae": 1.224,
+        "rmse": 1.673,
+        "mae": 1.2227,
         "directionHitPct": 62.86,
         "observations": 36,
         "sampleStart": "2023-03",
@@ -3271,7 +3271,7 @@
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop2": {
-        "rmse": 6.8683,
+        "rmse": 6.8682,
         "mae": 3.2409,
         "directionHitPct": 63.08,
         "observations": 66,
@@ -3280,23 +3280,23 @@
       },
       "seasonalGatedRankedTop3": {
         "rmse": 6.2786,
-        "mae": 2.9037,
+        "mae": 2.903,
         "directionHitPct": 72.31,
         "observations": 66,
         "sampleStart": "2020-03",
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop4": {
-        "rmse": 5.5398,
-        "mae": 2.8708,
+        "rmse": 5.5397,
+        "mae": 2.87,
         "directionHitPct": 66.15,
         "observations": 66,
         "sampleStart": "2020-03",
         "sampleEnd": "2026-08"
       },
       "seasonalGatedRankedTop5": {
-        "rmse": 5.4316,
-        "mae": 2.8815,
+        "rmse": 5.4315,
+        "mae": 2.8808,
         "directionHitPct": 69.23,
         "observations": 66,
         "sampleStart": "2020-03",
@@ -3304,7 +3304,7 @@
       },
       "seasonalGatedRankedTop6": {
         "rmse": 5.6008,
-        "mae": 2.8656,
+        "mae": 2.8649,
         "directionHitPct": 70.77,
         "observations": 66,
         "sampleStart": "2020-03",
@@ -3323,7 +3323,7 @@
       },
       "holdoutPeriod": {
         "rmse": 1.9855,
-        "mae": 1.2974,
+        "mae": 1.2975,
         "directionHitPct": 71.43,
         "observations": 36,
         "sampleStart": "2023-03",
@@ -3539,32 +3539,32 @@
       },
       "2026": {
         "seasonalGatedCarRetail": {
-          "rmse": 0.7803,
-          "mae": 0.5867,
+          "rmse": 0.7802,
+          "mae": 0.5868,
           "directionHitPct": 40.0,
           "observations": 6,
           "sampleStart": "2026-03",
           "sampleEnd": "2026-08"
         },
         "seasonalGatedRankedTop5": {
-          "rmse": 0.9118,
-          "mae": 0.849,
+          "rmse": 0.9072,
+          "mae": 0.8411,
           "directionHitPct": 60.0,
           "observations": 6,
           "sampleStart": "2026-03",
           "sampleEnd": "2026-08"
         },
         "seasonalGatedIncCpiNonfood": {
-          "rmse": 0.6983,
-          "mae": 0.515,
+          "rmse": 0.7025,
+          "mae": 0.523,
           "directionHitPct": 100.0,
           "observations": 6,
           "sampleStart": "2026-03",
           "sampleEnd": "2026-08"
         },
         "consensus": {
-          "rmse": 1.1504,
-          "mae": 1.0271,
+          "rmse": 1.1526,
+          "mae": 1.0311,
           "directionHitPct": 40.0,
           "observations": 6,
           "sampleStart": "2026-03",
@@ -4016,18 +4016,18 @@
       {
         "date": "2026-07-31",
         "publishedObservations": 10,
-        "seasonalGatedCarRetail": 0.757,
-        "seasonalGatedRankedTop5": 0.8854,
-        "seasonalGatedIncCpiNonfood": 0.9276,
-        "consensus": 1.0392
+        "seasonalGatedCarRetail": 0.7578,
+        "seasonalGatedRankedTop5": 0.8831,
+        "seasonalGatedIncCpiNonfood": 0.9285,
+        "consensus": 1.0407
       },
       {
         "date": "2026-08-31",
         "publishedObservations": 10,
         "seasonalGatedCarRetail": 0.7608,
-        "seasonalGatedRankedTop5": 0.8609,
-        "seasonalGatedIncCpiNonfood": 0.917,
-        "consensus": 1.0343
+        "seasonalGatedRankedTop5": 0.8579,
+        "seasonalGatedIncCpiNonfood": 0.919,
+        "consensus": 1.0358
       }
     ],
     "rollingWindowDefinition": "10 published observations, corresponding to 12 calendar months because January and February have no separate release.",
@@ -4094,16 +4094,16 @@
       },
       "2026": {
         "candidate": {
-          "rmse": 0.9118,
-          "mae": 0.849,
+          "rmse": 0.9072,
+          "mae": 0.8411,
           "directionHitPct": 60.0,
           "observations": 6,
           "sampleStart": "2026-03",
           "sampleEnd": "2026-08"
         },
         "scopeBaseline": {
-          "rmse": 0.7803,
-          "mae": 0.5867,
+          "rmse": 0.7802,
+          "mae": 0.5868,
           "directionHitPct": 40.0,
           "observations": 6,
           "sampleStart": "2026-03",
@@ -4118,16 +4118,16 @@
   },
   "consensusCommonSample": {
     "model": {
-      "rmse": 3.3364,
-      "mae": 2.1945,
+      "rmse": 3.3363,
+      "mae": 2.1937,
       "directionHitPct": 70.37,
       "observations": 55,
       "sampleStart": "2021-04",
       "sampleEnd": "2026-08"
     },
     "consensus": {
-      "rmse": 2.2688,
-      "mae": 1.673,
+      "rmse": 2.269,
+      "mae": 1.6734,
       "directionHitPct": 75.93,
       "observations": 55,
       "sampleStart": "2021-04",
@@ -4136,16 +4136,16 @@
   },
   "stableConsensusCommonSample": {
     "model": {
-      "rmse": 1.5707,
-      "mae": 1.0824,
+      "rmse": 1.5701,
+      "mae": 1.0806,
       "directionHitPct": 56.0,
       "observations": 26,
       "sampleStart": "2024-03",
       "sampleEnd": "2026-08"
     },
     "consensus": {
-      "rmse": 1.2403,
-      "mae": 1.0351,
+      "rmse": 1.2407,
+      "mae": 1.036,
       "directionHitPct": 68.0,
       "observations": 26,
       "sampleStart": "2024-03",
@@ -4171,23 +4171,23 @@
   "latestForecast": {
     "month": "2026-09",
     "model": null,
-    "consensus": null,
+    "consensus": 0.7167,
     "selectedFactors": [],
-    "hfCorrection": null,
+    "hfCorrection": -1.0,
     "alternatives": {
-      "seasonalBackbone": 1.7501,
-      "seasonalBias": 1.4853,
-      "directCarArx": null,
-      "directCarHomeArx": null,
-      "anchorCarBridge": null,
-      "anchorCarHomeBridge": null,
-      "seasonalHf": 1.7501
+      "seasonalBackbone": 1.7473,
+      "seasonalBias": 1.4823,
+      "directCarArx": -0.3989,
+      "directCarHomeArx": 0.0807,
+      "anchorCarBridge": -0.5546,
+      "anchorCarHomeBridge": -0.7801,
+      "seasonalHf": 0.7473
     },
     "stages": {
       "preliminary": {
         "key": "seasonalGatedBridge",
-        "value": null,
-        "status": "waiting_for_complete_or_same_window_hf"
+        "value": -0.7801,
+        "status": "available"
       },
       "preReleaseReview": {
         "key": "seasonalGatedRankedTop5",
@@ -10655,7 +10655,7 @@
     },
     {
       "date": "2026-07-31",
-      "actual": 0.62416,
+      "actual": 0.6,
       "previousMonth": 1.0,
       "seasonalNaive": 6.4,
       "seasonalBackbone": 2.026737,
@@ -10740,76 +10740,76 @@
     {
       "date": "2026-08-31",
       "actual": 0.4,
-      "previousMonth": 0.62416,
+      "previousMonth": 0.6,
       "seasonalNaive": 4.8,
-      "seasonalBackbone": 1.919208,
-      "seasonalBias": 1.673739,
-      "directCarArx": 0.642816,
-      "directCarHomeArx": 1.336749,
-      "directMacroArx": 1.252489,
-      "directSelectedMacroArx": 1.858432,
-      "directConsumptionDetailArx": 1.044254,
-      "directConsumptionSelectedArx": 0.40999,
-      "directIncServiceExpectations": 0.604028,
-      "directIncServiceNewOrders": 0.717642,
-      "directIncNonmanufacturingNewOrders": 0.503126,
-      "directIncNonmanufacturingBusiness": 0.883333,
-      "directIncServicesBusiness": 1.275523,
-      "directIncCpiNonfood": 1.356709,
-      "directIncTop2Service": 0.484173,
-      "directIncTop3Service": 0.374335,
-      "directIncTop4Service": 0.404456,
-      "directRankedTop1": 2.675358,
-      "directRankedTop2": 0.70978,
-      "directRankedTop3": -0.671433,
-      "directRankedTop4": -0.570562,
-      "directRankedTop5": -0.327383,
-      "directRankedTop6": -0.085583,
-      "anchorCarBridge": 0.698879,
-      "anchorCarHomeBridge": 0.289009,
-      "anchorMacroBridge": 1.073169,
-      "anchorFullMacroBridge": 0.289018,
-      "anchorSelectedMacroBridge": 0.518159,
-      "anchorConsumptionDetailBridge": 0.247883,
-      "anchorConsumptionSelectedBridge": 0.23906,
-      "anchorIncServiceExpectations": 0.197628,
-      "anchorIncServiceNewOrders": 0.225068,
-      "anchorIncNonmanufacturingNewOrders": 0.279683,
-      "anchorIncNonmanufacturingBusiness": 0.333423,
-      "anchorIncServicesBusiness": 0.32514,
-      "anchorIncCpiNonfood": 0.045529,
-      "anchorIncTop2Service": 0.167352,
-      "anchorIncTop3Service": 0.186171,
-      "anchorIncTop4Service": 0.224127,
-      "anchorRankedTop1": 0.678695,
-      "anchorRankedTop2": 0.306911,
-      "anchorRankedTop3": 0.514907,
-      "anchorRankedTop4": 0.774118,
-      "anchorRankedTop5": 0.624187,
-      "anchorRankedTop6": 0.698764,
-      "seasonalGatedBridge": 0.289009,
-      "seasonalGatedCarRetail": 0.698879,
-      "seasonalGatedMacroBridge": 1.073169,
-      "seasonalGatedFullMacroBridge": 0.289018,
-      "seasonalGatedSelectedMacroBridge": 0.518159,
-      "seasonalGatedConsumptionDetailBridge": 0.247883,
-      "seasonalGatedConsumptionSelectedBridge": 0.23906,
-      "seasonalGatedIncServiceExpectations": 0.197628,
-      "seasonalGatedIncServiceNewOrders": 0.225068,
-      "seasonalGatedIncNonmanufacturingNewOrders": 0.279683,
-      "seasonalGatedIncNonmanufacturingBusiness": 0.333423,
-      "seasonalGatedIncServicesBusiness": 0.32514,
-      "seasonalGatedIncCpiNonfood": 0.045529,
-      "seasonalGatedIncTop2Service": 0.167352,
-      "seasonalGatedIncTop3Service": 0.186171,
-      "seasonalGatedIncTop4Service": 0.224127,
-      "seasonalGatedRankedTop1": 0.678695,
-      "seasonalGatedRankedTop2": 0.306911,
-      "seasonalGatedRankedTop3": 0.514907,
-      "seasonalGatedRankedTop4": 0.774118,
-      "seasonalGatedRankedTop5": 0.624187,
-      "seasonalGatedRankedTop6": 0.698764,
-      "seasonalHf": 0.919208,
+      "seasonalBackbone": 1.910801,
+      "seasonalBias": 1.66496,
+      "directCarArx": 0.631434,
+      "directCarHomeArx": 1.33024,
+      "directMacroArx": 1.243359,
+      "directSelectedMacroArx": 1.853254,
+      "directConsumptionDetailArx": 1.03909,
+      "directConsumptionSelectedArx": 0.404909,
+      "directIncServiceExpectations": 0.59915,
+      "directIncServiceNewOrders": 0.711552,
+      "directIncNonmanufacturingNewOrders": 0.497102,
+      "directIncNonmanufacturingBusiness": 0.878028,
+      "directIncServicesBusiness": 1.270101,
+      "directIncCpiNonfood": 1.350193,
+      "directIncTop2Service": 0.478945,
+      "directIncTop3Service": 0.368984,
+      "directIncTop4Service": 0.399242,
+      "directRankedTop1": 2.660689,
+      "directRankedTop2": 0.697448,
+      "directRankedTop3": -0.679269,
+      "directRankedTop4": -0.578443,
+      "directRankedTop5": -0.335138,
+      "directRankedTop6": -0.092838,
+      "anchorCarBridge": 0.675858,
+      "anchorCarHomeBridge": 0.265032,
+      "anchorMacroBridge": 1.050506,
+      "anchorFullMacroBridge": 0.265455,
+      "anchorSelectedMacroBridge": 0.494563,
+      "anchorConsumptionDetailBridge": 0.223881,
+      "anchorConsumptionSelectedBridge": 0.215122,
+      "anchorIncServiceExpectations": 0.173726,
+      "anchorIncServiceNewOrders": 0.200988,
+      "anchorIncNonmanufacturingNewOrders": 0.255603,
+      "anchorIncNonmanufacturingBusiness": 0.309488,
+      "anchorIncServicesBusiness": 0.301209,
+      "anchorIncCpiNonfood": 0.021841,
+      "anchorIncTop2Service": 0.143349,
+      "anchorIncTop3Service": 0.162111,
+      "anchorIncTop4Service": 0.200099,
+      "anchorRankedTop1": 0.656541,
+      "anchorRankedTop2": 0.283759,
+      "anchorRankedTop3": 0.49163,
+      "anchorRankedTop4": 0.751096,
+      "anchorRankedTop5": 0.601195,
+      "anchorRankedTop6": 0.675861,
+      "seasonalGatedBridge": 0.265032,
+      "seasonalGatedCarRetail": 0.675858,
+      "seasonalGatedMacroBridge": 1.050506,
+      "seasonalGatedFullMacroBridge": 0.265455,
+      "seasonalGatedSelectedMacroBridge": 0.494563,
+      "seasonalGatedConsumptionDetailBridge": 0.223881,
+      "seasonalGatedConsumptionSelectedBridge": 0.215122,
+      "seasonalGatedIncServiceExpectations": 0.173726,
+      "seasonalGatedIncServiceNewOrders": 0.200988,
+      "seasonalGatedIncNonmanufacturingNewOrders": 0.255603,
+      "seasonalGatedIncNonmanufacturingBusiness": 0.309488,
+      "seasonalGatedIncServicesBusiness": 0.301209,
+      "seasonalGatedIncCpiNonfood": 0.021841,
+      "seasonalGatedIncTop2Service": 0.143349,
+      "seasonalGatedIncTop3Service": 0.162111,
+      "seasonalGatedIncTop4Service": 0.200099,
+      "seasonalGatedRankedTop1": 0.656541,
+      "seasonalGatedRankedTop2": 0.283759,
+      "seasonalGatedRankedTop3": 0.49163,
+      "seasonalGatedRankedTop4": 0.751096,
+      "seasonalGatedRankedTop5": 0.601195,
+      "seasonalGatedRankedTop6": 0.675861,
+      "seasonalHf": 0.910801,
       "consensus": 0.82,
       "actualStatus": "published",
       "forecastStatus": "available",
@@ -10826,81 +10826,84 @@
       "actual": null,
       "previousMonth": null,
       "seasonalNaive": null,
-      "seasonalBackbone": 1.750077,
-      "seasonalBias": 1.485309,
-      "directCarArx": null,
-      "directCarHomeArx": null,
+      "seasonalBackbone": 1.747303,
+      "seasonalBias": 1.482296,
+      "directCarArx": -0.39894,
+      "directCarHomeArx": 0.080679,
       "directMacroArx": null,
       "directSelectedMacroArx": null,
       "directConsumptionDetailArx": null,
       "directConsumptionSelectedArx": null,
-      "directIncServiceExpectations": null,
-      "directIncServiceNewOrders": null,
-      "directIncNonmanufacturingNewOrders": null,
-      "directIncNonmanufacturingBusiness": null,
-      "directIncServicesBusiness": null,
+      "directIncServiceExpectations": -0.382458,
+      "directIncServiceNewOrders": 0.61567,
+      "directIncNonmanufacturingNewOrders": 0.656557,
+      "directIncNonmanufacturingBusiness": 0.476335,
+      "directIncServicesBusiness": 0.599017,
       "directIncCpiNonfood": null,
-      "directIncTop2Service": null,
-      "directIncTop3Service": null,
-      "directIncTop4Service": null,
+      "directIncTop2Service": 0.13641,
+      "directIncTop3Service": 0.30699,
+      "directIncTop4Service": 0.335776,
       "directRankedTop1": null,
       "directRankedTop2": null,
       "directRankedTop3": null,
       "directRankedTop4": null,
       "directRankedTop5": null,
       "directRankedTop6": null,
-      "anchorCarBridge": null,
-      "anchorCarHomeBridge": null,
+      "anchorCarBridge": -0.554607,
+      "anchorCarHomeBridge": -0.780102,
       "anchorMacroBridge": null,
       "anchorFullMacroBridge": null,
       "anchorSelectedMacroBridge": null,
       "anchorConsumptionDetailBridge": null,
       "anchorConsumptionSelectedBridge": null,
-      "anchorIncServiceExpectations": null,
-      "anchorIncServiceNewOrders": null,
-      "anchorIncNonmanufacturingNewOrders": null,
-      "anchorIncNonmanufacturingBusiness": null,
-      "anchorIncServicesBusiness": null,
+      "anchorIncServiceExpectations": -0.659314,
+      "anchorIncServiceNewOrders": -0.325163,
+      "anchorIncNonmanufacturingNewOrders": -0.235559,
+      "anchorIncNonmanufacturingBusiness": -0.434536,
+      "anchorIncServicesBusiness": -0.526673,
       "anchorIncCpiNonfood": null,
-      "anchorIncTop2Service": null,
-      "anchorIncTop3Service": null,
-      "anchorIncTop4Service": null,
+      "anchorIncTop2Service": -0.314247,
+      "anchorIncTop3Service": -0.052397,
+      "anchorIncTop4Service": 0.022756,
       "anchorRankedTop1": null,
       "anchorRankedTop2": null,
       "anchorRankedTop3": null,
       "anchorRankedTop4": null,
       "anchorRankedTop5": null,
       "anchorRankedTop6": null,
-      "seasonalGatedBridge": null,
-      "seasonalGatedCarRetail": null,
+      "seasonalGatedBridge": -0.780102,
+      "seasonalGatedCarRetail": -0.554607,
       "seasonalGatedMacroBridge": null,
       "seasonalGatedFullMacroBridge": null,
       "seasonalGatedSelectedMacroBridge": null,
       "seasonalGatedConsumptionDetailBridge": null,
       "seasonalGatedConsumptionSelectedBridge": null,
-      "seasonalGatedIncServiceExpectations": null,
-      "seasonalGatedIncServiceNewOrders": null,
-      "seasonalGatedIncNonmanufacturingNewOrders": null,
-      "seasonalGatedIncNonmanufacturingBusiness": null,
-      "seasonalGatedIncServicesBusiness": null,
+      "seasonalGatedIncServiceExpectations": -0.659314,
+      "seasonalGatedIncServiceNewOrders": -0.325163,
+      "seasonalGatedIncNonmanufacturingNewOrders": -0.235559,
+      "seasonalGatedIncNonmanufacturingBusiness": -0.434536,
+      "seasonalGatedIncServicesBusiness": -0.526673,
       "seasonalGatedIncCpiNonfood": null,
-      "seasonalGatedIncTop2Service": null,
-      "seasonalGatedIncTop3Service": null,
-      "seasonalGatedIncTop4Service": null,
+      "seasonalGatedIncTop2Service": -0.314247,
+      "seasonalGatedIncTop3Service": -0.052397,
+      "seasonalGatedIncTop4Service": 0.022756,
       "seasonalGatedRankedTop1": null,
       "seasonalGatedRankedTop2": null,
       "seasonalGatedRankedTop3": null,
       "seasonalGatedRankedTop4": null,
       "seasonalGatedRankedTop5": null,
       "seasonalGatedRankedTop6": null,
-      "seasonalHf": 1.750077,
-      "consensus": null,
+      "seasonalHf": 0.747303,
+      "consensus": 0.716667,
       "actualStatus": "pending_or_unavailable",
       "forecastStatus": "waiting_inputs",
       "missingReason": "尚未公布或上游序列缺失",
       "consensusComparable": false,
-      "selectedFactors": [],
-      "hfCorrection": 0.0
+      "selectedFactors": [
+        "car_retail_level_yoy",
+        "pmi_services_expectations"
+      ],
+      "hfCorrection": -1.0
     }
   ]
 }

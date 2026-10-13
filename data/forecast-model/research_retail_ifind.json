@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-09-17",
+  "end": "2026-10-13",
   "series": {
     "actual_retail_yoy": {
       "key": "actual_retail_yoy",
@@ -11,9 +11,9 @@
       "frequency": "M",
       "unit": "%",
       "name": "社会消费品零售总额:当月同比",
-      "startTime": "19850131",
-      "endTime": "20260630",
-      "description": "提取数据：EDB-社会消费品零售总额:当月同比（20100101-20260817）-",
+      "startTime": "2010-01-31",
+      "endTime": "2026-08-31",
+      "description": "提取数据：EDB-社会消费品零售总额:当月同比（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -689,13 +689,15 @@
         ],
         [
           "2026-07-31",
-          0.624159627544657
+          0.6
         ],
         [
           "2026-08-31",
           0.4
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "consensus_retail_yoy": {
       "key": "consensus_retail_yoy",
@@ -707,7 +709,7 @@
       "noDateSuffix": true,
       "name": "预测平均值:社会消费品零售总额:当月同比",
       "startTime": "2021-04-30",
-      "endTime": "2026-08-31",
+      "endTime": "2026-09-30",
       "description": "提取数据：EDB-社会消费品零售总额:预测平均值:当月同比-",
       "records": [
         [
@@ -953,8 +955,14 @@
         [
           "2026-08-31",
           0.82
+        ],
+        [
+          "2026-09-30",
+          0.716666667
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "cpi_food_yoy": {
       "key": "cpi_food_yoy",
@@ -966,7 +974,7 @@
       "name": "CPI:食品:当月同比",
       "startTime": "2010-01-31",
       "endTime": "2026-08-31",
-      "description": "提取数据：EDB-CPI:食品:当月同比（20250721-20260914）-",
+      "description": "提取数据：EDB-CPI:食品:当月同比（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -1768,7 +1776,9 @@
           "2026-08-31",
           -1.4
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "cpi_nonfood_yoy": {
       "key": "cpi_nonfood_yoy",
@@ -1780,7 +1790,7 @@
       "name": "CPI:非食品:当月同比",
       "startTime": "2010-01-31",
       "endTime": "2026-08-31",
-      "description": "提取数据：EDB-CPI:非食品:当月同比（20250721-20260914）-",
+      "description": "提取数据：EDB-CPI:非食品:当月同比（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -2582,7 +2592,9 @@
           "2026-08-31",
           1.2
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "cpi_consumer_goods_yoy": {
       "key": "cpi_consumer_goods_yoy",
@@ -2592,9 +2604,9 @@
       "frequency": "M",
       "unit": "%",
       "name": "CPI:消费品:当月同比",
-      "startTime": "20020331",
-      "endTime": "20260731",
-      "description": "提取数据：EDB-CPI:消费品:当月同比（20100101-20260817）-",
+      "startTime": "2010-01-31",
+      "endTime": "2026-08-31",
+      "description": "提取数据：EDB-CPI:消费品:当月同比（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -3391,8 +3403,14 @@
         [
           "2026-07-31",
           0.2
+        ],
+        [
+          "2026-08-31",
+          0.8
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_nonmanufacturing_business": {
       "key": "pmi_nonmanufacturing_business",
@@ -3403,8 +3421,8 @@
       "unit": "%",
       "name": "非制造业PMI:商务活动",
       "startTime": "2010-01-31",
-      "endTime": "2026-08-31",
-      "description": "提取数据：EDB-非制造业PMI:商务活动（20250721-20260914）-",
+      "endTime": "2026-09-30",
+      "description": "提取数据：EDB-非制造业PMI:商务活动（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -4205,8 +4223,14 @@
         [
           "2026-08-31",
           49.0
+        ],
+        [
+          "2026-09-30",
+          50.2
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_nonmanufacturing_new_orders": {
       "key": "pmi_nonmanufacturing_new_orders",
@@ -4217,8 +4241,8 @@
       "unit": "%",
       "name": "非制造业PMI:新订单",
       "startTime": "2010-01-31",
-      "endTime": "2026-08-31",
-      "description": "提取数据：EDB-非制造业PMI:新订单（20250721-20260914）-",
+      "endTime": "2026-09-30",
+      "description": "提取数据：EDB-非制造业PMI:新订单（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -5019,8 +5043,14 @@
         [
           "2026-08-31",
           44.1
+        ],
+        [
+          "2026-09-30",
+          46.5
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_services_business": {
       "key": "pmi_services_business",
@@ -5031,8 +5061,8 @@
       "unit": "%",
       "name": "非制造业PMI:服务业",
       "startTime": "2012-02-29",
-      "endTime": "2026-08-31",
-      "description": "提取数据：EDB-非制造业PMI:服务业（20250721-20260914）-",
+      "endTime": "2026-09-30",
+      "description": "提取数据：EDB-非制造业PMI:服务业（20250819-20261013）-",
       "records": [
         [
           "2012-02-29",
@@ -5733,8 +5763,14 @@
         [
           "2026-08-31",
           49.3
+        ],
+        [
+          "2026-09-30",
+          50.2
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_services_new_orders": {
       "key": "pmi_services_new_orders",
@@ -5745,8 +5781,8 @@
       "unit": "%",
       "name": "非制造业PMI:服务业:新订单",
       "startTime": "2012-03-31",
-      "endTime": "2026-08-31",
-      "description": "提取数据：EDB-非制造业PMI:服务业:新订单（20250721-20260914）-",
+      "endTime": "2026-09-30",
+      "description": "提取数据：EDB-非制造业PMI:服务业:新订单（20250819-20261013）-",
       "records": [
         [
           "2012-03-31",
@@ -6443,8 +6479,14 @@
         [
           "2026-08-31",
           44.5
+        ],
+        [
+          "2026-09-30",
+          46.7
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "pmi_services_expectations": {
       "key": "pmi_services_expectations",
@@ -6455,8 +6497,8 @@
       "unit": "%",
       "name": "非制造业PMI:服务业:业务活动预期",
       "startTime": "2017-06-30",
-      "endTime": "2026-08-31",
-      "description": "提取数据：EDB-非制造业PMI:服务业:业务活动预期（20250721-20260914）-",
+      "endTime": "2026-09-30",
+      "description": "提取数据：EDB-非制造业PMI:服务业:业务活动预期（20250819-20261013）-",
       "records": [
         [
           "2017-06-30",
@@ -6901,8 +6943,14 @@
         [
           "2026-08-31",
           55.5
+        ],
+        [
+          "2026-09-30",
+          55.5
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     },
     "cpi_services_yoy": {
       "key": "cpi_services_yoy",
@@ -6914,7 +6962,7 @@
       "name": "CPI:服务项目:当月同比",
       "startTime": "2010-01-31",
       "endTime": "2026-08-31",
-      "description": "提取数据：EDB-CPI:服务项目:当月同比（20250721-20260914）-",
+      "description": "提取数据：EDB-CPI:服务项目:当月同比（20250819-20261013）-",
       "records": [
         [
           "2010-01-31",
@@ -7716,23 +7764,13 @@
           "2026-08-31",
           0.8
         ]
-      ]
+      ],
+      "providerUnit": "%",
+      "unitConversionFactor": 1.0
     }
   },
   "errors": {},
-  "warnings": {
-    "actual_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：actual_retail_yoy 固定 ID M001625520 未唯一命中；候选=[]",
-    "consensus_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：consensus_retail_yoy 固定 ID M005682254 未唯一命中；候选=[]",
-    "cpi_food_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_food_yoy 固定 ID M002826732 未唯一命中；候选=[]",
-    "cpi_nonfood_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_nonfood_yoy 固定 ID M002826748 未唯一命中；候选=[]",
-    "cpi_consumer_goods_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-07-31）：cpi_consumer_goods_yoy 固定 ID M002840897 未唯一命中；候选=[]",
-    "cpi_services_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：cpi_services_yoy 固定 ID M002840898 未唯一命中；候选=[]",
-    "pmi_nonmanufacturing_business": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_nonmanufacturing_business 固定 ID M002811179 未唯一命中；候选=[]",
-    "pmi_nonmanufacturing_new_orders": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_nonmanufacturing_new_orders 固定 ID M002811180 未唯一命中；候选=[]",
-    "pmi_services_business": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_services_business 固定 ID M004369936 未唯一命中；候选=[]",
-    "pmi_services_new_orders": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_services_new_orders 固定 ID M005933612 未唯一命中；候选=[]",
-    "pmi_services_expectations": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-08-31）：pmi_services_expectations 固定 ID M005933616 未唯一命中；候选=[]"
-  },
+  "warnings": {},
   "officialSupplements": {
     "2026-08-31": {
       "source": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965307.html",
