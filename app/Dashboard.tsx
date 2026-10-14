@@ -789,7 +789,7 @@ export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [error, setError] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [activeView, setActiveView] = useState<"macro" | "forecast">("macro");
+  const [activeView, setActiveView] = useState<"macro" | "forecast" | "rate">("macro");
   const [search, setSearch] = useState("");
   const [showAuxiliary, setShowAuxiliary] = useState(false);
   const [sortBy, setSortBy] = useState("category");
@@ -1047,6 +1047,12 @@ export default function Dashboard() {
             setActiveView("forecast");
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}>月频预测</button>
+          <button className={activeView === "rate" ? "active" : ""} onClick={() => {
+            setHistoryIndicator(null);
+            setSignalDrilldown(null);
+            setActiveView("rate");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}>利率预测</button>
         </nav>
         <div className="update-status">
           <span className="live-dot" />
@@ -1064,7 +1070,12 @@ export default function Dashboard() {
         </div>
       </header>
 
-      {activeView === "forecast" ? (
+      {activeView === "rate" ? (
+        <section className="shell" aria-label="十年期国债周频预测" style={{ paddingTop: 16 }}>
+          <iframe src="./weekly-rate/index.html?embed=1" title="十年期国债周频预测模型"
+            style={{ width: "100%", height: "calc(100vh - 100px)", minHeight: 760, border: 0 }} />
+        </section>
+      ) : activeView === "forecast" ? (
         <ForecastPanel />
       ) : (
         <>
