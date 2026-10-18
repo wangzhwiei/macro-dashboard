@@ -12,6 +12,10 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
+try:
+    from scripts.ifind_response_compat import normalize
+except ModuleNotFoundError:
+    from ifind_response_compat import normalize
 
 
 def root():
@@ -80,6 +84,19 @@ def wrap_ifind_call(raw_call):
     if getattr(raw_call, '_shared_cache', False) is True:
         return raw_call
 
+    def compatible(result):
+        def search(meta):
+            tag = hashlib.sha256(json.dumps([today(), meta], sort_keys=True).encode()).hexdigest()
+            path = root() / 'identity' / (tag + '.json')
+            cached = read(path)
+            if cached:
+                return cached
+            ledger('identity_search_attempt', tag)
+            response = raw_call('edb', 'search_edb', {'query': f"{meta['指标名称']}，{meta['国家地区']}，频率{meta['频率']}，单位{meta['单位']}，来源{meta['数据来源']}"})
+            write(path, response)
+            return response
+        return normalize(result, search)
+
     def call(server, tool, params):
         if server != 'edb' or tool != 'get_edb_data':
             return raw_call(server, tool, params)
@@ -96,7 +113,7 @@ def wrap_ifind_call(raw_call):
             ledger('cache_hit', key, identity)
             if 'error' in entry:
                 raise RuntimeError(entry['error'])
-            return entry['response']
+            return compatible(entry['response'])
         shared_path = None
         if identity and identity.get('start') and identity.get('end'):
             tag = [identity['id'], identity['frequency'], day, epoch]
@@ -123,6 +140,10 @@ def wrap_ifind_call(raw_call):
             write(root() / 'quota.json', {'day': day})
             ledger('quota_exhausted', key, identity)
             raise RuntimeError('iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数')
+        # Preserve the original answer as evidence, even when normalization fails.
+        write(root() / 'raw' / (key + '.json'), result)
+        result = compatible(result)
+        data = payload(result)
         good = bool(result.get('ok') and data.get('datas'))
         # Wrong candidates must not poison a same-day identity cache.
         accepted = good and (not identity or matches(data, identity))

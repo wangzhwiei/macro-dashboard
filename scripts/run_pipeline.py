@@ -89,6 +89,8 @@ def run_incremental(args: argparse.Namespace) -> int:
                  "-s", "tests", "-p", "test_ifind_quota.py"])
         run_step("shared request cache regression guards", [python, "-m", "unittest", "discover",
                  "-s", "tests", "-p", "test_ifind_request_cache.py"])
+        run_step("EDB response compatibility guards", [python, "-m", "unittest", "discover",
+                 "-s", "tests", "-p", "test_ifind_response_compat.py"])
         run_step("extend cached high-frequency dashboard series", update_command)
         if published_snapshot.exists():
             run_step(
