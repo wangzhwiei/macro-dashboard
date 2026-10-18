@@ -50,3 +50,15 @@ class CompatTests(unittest.TestCase):
     def test_old_format_unchanged(self):
         old = envelope({'datas':[{'existing': True}]})
         self.assertIs(normalize(old, lambda _: self.fail('unneeded search')), old)
+
+    def test_new_quota_wording_blocks_future_requests(self):
+        import tempfile
+        from unittest.mock import patch
+        from pathlib import Path
+        from scripts.ifind_request_cache import reject_quota, quota_blocked, reset_generation
+        with tempfile.TemporaryDirectory() as folder, patch('scripts.ifind_request_cache.root', return_value=Path(folder)):
+            with self.assertRaisesRegex(RuntimeError, '额度耗尽'):
+                reject_quota(envelope({'answer': 'search_edb 已经达到用户账号权益下该工具请求次数上限'}), 'test')
+            self.assertTrue(quota_blocked())
+            reset_generation()
+            self.assertFalse(quota_blocked())
