@@ -59,7 +59,11 @@ RATE_FACTORS = {"blast_furnace", "rebar_rate", "pta_rate", "methanol_rate", "asp
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    try:
+        from scripts.official_release_overlay import apply_official_releases
+    except ModuleNotFoundError:
+        from official_release_overlay import apply_official_releases
+    return apply_official_releases(path, json.loads(path.read_text(encoding="utf-8-sig")))
 
 
 def observations(rows: list[Any], scale: float = 1.0) -> pd.Series:
@@ -691,7 +695,11 @@ def augment_forecast_payload(
 
     comparison = result["comparisonOnCommonSample"]
     model_metrics = comparison["model"]
-    payload.setdefault("history", {})[key] = history
+    try:
+        from scripts.official_release_overlay import annotate_history
+    except ModuleNotFoundError:
+        from official_release_overlay import annotate_history
+    payload.setdefault("history", {})[key] = annotate_history(history, payload.get('history', {}).get(key, []), key)
     payload.setdefault("daily", {})[key] = []
     payload.setdefault("models", {})[key] = {
         "name": "固定资产投资累计同比",

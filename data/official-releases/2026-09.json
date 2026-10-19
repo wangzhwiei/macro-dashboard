@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "releasedAt": "2026-10-19",
+  "observationDate": "2026-09-30",
+  "policy": "Official NBS release overlay. Not an iFinD response; no provider ID is asserted for these observations. Original provider snapshots are preserved.",
+  "sources": {
+    "industrial": "https://www.stats.gov.cn/zwfwck/sjfb/202610/t20261019_1965617.html",
+    "investment": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261019_1965616.html",
+    "retail": "https://www.stats.gov.cn/sj/zxfbhjd/202610/t20261019_1965614.html"
+  },
+  "series": {
+    "data/industrial-value-model/targets_consensus.json": {
+      "actualMonthly": {"value": 5.5, "unit": "%", "source": "industrial"},
+      "actualYtd": {"value": 5.3, "unit": "%", "source": "industrial"},
+      "actualMomSa": {"value": 0.61, "unit": "%", "source": "industrial"}
+    },
+    "data/investment-model/source_data.json": {
+      "fixed_asset_investment_ytd_yoy": {"value": -7.2, "unit": "%", "source": "investment"},
+      "fixed_asset_investment_ytd_amount": {"value": 33411500000000, "unit": "元", "source": "investment"}
+    },
+    "data/industrial-value-model/production_inputs.json": {
+      "sector_mining_yoy": {"value": 1.3, "unit": "%", "source": "industrial"},
+      "sector_manufacturing_yoy": {"value": 6.0, "unit": "%", "source": "industrial"},
+      "sector_utility_yoy": {"value": 5.6, "unit": "%", "source": "industrial"},
+      "output_power_yoy": {"value": -1.2, "unit": "%", "source": "industrial"},
+      "output_steel_yoy": {"value": -3.8, "unit": "%", "source": "industrial"},
+      "output_cement_yoy": {"value": -5.3, "unit": "%", "source": "industrial"},
+      "output_ethylene_yoy": {"value": 6.4, "unit": "%", "source": "industrial"},
+      "output_nonferrous_yoy": {"value": 0.1, "unit": "%", "source": "industrial"}
+    }
+  }
+}

@@ -184,7 +184,11 @@ CALIBRATION_MIN_ERRORS = 6
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    try:
+        from scripts.official_release_overlay import apply_official_releases
+    except ModuleNotFoundError:
+        from official_release_overlay import apply_official_releases
+    return apply_official_releases(path, json.loads(path.read_text(encoding="utf-8-sig")))
 
 
 def series_from_rows(rows: list[list[Any]]) -> pd.Series:

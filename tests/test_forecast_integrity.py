@@ -140,7 +140,7 @@ class ForecastIntegrityTests(unittest.TestCase):
         latest = self.data["history"][key][-1]
         august = next(row for row in self.data["history"][key] if row["date"] == "2026-08-31")
         self.assertTrue(math.isclose(august["actual"], 5.2, abs_tol=1e-6))
-        self.assertEqual(latest["date"], "2026-09-30")
+        self.assertEqual(latest["date"], result['latest']['date'])
         self.assertEqual(latest["forecastKind"], "live_nowcast")
         self.assertIsNone(latest["actual"])
         self.assertTrue(math.isfinite(latest["forecast"]))

@@ -47,7 +47,11 @@ FACTOR_META = {
 
 
 def read_json(path: Path) -> dict[str, Any]:
-    return json.loads(path.read_text(encoding="utf-8-sig"))
+    try:
+        from scripts.official_release_overlay import apply_official_releases
+    except ModuleNotFoundError:
+        from official_release_overlay import apply_official_releases
+    return apply_official_releases(path, json.loads(path.read_text(encoding="utf-8-sig")))
 
 
 def month_key(value: str) -> str:
@@ -184,7 +188,11 @@ def augment_forecast_payload(
     backtest = result["backtest"]
     latest = result["latest"]
     production = read_json(production_path)
-    payload.setdefault("history", {})[key] = history
+    try:
+        from scripts.official_release_overlay import annotate_history
+    except ModuleNotFoundError:
+        from official_release_overlay import annotate_history
+    payload.setdefault("history", {})[key] = annotate_history(history, payload.get('history', {}).get(key, []), key)
     payload.setdefault("daily", {})[key] = []
     payload.setdefault("models", {})[key] = {
         "name": "规模以上工业增加值同比",

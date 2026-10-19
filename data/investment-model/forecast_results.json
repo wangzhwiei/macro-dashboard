@@ -5,40 +5,40 @@
   "modelFrozenAt": "2026-08-27",
   "modelFreezePolicy": "parameters, candidate sets, calibration windows and information cutoff are frozen; future updates may add only newly available observations",
   "target": "固定资产投资(不含农户)完成额累计同比",
-  "forecastMonth": "2026-09",
+  "forecastMonth": "2026-10",
   "method": "forecast bias-corrected monthly fixed investment amount from high-frequency and existing monthly-model signals, accumulate to a fixed amount, then convert with a walk-forward comparable base",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "current": {
-    "model": -7.394954,
+    "model": -7.36765,
     "unit": "%",
     "approx68PctRange": [
-      -8.08,
-      -6.71
+      -8.04,
+      -6.7
     ],
-    "predictedMonthlyFlowTrillion": 4.855946,
-    "predictedComparableCumulativeTrillion": 41.383494,
-    "comparableBaseTrillion": 44.688163,
-    "consensus": -0.905263,
+    "predictedMonthlyFlowTrillion": 4.227707,
+    "predictedComparableCumulativeTrillion": 45.698322,
+    "comparableBaseTrillion": 49.333005,
+    "consensus": null,
     "onlineFlowWeights": {
-      "same_month_amount": 0.213842,
-      "recent_flow_growth": 0.598583,
-      "high_frequency_bridge": 0.187576
+      "same_month_amount": 0.199805,
+      "recent_flow_growth": 0.59366,
+      "high_frequency_bridge": 0.206536
     }
   },
   "backtest": {
-    "rmse": 0.681208,
-    "mae": 0.530806,
-    "bias": 0.230105,
+    "rmse": 0.670338,
+    "mae": 0.519225,
+    "bias": 0.215448,
     "directionHitPct": 92.0,
-    "changeCaptureRatio": 1.09222,
-    "observations": 28,
+    "changeCaptureRatio": 1.082746,
+    "observations": 29,
     "sampleStart": "2023-05",
-    "sampleEnd": "2026-08"
+    "sampleEnd": "2026-09"
   },
   "lagDiagnostics": {
-    "actualCorrelation": 0.989108,
-    "previousActualCorrelation": 0.994326,
-    "previousMinusCurrentCorrelation": 0.005218
+    "actualCorrelation": 0.988839,
+    "previousActualCorrelation": 0.995538,
+    "previousMinusCurrentCorrelation": 0.006699
   },
   "legacyLagDiagnostics": {
     "actualCorrelation": 0.935326,
@@ -47,53 +47,53 @@
   },
   "comparisonOnCommonSample": {
     "model": {
-      "rmse": 0.681208,
-      "mae": 0.530806,
-      "bias": 0.230105,
+      "rmse": 0.670338,
+      "mae": 0.519225,
+      "bias": 0.215448,
       "directionHitPct": 87.5,
-      "changeCaptureRatio": 1.09222,
-      "observations": 28,
+      "changeCaptureRatio": 1.082746,
+      "observations": 29,
       "sampleStart": "2023-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
     "consensus": {
-      "rmse": 1.43756,
-      "mae": 0.880514,
-      "bias": 0.855667,
+      "rmse": 1.833481,
+      "mae": 1.067211,
+      "bias": 1.043221,
       "directionHitPct": 45.83,
-      "changeCaptureRatio": 2.19942,
-      "observations": 28,
+      "changeCaptureRatio": 3.032129,
+      "observations": 29,
       "sampleStart": "2023-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
-    "modelWinRatePct": 64.29,
-    "rmseImprovementPct": 52.61,
-    "maeImprovementPct": 39.72
+    "modelWinRatePct": 65.52,
+    "rmseImprovementPct": 63.44,
+    "maeImprovementPct": 51.35
   },
   "recentRegimeComparison": {
     "model": {
-      "rmse": 0.953168,
-      "mae": 0.875493,
-      "bias": 0.844764,
+      "rmse": 0.917369,
+      "mae": 0.823144,
+      "bias": 0.764786,
       "directionHitPct": 81.82,
-      "changeCaptureRatio": 1.776588,
-      "observations": 12,
+      "changeCaptureRatio": 1.390119,
+      "observations": 13,
       "sampleStart": "2025-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
     "consensus": {
-      "rmse": 2.152951,
-      "mae": 1.669609,
-      "bias": 1.669609,
+      "rmse": 2.706774,
+      "mae": 2.025388,
+      "bias": 2.025388,
       "directionHitPct": 36.36,
-      "changeCaptureRatio": 5.277552,
-      "observations": 12,
+      "changeCaptureRatio": 6.147292,
+      "observations": 13,
       "sampleStart": "2025-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
-    "modelWinRatePct": 75.0,
-    "rmseImprovementPct": 55.73,
-    "maeImprovementPct": 47.56
+    "modelWinRatePct": 76.92,
+    "rmseImprovementPct": 66.11,
+    "maeImprovementPct": 59.36
   },
   "legacyModelOnCommonSample": {
     "rmse": 1.254833,
@@ -107,50 +107,50 @@
   },
   "performanceGateVsConsensus": {
     "passed": true,
-    "modelRmse": 0.681208,
-    "consensusRmse": 1.43756,
-    "rmseImprovementPct": 52.61
+    "modelRmse": 0.670338,
+    "consensusRmse": 1.833481,
+    "rmseImprovementPct": 63.44
   },
   "flowCandidateDiagnostics": {
     "same_month_amount": {
-      "rmse": 0.37417,
-      "mae": 0.287542,
-      "bias": 0.118967,
-      "directionHitPct": 82.14,
-      "changeCaptureRatio": 0.96909,
-      "observations": 28,
+      "rmse": 0.374497,
+      "mae": 0.290851,
+      "bias": 0.128089,
+      "directionHitPct": 82.76,
+      "changeCaptureRatio": 0.965841,
+      "observations": 29,
       "sampleStart": "2023-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
     "recent_flow_growth": {
-      "rmse": 0.211587,
-      "mae": 0.140665,
-      "bias": 0.110044,
-      "directionHitPct": 92.86,
-      "changeCaptureRatio": 0.959963,
-      "observations": 28,
+      "rmse": 0.212421,
+      "mae": 0.143903,
+      "bias": 0.09816,
+      "directionHitPct": 93.1,
+      "changeCaptureRatio": 0.95563,
+      "observations": 29,
       "sampleStart": "2023-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
     "high_frequency_bridge": {
-      "rmse": 0.367976,
-      "mae": 0.283024,
-      "bias": 0.272596,
-      "directionHitPct": 75.0,
-      "changeCaptureRatio": 0.993157,
-      "observations": 16,
+      "rmse": 0.358914,
+      "mae": 0.27538,
+      "bias": 0.247556,
+      "directionHitPct": 76.47,
+      "changeCaptureRatio": 0.982049,
+      "observations": 17,
       "sampleStart": "2024-09",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     },
     "monthly_model_bridge": {
-      "rmse": 0.281804,
-      "mae": 0.247769,
-      "bias": 0.219039,
+      "rmse": 0.252732,
+      "mae": 0.206496,
+      "bias": 0.166951,
       "directionHitPct": 100.0,
-      "changeCaptureRatio": 1.099184,
-      "observations": 4,
+      "changeCaptureRatio": 1.09831,
+      "observations": 5,
       "sampleStart": "2026-05",
-      "sampleEnd": "2026-08"
+      "sampleEnd": "2026-09"
     }
   },
   "featureGroups": {
@@ -633,10 +633,21 @@
       "model": -7.394954,
       "legacyModel": null,
       "consensus": -0.905263,
-      "actual": null,
+      "actual": -7.2,
       "predictedMonthlyFlowTrillion": 4.855946,
       "predictedComparableCumulativeTrillion": 41.383494,
       "comparableBaseTrillion": 44.688163,
+      "kind": "walk_forward"
+    },
+    {
+      "date": "2026-10",
+      "model": -7.36765,
+      "legacyModel": null,
+      "consensus": null,
+      "actual": null,
+      "predictedMonthlyFlowTrillion": 4.227707,
+      "predictedComparableCumulativeTrillion": 45.698322,
+      "comparableBaseTrillion": 49.333005,
       "kind": "live_nowcast"
     }
   ],

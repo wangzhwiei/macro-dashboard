@@ -149,7 +149,14 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
             "formula": f"固定因子：{fixed_names}；1—3月加入春节日历门控。任一固定因子未公布时不生成预测。",
             "status": current["status"], "forecastMonth": current["month"],
             "earliestForecastDate": current["earliest_factor_release_date"],
-            "missingFactors": current["missing_factors"],
+            "missingFactors": [
+                {'korea_imports_from_china_yoy_lag0': '目标月韩国自中国进口同比',
+                 'taiwan_imports_from_mainland_yoy_lag1': '上月中国台湾自大陆进口额',
+                 'thailand_imports_from_china_yoy_lag1': '上月泰国自中国进口额',
+                 'korea_export_yoy_d1': '目标月韩国出口同比变化'}.get(item, item)
+                for item in current['missing_factors']
+            ],
+            "availabilityNote": f"{current['month']}确认预测所需的固定月份因子尚未全部取得并通过核验；不以旧月份替代，也不改变已定稿因子和滞后。",
         }
     high_frequency = payload.setdefault("highFrequency", {})
     high_frequency.pop("进出口", None)

@@ -123,7 +123,11 @@ def main() -> int:
     missing = [metadata[key]["name"] for key in selected if pd.isna(factors[key].get(current_month))]
     holdout = model["rankedTopKRace"]["holdoutPeriod"][MODEL_KEY]
     payload.setdefault("daily", {})["retail"] = []
-    payload.setdefault("history", {})["retail"] = history
+    try:
+        from scripts.official_release_overlay import annotate_history
+    except ModuleNotFoundError:
+        from official_release_overlay import annotate_history
+    payload.setdefault("history", {})["retail"] = annotate_history(history, payload.get('history', {}).get('retail', []), 'retail')
     payload.setdefault("models", {})["retail"] = {
         "name": "社零同比V7（正式版）",
         "unit": "%",
@@ -137,7 +141,7 @@ def main() -> int:
         "activeStage": "preliminary" if latest.get("model") is None and preliminary_value is not None else "pre_release_review",
         "preliminaryModelKey": preliminary.get("key"),
         "forecastMonth": latest["month"],
-        "earliestForecastDate": "2026-09-09",
+        "availabilityNote": f"{latest['month']}正式预测需等待当月CPI、服务业PMI及完整汽车零售因子；未公布的数据不填充为实际值。",
         "missingFactors": missing,
     }
     payload.setdefault("metrics", {})["retail"] = {

@@ -24,12 +24,12 @@ SPECS = (
     },
     {
         "file": "partner", "key": "taiwan_imports_from_mainland_value",
-        "query": "中国台湾:进口金额:中国大陆:所有产品:当月同比", "id": "G002610107",
+        "query": "中国台湾:进口总额:美元:大陆", "id": "G002610107",
         "name": "中国台湾:进口总额:美元:大陆", "unit": "美元", "source": "台湾统计局",
     },
     {
         "file": "partner", "key": "thailand_imports_from_china_value",
-        "query": "泰国:进口金额:中国:当月同比", "id": "G019713134",
+        "query": "泰国:进口金额:中国:总计:当月值", "id": "G019713134",
         "name": "泰国:进口金额:中国:总计:当月值", "unit": "泰铢", "source": "泰国海关",
     },
     {
