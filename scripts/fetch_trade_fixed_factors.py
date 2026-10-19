@@ -7,6 +7,7 @@ import json
 import os
 import sys
 import time
+from datetime import date, timedelta
 from pathlib import Path
 
 
@@ -101,8 +102,14 @@ def main() -> int:
     refreshed = 0
     for index, spec in enumerate(SPECS, 1):
         try:
-            rows, attrs = fetch(call, spec)
             item = payloads[spec["file"]]["series"][spec["key"]]
+            previous = item.get('data', [])
+            start = (date.fromisoformat(max(str(r[0])[:10] for r in previous)) - timedelta(days=45)).strftime('%Y%m%d') if previous else '20200101'
+            request = dict(spec, query=f"{spec['query']}（{start}-{date.today():%Y%m%d}）")
+            rows, attrs = fetch(call, request)
+            merged = {str(d)[:10]: v for d, v in previous}
+            merged.update({str(d)[:10]: v for d, v in rows})
+            rows = [[d, merged[d]] for d in sorted(merged, reverse=True)]
             item["data"] = rows
             item["providerId"] = spec["id"]
             item["name"] = spec["name"]

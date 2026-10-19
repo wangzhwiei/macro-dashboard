@@ -100,6 +100,10 @@ class ForecastIntegrityTests(unittest.TestCase):
 
 
     def test_frozen_credit_models_are_available_in_forecast_module(self) -> None:
+        import calendar
+        result = json.loads((ROOT / 'data/credit-model/forecast_results.json').read_text(encoding='utf-8'))
+        year, month = map(int, result['forecastMonth'].split('-'))
+        expected_date = f'{year:04d}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}'
         keys = ("m2_yoy", "new_rmb_loans", "social_financing")
         self.assertEqual(self.data["modelLocks"]["credit"]["version"], "credit-v1.0.0")
         self.assertEqual(self.data["modelLocks"]["credit"]["frozenAt"], "2026-08-25")
@@ -110,7 +114,7 @@ class ForecastIntegrityTests(unittest.TestCase):
             self.assertEqual(self.data["history"][key][0]["date"], "2023-01-31")
             august = next(row for row in self.data["history"][key] if row["date"] == "2026-08-31")
             self.assertIsNotNone(august["actual"])
-            self.assertEqual(self.data["history"][key][-1]["date"], "2026-09-30")
+            self.assertEqual(self.data["history"][key][-1]["date"], expected_date)
             self.assertEqual(self.data["history"][key][-1]["forecastKind"], "live_nowcast")
             self.assertIsNone(self.data["history"][key][-1]["actual"])
         credit_inputs = self.data["highFrequency"]["信用"]

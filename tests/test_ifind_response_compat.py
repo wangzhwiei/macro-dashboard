@@ -51,6 +51,64 @@ class CompatTests(unittest.TestCase):
         old = envelope({'datas':[{'existing': True}]})
         self.assertIs(normalize(old, lambda _: self.fail('unneeded search')), old)
 
+    def test_saved_identity_allows_only_end_date_to_advance(self):
+        old = dict(self.item, endDate='20261008')
+        raw = envelope({'answer': self.answer, 'indicator_description': [self.meta]})
+        result = normalize(raw, catalog=[old])
+        self.assertIn('saved_provider_metadata_join', result['data']['result']['content'][0]['text'])
+        for field in ('indexName', 'freq', 'unit', 'dataSource', 'country', 'node', 'startDate'):
+            with self.assertRaises(RuntimeError):
+                normalize(raw, catalog=[dict(old, **{field:'wrong'})])
+        with self.assertRaises(RuntimeError):
+            normalize(raw, catalog=[old, dict(old, displayId='S000000000')])
+
+    def test_wrapper_never_searches(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from scripts.ifind_request_cache import wrap_ifind_call
+        raw = envelope({'answer': self.answer, 'indicator_description': [self.meta]})
+        calls = []
+        def call(server, tool, params):
+            calls.append(tool)
+            return raw
+        with tempfile.TemporaryDirectory() as folder, patch('scripts.ifind_request_cache.root', return_value=Path(folder)), patch('scripts.ifind_request_cache.saved_catalog', return_value=[self.item]):
+            wrap_ifind_call(call)('edb', 'get_edb_data', {'query': 'test'})
+        self.assertEqual(calls, ['get_edb_data'])
+
+    def test_archival_unit_scale_does_not_change_identity_or_raw_values(self):
+        meta = dict(self.meta, 单位='吨')
+        item = dict(self.item, unit='万吨')
+        raw = envelope({'answer': self.answer.replace('单位：%', '单位：吨'), 'indicator_description': [meta]})
+        result = normalize(raw, catalog=[item])
+        data = json.loads(result['data']['result']['content'][0]['text'])['data']['datas'][0]['data']
+        self.assertEqual(data['attrs']['沥青开工率']['unit'], '吨')
+        self.assertEqual(data['data'][-1][1], 15)
+        with self.assertRaises(RuntimeError):
+            normalize(raw, catalog=[dict(item, unit='亿元')])
+
+    def test_rejected_response_retries_do_not_repeat_network(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import Mock, patch
+        from scripts.ifind_request_cache import wrap_ifind_call
+        raw = envelope({'answer': self.answer, 'indicator_description': [self.meta]})
+        call = Mock(return_value=raw)
+        with tempfile.TemporaryDirectory() as folder, patch('scripts.ifind_request_cache.root', return_value=Path(folder)), patch('scripts.ifind_request_cache.saved_catalog', return_value=[]):
+            wrapped = wrap_ifind_call(call)
+            for _ in range(3):
+                with self.assertRaises(RuntimeError):
+                    wrapped('edb', 'get_edb_data', {'query': 'test'})
+        self.assertEqual(call.call_count, 1)
+
+    def test_omitted_unit_requires_archived_dimensionless_series(self):
+        meta = dict(self.meta)
+        del meta['单位']
+        raw = envelope({'answer': self.answer.replace('（单位：%）',''), 'indicator_description': [meta]})
+        normalize(raw, catalog=[dict(self.item, unit='')])
+        with self.assertRaises(RuntimeError):
+            normalize(raw, catalog=[self.item])
+
     def test_new_quota_wording_blocks_future_requests(self):
         import tempfile
         from unittest.mock import patch

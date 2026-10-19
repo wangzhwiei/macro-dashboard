@@ -1404,12 +1404,16 @@
         [
           "2026-10-09",
           81.37
+        ],
+        [
+          "2026-10-16",
+          80.51
         ]
       ],
       "startTime": "2020-01-03",
-      "endTime": "2026-10-09",
+      "endTime": "2026-10-16",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_blast_furnace",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "rebar_rate": {
       "providerId": "S005580571",
@@ -2825,12 +2829,16 @@
         [
           "2026-10-09",
           37.38
+        ],
+        [
+          "2026-10-16",
+          36.39
         ]
       ],
       "startTime": "2020-01-03",
-      "endTime": "2026-10-09",
+      "endTime": "2026-10-16",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_rebar_steel_rate",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "power_coal": {
       "providerId": "S003839324",
@@ -10957,7 +10965,7 @@
         ],
         [
           "2026-09-15",
-          815400.0000000001
+          815400.0
         ],
         [
           "2026-09-16",
@@ -11009,7 +11017,7 @@
         ],
         [
           "2026-09-28",
-          878199.9999999999
+          878200.0
         ],
         [
           "2026-09-29",
@@ -11017,7 +11025,7 @@
         ],
         [
           "2026-09-30",
-          864300.0000000001
+          864300.0
         ],
         [
           "2026-10-01",
@@ -11065,13 +11073,29 @@
         ],
         [
           "2026-10-12",
-          829599.9999999999
+          829600.0
+        ],
+        [
+          "2026-10-13",
+          841200.0
+        ],
+        [
+          "2026-10-14",
+          838200.0
+        ],
+        [
+          "2026-10-15",
+          843400.0
+        ],
+        [
+          "2026-10-16",
+          831500.0
         ]
       ],
       "startTime": "2020-01-01",
-      "endTime": "2026-10-12",
+      "endTime": "2026-10-16",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_power_coal",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "pta_rate": {
       "providerId": "S019765727",
@@ -17463,12 +17487,28 @@
         [
           "2026-10-12",
           73.38
+        ],
+        [
+          "2026-10-13",
+          73.38
+        ],
+        [
+          "2026-10-14",
+          70.12
+        ],
+        [
+          "2026-10-15",
+          70.12
+        ],
+        [
+          "2026-10-16",
+          70.12
         ]
       ],
       "startTime": "2020-02-19",
-      "endTime": "2026-10-12",
+      "endTime": "2026-10-16",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_pta",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "methanol_rate": {
       "providerId": "S005439668",
@@ -18864,12 +18904,16 @@
         [
           "2026-10-09",
           92.15
+        ],
+        [
+          "2026-10-16",
+          88.94
         ]
       ],
       "startTime": "2020-01-03",
-      "endTime": "2026-10-09",
+      "endTime": "2026-10-16",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_methanol",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "car_wholesale": {
       "providerId": "S023782827",
@@ -20277,12 +20321,16 @@
         [
           "2026-09-30",
           84277.0
+        ],
+        [
+          "2026-10-11",
+          35005.0
         ]
       ],
       "startTime": "2020-01-12",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-11",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_car_wholesale",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "car_retail": {
       "providerId": "S023782829",
@@ -21694,12 +21742,16 @@
         [
           "2026-09-30",
           56743.0
+        ],
+        [
+          "2026-10-11",
+          41719.0
         ]
       ],
       "startTime": "2020-01-12",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-11",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_car_retail",
-      "sourceRetrievedAt": "2026-10-13"
+      "sourceRetrievedAt": "2026-10-19"
     },
     "broad_car_output_yoy": {
       "providerId": "S002811623",
@@ -26126,5 +26178,5 @@
       ]
     }
   },
-  "synchronizedAt": "2026-10-13T09:56:18.646983+08:00"
+  "synchronizedAt": "2026-10-19T13:46:03.651465+08:00"
 }

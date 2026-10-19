@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-09-15T15:54:50.419230+08:00",
+  "retrievedAt": "2026-10-19T13:44:39.503130+08:00",
   "trainingPolicy": "一致预期与模型输入物理隔离，仅用于预测结果评估",
   "series": {
     "actualMonthly": {
@@ -2757,17 +2757,5 @@
     "actualYtd 实时查询失败，保留已验证缓存 M001622303",
     "actualMomSa 实时查询失败，保留已验证缓存 M002822189",
     "consensus 实时查询失败，保留已验证缓存 M005682255"
-  ],
-  "officialSupplements": {
-    "2026-08-31": {
-      "source": "https://www.stats.gov.cn/sj/zxfb/202609/t20260915_1965307.html",
-      "keys": [
-        "actualMonthly",
-        "actualYtd",
-        "actualMomSa"
-      ],
-      "recordedAt": "2026-09-15T16:23:44.352653+08:00",
-      "reason": "iFinD quota exhausted before the official release was mirrored"
-    }
-  }
+  ]
 }

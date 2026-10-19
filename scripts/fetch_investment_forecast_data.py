@@ -160,10 +160,23 @@ def fetch(call_py: Path, checkpoint: Path | None = None, resume: bool = False) -
         errors = []
         now = datetime.now(ZoneInfo("Asia/Shanghai"))
         query = config["query"].replace("202608", now.strftime("%Y%m"))
+        if key in previous_series:
+            import re
+            from datetime import timedelta
+            latest = max(str(row[0])[:10] for row in previous_series[key]['observations'])
+            start = (datetime.fromisoformat(latest) - timedelta(days=45)).strftime('%Y%m%d')
+            query = re.sub(r'\d{6,8}-\d{6,8}', f'{start}-{now:%Y%m%d}', query)
         for attempt in range(3):
             try:
                 parsed = parse(call("edb", "get_edb_data", {"query": query}), config["providerId"])
                 parsed["role"] = config["role"]
+                if key in previous_series:
+                    previous = previous_series[key]
+                    if parsed['unit'] != previous['unit'] or parsed['frequency'] != previous['frequency']:
+                        raise RuntimeError('normalized unit/frequency mismatch during incremental merge')
+                    merged = {str(d)[:10]: v for d, v in previous['observations']}
+                    merged.update({str(d)[:10]: v for d, v in parsed['observations']})
+                    parsed['observations'] = sorted(merged.items())
                 result["series"][key] = parsed
                 break
             except Exception as error:

@@ -7,7 +7,8 @@ import argparse
 import importlib.util
 import json
 import os
-from datetime import datetime
+import re
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 from zoneinfo import ZoneInfo
@@ -175,10 +176,23 @@ def fetch(
             errors = []
             end_month = datetime.now(ZoneInfo("Asia/Shanghai")).strftime("%Y%m")
             queries = [query.replace("202608", end_month) for query in config["queries"]]
+            previous = cached.get('series', {}).get(key, {})
+            if previous.get('providerId') == config['providerId'] and previous.get('observations'):
+                latest = max(str(row[0])[:10] for row in previous['observations'])
+                start = (datetime.fromisoformat(latest) - timedelta(days=45)).strftime('%Y%m%d')
+                end = datetime.now(ZoneInfo('Asia/Shanghai')).strftime('%Y%m%d')
+                queries = [re.sub(r'\d{6,8}-\d{6,8}', f'{start}-{end}', q) for q in queries]
             for query in queries * 2:
                 try:
                     response = ifind_call("edb", "get_edb_data", {"query": query})
-                    payload["series"][key] = parse_payload(response, config["providerId"])
+                    candidate = parse_payload(response, config["providerId"])
+                    if previous.get('providerId') == config['providerId'] and previous.get('observations'):
+                        if candidate['unit'] != previous['unit'] or candidate['frequency'] != previous['frequency']:
+                            raise RuntimeError('industrial target unit/frequency mismatch')
+                        merged = {str(d)[:10]: v for d, v in previous['observations']}
+                        merged.update({str(d)[:10]: v for d, v in candidate['observations']})
+                        candidate['observations'] = sorted(merged.items())
+                    payload["series"][key] = candidate
                     break
                 except Exception as error:
                     errors.append(str(error))

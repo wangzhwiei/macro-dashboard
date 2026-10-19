@@ -5,10 +5,10 @@
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 197,
+    "history_weeks": 198,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
-    "stale_indicators": 2,
+    "stale_indicators": 1,
     "cadence_issues": 0,
     "required_provider_codes": 111,
     "mapped_provider_codes": 111,
@@ -16,9 +16,7 @@
   },
   "errors": [],
   "warnings": [
-    "secondhand 来源核验未通过，正在使用历史缓存：iFinD模糊匹配漂移：期望S004368947唯一命中，实际['S004368949']",
-    "glass_rate 来源核验未通过，正在使用历史缓存：iFinD多列响应缺少明确列映射，拒绝读取第一数值列",
-    "glass_rate 最新数据为2026-09-25，已滞后18天（weekly容忍14天）",
-    "gasoline_ex_factory_taxed 最新数据为2026-09-25，已滞后18天（weekly容忍14天）"
+    "px_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "px_rate 最新数据为2026-10-12，已滞后5个工作日（daily容忍4天）"
   ]
 }

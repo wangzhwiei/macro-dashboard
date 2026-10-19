@@ -1,7 +1,7 @@
 {
   "_meta": {
     "source": "iFinD EDB",
-    "retrievedAt": "2026-10-13T09:23:12.925061+08:00",
+    "retrievedAt": "2026-10-19T13:46:03.841365+08:00",
     "usage": "personal research",
     "field": "iFinD 预测平均值",
     "queryMode": "Chinese name discovery + fixed provider ID validation",
@@ -2300,6 +2300,17 @@
       "frequency": "M",
       "unit": "%",
       "retrievedAt": "2026-09-08T13:01:41.683095+08:00",
+      "imputed": false
+    },
+    {
+      "date": "2026-09-30",
+      "value": 50.0,
+      "source": "iFinD EDB",
+      "queryName": "预测平均值:PMI",
+      "providerId": "M005779145",
+      "frequency": "M",
+      "unit": "%",
+      "retrievedAt": "2026-10-19T13:46:03.841365+08:00",
       "imputed": false
     }
   ]

@@ -14,9 +14,9 @@ from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 try:
-    from scripts.ifind_response_compat import normalize, parse_search, bind_identity
+    from scripts.ifind_response_compat import normalize, saved_catalog
 except ModuleNotFoundError:
-    from ifind_response_compat import normalize, parse_search, bind_identity
+    from ifind_response_compat import normalize, saved_catalog
 
 
 def root():
@@ -93,35 +93,17 @@ def wrap_ifind_call(raw_call):
     if getattr(raw_call, '_shared_cache', False) is True:
         return raw_call
 
+    catalog = None
     def compatible(result, expected_id=None):
-        def search(meta):
-            tag = hashlib.sha256(json.dumps([today(), meta, expected_id, read(root() / 'generation.json').get('value', '')], sort_keys=True).encode()).hexdigest()
-            path = root() / 'identity' / (tag + '.json')
-            # A catalog search often returns several indicators. Reuse any
-            # prior catalog with an exact eight-field match, including end date.
-            for saved in (root() / 'identity').glob('*.json'):
-                prior = read(saved)
-                try:
-                    matched = bind_identity(meta, parse_search(prior))
-                    if expected_id and matched['displayId'] != expected_id:
-                        continue
-                    ledger('identity_cache_hit', tag)
-                    return prior
-                except (RuntimeError, KeyError, ValueError, TypeError):
-                    continue
-            cached = read(path)
-            if cached:
-                reject_quota(cached, tag)
-                return cached
-            if quota_blocked():
-                raise RuntimeError('iFinD接口额度耗尽：暂停目录搜索')
-            ledger('identity_search_attempt', tag)
-            query = f"指标编码{expected_id}，{meta['指标名称']}" if expected_id else meta['指标名称']
-            response = raw_call('edb', 'search_edb', {'query': query})
-            write(path, response)
-            reject_quota(response, tag)
-            return response
-        return normalize(result, search)
+        nonlocal catalog
+        data = payload(result)
+        if data.get('datas') or not data.get('indicator_description'):
+            return result
+        if catalog is None:
+            catalog = saved_catalog(root())
+        # Downstream fixed-ID checks remain unchanged. Never use the requested
+        # ID to disambiguate two different IDs with the same metadata signature.
+        return normalize(result, catalog=catalog)
 
     def call(server, tool, params):
         if server != 'edb' or tool != 'get_edb_data':
@@ -142,6 +124,14 @@ def wrap_ifind_call(raw_call):
             if 'error' in entry:
                 raise RuntimeError(entry['error'])
             return compatible(entry['response'], expected_id)
+        # Revalidate a rejected raw response locally, without spending quota on
+        # identical retries. Parser fixes take effect immediately on this evidence.
+        raw_path = root() / 'raw' / (key + '.json')
+        if not bypass and raw_path.exists() and time.time() - raw_path.stat().st_mtime < 900:
+            result = compatible(read(raw_path), expected_id)
+            if payload(result).get('datas'):
+                ledger('raw_cache_hit', key, identity)
+                return result
         shared_path = None
         if identity and identity.get('start') and identity.get('end'):
             tag = [identity['id'], identity['frequency'], day, epoch]

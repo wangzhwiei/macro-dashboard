@@ -178,13 +178,17 @@ def run_incremental(args: argparse.Namespace) -> int:
         # The industrial bridge uses the freshly extended dashboard series.
         # Re-estimating from stored official targets is cheap and keeps its
         # current-month estimate synchronized with the daily high-frequency data.
+        if 12 <= refresh_end.day <= 20:
+            industrial_source = ROOT / 'data' / 'industrial-value-model' / 'targets_consensus.json'
+            if not artifact_checked_today(industrial_source, refresh_end):
+                run_step('refresh industrial targets incrementally', [python, 'scripts/fetch_industrial_value_data.py', '--targets-only'])
         run_step("rerun frozen industrial model", [python, "scripts/industrial_value_forecast_model.py"])
         run_step(
             "publish industrial forecast",
             [python, "scripts/publish_industrial_value_forecasts.py", "--base", "public/data/forecasts.json"],
         )
 
-        if 9 <= refresh_end.day <= 18:
+        if 9 <= refresh_end.day <= 20:
             credit_source = ROOT / "data" / "credit-model" / "source_data.json"
             if not artifact_checked_today(credit_source, refresh_end):
                 run_step("refresh credit release-window inputs", [python, "scripts/fetch_credit_forecast_data.py", "--resume"])

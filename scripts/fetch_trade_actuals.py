@@ -9,6 +9,7 @@ import json
 import os
 import sys
 import time
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,11 +64,16 @@ def main() -> int:
     call = load_client()
     series = {}
     metadata = {}
+    path = ROOT / 'data/trade-model/trade_targets_ifind.csv'
+    previous = list(csv.DictReader(path.open(encoding='utf-8-sig'))) if path.exists() else []
     for index, (key, spec) in enumerate(EXPECTED.items()):
         if index:
             time.sleep(0.5)
-        rows, meta = fetch(call, spec)
-        series[key] = {row[0]: row[1] for row in rows}
+        start = (date.fromisoformat(max(r['date'][:10] for r in previous)) - timedelta(days=45)).strftime('%Y%m%d') if previous else '20200101'
+        request = dict(spec, query=f"{spec['query']}（{start}-{date.today():%Y%m%d}）")
+        rows, meta = fetch(call, request)
+        series[key] = {r['date']: float(r[key+'_yoy']) for r in previous if r.get(key+'_yoy')}
+        series[key].update({row[0]: row[1] for row in rows})
         metadata[key] = {"query": spec["query"], "attrs": meta, "rows": len(rows), "latest": rows[0]}
         print(f"[OK] {key}: {len(rows)}条, 最新={rows[0]}")
     dates = sorted(set(series["exports"]) | set(series["imports"]))
@@ -76,8 +82,8 @@ def main() -> int:
     with (out / "trade_targets_ifind.csv").open("w", encoding="utf-8", newline="") as handle:
         writer = csv.writer(handle)
         writer.writerow(["date", "exports_yoy", "imports_yoy"])
-        for date in dates:
-            writer.writerow([date, series["exports"].get(date), series["imports"].get(date)])
+        for observed_day in dates:
+            writer.writerow([observed_day, series["exports"].get(observed_day), series["imports"].get(observed_day)])
     (out / "trade_targets_ifind.meta.json").write_text(
         json.dumps({"source": "iFinD EDB / 海关总署", "series": metadata}, ensure_ascii=False, indent=2), encoding="utf-8")
     return 0
