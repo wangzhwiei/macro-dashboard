@@ -1,0 +1,16 @@
+{
+  "provenance": "Original iFinD native datas.attrs in archived trade-partner-import-ifind-probes.json; not inferred from query",
+  "catalog": [
+    {
+      "displayId": "G002610107",
+      "indexName": "中国台湾:进口总额:美元:大陆",
+      "freq": "M",
+      "unit": "美元",
+      "node": "中国台湾",
+      "country": "中国",
+      "dataSource": "台湾统计局",
+      "startDate": "20000131",
+      "endDate": "20260731"
+    }
+  ]
+}

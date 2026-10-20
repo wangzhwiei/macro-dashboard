@@ -51,6 +51,7 @@ function HistoryChart({ rows, precision }: { rows: ForecastHistoryPoint[]; preci
   const backtestIndex = rows.findIndex((row) => row.date >= "2023-01-01");
   const latest = [...rows].reverse().find((row) => row.forecast !== null || row.actual !== null);
   return <>
+    {rows.some(row=>row.forecastKind==="retrospective_reconstruction") && <p role="note">事后复算月份：{rows.filter(row=>row.forecastKind==="retrospective_reconstruction").map(row=>row.date.slice(0,7)).join("、")}。这些模型值使用补齐后的数据重建，并非公布前实际发布的预测。</p>}
     <div className="forecast-v2-legend" aria-label="图例"><span><i className="actual" />真实公布值</span><span><i className="model" />月末无前视模型值</span><span><i className="locked" />当前确认点预测</span><span><i className="consensus" />市场一致预期（有数据时）</span></div>
     <div className="forecast-v2-chart-shell">
       <div className="forecast-v2-reading"><span>{(hover ?? latest)?.date.slice(0, 7)}</span><strong>{(hover ? hover.actual : (latest?.actual ?? latest?.forecast))?.toFixed(precision) ?? "—"}</strong><small>{hover ? `一致预期 ${hover.consensus?.toFixed(precision) ?? "—"} / 模型 ${hover.forecast?.toFixed(precision) ?? "—"}` : "最新月度读数"}</small></div>

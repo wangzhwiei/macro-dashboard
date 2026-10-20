@@ -131,7 +131,13 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
                     if consensus is not None else None
                 ),
                 "consensusCarriedForward": consensus_carried_forward,
-                "forecastKind": "walk_forward" if pd.notna(forecast) and pd.notna(actual) else None,
+                "forecastKind": (
+                    "retrospective_reconstruction" if pd.notna(forecast) and (
+                        previously_published.get(date_key, {}).get("forecastKind") == "retrospective_reconstruction"
+                        or (previously_published.get(date_key, {}).get("forecast") is None
+                            and previously_published.get(date_key, {}).get("actual") is not None)
+                    ) else "walk_forward" if pd.notna(forecast) and pd.notna(actual) else None
+                ),
                 "officialRounding": round(float(forecast), 1) if pd.notna(forecast) else None,
             })
         payload.setdefault("history", {})[key] = history

@@ -24,7 +24,7 @@ SPECS = (
     },
     {
         "file": "partner", "key": "taiwan_imports_from_mainland_value",
-        "query": "中国台湾:进口总额:美元:大陆", "id": "G002610107",
+        "query": "中国台湾:进口总额:美元:大陆，唯一指标编码G002610107，月度当月值，月频M，不要年度Y、累计值或同比", "id": "G002610107",
         "name": "中国台湾:进口总额:美元:大陆", "unit": "美元", "source": "台湾统计局",
     },
     {

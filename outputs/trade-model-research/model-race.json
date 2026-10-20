@@ -89,36 +89,36 @@
           "sample_end": "2026-09"
         },
         "destination_import_bridge": {
-          "rmse": 6.6997,
-          "mae": 4.434,
+          "rmse": 6.5591,
+          "mae": 4.3104,
           "direction_hit_pct": 88.89,
           "observations": 27,
           "sample_start": "2024-07",
           "sample_end": "2026-09"
         },
         "destination_import_cny_gated": {
-          "rmse": 5.3314,
-          "mae": 3.8401,
+          "rmse": 5.1533,
+          "mae": 3.7165,
           "direction_hit_pct": 88.89,
           "observations": 27,
           "sample_start": "2024-07",
           "sample_end": "2026-09"
         },
         "export_fixed_bridge": {
-          "rmse": 6.6275,
-          "mae": 4.3364,
-          "direction_hit_pct": 86.96,
-          "observations": 23,
+          "rmse": 6.5968,
+          "mae": 4.4,
+          "direction_hit_pct": 87.5,
+          "observations": 24,
           "sample_start": "2024-10",
-          "sample_end": "2026-08"
+          "sample_end": "2026-09"
         },
         "export_fixed_cny_gated": {
-          "rmse": 4.9427,
-          "mae": 3.5143,
-          "direction_hit_pct": 91.3,
-          "observations": 23,
+          "rmse": 4.9833,
+          "mae": 3.6121,
+          "direction_hit_pct": 91.67,
+          "observations": 24,
           "sample_start": "2024-10",
-          "sample_end": "2026-08"
+          "sample_end": "2026-09"
         },
         "consensus": {
           "rmse": 4.9299,
@@ -195,36 +195,36 @@
           "sample_end": "2026-09"
         },
         "destination_import_bridge": {
-          "rmse": 5.3567,
-          "mae": 3.8901,
+          "rmse": 5.1643,
+          "mae": 3.7565,
           "direction_hit_pct": 88.0,
           "observations": 25,
           "sample_start": "2024-07",
           "sample_end": "2026-09"
         },
         "destination_import_cny_gated": {
-          "rmse": 4.2893,
-          "mae": 3.368,
+          "rmse": 4.0469,
+          "mae": 3.2343,
           "direction_hit_pct": 88.0,
           "observations": 25,
           "sample_start": "2024-07",
           "sample_end": "2026-09"
         },
         "export_fixed_bridge": {
-          "rmse": 5.2112,
-          "mae": 3.6391,
-          "direction_hit_pct": 85.71,
-          "observations": 21,
+          "rmse": 5.2409,
+          "mae": 3.74,
+          "direction_hit_pct": 86.36,
+          "observations": 22,
           "sample_start": "2024-10",
-          "sample_end": "2026-08"
+          "sample_end": "2026-09"
         },
         "export_fixed_cny_gated": {
-          "rmse": 3.9616,
-          "mae": 2.9338,
-          "direction_hit_pct": 90.48,
-          "observations": 21,
+          "rmse": 4.0656,
+          "mae": 3.0667,
+          "direction_hit_pct": 90.91,
+          "observations": 22,
           "sample_start": "2024-10",
-          "sample_end": "2026-08"
+          "sample_end": "2026-09"
         },
         "consensus": {
           "rmse": 4.9299,
@@ -235,7 +235,7 @@
           "sample_end": "2026-09"
         }
       },
-      "common_sample_winner": "export_fixed_cny_gated",
+      "common_sample_winner": "destination_import_cny_gated",
       "missing_consensus_months": [
         "2026-01",
         "2026-02"
@@ -288,8 +288,8 @@
         "corrected_export_residual_correction": 0.0,
         "destination_import_features": [
           "korea_imports_from_china_yoy_lag0",
-          "thailand_imports_from_china_yoy_lag1",
-          "taiwan_imports_from_mainland_yoy_lag2"
+          "taiwan_imports_from_mainland_yoy_lag1",
+          "thailand_imports_from_china_yoy_lag1"
         ],
         "destination_import_correlations": {
           "us_imports_from_china_yoy_lag1": -0.2859274781631032,
@@ -307,9 +307,9 @@
           "eu27_imports_from_china_yoy_lag2": 0.3729986671010232,
           "eu27_imports_from_china_yoy_lag3": 0.22820872895098468,
           "eu27_imports_from_china_yoy_lag4": 0.14734245799703755,
-          "taiwan_imports_from_mainland_yoy_lag1": 0.7609940030593504,
-          "taiwan_imports_from_mainland_yoy_lag2": 0.5076314062301048,
-          "taiwan_imports_from_mainland_yoy_lag3": 0.5634360071097964,
+          "taiwan_imports_from_mainland_yoy_lag1": 0.760962822860109,
+          "taiwan_imports_from_mainland_yoy_lag2": 0.5076660968800626,
+          "taiwan_imports_from_mainland_yoy_lag3": 0.5638219873444449,
           "malaysia_imports_from_china_yoy_lag1": 0.21042261351335914,
           "malaysia_imports_from_china_yoy_lag2": 0.46456868880951896,
           "malaysia_imports_from_china_yoy_lag3": 0.4766878818065644,
@@ -318,9 +318,9 @@
           "thailand_imports_from_china_yoy_lag3": 0.5122762275102912
         },
         "destination_import_contributions": {
-          "korea_imports_from_china_yoy_lag0": 19.79523031065064,
-          "thailand_imports_from_china_yoy_lag1": 2.26606306629346,
-          "taiwan_imports_from_mainland_yoy_lag2": 0.44082453466037885
+          "korea_imports_from_china_yoy_lag0": 14.231949479962728,
+          "taiwan_imports_from_mainland_yoy_lag1": 11.784998861810699,
+          "thailand_imports_from_china_yoy_lag1": -0.13883433239954468
         },
         "cny_calendar_gate_active": false,
         "cny_calendar_features": [],
@@ -334,14 +334,22 @@
           "taiwan_imports_from_mainland_yoy_lag1",
           "thailand_imports_from_china_yoy_lag1"
         ],
-        "export_fixed_contributions": {},
+        "export_fixed_contributions": {
+          "korea_imports_from_china_yoy_lag0": 14.231949479962728,
+          "taiwan_imports_from_mainland_yoy_lag1": 11.784998861810699,
+          "thailand_imports_from_china_yoy_lag1": -0.13883433239954468
+        },
         "export_fixed_cny_gate_active": false,
         "export_fixed_cny_features": [
           "korea_imports_from_china_yoy_lag0",
           "taiwan_imports_from_mainland_yoy_lag1",
           "thailand_imports_from_china_yoy_lag1"
         ],
-        "export_fixed_cny_contributions": {},
+        "export_fixed_cny_contributions": {
+          "korea_imports_from_china_yoy_lag0": 14.231949479962728,
+          "taiwan_imports_from_mainland_yoy_lag1": 11.784998861810699,
+          "thailand_imports_from_china_yoy_lag1": -0.13883433239954468
+        },
         "import_fixed_features": [],
         "import_fixed_contributions": {},
         "import_fixed_cny_gate_active": false,
@@ -354,14 +362,13 @@
         "status": "WAITING_FOR_FIXED_FACTORS",
         "missing_factors": [
           "korea_imports_from_china_yoy_lag0",
-          "taiwan_imports_from_mainland_yoy_lag1",
           "thailand_imports_from_china_yoy_lag1"
         ],
         "earliest_factor_release_date": "2026-11-01",
         "method": "export_fixed_factors_cny_gated",
         "model_version": "fixed_factors_cny_gated_v1",
         "ungated_model_forecast": null,
-        "legacy_dynamic_model_forecast": 28.8312,
+        "legacy_dynamic_model_forecast": 31.015456,
         "previous_actual_anchor": 36.1021,
         "predicted_change": 0.0,
         "selected_factors": [
@@ -385,9 +392,9 @@
           "eu27_imports_from_china_yoy_lag2": 0.3729986671010232,
           "eu27_imports_from_china_yoy_lag3": 0.22820872895098468,
           "eu27_imports_from_china_yoy_lag4": 0.1315547377687574,
-          "taiwan_imports_from_mainland_yoy_lag1": 0.7609940030593504,
-          "taiwan_imports_from_mainland_yoy_lag2": 0.5305062353246196,
-          "taiwan_imports_from_mainland_yoy_lag3": 0.5842279552186019,
+          "taiwan_imports_from_mainland_yoy_lag1": 0.78764595083516,
+          "taiwan_imports_from_mainland_yoy_lag2": 0.5304937166615522,
+          "taiwan_imports_from_mainland_yoy_lag3": 0.5845149814421656,
           "malaysia_imports_from_china_yoy_lag1": 0.21042261351335914,
           "malaysia_imports_from_china_yoy_lag2": 0.46456868880951896,
           "malaysia_imports_from_china_yoy_lag3": 0.5967160178935852,
@@ -417,14 +424,14 @@
         ],
         "export_factor_contributions": {},
         "destination_import_features": [
+          "taiwan_imports_from_mainland_yoy_lag1",
           "korea_imports_from_china_yoy_lag1",
-          "taiwan_imports_from_mainland_yoy_lag3",
           "thailand_imports_from_china_yoy_lag2"
         ],
         "destination_import_contributions": {
-          "korea_imports_from_china_yoy_lag1": 19.63956586589784,
-          "taiwan_imports_from_mainland_yoy_lag3": 3.641375227326939,
-          "thailand_imports_from_china_yoy_lag2": 0.3664973592311252
+          "taiwan_imports_from_mainland_yoy_lag1": 11.962982292745576,
+          "korea_imports_from_china_yoy_lag1": 12.42446625754764,
+          "thailand_imports_from_china_yoy_lag2": 1.4442452074350258
         },
         "cny_calendar_gate_active": false,
         "cny_calendar_features": [

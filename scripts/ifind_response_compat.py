@@ -114,6 +114,10 @@ def normalize(response, search=None, catalog=None):
 def saved_catalog(cache_root):
     """Read old provider-issued IDs; never infer an ID from a query or name."""
     output = []
+    from pathlib import Path
+    archive = Path(__file__).resolve().parents[1] / 'data/trade-model/fixed_factor_provider_catalog.json'
+    if archive.exists():
+        output.extend(json.loads(archive.read_text(encoding='utf-8'))['catalog'])
     # These provider attrs were saved only after the original trade fetcher
     # checked returned name, ID, frequency, unit, country and source exactly.
     from pathlib import Path

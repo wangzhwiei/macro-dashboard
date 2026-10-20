@@ -8,7 +8,7 @@ export interface ForecastHistoryPoint {
   consensus: number | null;
   consensusSource?: string | null;
   consensusCarriedForward?: boolean;
-  forecastKind?: "walk_forward" | "confirmed_nowcast" | "live_nowcast" | null;
+  forecastKind?: "walk_forward" | "confirmed_nowcast" | "live_nowcast" | "retrospective_reconstruction" | null;
   officialRounding?: number | null;
 }
 
