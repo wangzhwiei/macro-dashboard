@@ -1,4 +1,4 @@
-date,model,legacyModel,consensus,actual,predictedMonthlyFlowTrillion,predictedComparableCumulativeTrillion,comparableBaseTrillion,kind
+﻿date,model,legacyModel,consensus,actual,predictedMonthlyFlowTrillion,predictedComparableCumulativeTrillion,comparableBaseTrillion,kind
 2023-03,,4.870551,5.378571,5.1,,,,walk_forward
 2023-04,,4.677996,5.377778,4.7,,,15.358267,walk_forward
 2023-05,3.505094,4.415932,4.43125,4.0,5.235718,21.315824,20.593985,walk_forward
@@ -35,8 +35,8 @@ date,model,legacyModel,consensus,actual,predictedMonthlyFlowTrillion,predictedCo
 2026-03,,2.446365,1.444444,1.7,,,,walk_forward
 2026-04,,1.758276,1.657143,-1.6,,,17.425689,walk_forward
 2026-05,-2.527827,-1.614585,-2.0,-4.1,5.367839,22.514717,23.098609,walk_forward
-2026-06,-4.796272,-3.753381,-1.555,-5.7,6.506418,28.657984,30.101746,walk_forward
+2026-06,-4.796271,-3.753381,-1.555,-5.7,6.506418,28.657984,30.101746,walk_forward
 2026-07,-5.981265,-5.459402,-5.666667,-6.7,4.335775,32.721722,34.803406,walk_forward
-2026-08,-6.925171,-6.310459,-7.02,-7.2,4.164147,36.635725,39.361582,walk_forward
+2026-08,-6.92517,-6.310459,-7.02,-7.2,4.164147,36.635725,39.361582,walk_forward
 2026-09,-7.394954,,-0.905263,-7.2,4.855946,41.383494,44.688163,walk_forward
-2026-10,-7.36765,,,,4.227707,45.698322,49.333005,live_nowcast
+2026-10,-7.367721,,,,4.227671,45.698286,49.333005,live_nowcast

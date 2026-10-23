@@ -43,10 +43,10 @@
     }
   },
   "monthlyModelInputs": {
-    "cpi": 0.369883,
-    "ppi": 5.513971,
-    "pmi": 50.122258,
-    "industrial_value": 4.911305
+    "cpi": 0.360664,
+    "ppi": 5.582305,
+    "pmi": 50.113279,
+    "industrial_value": 5.033216
   },
   "informationSet": {
     "historicalBacktest": {

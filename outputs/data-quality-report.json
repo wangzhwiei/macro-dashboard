@@ -5,10 +5,10 @@
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 198,
+    "history_weeks": 199,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
-    "stale_indicators": 1,
+    "stale_indicators": 7,
     "cadence_issues": 0,
     "required_provider_codes": 111,
     "mapped_provider_codes": 111,
@@ -16,7 +16,20 @@
   },
   "errors": [],
   "warnings": [
+    "polyester_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "polyester_rate 最新数据为2026-10-16，已滞后5个工作日（daily容忍4天）",
+    "copper_inventory 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "copper_inventory 最新数据为2026-10-16，已滞后5个工作日（daily容忍4天）",
+    "glass_spot 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "glass_spot 最新数据为2026-10-16，已滞后5个工作日（daily容忍4天）",
+    "pta_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "pta_rate 最新数据为2026-10-16，已滞后5个工作日（daily容忍4天）",
     "px_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
-    "px_rate 最新数据为2026-10-12，已滞后5个工作日（daily容忍4天）"
+    "px_rate 最新数据为2026-10-12，已滞后9个工作日（daily容忍4天）",
+    "methanol_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "lme_copper_inventory 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
+    "lme_copper_inventory 最新数据为2026-10-16，已滞后5个工作日（daily容忍4天）",
+    "iron_ore_futures 来源核验未通过，正在使用历史缓存：iFinD metadata does not uniquely match catalog identity",
+    "iron_ore_futures 最新数据为2026-10-16，已滞后5个工作日（daily容忍4天）"
   ]
 }
