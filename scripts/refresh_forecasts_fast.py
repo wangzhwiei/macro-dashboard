@@ -160,7 +160,9 @@ def main() -> int:
         })
     payload["daily"] = daily
     payload["dailyAsOf"] = max(rows[-1]["date"] for rows in daily.values() if rows)
-    for section in ("daily", "history", "models", "metrics"):
+    # Keep published trade history immutable for the downstream trade publisher.
+    # Removing it loses both real-time forecasts and retrospective provenance.
+    for section in ("daily", "models", "metrics"):
         for trade_key in ("imports", "exports"):
             payload.get(section, {}).pop(trade_key, None)
     payload.get("highFrequency", {}).pop("进出口", None)
