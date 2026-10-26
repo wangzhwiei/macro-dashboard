@@ -413,7 +413,7 @@
         ],
         "hf_contributions": {
           "usdcny_m3": 2.1614045863866163,
-          "cfets_m3": 0.2534842536268224,
+          "cfets_m3": 0.23348430411955343,
           "ccfi_m3": -0.031522528416587585
         },
         "export_seasonal_backbone": 15.787368,
@@ -448,7 +448,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-10-23T08:28:28.201240+00:00"
+        "data_as_of": "2026-10-26T02:52:45.488134+00:00"
       }
     },
     "imports": {
@@ -775,7 +775,7 @@
           "contributions": {},
           "original_model_preserved": true
         },
-        "data_as_of": "2026-10-23T08:28:28.201240+00:00"
+        "data_as_of": "2026-10-26T02:52:45.488134+00:00"
       }
     }
   }

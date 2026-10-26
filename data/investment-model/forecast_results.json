@@ -9,14 +9,14 @@
   "method": "forecast bias-corrected monthly fixed investment amount from high-frequency and existing monthly-model signals, accumulate to a fixed amount, then convert with a walk-forward comparable base",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "current": {
-    "model": -7.367721,
+    "model": -7.36702,
     "unit": "%",
     "approx68PctRange": [
       -8.04,
       -6.7
     ],
-    "predictedMonthlyFlowTrillion": 4.227671,
-    "predictedComparableCumulativeTrillion": 45.698286,
+    "predictedMonthlyFlowTrillion": 4.228017,
+    "predictedComparableCumulativeTrillion": 45.698632,
     "comparableBaseTrillion": 49.333005,
     "consensus": null,
     "onlineFlowWeights": {
@@ -641,12 +641,12 @@
     },
     {
       "date": "2026-10",
-      "model": -7.367721,
+      "model": -7.36702,
       "legacyModel": null,
       "consensus": null,
       "actual": null,
-      "predictedMonthlyFlowTrillion": 4.227671,
-      "predictedComparableCumulativeTrillion": 45.698286,
+      "predictedMonthlyFlowTrillion": 4.228017,
+      "predictedComparableCumulativeTrillion": 45.698632,
       "comparableBaseTrillion": 49.333005,
       "kind": "live_nowcast"
     }

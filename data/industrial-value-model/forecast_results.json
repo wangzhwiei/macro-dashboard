@@ -10,7 +10,7 @@
   "asOf": "2026-10-23",
   "latest": {
     "date": "2026-10-31",
-    "model": 5.033216,
+    "model": 5.046402,
     "selectedFactors": [
       "known_fixed_volume_carry",
       "power_coal",
@@ -78,12 +78,12 @@
       "car_retail_yoy_level"
     ],
     "knownFixedVolumeCarry": 4.725922,
-    "baseModel": 5.211282,
-    "uncalibratedModel": 4.953328,
+    "baseModel": 5.211305,
+    "uncalibratedModel": 4.966514,
     "historicalErrorCorrection": 0.079888,
-    "reportResidualModel": 4.665184,
+    "reportResidualModel": 4.387529,
     "reportOnlineWeight": 0.398665,
-    "individualResidualModel": 4.952966,
+    "individualResidualModel": 4.967267,
     "individualOnlineWeight": 0.991077,
     "consensus": null,
     "actual": null,
@@ -98,7 +98,7 @@
       "recentCorrelation": -0.069265,
       "stableAbsCorrelation": 0.0,
       "observations": 63,
-      "latestSignal": 1.958255
+      "latestSignal": 1.974811
     },
     {
       "name": "blast_furnace",
@@ -3754,7 +3754,7 @@
     },
     {
       "date": "2026-10-31",
-      "model": 5.033216,
+      "model": 5.046402,
       "selectedFactors": [
         "known_fixed_volume_carry",
         "power_coal",
@@ -3822,12 +3822,12 @@
         "car_retail_yoy_level"
       ],
       "knownFixedVolumeCarry": 4.725922,
-      "baseModel": 5.211282,
-      "uncalibratedModel": 4.953328,
+      "baseModel": 5.211305,
+      "uncalibratedModel": 4.966514,
       "historicalErrorCorrection": 0.079888,
-      "reportResidualModel": 4.665184,
+      "reportResidualModel": 4.387529,
       "reportOnlineWeight": 0.398665,
-      "individualResidualModel": 4.952966,
+      "individualResidualModel": 4.967267,
       "individualOnlineWeight": 0.991077,
       "consensus": null,
       "actual": null,
@@ -4288,8 +4288,8 @@
       "role": "diffusion",
       "providerId": null,
       "start": "2023-01-03",
-      "end": "2026-10-22",
-      "observations": 898
+      "end": "2026-10-23",
+      "observations": 899
     },
     "power_coal": {
       "family": "energy",
@@ -4297,8 +4297,8 @@
       "role": "diffusion",
       "providerId": "S003839324",
       "start": "2020-01-01",
-      "end": "2026-10-22",
-      "observations": 2067
+      "end": "2026-10-23",
+      "observations": 2068
     },
     "pta_rate": {
       "family": "chemical",
@@ -4306,8 +4306,8 @@
       "role": "diffusion",
       "providerId": "S019765727",
       "start": "2020-02-19",
-      "end": "2026-10-22",
-      "observations": 1604
+      "end": "2026-10-23",
+      "observations": 1605
     },
     "methanol_rate": {
       "family": "chemical",
