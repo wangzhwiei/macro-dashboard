@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: [self-hosted, cjhx-internal, windows]
+    runs-on: ${{ inputs.mode == 'publish_only' && 'windows-latest' || fromJSON('["self-hosted","cjhx-internal","windows"]') }}
     timeout-minutes: 45
     env:
       MACRO_DATA_ADAPTER: hybrid
