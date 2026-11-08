@@ -135,6 +135,18 @@ def _cache_busted_url(url: str, nonce: int | None = None) -> str:
 
 
 def _download_cjhx_csv() -> Path:
+    # Optional authenticated download of the exact upstream GitHub blob when
+    # raw.githubusercontent.com is unreachable. Verify bytes before parsing.
+    snapshot = os.environ.get('CJHX_VERIFIED_SNAPSHOT')
+    if snapshot:
+        path = Path(snapshot)
+        expected = os.environ.get('CJHX_VERIFIED_SNAPSHOT_SHA256', '')
+        content = path.read_bytes()
+        if not re.fullmatch(r'[a-f0-9]{64}', expected) or hashlib.sha256(content).hexdigest() != expected:
+            raise RuntimeError('CJHX supplied snapshot hash verification failed')
+        if not content.decode('utf-8-sig').startswith('series_key,date,indicator_code,indicator_name,value,error'):
+            raise RuntimeError('CJHX supplied snapshot schema mismatch')
+        return path
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     cached = CACHE_DIR / "macro_extract_70_results.csv"
     # The upstream file is already an incremental consolidated snapshot and is

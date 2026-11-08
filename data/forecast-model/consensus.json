@@ -1,7 +1,7 @@
 {
   "_meta": {
     "source": "iFinD EDB",
-    "retrievedAt": "2026-10-23T16:29:40.349189+08:00",
+    "retrievedAt": "2026-11-08T22:47:57.547206+08:00",
     "usage": "personal research",
     "field": "iFinD 预测平均值",
     "queryMode": "Chinese name discovery + fixed provider ID validation",
@@ -772,6 +772,17 @@
       "unit": "%",
       "retrievedAt": "2026-10-13T09:23:12.925061+08:00",
       "imputed": false
+    },
+    {
+      "date": "2026-10-31",
+      "value": 0.8286,
+      "source": "iFinD EDB",
+      "queryName": "预测平均值:CPI:当月同比",
+      "providerId": "M005682252",
+      "frequency": "M",
+      "unit": "%",
+      "retrievedAt": "2026-11-08T22:47:57.547206+08:00",
+      "imputed": false
     }
   ],
   "ppi": [
@@ -1532,6 +1543,17 @@
       "frequency": "M",
       "unit": "%",
       "retrievedAt": "2026-10-13T09:23:12.925061+08:00",
+      "imputed": false
+    },
+    {
+      "date": "2026-10-31",
+      "value": 4.5111,
+      "source": "iFinD EDB",
+      "queryName": "预测平均值:PPI:当月同比",
+      "providerId": "M005682253",
+      "frequency": "M",
+      "unit": "%",
+      "retrievedAt": "2026-11-08T22:47:57.547206+08:00",
       "imputed": false
     }
   ],
@@ -2311,6 +2333,17 @@
       "frequency": "M",
       "unit": "%",
       "retrievedAt": "2026-10-19T13:46:03.841365+08:00",
+      "imputed": false
+    },
+    {
+      "date": "2026-10-31",
+      "value": 49.8,
+      "source": "iFinD EDB",
+      "queryName": "预测平均值:PMI",
+      "providerId": "M005779145",
+      "frequency": "M",
+      "unit": "%",
+      "retrievedAt": "2026-11-08T22:47:57.547206+08:00",
       "imputed": false
     }
   ]

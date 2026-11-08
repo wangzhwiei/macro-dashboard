@@ -5,7 +5,7 @@
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 199,
+    "history_weeks": 201,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
     "stale_indicators": 2,
@@ -16,17 +16,7 @@
   },
   "errors": [],
   "warnings": [
-    "bill_6m 来源核验未通过，正在使用历史缓存：iFinD未返回指标候选，无法核验编码：# 查询结果\n抱歉，本次EDB数据查询未返回有效结果\n# 可能原因\n-1.查询内容表述不够明确或指标名称有误\n-2.所查询的宏观指标不存在\n-3.接口服务暂时不可用",
-    "polyester_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
-    "polyester_rate 最新数据为2026-10-16，已滞后6个工作日（daily容忍4天）",
-    "coking_rate 来源核验未通过，正在使用历史缓存：iFinD observation outside metadata coverage",
-    "eia_crude_inventory 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数",
-    "wire_inventory 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数",
-    "nanhua_agri 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数",
-    "nanhua_energy 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数",
-    "nanhua_metals 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数",
-    "iron_ore_futures 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数",
-    "iron_ore_futures 最新数据为2026-10-16，已滞后6个工作日（daily容忍4天）",
-    "gasoline_ex_factory_taxed 来源核验未通过，正在使用历史缓存：iFinD接口额度耗尽：全流程暂停取数；恢复额度后请选择强制重新取数"
+    "px_rate 最新数据为2026-10-22，已滞后11个工作日（daily容忍4天）",
+    "nanhua_metals 最新数据为2026-10-23，已滞后10个工作日（daily容忍4天）"
   ]
 }

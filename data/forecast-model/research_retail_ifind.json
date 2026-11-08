@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-10-19",
+  "end": "2026-11-08",
   "series": {
     "actual_retail_yoy": {
       "key": "actual_retail_yoy",
@@ -713,7 +713,7 @@
       "noDateSuffix": true,
       "name": "预测平均值:社会消费品零售总额:当月同比",
       "startTime": "2021-04-30",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -963,6 +963,10 @@
         [
           "2026-09-30",
           0.7375
+        ],
+        [
+          "2026-10-31",
+          0.82
         ]
       ],
       "providerUnit": "%",
@@ -3437,7 +3441,7 @@
       "unit": "%",
       "name": "非制造业PMI:商务活动",
       "startTime": "2010-01-31",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -4243,6 +4247,10 @@
         [
           "2026-09-30",
           50.2
+        ],
+        [
+          "2026-10-31",
+          49.7
         ]
       ],
       "providerUnit": "%",
@@ -4257,7 +4265,7 @@
       "unit": "%",
       "name": "非制造业PMI:新订单",
       "startTime": "2010-01-31",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -5063,6 +5071,10 @@
         [
           "2026-09-30",
           46.5
+        ],
+        [
+          "2026-10-31",
+          44.4
         ]
       ],
       "providerUnit": "%",
@@ -5077,7 +5089,7 @@
       "unit": "%",
       "name": "非制造业PMI:服务业",
       "startTime": "2012-02-29",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -5783,6 +5795,10 @@
         [
           "2026-09-30",
           50.2
+        ],
+        [
+          "2026-10-31",
+          50.0
         ]
       ],
       "providerUnit": "%",
@@ -6513,7 +6529,7 @@
       "unit": "%",
       "name": "非制造业PMI:服务业:业务活动预期",
       "startTime": "2017-06-30",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -6963,6 +6979,10 @@
         [
           "2026-09-30",
           55.5
+        ],
+        [
+          "2026-10-31",
+          55.2
         ]
       ],
       "providerUnit": "%",

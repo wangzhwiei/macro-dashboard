@@ -4,16 +4,16 @@
   "modelFrozen": true,
   "modelFrozenAt": "2026-08-25",
   "forecastMonth": "2026-10",
-  "dataRetrievedAt": "2026-10-19T13:39:03.913239+08:00",
+  "dataRetrievedAt": "2026-11-08T22:49:55.154339+08:00",
   "method": "target-specific no-leakage models: M2 balance-change bridge converted back to YoY; seasonal-drift, bill-rate overlay and online residual correction for loans; structural and official-component TSF challengers with robust same-month shrinkage and online residual correction",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning and model selection",
   "current": {
     "m2_yoy": {
       "model": 7.21,
-      "consensus": null,
+      "consensus": 7.2667,
       "unit": "%",
-      "gapVsConsensus": null,
-      "consensusStatus": "not_yet_published",
+      "gapVsConsensus": -0.06,
+      "consensusStatus": "available",
       "approx68PctRange": [
         6.93,
         7.49
@@ -21,10 +21,10 @@
     },
     "new_rmb_loans": {
       "model": 0.05,
-      "consensus": null,
+      "consensus": -0.0376,
       "unit": "万亿元",
-      "gapVsConsensus": null,
-      "consensusStatus": "not_yet_published",
+      "gapVsConsensus": 0.09,
+      "consensusStatus": "available",
       "approx68PctRange": [
         -0.27,
         0.37
@@ -32,10 +32,10 @@
     },
     "social_financing": {
       "model": 1.18,
-      "consensus": null,
+      "consensus": 1.41983333,
       "unit": "万亿元",
-      "gapVsConsensus": null,
-      "consensusStatus": "not_yet_published",
+      "gapVsConsensus": -0.24,
+      "consensusStatus": "available",
       "approx68PctRange": [
         0.65,
         1.71
@@ -43,10 +43,10 @@
     }
   },
   "monthlyModelInputs": {
-    "cpi": 0.360664,
-    "ppi": 5.582305,
-    "pmi": 50.113279,
-    "industrial_value": 5.046402
+    "cpi": 0.306243,
+    "ppi": 5.630566,
+    "pmi": 50.169762,
+    "industrial_value": 5.026089
   },
   "informationSet": {
     "historicalBacktest": {
@@ -61,7 +61,7 @@
       ]
     },
     "liveMonth": {
-      "asOf": "2026-10-19T13:39:03.913239+08:00",
+      "asOf": "2026-11-08T22:49:55.154339+08:00",
       "policy": "use released actual when available; otherwise use the project's generated no-consensus forecast"
     }
   },
@@ -306,9 +306,9 @@
         "sampleEnd": "2026-09"
       },
       "consensus": {
-        "rmse": 0.371194,
-        "mae": 0.287981,
-        "bias": -0.045129,
+        "rmse": 0.372671,
+        "mae": 0.2897,
+        "bias": -0.043417,
         "observations": 24,
         "sampleStart": "2024-10",
         "sampleEnd": "2026-09"
@@ -346,9 +346,9 @@
         "sampleEnd": "2026-09"
       },
       "consensus": {
-        "rmse": 0.417751,
-        "mae": 0.352648,
-        "bias": -0.100868,
+        "rmse": 0.417752,
+        "mae": 0.352649,
+        "bias": -0.100869,
         "observations": 25,
         "sampleStart": "2024-09",
         "sampleEnd": "2026-09"
@@ -366,8 +366,8 @@
     "social_financing": {
       "passed": false,
       "modelRmse": 0.525804,
-      "consensusRmse": 0.417751,
-      "remainingGap": 0.108053
+      "consensusRmse": 0.417752,
+      "remainingGap": 0.108052
     }
   },
   "history": {
@@ -417,19 +417,19 @@
       {
         "date": "2022-04",
         "model": null,
-        "consensus": 9.817647,
+        "consensus": 9.8176,
         "actual": 10.5
       },
       {
         "date": "2022-05",
         "model": null,
-        "consensus": 10.478571,
+        "consensus": 10.4786,
         "actual": 11.1
       },
       {
         "date": "2022-06",
         "model": null,
-        "consensus": 9.974074,
+        "consensus": 9.9741,
         "actual": 11.4
       },
       {
@@ -447,7 +447,7 @@
       {
         "date": "2022-09",
         "model": null,
-        "consensus": 10.594118,
+        "consensus": 10.5941,
         "actual": 12.1
       },
       {
@@ -459,13 +459,13 @@
       {
         "date": "2022-11",
         "model": null,
-        "consensus": 11.761538,
+        "consensus": 11.7615,
         "actual": 12.4
       },
       {
         "date": "2022-12",
         "model": null,
-        "consensus": 10.07377,
+        "consensus": 10.0738,
         "actual": 11.8
       },
       {
@@ -477,19 +477,19 @@
       {
         "date": "2023-02",
         "model": null,
-        "consensus": 12.315333,
+        "consensus": 12.3153,
         "actual": 12.9
       },
       {
         "date": "2023-03",
         "model": null,
-        "consensus": 11.887368,
+        "consensus": 11.8874,
         "actual": 12.7
       },
       {
         "date": "2023-04",
         "model": null,
-        "consensus": 12.437222,
+        "consensus": 12.4372,
         "actual": 12.4
       },
       {
@@ -501,19 +501,19 @@
       {
         "date": "2023-06",
         "model": null,
-        "consensus": 10.946522,
+        "consensus": 10.9465,
         "actual": 11.3
       },
       {
         "date": "2023-07",
         "model": null,
-        "consensus": 11.057692,
+        "consensus": 11.0577,
         "actual": 10.7
       },
       {
         "date": "2023-08",
         "model": null,
-        "consensus": 10.637778,
+        "consensus": 10.6378,
         "actual": 10.6
       },
       {
@@ -525,19 +525,19 @@
       {
         "date": "2023-10",
         "model": null,
-        "consensus": 10.32375,
+        "consensus": 10.3238,
         "actual": 10.3
       },
       {
         "date": "2023-11",
         "model": null,
-        "consensus": 10.096667,
+        "consensus": 10.0967,
         "actual": 10.0
       },
       {
         "date": "2023-12",
         "model": null,
-        "consensus": 10.19973,
+        "consensus": 10.1997,
         "actual": 9.7
       },
       {
@@ -549,19 +549,19 @@
       {
         "date": "2024-02",
         "model": null,
-        "consensus": 8.969231,
+        "consensus": 8.9692,
         "actual": 8.7
       },
       {
         "date": "2024-03",
         "model": null,
-        "consensus": 9.036364,
+        "consensus": 9.0364,
         "actual": 8.3
       },
       {
         "date": "2024-04",
         "model": null,
-        "consensus": 8.316667,
+        "consensus": 8.3167,
         "actual": 7.2
       },
       {
@@ -585,19 +585,19 @@
       {
         "date": "2024-08",
         "model": null,
-        "consensus": 6.235385,
+        "consensus": 6.2354,
         "actual": 6.3
       },
       {
         "date": "2024-09",
         "model": null,
-        "consensus": 7.420833,
+        "consensus": 7.4208,
         "actual": 6.8
       },
       {
         "date": "2024-10",
         "model": 6.935175,
-        "consensus": 6.941667,
+        "consensus": 6.9417,
         "actual": 7.5
       },
       {
@@ -609,13 +609,13 @@
       {
         "date": "2024-12",
         "model": 7.28072,
-        "consensus": 8.347619,
+        "consensus": 8.3476,
         "actual": 7.3
       },
       {
         "date": "2025-01",
         "model": 7.310895,
-        "consensus": 7.43125,
+        "consensus": 7.4312,
         "actual": 7.0
       },
       {
@@ -627,13 +627,13 @@
       {
         "date": "2025-03",
         "model": 6.970112,
-        "consensus": 7.173684,
+        "consensus": 7.1737,
         "actual": 7.0
       },
       {
         "date": "2025-04",
         "model": 7.609141,
-        "consensus": 7.481818,
+        "consensus": 7.4818,
         "actual": 8.0
       },
       {
@@ -645,13 +645,13 @@
       {
         "date": "2025-06",
         "model": 8.201032,
-        "consensus": 8.043478,
+        "consensus": 8.0435,
         "actual": 8.3
       },
       {
         "date": "2025-07",
         "model": 8.403551,
-        "consensus": 8.319231,
+        "consensus": 8.3192,
         "actual": 8.8
       },
       {
@@ -663,7 +663,7 @@
       {
         "date": "2025-09",
         "model": 8.456221,
-        "consensus": 8.13913,
+        "consensus": 8.1391,
         "actual": 8.4
       },
       {
@@ -681,7 +681,7 @@
       {
         "date": "2025-12",
         "model": 7.94521,
-        "consensus": 7.974483,
+        "consensus": 7.9745,
         "actual": 8.5
       },
       {
@@ -693,13 +693,13 @@
       {
         "date": "2026-02",
         "model": 8.919407,
-        "consensus": 8.857143,
+        "consensus": 8.8571,
         "actual": 9.0
       },
       {
         "date": "2026-03",
         "model": 8.798294,
-        "consensus": 8.188235,
+        "consensus": 8.1882,
         "actual": 8.5
       },
       {
@@ -717,7 +717,7 @@
       {
         "date": "2026-06",
         "model": 8.366548,
-        "consensus": 8.116667,
+        "consensus": 8.1167,
         "actual": 8.0
       },
       {
@@ -735,13 +735,13 @@
       {
         "date": "2026-09",
         "model": 7.455698,
-        "consensus": 7.5,
+        "consensus": 7.5412,
         "actual": 7.2
       },
       {
         "date": "2026-10",
         "model": 7.207918,
-        "consensus": null,
+        "consensus": 7.2667,
         "actual": null
       }
     ],
@@ -1115,7 +1115,7 @@
       {
         "date": "2026-10",
         "model": 0.047934,
-        "consensus": null,
+        "consensus": -0.0376,
         "actual": null
       }
     ],
@@ -1477,19 +1477,19 @@
       {
         "date": "2026-08",
         "model": 2.903203,
-        "consensus": 1.9839,
+        "consensus": 1.983889,
         "actual": 1.6581
       },
       {
         "date": "2026-09",
         "model": 3.728644,
-        "consensus": 3.1664,
+        "consensus": 3.166375,
         "actual": 3.5476
       },
       {
         "date": "2026-10",
         "model": 1.177581,
-        "consensus": null,
+        "consensus": 1.419833,
         "actual": null
       }
     ]

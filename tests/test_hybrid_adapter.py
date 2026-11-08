@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import os
 import tempfile
 import unittest
+from unittest.mock import patch
 from datetime import date
 from pathlib import Path
 
@@ -15,6 +17,22 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HybridRoutingTests(unittest.TestCase):
+    def test_verified_snapshot_requires_matching_hash_and_schema(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'source.csv'
+            raw = b'series_key,date,indicator_code,indicator_name,value,error\nx,20261106,S1,X,1,\n'
+            path.write_bytes(raw)
+            with patch.dict(os.environ, {'CJHX_VERIFIED_SNAPSHOT': str(path), 'CJHX_VERIFIED_SNAPSHOT_SHA256': hashlib.sha256(raw).hexdigest()}):
+                self.assertEqual(hybrid_adapter._download_cjhx_csv(), path)
+                path.write_bytes(raw + b'changed')
+                with self.assertRaisesRegex(RuntimeError, 'hash verification'):
+                    hybrid_adapter._download_cjhx_csv()
+            bad = b'{"error":"invalid source"}'
+            path.write_bytes(bad)
+            with patch.dict(os.environ, {'CJHX_VERIFIED_SNAPSHOT': str(path), 'CJHX_VERIFIED_SNAPSHOT_SHA256': hashlib.sha256(bad).hexdigest()}):
+                with self.assertRaisesRegex(RuntimeError, 'schema mismatch'):
+                    hybrid_adapter._download_cjhx_csv()
+
     def test_cjhx_url_cache_buster_preserves_existing_query(self):
         self.assertEqual(
             hybrid_adapter._cache_busted_url("https://example.test/data.csv", 123),

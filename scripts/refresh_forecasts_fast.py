@@ -104,6 +104,10 @@ def main() -> int:
     if ifind.get("errors"):
         raise RuntimeError(f"iFinD 输入仍有错误：{ifind['errors']}")
     payload = read_json(args.output)
+    published_history = {
+        key: {row['date']: dict(row) for row in rows}
+        for key, rows in payload.get('history', {}).items()
+    }
     display_start = payload.get("backtestStart", "2023-01-31")
     payload["displayStart"] = display_start
     for key, rows in payload["history"].items():
@@ -160,6 +164,15 @@ def main() -> int:
         })
     payload["daily"] = daily
     payload["dailyAsOf"] = max(rows[-1]["date"] for rows in daily.values() if rows)
+    # Once an actual is released, retain the forecast previously shown to users.
+    # Never replace it with a fresh estimate using post-release information.
+    for key in ("cpi", "cpi_mom", "ppi", "ppi_mom", "pmi"):
+        for row in payload['history'].get(key, []):
+            prior = published_history.get(key, {}).get(row['date'], {})
+            if row.get('actual') is not None and prior.get('forecast') is not None:
+                row['forecast'] = prior['forecast']
+                row['officialRounding'] = prior.get('officialRounding')
+                row['forecastKind'] = prior.get('forecastKind') if prior.get('actual') is not None else 'confirmed_nowcast'
     # Keep published trade history immutable for the downstream trade publisher.
     # Removing it loses both real-time forecasts and retrospective provenance.
     for section in ("daily", "models", "metrics"):

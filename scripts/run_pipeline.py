@@ -147,7 +147,7 @@ def run_incremental(args: argparse.Namespace) -> int:
         # Slow monthly histories are refreshed only around their release
         # windows, at most once per day. Daily market/production inputs above
         # remain incremental on every run.
-        if 9 <= refresh_end.day <= 20:
+        if getattr(args, 'refresh_monthly_inputs', False) or 9 <= refresh_end.day <= 20:
             retail_source = ROOT / "data" / "forecast-model" / "research_retail_ifind.json"
             retail_fetch = [
                 python,
@@ -157,7 +157,7 @@ def run_incremental(args: argparse.Namespace) -> int:
                 "--output",
                 str(retail_source),
                 "--start",
-                (refresh_end - timedelta(days=420)).isoformat(),
+                (refresh_end - timedelta(days=45)).isoformat(),
                 "--end",
                 refresh_end.isoformat(),
                 "--merge-existing",
@@ -178,7 +178,7 @@ def run_incremental(args: argparse.Namespace) -> int:
         # The industrial bridge uses the freshly extended dashboard series.
         # Re-estimating from stored official targets is cheap and keeps its
         # current-month estimate synchronized with the daily high-frequency data.
-        if 12 <= refresh_end.day <= 20:
+        if getattr(args, 'refresh_monthly_inputs', False) or 12 <= refresh_end.day <= 20:
             industrial_source = ROOT / 'data' / 'industrial-value-model' / 'targets_consensus.json'
             if not artifact_checked_today(industrial_source, refresh_end):
                 run_step('refresh industrial targets incrementally', [python, 'scripts/fetch_industrial_value_data.py', '--targets-only'])
@@ -188,14 +188,14 @@ def run_incremental(args: argparse.Namespace) -> int:
             [python, "scripts/publish_industrial_value_forecasts.py", "--base", "public/data/forecasts.json"],
         )
 
-        if 9 <= refresh_end.day <= 20:
+        if getattr(args, 'refresh_monthly_inputs', False) or 9 <= refresh_end.day <= 20:
             credit_source = ROOT / "data" / "credit-model" / "source_data.json"
             if not artifact_checked_today(credit_source, refresh_end):
                 run_step("refresh credit release-window inputs", [python, "scripts/fetch_credit_forecast_data.py", "--resume"])
         run_step("rerun frozen credit models", [python, "scripts/credit_forecast_model.py"])
         run_step("publish credit forecasts", [python, "scripts/publish_credit_forecasts.py", "--base", "public/data/forecasts.json"])
 
-        if 12 <= refresh_end.day <= 20:
+        if getattr(args, 'refresh_monthly_inputs', False) or 12 <= refresh_end.day <= 20:
             investment_source = ROOT / "data" / "investment-model" / "source_data.json"
             if not artifact_checked_today(investment_source, refresh_end):
                 run_step("refresh investment release-window inputs", [python, "scripts/fetch_investment_forecast_data.py", "--resume"])
@@ -205,7 +205,7 @@ def run_incremental(args: argparse.Namespace) -> int:
         # Customs actuals and partner indicators are monthly releases. Check
         # them during the release window, while a quota/source failure keeps
         # the last validated snapshot and never blocks the daily deployment.
-        if 7 <= refresh_end.day <= 25:
+        if getattr(args, 'refresh_monthly_inputs', False) or 7 <= refresh_end.day <= 25:
             run_optional_step("refresh trade actuals", [python, "scripts/fetch_trade_actuals.py"])
             run_optional_step("refresh fixed trade factors", [python, "scripts/fetch_trade_fixed_factors.py"])
         # Consensus is comparison-only and must not block publication.
@@ -241,6 +241,7 @@ def run_incremental(args: argparse.Namespace) -> int:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--force-ifind', action='store_true', help='手动清除请求缓存与额度暂停状态，再验证一次接口')
+    parser.add_argument('--refresh-monthly-inputs', action='store_true', help='手动增量核查全部月频输入，不受常规公布窗口限制；保留请求缓存')
     parser.add_argument(
         "--adapter",
         choices=["mock", "http", "custom", "hybrid"],

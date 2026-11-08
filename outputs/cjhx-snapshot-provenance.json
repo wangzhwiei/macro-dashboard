@@ -1,0 +1,10 @@
+{
+  "retrievedOn": "2026-11-08",
+  "repository": "wangzhwiei/macro-data",
+  "path": "macro_extract_70_results.csv",
+  "ref": "main",
+  "retrievalMethod": "GitHub contents API raw response; fallback after raw.githubusercontent.com timeout",
+  "verifiedGitBlobSha": "9a7a2d9c7ebd26a93367c8233d6c8baf83c9fbdd",
+  "verifiedSha256": "a2e1185c5e620ccd64c35a470b135ace2c0b6e48d1036df2b46d390452e56e5a",
+  "latestObservation": "2026-11-07"
+}

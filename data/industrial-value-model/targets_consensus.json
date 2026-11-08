@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-10-19T13:44:39.503130+08:00",
+  "retrievedAt": "2026-11-08T22:49:23.833765+08:00",
   "trainingPolicy": "一致预期与模型输入物理隔离，仅用于预测结果评估",
   "series": {
     "actualMonthly": {

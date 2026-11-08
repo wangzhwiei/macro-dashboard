@@ -1412,12 +1412,20 @@
         [
           "2026-10-23",
           80.42
+        ],
+        [
+          "2026-10-30",
+          80.03
+        ],
+        [
+          "2026-11-06",
+          79.71
         ]
       ],
       "startTime": "2020-01-03",
-      "endTime": "2026-10-23",
+      "endTime": "2026-11-06",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_blast_furnace",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "rebar_rate": {
       "providerId": "S005580571",
@@ -2841,12 +2849,20 @@
         [
           "2026-10-23",
           36.72
+        ],
+        [
+          "2026-10-30",
+          35.74
+        ],
+        [
+          "2026-11-06",
+          36.39
         ]
       ],
       "startTime": "2020-01-03",
-      "endTime": "2026-10-23",
+      "endTime": "2026-11-06",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_rebar_steel_rate",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "power_coal": {
       "providerId": "S003839324",
@@ -11122,12 +11138,72 @@
         [
           "2026-10-22",
           842099.9999999999
+        ],
+        [
+          "2026-10-23",
+          835000.0
+        ],
+        [
+          "2026-10-24",
+          839400.0
+        ],
+        [
+          "2026-10-25",
+          844200.0
+        ],
+        [
+          "2026-10-26",
+          839400.0
+        ],
+        [
+          "2026-10-27",
+          829400.0
+        ],
+        [
+          "2026-10-28",
+          822800.0
+        ],
+        [
+          "2026-10-29",
+          826800.0000000001
+        ],
+        [
+          "2026-10-30",
+          817400.0
+        ],
+        [
+          "2026-10-31",
+          803500.0
+        ],
+        [
+          "2026-11-01",
+          803800.0
+        ],
+        [
+          "2026-11-02",
+          803100.0
+        ],
+        [
+          "2026-11-03",
+          797400.0
+        ],
+        [
+          "2026-11-04",
+          799300.0000000001
+        ],
+        [
+          "2026-11-05",
+          820400.0000000001
+        ],
+        [
+          "2026-11-06",
+          828700.0
         ]
       ],
       "startTime": "2020-01-01",
-      "endTime": "2026-10-22",
+      "endTime": "2026-11-06",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_power_coal",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "pta_rate": {
       "providerId": "S019765727",
@@ -17551,12 +17627,56 @@
         [
           "2026-10-22",
           70.12
+        ],
+        [
+          "2026-10-23",
+          70.12
+        ],
+        [
+          "2026-10-26",
+          70.12
+        ],
+        [
+          "2026-10-27",
+          73.38
+        ],
+        [
+          "2026-10-28",
+          73.38
+        ],
+        [
+          "2026-10-29",
+          76.64
+        ],
+        [
+          "2026-10-30",
+          76.64
+        ],
+        [
+          "2026-11-02",
+          72.73
+        ],
+        [
+          "2026-11-03",
+          72.73
+        ],
+        [
+          "2026-11-04",
+          72.73
+        ],
+        [
+          "2026-11-05",
+          72.73
+        ],
+        [
+          "2026-11-06",
+          72.73
         ]
       ],
       "startTime": "2020-02-19",
-      "endTime": "2026-10-22",
+      "endTime": "2026-11-06",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_pta",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "methanol_rate": {
       "providerId": "S005439668",
@@ -18960,12 +19080,20 @@
         [
           "2026-10-23",
           88.13
+        ],
+        [
+          "2026-10-30",
+          89.38
+        ],
+        [
+          "2026-11-06",
+          88.86
         ]
       ],
       "startTime": "2020-01-03",
-      "endTime": "2026-10-23",
+      "endTime": "2026-11-06",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_methanol",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "car_wholesale": {
       "providerId": "S023782827",
@@ -20381,12 +20509,20 @@
         [
           "2026-10-18",
           47370.0
+        ],
+        [
+          "2026-10-25",
+          55364.0
+        ],
+        [
+          "2026-10-31",
+          85006.0
         ]
       ],
       "startTime": "2020-01-12",
-      "endTime": "2026-10-18",
+      "endTime": "2026-10-31",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_car_wholesale",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "car_retail": {
       "providerId": "S023782829",
@@ -21806,12 +21942,20 @@
         [
           "2026-10-18",
           43815.0
+        ],
+        [
+          "2026-10-25",
+          45796.0
+        ],
+        [
+          "2026-10-31",
+          54603.0
         ]
       ],
       "startTime": "2020-01-12",
-      "endTime": "2026-10-18",
+      "endTime": "2026-10-31",
       "synchronizedFrom": "forecast-model/ifind_latest_inputs.json:pmi_car_retail",
-      "sourceRetrievedAt": "2026-10-23"
+      "sourceRetrievedAt": "2026-11-08"
     },
     "broad_car_output_yoy": {
       "providerId": "S002811623",
@@ -26238,5 +26382,5 @@
       ]
     }
   },
-  "synchronizedAt": "2026-10-26T10:52:47.063993+08:00"
+  "synchronizedAt": "2026-11-08T22:52:59.852522+08:00"
 }
