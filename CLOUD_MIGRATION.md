@@ -1,6 +1,10 @@
 # Cloud migration — isolated staging
 
-Production is not switched. Baseline source: `93773d061454ed958b1c392e7e405d625b5700be`.
+Production cloud cutover completed on 2026-11-16. Baseline source: `93773d061454ed958b1c392e7e405d625b5700be`.
+
+Verified full production run: https://github.com/wangzhwiei/macro-dashboard/actions/runs/43819895597
+All gate/build/deploy jobs succeeded; live dashboard and forecast JSON matched the
+persisted repository data. The daily schedule remains OFF by default.
 
 Rollback snapshots: `backup/pre-cloud-main-20261116` and `backup/pre-cloud-pages-20261116`.
 These are snapshot branches, not branch-protection rules.
@@ -31,10 +35,10 @@ The public page does not itself grant any privileges: GitHub verifies every read
 configuration write and workflow dispatch. Non-admin visitors cannot execute jobs.
 The data-path registry links to the actual configuration, not arbitrary URLs.
 
-## Production activation (not yet performed)
+## Production activation and operation
 
-Only after acceptance: copy vetted staged changes into main, set config phase to
-`production`, and add cloud-update.yml to the default gh-pages branch. The old
+After acceptance, vetted changes were copied into main, config phase was set to
+`production`, and cloud-update.yml was added to the default gh-pages branch. The old
 update-and-deploy workflow remains intact as a fallback. Keep the daily schedule
 disabled initially; the administrator can enable it through the management page.
 Scheduled gate runs hourly at :45 UTC and allows the selected Shanghai hour only.
