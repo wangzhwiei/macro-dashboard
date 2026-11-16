@@ -48,7 +48,7 @@ jobs:
       TZ: Asia/Shanghai
       IFIND_AUTH_TOKEN: ${{ secrets.IFIND_CLOUD_AUTH_TOKEN }}
       IFIND_SKILL_DIR: ${{ github.workspace }}/scripts/cloud_runtime
-      MACRO_DATA_CACHE_DIR: ${{ runner.temp }}/macro-cloud-cache
+      MACRO_DATA_CACHE_DIR: /tmp/macro-cloud-cache
       IFIND_MAX_CALLS: '80'
       PYTHONWARNINGS: ignore
     steps:
