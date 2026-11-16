@@ -7827,6 +7827,7 @@
   },
   "errors": {},
   "warnings": {
+    "actual_retail_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-30）：iFinD observation outside metadata coverage",
     "cpi_consumer_goods_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-30）：cpi_consumer_goods_yoy 固定 ID M002840897 未唯一命中；候选=['M002826730']"
   },
   "officialSupplements": {

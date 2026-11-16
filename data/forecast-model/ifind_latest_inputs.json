@@ -93718,7 +93718,7 @@
         ],
         [
           "2026-11-15",
-          46999.00000000001
+          70729.0
         ]
       ],
       "providerUnit": "万平方米",
@@ -109348,6 +109348,8 @@
   },
   "errors": {},
   "warnings": {
+    "cpi_veg": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-11-13）：iFinD observation outside metadata coverage",
+    "cpi_pork": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-11-15）：iFinD observation outside metadata coverage",
     "pmi_new_orders": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-30）：iFinD multi-indicator text response rejected"
   }
 }

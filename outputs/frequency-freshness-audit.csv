@@ -1,4 +1,4 @@
-indicator_id,name,source,configured_frequency,page_frequency,updated_at,generated_date,stale_days,tolerance_days,median_gap_days,cadence_status,cadence_issue,freshness_status
+﻿indicator_id,name,source,configured_frequency,page_frequency,updated_at,generated_date,stale_days,tolerance_days,median_gap_days,cadence_status,cadence_issue,freshness_status
 irs_1y,FR007 IRS 1Y,CJHX,daily,日频,2026-11-13,2026-11-16,1,4,1.0,ok,,fresh
 irs_5y,FR007 IRS 5Y,CJHX,daily,日频,2026-11-13,2026-11-16,1,4,1.0,ok,,fresh
 shibor_3m,SHIBOR 3M,CJHX,daily,日频,2026-11-13,2026-11-16,1,4,1.0,ok,,fresh
