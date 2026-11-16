@@ -140,6 +140,7 @@ export default function ForecastWorkspace() {
     <div className="forecast-kpis"><div><span>当前确认点预测</span><strong>{modelPending?"待因子齐备":latest?.forecast?.toFixed(precision)??"-"}</strong><small>{currentNote}</small></div><div><span>回测误差</span><strong>{score.rmse.toFixed(3)}</strong><small>RMSE · {score.sampleStart} 至 {score.sampleEnd}{score.directionHit!=null?` · 方向命中 ${score.directionHit.toFixed(1)}%`:""}{score.benchmarkRmse!=null?` · 一致预期 ${score.benchmarkRmse.toFixed(3)}`:""}</small></div><div><span>最近真实公布</span><strong>{latestActual?.actual?.toFixed(precision)??"-"}</strong><small>{latestActual?.date.slice(0,7)} · 官方值</small></div></div>
     {modelPending&&<p role="status">{model.availabilityNote??"固定因子尚未齐备，暂不生成确认预测。"}{model.missingFactors?.length?` 缺少：${model.missingFactors.join("、")}。`:""}</p>}
     {latestActual?.actualSourceUrl&&<p><a href={latestActual.actualSourceUrl} target="_blank" rel="noreferrer">查看最近实际值的国家统计局原始公告</a></p>}
+    {model.dataQualityNote&&<p role="status">{model.dataQualityNote}</p>}
     <HistoryChart rows={rows} precision={precision}/>{(data.daily[key]?.length??0)>0&&<RealtimeChart points={data.daily[key]} label={model.name} unit={model.unit}/>}<ComparisonTable rows={rows} precision={precision} hasConsensus={mode==="yoy"}/>
   </section><ForecastInputs data={data}/></div>;
 }

@@ -79,6 +79,8 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
         "imports": series_map(ROOT / "data" / "trade-model" / "baseline_import_yoy.json"),
     }
     partner, anchor = read_json(PARTNERS), read_json(ANCHORS)
+    actual_metadata_path = ROOT / 'data/trade-model/trade_targets_ifind.meta.json'
+    actual_warnings = read_json(actual_metadata_path).get('warnings', []) if actual_metadata_path.exists() else []
     stores = {"partner": partner, "anchor": anchor}
     factor_rows: dict[str, list[dict[str, Any]]] = {key: [] for key in CONFIG}
     for key, config in CONFIG.items():
@@ -163,6 +165,10 @@ def augment_payload(payload: dict[str, Any]) -> dict[str, Any]:
                 for item in current['missing_factors']
             ],
             "availabilityNote": f"{current['month']}确认预测所需的固定月份因子尚未全部取得并通过核验；不以旧月份替代，也不改变已定稿因子和滞后。",
+            "dataQualityNote": (
+                '实际值更新提示：本轮接口返回的指标未通过原编码和口径核验，保留上次已验证实际值。后续空白不代表尚未公布，而是尚未取得同口径已核验数据。'
+                if any(str(warning).startswith(key + ':') for warning in actual_warnings) else None
+            ),
         }
     high_frequency = payload.setdefault("highFrequency", {})
     high_frequency.pop("进出口", None)

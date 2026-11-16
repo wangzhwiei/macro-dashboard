@@ -64,6 +64,11 @@ def main() -> int:
     call = load_client()
     series = {}
     metadata = {}
+    meta_path = ROOT / 'data/trade-model/trade_targets_ifind.meta.json'
+    if meta_path.exists():
+        metadata = json.loads(meta_path.read_text(encoding='utf-8-sig')).get('series', {})
+    warnings = []
+    refreshed = 0
     path = ROOT / 'data/trade-model/trade_targets_ifind.csv'
     previous = list(csv.DictReader(path.open(encoding='utf-8-sig'))) if path.exists() else []
     for index, (key, spec) in enumerate(EXPECTED.items()):
@@ -71,14 +76,26 @@ def main() -> int:
             time.sleep(0.5)
         start = (date.fromisoformat(max(r['date'][:10] for r in previous)) - timedelta(days=45)).strftime('%Y%m%d') if previous else '20200101'
         query = (f"中国:{spec['name']}（{start}-{date.today():%Y%m%d}），唯一编码{spec['id']}，月频，海关总署，非出口总值。" if key == 'exports'
-                 else f"{spec['name']}，指标ID {spec['id']}（{start}-{date.today():%Y%m%d}）")
+                 else f"{spec['name']}（{start}-{date.today():%Y%m%d}），海关总署，数据编码{spec['id']}。")
         request = dict(spec, query=query)
-        rows, meta = fetch(call, request)
         series[key] = {r['date']: float(r[key+'_yoy']) for r in previous if r.get(key+'_yoy')}
+        try:
+            rows, meta = fetch(call, request)
+            if not rows:
+                raise RuntimeError('No verified observations returned')
+        except Exception as error:
+            if not series[key]:
+                raise
+            warnings.append(f'{key}: {error}')
+            print(f'[WARN] {key}: retained previous validated observations; {error}', file=sys.stderr)
+            continue
         series[key].update({row[0]: row[1] for row in rows})
+        refreshed += 1
         latest = max(rows, key=lambda r: r[0])
         metadata[key] = {"query": spec["query"], "attrs": meta, "rows": len(series[key]), "latest": latest}
         print(f"[OK] {key}: {len(rows)}条, 最新={latest}")
+    if not refreshed:
+        raise RuntimeError('No trade actual series passed validation')
     dates = sorted(set(series["exports"]) | set(series["imports"]))
     out = ROOT / "data" / "trade-model"
     out.mkdir(parents=True, exist_ok=True)
@@ -88,7 +105,7 @@ def main() -> int:
         for observed_day in dates:
             writer.writerow([observed_day, series["exports"].get(observed_day), series["imports"].get(observed_day)])
     (out / "trade_targets_ifind.meta.json").write_text(
-        json.dumps({"source": "iFinD EDB / 海关总署", "series": metadata}, ensure_ascii=False, indent=2), encoding="utf-8")
+        json.dumps({"source": "iFinD EDB / 海关总署", "series": metadata, "warnings": warnings}, ensure_ascii=False, indent=2), encoding="utf-8")
     return 0
 
 

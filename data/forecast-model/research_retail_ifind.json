@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "start": "2010-01-01",
-  "end": "2026-11-08",
+  "end": "2026-11-16",
   "series": {
     "actual_retail_yoy": {
       "key": "actual_retail_yoy",
@@ -966,7 +966,7 @@
         ],
         [
           "2026-10-31",
-          0.82
+          0.8
         ]
       ],
       "providerUnit": "%",
@@ -981,7 +981,7 @@
       "unit": "%",
       "name": "CPI:食品:当月同比",
       "startTime": "2010-01-31",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -1787,6 +1787,10 @@
         [
           "2026-09-30",
           -1.7
+        ],
+        [
+          "2026-10-31",
+          -2.9
         ]
       ],
       "providerUnit": "%",
@@ -1801,7 +1805,7 @@
       "unit": "%",
       "name": "CPI:非食品:当月同比",
       "startTime": "2010-01-31",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -2606,6 +2610,10 @@
         ],
         [
           "2026-09-30",
+          1.5
+        ],
+        [
+          "2026-10-31",
           1.5
         ]
       ],
@@ -5813,8 +5821,8 @@
       "unit": "%",
       "name": "非制造业PMI:服务业:新订单",
       "startTime": "2012-03-31",
-      "endTime": "2026-09-30",
-      "description": "提取数据：EDB-非制造业PMI:服务业:新订单（20250819-20261013）-",
+      "endTime": "2026-10-31",
+      "description": null,
       "records": [
         [
           "2012-03-31",
@@ -6515,6 +6523,10 @@
         [
           "2026-09-30",
           46.7
+        ],
+        [
+          "2026-10-31",
+          45.2
         ]
       ],
       "providerUnit": "%",
@@ -6997,7 +7009,7 @@
       "unit": "%",
       "name": "CPI:服务项目:当月同比",
       "startTime": "2010-01-31",
-      "endTime": "2026-09-30",
+      "endTime": "2026-10-31",
       "description": null,
       "records": [
         [
@@ -7803,6 +7815,10 @@
         [
           "2026-09-30",
           0.8
+        ],
+        [
+          "2026-10-31",
+          0.7
         ]
       ],
       "providerUnit": "%",
@@ -7811,7 +7827,7 @@
   },
   "errors": {},
   "warnings": {
-    "pmi_services_new_orders": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-30）：iFinD multi-indicator text response rejected"
+    "cpi_consumer_goods_yoy": "本次模糊召回失败，保留已通过固定ID校验的历史快照（最新2026-09-30）：cpi_consumer_goods_yoy 固定 ID M002840897 未唯一命中；候选=['M002826730']"
   },
   "officialSupplements": {
     "2026-08-31": {

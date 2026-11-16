@@ -143,9 +143,9 @@
       "sampleEnd": "2026-09"
     },
     "monthly_model_bridge": {
-      "rmse": 0.252733,
-      "mae": 0.206498,
-      "bias": 0.16695,
+      "rmse": 0.252734,
+      "mae": 0.206497,
+      "bias": 0.166951,
       "directionHitPct": 100.0,
       "changeCaptureRatio": 1.09831,
       "observations": 5,
@@ -602,7 +602,7 @@
       "consensus": -1.555,
       "actual": -5.7,
       "predictedMonthlyFlowTrillion": 6.506418,
-      "predictedComparableCumulativeTrillion": 28.657984,
+      "predictedComparableCumulativeTrillion": 28.657985,
       "comparableBaseTrillion": 30.101746,
       "kind": "walk_forward"
     },
@@ -623,7 +623,7 @@
       "legacyModel": -6.310459,
       "consensus": -7.02,
       "actual": -7.2,
-      "predictedMonthlyFlowTrillion": 4.164147,
+      "predictedMonthlyFlowTrillion": 4.164148,
       "predictedComparableCumulativeTrillion": 36.635725,
       "comparableBaseTrillion": 39.361582,
       "kind": "walk_forward"

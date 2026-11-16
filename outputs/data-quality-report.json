@@ -5,10 +5,10 @@
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 201,
+    "history_weeks": 202,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
-    "stale_indicators": 2,
+    "stale_indicators": 1,
     "cadence_issues": 0,
     "required_provider_codes": 111,
     "mapped_provider_codes": 111,
@@ -16,7 +16,7 @@
   },
   "errors": [],
   "warnings": [
-    "px_rate 最新数据为2026-10-22，已滞后11个工作日（daily容忍4天）",
-    "nanhua_metals 最新数据为2026-10-23，已滞后10个工作日（daily容忍4天）"
+    "nanhua_metals 来源核验未通过，正在使用历史缓存：iFinD metadata does not uniquely match catalog identity",
+    "nanhua_metals 最新数据为2026-10-23，已滞后16个工作日（daily容忍4天）"
   ]
 }

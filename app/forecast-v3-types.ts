@@ -29,7 +29,7 @@ export interface ForecastInput {
   series: ForecastPoint[];
 }
 
-export interface ForecastModel { name: string; unit: string; description: string; formula: string; status?: "READY" | "WAITING_FOR_FIXED_FACTORS" | "WAITING_FOR_MONTHLY_FACTORS"; forecastMonth?: string; earliestForecastDate?: string; availabilityNote?: string; missingFactors?: string[] }
+export interface ForecastModel { name: string; unit: string; description: string; formula: string; status?: "READY" | "WAITING_FOR_FIXED_FACTORS" | "WAITING_FOR_MONTHLY_FACTORS"; forecastMonth?: string; earliestForecastDate?: string; availabilityNote?: string; dataQualityNote?: string; missingFactors?: string[] }
 export interface ForecastMetric { rmse: number; mae: number; sampleStart: string; sampleEnd: string; directionHit?: number; benchmarkRmse?: number; observations?: number }
 
 export interface ForecastData {

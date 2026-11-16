@@ -66,6 +66,11 @@ def run_incremental(args: argparse.Namespace) -> int:
     refresh_end = date.fromisoformat(args.end_date) if args.end_date else date.today()
     dashboard_path = ROOT / "public" / "data" / "dashboard.json"
     published_snapshot = ROOT / "outputs" / ".dashboard-before-incremental.json"
+    forecast_snapshot = ROOT / "outputs" / ".forecasts-before-incremental.json"
+    forecasts_path = ROOT / "public" / "data" / "forecasts.json"
+    if forecasts_path.exists():
+        forecast_snapshot.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(forecasts_path, forecast_snapshot)
     if dashboard_path.exists():
         published_snapshot.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(dashboard_path, published_snapshot)
@@ -222,6 +227,8 @@ def run_incremental(args: argparse.Namespace) -> int:
             "check forecast artifact integrity",
             [python, "-m", "unittest", "tests.test_forecast_integrity"],
         )
+        if forecast_snapshot.exists():
+            run_step('preserve published forecast vintages', [python, 'scripts/preserve_published_forecasts.py', '--published', str(forecast_snapshot)])
         if not args.data_only:
             npm = shutil.which("npm")
             if not npm:
@@ -233,6 +240,7 @@ def run_incremental(args: argparse.Namespace) -> int:
         return 1
     finally:
         published_snapshot.unlink(missing_ok=True)
+        forecast_snapshot.unlink(missing_ok=True)
 
     print("\nIncremental pipeline completed; historical model inputs were not refetched.")
     return 0

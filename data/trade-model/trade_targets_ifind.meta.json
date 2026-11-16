@@ -8,15 +8,15 @@
         "freq": "M",
         "unit": "%",
         "start_time": "19990131",
-        "end_time": "20260930",
+        "end_time": "20261031",
         "data_source": "海关总署",
         "country": "中国",
         "node": "对外贸易"
       },
-      "rows": 61,
+      "rows": 62,
       "latest": [
-        "2026-09-30",
-        36.1021
+        "2026-10-31",
+        35.0339
       ]
     },
     "imports": {
@@ -37,5 +37,8 @@
         31.7213
       ]
     }
-  }
+  },
+  "warnings": [
+    "imports: iFinD metadata does not uniquely match catalog identity"
+  ]
 }
