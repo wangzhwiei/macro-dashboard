@@ -4,6 +4,7 @@ on:
     branches: [cloud-admin-staging]
     paths:
       - scripts/cloud_preflight.py
+      - scripts/cloud_smoke.py
       - scripts/cloud_runtime/**
       - .github/workflows/cloud-staging.yml
   workflow_dispatch:
@@ -15,7 +16,7 @@ concurrency:
 jobs:
   preflight:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
         with:
@@ -25,9 +26,17 @@ jobs:
           python-version: '3.11'
       - name: Validate provider TLS without sending credentials
         run: python scripts/cloud_preflight.py
+      - name: Install HTTP dependency
+        run: pip install requests==2.32.5
+      - name: Verify one bounded EDB series
+        env:
+          IFIND_AUTH_TOKEN: ${{ secrets.IFIND_CLOUD_AUTH_TOKEN }}
+          IFIND_SKILL_DIR: ${{ github.workspace }}/scripts/cloud_runtime
+          MACRO_DATA_CACHE_DIR: ${{ runner.temp }}/macro-cloud-cache
+        run: python scripts/cloud_smoke.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: cloud-preflight
-          path: outputs/cloud-preflight.json
+          path: outputs/cloud-*.json
           retention-days: 7
