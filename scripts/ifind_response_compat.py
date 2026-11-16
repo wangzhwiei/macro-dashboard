@@ -115,6 +115,9 @@ def saved_catalog(cache_root):
     """Read old provider-issued IDs; never infer an ID from a query or name."""
     output = []
     from pathlib import Path
+    bootstrap = Path(__file__).resolve().parents[1] / 'data/cloud-bootstrap.json'
+    if bootstrap.exists():
+        output.extend(json.loads(bootstrap.read_text(encoding='utf-8')).get('catalog', []))
     archive = Path(__file__).resolve().parents[1] / 'data/trade-model/fixed_factor_provider_catalog.json'
     if archive.exists():
         output.extend(json.loads(archive.read_text(encoding='utf-8'))['catalog'])

@@ -1053,6 +1053,7 @@ export default function Dashboard() {
             setActiveView("rate");
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}>利率预测</button>
+          <button onClick={() => { window.location.href = './admin.html'; }}>后台管理</button>
         </nav>
         <div className="update-status">
           <span className="live-dot" />

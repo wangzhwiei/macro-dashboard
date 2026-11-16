@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "phase": "production",
+  "schedule": {"enabled": false, "hourShanghai": 9, "minute": 45},
+  "maxProviderCalls": 80,
+  "refreshMonthlyInputs": true
+}

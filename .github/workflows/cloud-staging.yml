@@ -1,0 +1,97 @@
+name: Cloud staging validation (no production writes)
+on:
+  push:
+    branches: [cloud-admin-staging]
+    paths:
+      - scripts/cloud_preflight.py
+      - scripts/cloud_smoke.py
+      - scripts/prepare_cloud_runtime.py
+      - requirements-cloud.txt
+      - scripts/cloud_runtime/**
+      - .github/workflows/cloud-staging.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: macro-cloud-staging
+  cancel-in-progress: false
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: cloud-admin-staging
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate provider TLS without sending credentials
+        run: python scripts/cloud_preflight.py
+      - name: Install HTTP dependency
+        run: pip install requests==2.32.5
+      - name: Verify one bounded EDB series
+        env:
+          IFIND_AUTH_TOKEN: ${{ secrets.IFIND_CLOUD_AUTH_TOKEN }}
+          IFIND_SKILL_DIR: ${{ github.workspace }}/scripts/cloud_runtime
+          MACRO_DATA_CACHE_DIR: ${{ runner.temp }}/macro-cloud-cache
+        run: python scripts/cloud_smoke.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cloud-preflight
+          path: outputs/cloud-*.json
+          retention-days: 7
+  incremental-preview:
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      TZ: Asia/Shanghai
+      IFIND_SKILL_DIR: ${{ github.workspace }}/scripts/cloud_runtime
+      MACRO_DATA_CACHE_DIR: /tmp/macro-cloud-cache
+      IFIND_MAX_CALLS: '80'
+      PYTHONWARNINGS: ignore
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: cloud-admin-staging
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install model dependencies
+        run: pip install -r requirements-cloud.txt
+      - uses: actions/cache/restore@v4
+        with:
+          path: /tmp/macro-cloud-cache
+          key: cloud-edb-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: cloud-edb-v1-
+      - name: Initialize validated cloud cache
+        run: python scripts/prepare_cloud_runtime.py
+      - name: Run incremental high-frequency and monthly pipeline
+        env:
+          IFIND_AUTH_TOKEN: ${{ secrets.IFIND_CLOUD_AUTH_TOKEN }}
+        run: python scripts/run_pipeline.py --adapter hybrid --days 1310 --incremental --data-only --allow-stale --refresh-monthly-inputs
+      - name: Check published forecast integrity
+        run: |
+          python -m unittest tests.test_forecast_integrity tests.test_preserve_published_forecasts tests.test_ifind_response_compat tests.test_cloud_runtime tests.test_cloud_acceptance
+          python scripts/verify_cloud_result.py
+      - name: Build isolated preview only
+        run: npm ci --no-audit --no-fund && npm run build:github
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: /tmp/macro-cloud-cache
+          key: cloud-edb-v1-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cloud-preview-validation
+          path: |
+            docs/
+            outputs/data-quality-report.json
+          retention-days: 7

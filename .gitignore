@@ -1,4 +1,5 @@
 node_modules/
+scripts/cloud_runtime/mcp_config.json
 dist/
 data_cache/
 *.log
