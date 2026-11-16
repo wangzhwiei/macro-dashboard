@@ -1,0 +1,33 @@
+name: Cloud staging validation (no production writes)
+on:
+  push:
+    branches: [cloud-admin-staging]
+    paths:
+      - scripts/cloud_preflight.py
+      - scripts/cloud_runtime/**
+      - .github/workflows/cloud-staging.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: macro-cloud-staging
+  cancel-in-progress: false
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate provider TLS without sending credentials
+        run: python scripts/cloud_preflight.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cloud-preflight
+          path: outputs/cloud-preflight.json
+          retention-days: 7
