@@ -23,6 +23,8 @@ def _post(method, params):
     # TLS validation is mandatory; never copy the legacy verify=False setting.
     response = requests.post(ENDPOINT, headers=headers, json=body, timeout=(15, 90))
     response.raise_for_status()
+    if token and token in response.text:
+        raise RuntimeError('Provider response unexpectedly contains a credential; response discarded')
     if not response.content:
         return response, {}
     if 'text/event-stream' in response.headers.get('Content-Type', ''):

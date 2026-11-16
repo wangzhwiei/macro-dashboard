@@ -1,0 +1,6 @@
+# Match the verified local modelling environment; do not upgrade during migration.
+numpy==2.4.4
+pandas==3.0.2
+scipy==1.17.1
+statsmodels==0.14.6
+requests==2.32.5
