@@ -2,6 +2,7 @@
 import json
 import os
 import requests
+from pathlib import Path
 
 ENDPOINT = 'https://api-mcp.51ifind.com:8643/ds-mcp-servers/hexin-ifind-ds-edb-mcp'
 _session = None
@@ -35,6 +36,14 @@ def call(server_type, tool_name, params):
     global _session
     if server_type != 'edb' or tool_name != 'get_edb_data':
         raise ValueError('Cloud runtime only allows edb/get_edb_data')
+    budget_file = Path(os.environ['MACRO_DATA_CACHE_DIR'])/'cloud-run-budget.json'
+    run_id = os.environ.get('GITHUB_RUN_ID', 'local') + ':' + os.environ.get('GITHUB_RUN_ATTEMPT', '1')
+    prior = json.loads(budget_file.read_text()) if budget_file.exists() else {}
+    used = prior.get('used', 0) if prior.get('runId') == run_id else 0
+    if used >= int(os.environ.get('IFIND_MAX_CALLS', '80')):
+        raise RuntimeError('Cloud request budget reached; no further provider calls allowed')
+    budget_file.parent.mkdir(parents=True, exist_ok=True)
+    budget_file.write_text(json.dumps({'runId': run_id, 'used': used+1}))
     if _session is None:
         response, result = _post('initialize', {
             'protocolVersion': '2025-03-26', 'capabilities': {},
