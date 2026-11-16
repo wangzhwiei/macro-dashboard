@@ -19,3 +19,33 @@ Remaining acceptance gates before production cutover:
 6. Preview build, forecast-vintage checks, production snapshot and rollback verification.
 
 Until all gates pass, existing production source, data, page and manual workflow remain intact.
+
+## Administrator access
+
+`admin.html` uses the administrator's own GitHub fine-grained token, limited to this
+repository, with Contents and Actions read/write permissions. It remains in page
+memory only and is never written to browser storage. The provider token is a
+GitHub encrypted secret named `IFIND_CLOUD_AUTH_TOKEN`; do not enter it in the UI.
+
+The public page does not itself grant any privileges: GitHub verifies every read,
+configuration write and workflow dispatch. Non-admin visitors cannot execute jobs.
+The data-path registry links to the actual configuration, not arbitrary URLs.
+
+## Production activation (not yet performed)
+
+Only after acceptance: copy vetted staged changes into main, set config phase to
+`production`, and add cloud-update.yml to the default gh-pages branch. The old
+update-and-deploy workflow remains intact as a fallback. Keep the daily schedule
+disabled initially; the administrator can enable it through the management page.
+Scheduled gate runs hourly at :45 UTC and allows the selected Shanghai hour only.
+GitHub scheduling may be delayed; this is not a guaranteed wall-clock scheduler.
+Unattended runs use cloud Linux and never depend on the local Windows runner.
+
+## Failure safety
+
+All structural, freshness-regression and published-forecast checks precede data
+commit and Pages publication. Requests have a per-run budget, exact-ID checks and
+shared response cache. Model packages are pinned to the verified local versions.
+Concurrent source edits abort persistence rather than overwrite newer work.
+If deployment fails after data persistence, the existing deployed page remains
+available; a publish-only retry uses no provider quota.

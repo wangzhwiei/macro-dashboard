@@ -1,0 +1,94 @@
+name: Cloud update and publish
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [refresh, publish_only]
+        default: refresh
+        description: Incremental refresh or publish existing validated data
+  schedule:
+    - cron: '45 * * * *'
+permissions:
+  contents: read
+concurrency:
+  group: macro-dashboard-production
+  cancel-in-progress: false
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      run: ${{ steps.gate.outputs.run }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - id: gate
+        run: python scripts/cloud_schedule_gate.py
+  build:
+    needs: gate
+    if: needs.gate.outputs.run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    env:
+      TZ: Asia/Shanghai
+      IFIND_SKILL_DIR: ${{ github.workspace }}/scripts/cloud_runtime
+      MACRO_DATA_CACHE_DIR: /tmp/macro-cloud-cache
+      PYTHONWARNINGS: ignore
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pip install -r requirements-cloud.txt
+      - uses: actions/cache/restore@v4
+        with:
+          path: /tmp/macro-cloud-cache
+          key: cloud-edb-v1-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: cloud-edb-v1-
+      - run: python scripts/prepare_cloud_runtime.py
+      - name: Incremental high-frequency and monthly update
+        if: inputs.mode != 'publish_only'
+        env:
+          IFIND_AUTH_TOKEN: ${{ secrets.IFIND_CLOUD_AUTH_TOKEN }}
+        run: python scripts/run_pipeline.py --adapter hybrid --days 1310 --incremental --data-only --allow-stale --refresh-monthly-inputs
+      - name: Release acceptance checks
+        run: |
+          python -m unittest tests.test_cloud_runtime tests.test_cloud_acceptance tests.test_forecast_integrity tests.test_preserve_published_forecasts
+          python scripts/verify_cloud_result.py
+      - run: npm ci --no-audit --no-fund && npm run build:github
+      - name: Persist verified data atomically
+        if: inputs.mode != 'publish_only'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/persist_cloud_data.py
+      - uses: actions/cache/save@v4
+        if: always()
+        with:
+          path: /tmp/macro-cloud-cache
+          key: cloud-edb-v1-${{ github.run_id }}-${{ github.run_attempt }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
