@@ -5,6 +5,7 @@ on:
     paths:
       - scripts/cloud_preflight.py
       - scripts/cloud_smoke.py
+      - scripts/prepare_cloud_runtime.py
       - scripts/cloud_runtime/**
       - .github/workflows/cloud-staging.yml
   workflow_dispatch:
@@ -72,7 +73,6 @@ jobs:
       - name: Build isolated preview only
         run: npm ci --no-audit --no-fund && npm run build:github
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
           name: cloud-preview-validation
           path: |
