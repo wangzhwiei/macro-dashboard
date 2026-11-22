@@ -64,8 +64,18 @@ jobs:
         run: python scripts/run_pipeline.py --adapter hybrid --days 1310 --incremental --data-only --allow-stale --refresh-monthly-inputs
       - name: Release acceptance checks
         run: |
-          python -m unittest tests.test_cloud_runtime tests.test_cloud_acceptance tests.test_forecast_integrity tests.test_preserve_published_forecasts
+          python -m unittest tests.test_ifind_response_compat tests.test_cloud_runtime tests.test_cloud_acceptance tests.test_forecast_integrity tests.test_preserve_published_forecasts
           python scripts/verify_cloud_result.py
+      - name: Preserve release diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-diagnostics
+          path: |
+            outputs/cloud-acceptance.json
+            outputs/data-quality-report.json
+          if-no-files-found: ignore
+          retention-days: 7
       - run: npm ci --no-audit --no-fund && npm run build:github
       - name: Persist verified data atomically
         if: inputs.mode != 'publish_only'
