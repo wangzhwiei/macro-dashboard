@@ -5,7 +5,7 @@
     "configured_indicators": 111,
     "generated_indicators": 111,
     "coverage": 1.0,
-    "history_weeks": 202,
+    "history_weeks": 203,
     "categories": 9,
     "mode": "CJHX+iFinD生产数据",
     "stale_indicators": 1,
@@ -17,6 +17,6 @@
   "errors": [],
   "warnings": [
     "nanhua_metals 来源核验未通过，正在使用历史缓存：iFinD metadata does not uniquely match catalog identity",
-    "nanhua_metals 最新数据为2026-10-23，已滞后16个工作日（daily容忍4天）"
+    "nanhua_metals 最新数据为2026-10-23，已滞后20个工作日（daily容忍4天）"
   ]
 }

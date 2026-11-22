@@ -144,10 +144,10 @@
     },
     "monthly_model_bridge": {
       "rmse": 0.252734,
-      "mae": 0.206497,
+      "mae": 0.206498,
       "bias": 0.166951,
       "directionHitPct": 100.0,
-      "changeCaptureRatio": 1.09831,
+      "changeCaptureRatio": 1.098311,
       "observations": 5,
       "sampleStart": "2026-05",
       "sampleEnd": "2026-09"

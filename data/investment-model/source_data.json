@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "retrievedAt": "2026-11-16T09:38:49.418562+08:00",
+  "retrievedAt": "2026-11-22T17:59:29.697580+08:00",
   "consensusPolicy": "comparison_only; excluded from features, training, tuning, candidate selection and weights",
   "releasePolicy": "structural investment components are same-release data and may enter forecasts only with lag >= 1 month",
   "series": {
@@ -11,7 +11,7 @@
       "frequency": "M",
       "source": "国家统计局",
       "startTime": "19920229",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -256,6 +256,10 @@
         [
           "2026-09-30",
           33411500000000.0
+        ],
+        [
+          "2026-10-31",
+          36482400000000.0
         ]
       ],
       "role": "target_level"
@@ -1011,7 +1015,7 @@
       "frequency": "M",
       "source": "国家统计局",
       "startTime": "20040229",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -1256,6 +1260,10 @@
         [
           "2026-09-30",
           -2.1
+        ],
+        [
+          "2026-10-31",
+          -2.9
         ]
       ],
       "role": "lagged_component_only"
@@ -1267,7 +1275,7 @@
       "frequency": "M",
       "source": "同花顺金融",
       "startTime": "20040229",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -1512,6 +1520,10 @@
         [
           "2026-09-30",
           -4.2
+        ],
+        [
+          "2026-10-31",
+          -5.1
         ]
       ],
       "role": "lagged_component_only"
@@ -1523,7 +1535,7 @@
       "frequency": "M",
       "source": "同花顺金融",
       "startTime": "20030228",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -1768,6 +1780,10 @@
         [
           "2026-09-30",
           17180577580000.0
+        ],
+        [
+          "2026-10-31",
+          18901854240000.0
         ]
       ],
       "role": "lagged_component_level_only"
@@ -1779,7 +1795,7 @@
       "frequency": "M",
       "source": "国家统计局",
       "startTime": "19950228",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -2024,6 +2040,10 @@
         [
           "2026-09-30",
           -20.6
+        ],
+        [
+          "2026-10-31",
+          -21.6
         ]
       ],
       "role": "lagged_component_only"
@@ -2035,7 +2055,7 @@
       "frequency": "M",
       "source": "国家统计局",
       "startTime": "19940228",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -2280,6 +2300,10 @@
         [
           "2026-09-30",
           5336352000000.0
+        ],
+        [
+          "2026-10-31",
+          5721536000000.0
         ]
       ],
       "role": "lagged_component_level_only"
@@ -2291,7 +2315,7 @@
       "frequency": "M",
       "source": "国家统计局",
       "startTime": "20120331",
-      "endTime": "20260930",
+      "endTime": "20261031",
       "observations": [
         [
           "2021-04-30",
@@ -2536,6 +2560,10 @@
         [
           "2026-09-30",
           -10.4
+        ],
+        [
+          "2026-10-31",
+          -11.4
         ]
       ],
       "role": "lagged_component_only"
@@ -2771,7 +2799,7 @@
         ],
         [
           "2026-12-31",
-          2.0314
+          1.8486
         ],
         [
           "2027-03-31",
