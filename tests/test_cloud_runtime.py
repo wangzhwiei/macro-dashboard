@@ -27,6 +27,7 @@ class CloudRuntimeTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError,'budget reached'):
                     client.call('edb','get_edb_data',{'query':'test'})
                 post.assert_not_called()
+            self.assertTrue(json.loads(Path(folder,'cloud-run-budget.json').read_text())['blocked'])
 
     def test_credential_not_embedded_and_tls_never_disabled(self):
         client=self.client()

@@ -50,7 +50,7 @@ def bind_identity(meta, catalog, archival=False):
     return matches[0]
 
 
-def parse_table(answer, meta):
+def parse_table(answer, meta, excluded=None):
     lines = answer.strip().splitlines()
     if len(lines) < 3 or any(not x.startswith('|') or not x.endswith('|') for x in lines):
         raise RuntimeError('iFinD table malformed or truncated')
@@ -65,6 +65,11 @@ def parse_table(answer, meta):
         day = date.fromisoformat(row[0]).isoformat()
         compact = day.replace('-', '')
         if not str(meta['起始日期']) <= compact <= str(meta['终止日期']):
+            if excluded is not None and compact > str(meta['终止日期']):
+                # Provider text can append a newer row than its own coverage.
+                # Quarantine it, never relabel or admit it as an observation.
+                excluded.append({'date': day, 'reason': 'after_provider_metadata_end'})
+                continue
             raise RuntimeError('iFinD observation outside metadata coverage')
         if row[1] in ('--', '-', '', 'null', 'None', 'N/A'):
             continue
@@ -98,7 +103,11 @@ def normalize(response, search=None, catalog=None):
     archival = catalog is not None
     catalog = catalog if archival else parse_search(search(meta))
     identity = bind_identity(meta, catalog, archival=archival)
-    rows = parse_table(data.get('answer', ''), meta)
+    excluded = []
+    rows = parse_table(data.get('answer', ''), meta, excluded=excluded)
+    if excluded:
+        data['excludedObservations'] = {'providerId': identity['displayId'],
+                                       'metadataEnd': meta['终止日期'], 'rows': excluded}
     attr = {'index_id': identity['displayId'], 'freq': meta['频率'], 'unit': meta['单位'],
             'start_time': meta['起始日期'], 'end_time': meta['终止日期'], 'data_source': meta['数据来源'],
             'country': meta['国家地区'], 'node': meta['所属节点']}

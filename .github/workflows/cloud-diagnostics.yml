@@ -1,0 +1,44 @@
+name: Diagnose cached cloud update (no provider calls)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: /tmp/macro-cloud-cache
+          key: diagnostic-read-only
+          restore-keys: cloud-edb-v1-
+      - name: Inspect date coverage and request counts (no credentials)
+        run: |
+          python - <<'PY'
+          import json, collections
+          from pathlib import Path
+          root = Path('/tmp/macro-cloud-cache/requests')
+          for p in (root/'raw').glob('*.json'):
+              try:
+                  r=json.loads(p.read_text())
+                  data=json.loads(r['data']['result']['content'][0]['text'])['data']
+                  for m in data.get('indicator_description',[]):
+                      outside=[]
+                      for line in data.get('answer','').splitlines()[2:]:
+                          cells=[s.strip() for s in line.strip('|').split('|')]
+                          if len(cells)!=2: continue
+                          day=cells[0].replace('-','')
+                          if len(day)==8 and day.isdigit() and not str(m['起始日期'])<=day<=str(m['终止日期']):
+                              outside.append({'date':cells[0], 'missing':cells[1] in ('--','-','','null','None','N/A')})
+                      if outside:
+                          print(json.dumps({'name':m['指标名称'],'start':m['起始日期'],'end':m['终止日期'],'outside':outside},ensure_ascii=False))
+              except (ValueError,KeyError,TypeError): pass
+          ledger=root/'usage.jsonl'
+          counts=collections.Counter()
+          if ledger.exists():
+              for line in ledger.read_text().splitlines():
+                  row=json.loads(line)
+                  counts[(row['time'][:10],row['event'],row.get('consumer',''))]+=1
+          for key,value in sorted(counts.items()): print(key,value)
+          PY

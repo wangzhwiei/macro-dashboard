@@ -43,6 +43,7 @@ def call(server_type, tool_name, params):
     prior = json.loads(budget_file.read_text()) if budget_file.exists() else {}
     used = prior.get('used', 0) if prior.get('runId') == run_id else 0
     if used >= int(os.environ.get('IFIND_MAX_CALLS', '80')):
+        budget_file.write_text(json.dumps({'runId': run_id, 'used': used, 'blocked': True}))
         raise RuntimeError('Cloud request budget reached; no further provider calls allowed')
     budget_file.parent.mkdir(parents=True, exist_ok=True)
     budget_file.write_text(json.dumps({'runId': run_id, 'used': used+1}))

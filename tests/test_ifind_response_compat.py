@@ -39,8 +39,19 @@ class CompatTests(unittest.TestCase):
     def test_bad_tables(self):
         for answer in (self.answer+'\n...', self.answer.replace('15|','NaN|'),
                        self.answer.replace('沥青开工率（','另一个指标（'),
-                       self.answer+'\n|2026-10-15|17|', self.answer+'\n|2026-10-16|1|'):
+                       self.answer+'\n|2026-10-15|17|', self.answer+'\n|2021-11-10|1|'):
             with self.assertRaises((RuntimeError,ValueError)): self.run_response(answer=answer)
+
+    def test_after_coverage_rows_are_quarantined_not_admitted_or_redated(self):
+        result = self.run_response(answer=self.answer+'\n|2026-10-16|99|')
+        data = json.loads(result['data']['result']['content'][0]['text'])['data']
+        self.assertEqual(data['datas'][0]['data']['data'], [['2026-10-08',16.0],['2026-10-15',15.0]])
+        self.assertEqual(data['excludedObservations']['rows'][0]['date'], '2026-10-16')
+        self.assertEqual(data['datas'][0]['data']['attrs']['沥青开工率']['end_time'], '20261015')
+
+    def test_only_outside_rows_cannot_become_usable_data(self):
+        with self.assertRaisesRegex(RuntimeError, 'no numeric observations'):
+            self.run_response(answer='|日期|沥青开工率（单位：%）|\n|---|---|\n|2026-10-16|99|')
 
     def test_suffix_is_expanded_once(self):
         result = self.run_response(answer=self.answer.replace('|15|','|1.5万|'))
